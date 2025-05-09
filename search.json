@@ -63,9 +63,9 @@
   {
     "objectID": "module1_foundations/github.html",
     "href": "module1_foundations/github.html",
-    "title": "GitHub",
+    "title": "1  GitHub",
     "section": "",
-    "text": "DHI’s Python Ecosystem on GitHub\nGitHub is a website for storing, sharing, and collaborating on software development projects. It’s an especially popular platform for open-source software. DHI uses GitHub for hosting its entire open-source Python ecosystem, including documentation and examples.\nDHI’s Python ecosystem is organized into modular Python packages based on functionality. This is a common pattern in Python that empowers users to flexibly combine functionalities to meet specific project needs. An overview of Python packages useful for MIKE+ modelling is provided in the table below.\nFeel free to browse additional open-source packages on DHI’s GitHub profile.",
+    "text": "1.1 DHI’s Python Ecosystem on GitHub\nGitHub is a website for storing, sharing, and collaborating on software development projects. It’s an especially popular platform for open-source software. DHI uses GitHub for hosting its entire open-source Python ecosystem, including documentation and examples.\nDHI’s Python ecosystem is organized into modular Python packages based on functionality. This is a common pattern in Python that empowers users to flexibly combine functionalities to meet specific project needs. An overview of Python packages useful for MIKE+ modelling is provided in the table below.\nFeel free to browse additional open-source packages on DHI’s GitHub profile.",
     "crumbs": [
       "Module 1 - Foundations",
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>GitHub</span>"
@@ -74,7 +74,7 @@
   {
     "objectID": "module1_foundations/github.html#dhis-python-ecosystem-on-github",
     "href": "module1_foundations/github.html#dhis-python-ecosystem-on-github",
-    "title": "GitHub",
+    "title": "1  GitHub",
     "section": "",
     "text": "Package\nDescription\n\n\n\n\n\nRead, write and manipulate dfs0, dfs1, dfs2, dfs3, dfsu and mesh files.\n\n\n\nRead, manipulate, and analyze res1d, res, resx, out, and xns11 files.\n\n\n\nMIKE+Py is a python interface for MIKE+.\n\n\n\nCompare MIKE model results and observations.\n\n\n\nAnomaly Detection for time series data.",
     "crumbs": [
@@ -85,9 +85,9 @@
   {
     "objectID": "module1_foundations/github.html#why-visit-a-python-packages-github-page",
     "href": "module1_foundations/github.html#why-visit-a-python-packages-github-page",
-    "title": "GitHub",
-    "section": "Why visit a Python package’s GitHub page?",
-    "text": "Why visit a Python package’s GitHub page?\nYou’ll use GitHub for:\n\nAccessing documentation and examples.\nCreating ‘issues’ and/or ‘discussions’ when you need help.\nChecking out changes with new package versions.\nBrowsing source code and/or contributing code you think is generally useful.",
+    "title": "1  GitHub",
+    "section": "1.2 Why visit a Python package’s GitHub page?",
+    "text": "1.2 Why visit a Python package’s GitHub page?\nYou’ll use GitHub for:\n\nAccessing documentation and examples.\nCreating ‘issues’ and/or ‘discussions’ when you need help.\nChecking out changes with new package versions.\nBrowsing source code and/or contributing code you think is generally useful.",
     "crumbs": [
       "Module 1 - Foundations",
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>GitHub</span>"
@@ -96,9 +96,9 @@
   {
     "objectID": "module1_foundations/github.html#typical-structure-of-a-python-package-on-github",
     "href": "module1_foundations/github.html#typical-structure-of-a-python-package-on-github",
-    "title": "GitHub",
-    "section": "Typical structure of a Python package on GitHub",
-    "text": "Typical structure of a Python package on GitHub\nPlease watch the video below for a guided tour of how DHI organizes their Python packages on GitHub.",
+    "title": "1  GitHub",
+    "section": "1.3 Typical structure of a Python package on GitHub",
+    "text": "1.3 Typical structure of a Python package on GitHub\nPlease watch the video below for a guided tour of how DHI organizes their Python packages on GitHub.",
     "crumbs": [
       "Module 1 - Foundations",
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>GitHub</span>"
@@ -107,9 +107,9 @@
   {
     "objectID": "module1_foundations/python_management.html",
     "href": "module1_foundations/python_management.html",
-    "title": "Python Management",
+    "title": "2  Python Management",
     "section": "",
-    "text": "Tools\nPython continuously releases new versions. Similarly, individual Python packages (hosted on PyPI) also continuously release new versions. Python scripts usually have dependencies on specific Python versions and packages, which highlights the need to carefully managing these. This is similar to different versions of MIKE+: you would not expect a MIKE+ 2025 model to run with MIKE+ 2023.\nThere are several tools for managing Python and packages together. Two common options are:\nThis course uses uv. Please install uv according to their official installation instructions. Use the “standalone installer” for Windows.\nConfirm you properly installed uv by opening a terminal and running:",
+    "text": "2.1 Tools\nPython continuously releases new versions. Similarly, individual Python packages (hosted on PyPI) also continuously release new versions. Python scripts usually have dependencies on specific Python versions and packages, which highlights the need to carefully managing these. This is similar to different versions of MIKE+: you would not expect a MIKE+ 2025 model to run with MIKE+ 2023.\nThere are several tools for managing Python and packages together. Two common options are:\nThis course uses uv. Please install uv according to their official installation instructions. Use the “standalone installer” for Windows.\nConfirm you properly installed uv by opening a terminal and running:",
     "crumbs": [
       "Module 1 - Foundations",
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Python Management</span>"
@@ -118,7 +118,7 @@
   {
     "objectID": "module1_foundations/python_management.html#tools",
     "href": "module1_foundations/python_management.html#tools",
-    "title": "Python Management",
+    "title": "2  Python Management",
     "section": "",
     "text": "uv\nMiniforge\n\n\n\nuv --version\n\n\n\n\n\n\nLearn basics of terminals\n\n\n\nInstalling and using uv requires using a terminal. Being familiar with terminals is generally useful for Python. This course assumes basic knowledge. If you’ve never used a terminal before, then please refer to an introductory resource such as: Windows PowerShell.",
     "crumbs": [
@@ -129,9 +129,9 @@
   {
     "objectID": "module1_foundations/python_management.html#installing-python-with-uv",
     "href": "module1_foundations/python_management.html#installing-python-with-uv",
-    "title": "Python Management",
-    "section": "Installing Python with uv",
-    "text": "Installing Python with uv\nYou can install Python with uv from the command line:\nuv python install\nBy default, this installs the latest version of Python (3.13.2 at the time of writing).\nConfirm it installed correctly by running:\nuv run python --version",
+    "title": "2  Python Management",
+    "section": "2.2 Installing Python with uv",
+    "text": "2.2 Installing Python with uv\nYou can install Python with uv from the command line:\nuv python install\nBy default, this installs the latest version of Python (3.13.2 at the time of writing).\nConfirm it installed correctly by running:\nuv run python --version",
     "crumbs": [
       "Module 1 - Foundations",
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Python Management</span>"
@@ -140,9 +140,9 @@
   {
     "objectID": "module1_foundations/python_management.html#virtual-environments",
     "href": "module1_foundations/python_management.html#virtual-environments",
-    "title": "Python Management",
-    "section": "Virtual Environments",
-    "text": "Virtual Environments\n\n\n\n\n\n\nNote\n\n\n\nVirtual environments are an advanced Python topic, however, they are fundamental to using uv. Therefore, they will not be covered in depth, but explained just enough to be useful.\n\n\nVirtual environments are useful for isolating dependencies between projects. For example, let’s say you work on two projects: Project A and Project B. If Project A requires a different version of Python than Project B, then you can handle that by creating virtual environments for each project. This avoids a common issue encountered when not using virtual environments. Conceptually, a virtual environment is a single Python version and set of Python packages.\nCreate a new folder, and make a virtual environment:\nuv venv\n\n\n\n\n\n\nTip\n\n\n\nUse the terminal cd command to change its current directory. Alternatively, install Windows Terminal to easily launch a terminal from a folder within File Explorer via the right-click context menu.\n\n\nNotice a folder called .venv was created. Explore that folder to see what it contains. Can you find the file Python.exeand the folder site-packages?\nIt’s good practice to create a single virtual environment in the root directory of each project. Therefore, the remainder of this course assumes you always run uv from within a folder containing a virtual environment.\nRefer to uv’s documentation for additional details.",
+    "title": "2  Python Management",
+    "section": "2.3 Virtual Environments",
+    "text": "2.3 Virtual Environments\n\n\n\n\n\n\nNote\n\n\n\nVirtual environments are an advanced Python topic, however, they are fundamental to using uv. Therefore, they will not be covered in depth, but explained just enough to be useful.\n\n\nVirtual environments are useful for isolating dependencies between projects. For example, let’s say you work on two projects: Project A and Project B. If Project A requires a different version of Python than Project B, then you can handle that by creating virtual environments for each project. This avoids a common issue encountered when not using virtual environments. Conceptually, a virtual environment is a single Python version and set of Python packages.\nCreate a new folder, and make a virtual environment:\nuv venv\n\n\n\n\n\n\nTip\n\n\n\nUse the terminal cd command to change its current directory. Alternatively, install Windows Terminal to easily launch a terminal from a folder within File Explorer via the right-click context menu.\n\n\nNotice a folder called .venv was created. Explore that folder to see what it contains. Can you find the file Python.exeand the folder site-packages?\nIt’s good practice to create a single virtual environment in the root directory of each project. Therefore, the remainder of this course assumes you always run uv from within a folder containing a virtual environment.\nRefer to uv’s documentation for additional details.",
     "crumbs": [
       "Module 1 - Foundations",
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Python Management</span>"
@@ -151,9 +151,9 @@
   {
     "objectID": "module1_foundations/python_management.html#python-package-management",
     "href": "module1_foundations/python_management.html#python-package-management",
-    "title": "Python Management",
-    "section": "Python package management",
-    "text": "Python package management\nuv provides two different approaches for Python package management. This course uses their pip interface. Common workflows are shown in the following sections. Refer to uv’s documentation for more details.\n\nInstall packages\nInstall Python packages with uv as follows:\nuv pip install &lt;package-name&gt;\nFor example, install mikeio as follows:\nuv pip install mikeio\nLook at the site-packages folder again. Notice that it now includes mikeio and many other packages. When a package is installed, all of its dependencies are also installed automatically.\n\n\nList installed packages\nList all installed Python packages and their versions with:\nuv pip list\n\n\nUpgrade packages\nUpgrade an older package version to the latest version as follows:\nuv pip install --upgrade mikeio\n\n\nInstall specific package versions\nOccasionally there’s a need to install an older version of a package, which can be done as follows:\nuv pip install mikeio==1.7.1",
+    "title": "2  Python Management",
+    "section": "2.4 Python package management",
+    "text": "2.4 Python package management\nuv provides two different approaches for Python package management. This course uses their pip interface. Common workflows are shown in the following sections. Refer to uv’s documentation for more details.\n\n2.4.1 Install packages\nInstall Python packages with uv as follows:\nuv pip install &lt;package-name&gt;\nFor example, install mikeio as follows:\nuv pip install mikeio\nLook at the site-packages folder again. Notice that it now includes mikeio and many other packages. When a package is installed, all of its dependencies are also installed automatically.\n\n\n2.4.2 List installed packages\nList all installed Python packages and their versions with:\nuv pip list\n\n\n2.4.3 Upgrade packages\nUpgrade an older package version to the latest version as follows:\nuv pip install --upgrade mikeio\n\n\n2.4.4 Install specific package versions\nOccasionally there’s a need to install an older version of a package, which can be done as follows:\nuv pip install mikeio==1.7.1",
     "crumbs": [
       "Module 1 - Foundations",
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Python Management</span>"
@@ -162,9 +162,9 @@
   {
     "objectID": "module1_foundations/python_management.html#example-video",
     "href": "module1_foundations/python_management.html#example-video",
-    "title": "Python Management",
-    "section": "Example video",
-    "text": "Example video",
+    "title": "2  Python Management",
+    "section": "2.5 Example video",
+    "text": "2.5 Example video",
     "crumbs": [
       "Module 1 - Foundations",
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Python Management</span>"
@@ -173,9 +173,9 @@
   {
     "objectID": "module1_foundations/ide.html",
     "href": "module1_foundations/ide.html",
-    "title": "Integrated Development Environments (IDEs)",
+    "title": "3  Integrated Development Environments (IDEs)",
     "section": "",
-    "text": "Why use an IDE?\nAn Integrated Development Environment (IDE) is a software that bundles together tools convenient for software development. This course uses Visual Studio Code as an IDE, which is a popular free and open-source software provided by Microsoft.\nThere are several benefits to using an IDE compared to using a text editor like Notepad:",
+    "text": "3.1 Why use an IDE?\nAn Integrated Development Environment (IDE) is a software that bundles together tools convenient for software development. This course uses Visual Studio Code as an IDE, which is a popular free and open-source software provided by Microsoft.\nThere are several benefits to using an IDE compared to using a text editor like Notepad:",
     "crumbs": [
       "Module 1 - Foundations",
       "<span class='chapter-number'>3</span>  <span class='chapter-title'>Integrated Development Environments (IDEs)</span>"
@@ -184,7 +184,7 @@
   {
     "objectID": "module1_foundations/ide.html#why-use-an-ide",
     "href": "module1_foundations/ide.html#why-use-an-ide",
-    "title": "Integrated Development Environments (IDEs)",
+    "title": "3  Integrated Development Environments (IDEs)",
     "section": "",
     "text": "Designed for easy code writing, with several shortcuts\nSyntax highlighting for more readable code\nAutomatic code completion\nIntegrated terminal\nIntegrated LLM chat and code completion\nHighly customizable with extensions",
     "crumbs": [
@@ -195,9 +195,9 @@
   {
     "objectID": "module1_foundations/ide.html#install-visual-studio-code",
     "href": "module1_foundations/ide.html#install-visual-studio-code",
-    "title": "Integrated Development Environments (IDEs)",
-    "section": "Install Visual Studio Code",
-    "text": "Install Visual Studio Code\nInstall Visual Studio Code (VSCode) according to their official instructions.\n\n\n\n\n\n\nCaution\n\n\n\nYou may stumble upon a software called Visual Studio, which is different than Visual Studio Code.",
+    "title": "3  Integrated Development Environments (IDEs)",
+    "section": "3.2 Install Visual Studio Code",
+    "text": "3.2 Install Visual Studio Code\nInstall Visual Studio Code (VSCode) according to their official instructions.\n\n\n\n\n\n\nCaution\n\n\n\nYou may stumble upon a software called Visual Studio, which is different than Visual Studio Code.",
     "crumbs": [
       "Module 1 - Foundations",
       "<span class='chapter-number'>3</span>  <span class='chapter-title'>Integrated Development Environments (IDEs)</span>"
@@ -206,9 +206,9 @@
   {
     "objectID": "module1_foundations/ide.html#getting-started",
     "href": "module1_foundations/ide.html#getting-started",
-    "title": "Integrated Development Environments (IDEs)",
-    "section": "Getting Started",
-    "text": "Getting Started\nVS Code provides excellent documentation. Please refer to their getting started guide for a basic introduction.",
+    "title": "3  Integrated Development Environments (IDEs)",
+    "section": "3.3 Getting Started",
+    "text": "3.3 Getting Started\nVS Code provides excellent documentation. Please refer to their getting started guide for a basic introduction.",
     "crumbs": [
       "Module 1 - Foundations",
       "<span class='chapter-number'>3</span>  <span class='chapter-title'>Integrated Development Environments (IDEs)</span>"
@@ -217,9 +217,9 @@
   {
     "objectID": "module1_foundations/ide.html#visual-studio-code-extensions",
     "href": "module1_foundations/ide.html#visual-studio-code-extensions",
-    "title": "Integrated Development Environments (IDEs)",
-    "section": "Visual Studio Code Extensions",
-    "text": "Visual Studio Code Extensions\nThis course uses the Python extension for VS Code. Extensions can be installed from within VS Code. Refer to VS Code’s documentation for guidance.",
+    "title": "3  Integrated Development Environments (IDEs)",
+    "section": "3.4 Visual Studio Code Extensions",
+    "text": "3.4 Visual Studio Code Extensions\nThis course uses the Python extension for VS Code. Extensions can be installed from within VS Code. Refer to VS Code’s documentation for guidance.",
     "crumbs": [
       "Module 1 - Foundations",
       "<span class='chapter-number'>3</span>  <span class='chapter-title'>Integrated Development Environments (IDEs)</span>"
@@ -228,9 +228,9 @@
   {
     "objectID": "module1_foundations/ide.html#opening-projects",
     "href": "module1_foundations/ide.html#opening-projects",
-    "title": "Integrated Development Environments (IDEs)",
-    "section": "Opening Projects",
-    "text": "Opening Projects\nVS Code can be used in different ways. This course uses a common workflow of opening VS Code from the root directory of a project folder. Alternatively, open a project folder via “Open Folder” from within VS Code.",
+    "title": "3  Integrated Development Environments (IDEs)",
+    "section": "3.5 Opening Projects",
+    "text": "3.5 Opening Projects\nVS Code can be used in different ways. This course uses a common workflow of opening VS Code from the root directory of a project folder. Alternatively, open a project folder via “Open Folder” from within VS Code.",
     "crumbs": [
       "Module 1 - Foundations",
       "<span class='chapter-number'>3</span>  <span class='chapter-title'>Integrated Development Environments (IDEs)</span>"
@@ -239,9 +239,9 @@
   {
     "objectID": "module1_foundations/ide.html#selecting-python-interpreters",
     "href": "module1_foundations/ide.html#selecting-python-interpreters",
-    "title": "Integrated Development Environments (IDEs)",
-    "section": "Selecting Python Interpreters",
-    "text": "Selecting Python Interpreters\nVS Code should automatically detect virtual environments located in the root project directory.\nOtherwise, there’s an option of manually selecting which Python Interpreter VS Code uses. Access it via the Command Palette (CTRL + SHIFT + P) and typing “Python: Select Interpreter”.\nVS Code uses the selected interpreter for running scripts, as well as for other features like auto completion.",
+    "title": "3  Integrated Development Environments (IDEs)",
+    "section": "3.6 Selecting Python Interpreters",
+    "text": "3.6 Selecting Python Interpreters\nVS Code should automatically detect virtual environments located in the root project directory.\nOtherwise, there’s an option of manually selecting which Python Interpreter VS Code uses. Access it via the Command Palette (CTRL + SHIFT + P) and typing “Python: Select Interpreter”.\nVS Code uses the selected interpreter for running scripts, as well as for other features like auto completion.",
     "crumbs": [
       "Module 1 - Foundations",
       "<span class='chapter-number'>3</span>  <span class='chapter-title'>Integrated Development Environments (IDEs)</span>"
@@ -250,9 +250,9 @@
   {
     "objectID": "module1_foundations/ide.html#example---setting-up-a-fresh-project",
     "href": "module1_foundations/ide.html#example---setting-up-a-fresh-project",
-    "title": "Integrated Development Environments (IDEs)",
-    "section": "Example - Setting up a fresh project",
-    "text": "Example - Setting up a fresh project",
+    "title": "3  Integrated Development Environments (IDEs)",
+    "section": "3.7 Example - Setting up a fresh project",
+    "text": "3.7 Example - Setting up a fresh project",
     "crumbs": [
       "Module 1 - Foundations",
       "<span class='chapter-number'>3</span>  <span class='chapter-title'>Integrated Development Environments (IDEs)</span>"
@@ -261,9 +261,9 @@
   {
     "objectID": "module1_foundations/python_scripts.html",
     "href": "module1_foundations/python_scripts.html",
-    "title": "Python Scripts",
+    "title": "4  Python Scripts",
     "section": "",
-    "text": "Running Python Scripts\nA Python script is a file with the extension .py that contains Python code that’s executable via Python’s interpreter.\nPython is most powerful when scripts are reused. Therefore, it’s important to understand both how to run scripts others have sent you, as well as how to explain how others can use scripts you wrote.",
+    "text": "4.1 Running Python Scripts\nA Python script is a file with the extension .py that contains Python code that’s executable via Python’s interpreter.\nPython is most powerful when scripts are reused. Therefore, it’s important to understand both how to run scripts others have sent you, as well as how to explain how others can use scripts you wrote.",
     "crumbs": [
       "Module 1 - Foundations",
       "<span class='chapter-number'>4</span>  <span class='chapter-title'>Python Scripts</span>"
@@ -272,9 +272,9 @@
   {
     "objectID": "module1_foundations/python_scripts.html#running-python-scripts",
     "href": "module1_foundations/python_scripts.html#running-python-scripts",
-    "title": "Python Scripts",
+    "title": "4  Python Scripts",
     "section": "",
-    "text": "Running in Terminal\nYou can run a script from the terminal by running:\nuv run python example_script.py\n\n\nRunning in VS Code\nYou can run scripts from VS Code’s user interface. Under the hood, it executes the script in the terminal, so this is only a matter of preference. Refer to VS Code’s documentation on how to run Python code.\n\n\n\n\n\n\nTip\n\n\n\nRunning scripts in debug mode is more convenient via VS Code’s user interface. This lets you walk through code line by line as it executes, which is helpful when investigating unexpected outcomes.",
+    "text": "4.1.1 Running in Terminal\nYou can run a script from the terminal by running:\nuv run python example_script.py\n\n\n4.1.2 Running in VS Code\nYou can run scripts from VS Code’s user interface. Under the hood, it executes the script in the terminal, so this is only a matter of preference. Refer to VS Code’s documentation on how to run Python code.\n\n\n\n\n\n\nTip\n\n\n\nRunning scripts in debug mode is more convenient via VS Code’s user interface. This lets you walk through code line by line as it executes, which is helpful when investigating unexpected outcomes.",
     "crumbs": [
       "Module 1 - Foundations",
       "<span class='chapter-number'>4</span>  <span class='chapter-title'>Python Scripts</span>"
@@ -283,9 +283,9 @@
   {
     "objectID": "module1_foundations/python_scripts.html#script-dependencies",
     "href": "module1_foundations/python_scripts.html#script-dependencies",
-    "title": "Python Scripts",
-    "section": "Script Dependencies",
-    "text": "Script Dependencies\nAs previously mentioned, Python code includes dependencies on a set of Python packages (e.g. mikeio). If a script is run with a virtual environment that is missing these dependencies, there’ll be an error along the lines of: ModuleNotFoundError: No module named ‘mikeio’. The package listed in the error message (e.g. mikeio) needs to be installed before running the script.\n\n\n\n\n\n\nTip\n\n\n\nuv provides a way of defining dependencies within the script itself, such that they are automatically detected and installed when running the script with uv. Refer to uv’s documentation on script inline metadata for details.",
+    "title": "4  Python Scripts",
+    "section": "4.2 Script Dependencies",
+    "text": "4.2 Script Dependencies\nAs previously mentioned, Python code includes dependencies on a set of Python packages (e.g. mikeio). If a script is run with a virtual environment that is missing these dependencies, there’ll be an error along the lines of: ModuleNotFoundError: No module named ‘mikeio’. The package listed in the error message (e.g. mikeio) needs to be installed before running the script.\n\n\n\n\n\n\nTip\n\n\n\nuv provides a way of defining dependencies within the script itself, such that they are automatically detected and installed when running the script with uv. Refer to uv’s documentation on script inline metadata for details.",
     "crumbs": [
       "Module 1 - Foundations",
       "<span class='chapter-number'>4</span>  <span class='chapter-title'>Python Scripts</span>"
@@ -294,9 +294,9 @@
   {
     "objectID": "module1_foundations/python_scripts.html#example---running-scripts",
     "href": "module1_foundations/python_scripts.html#example---running-scripts",
-    "title": "Python Scripts",
-    "section": "Example - running scripts",
-    "text": "Example - running scripts",
+    "title": "4  Python Scripts",
+    "section": "4.3 Example - running scripts",
+    "text": "4.3 Example - running scripts",
     "crumbs": [
       "Module 1 - Foundations",
       "<span class='chapter-number'>4</span>  <span class='chapter-title'>Python Scripts</span>"
@@ -305,9 +305,9 @@
   {
     "objectID": "module1_foundations/jupyter_notebooks.html",
     "href": "module1_foundations/jupyter_notebooks.html",
-    "title": "Jupyter Notebooks",
+    "title": "5  Jupyter Notebooks",
     "section": "",
-    "text": "Comparison with Python Scripts\nA Jupyter Notebook is a file with the extension .ipynb that combines code, its output, and markdown into an interactive notebook-like experience.\nA key difference is that notebooks are interactive, whereas scripts simply run from start to end. Generally, notebooks are more useful for exploratory or visual workflows (e.g. making plots, or analyzing data). It’s also a great tool for learning Python.",
+    "text": "5.1 Comparison with Python Scripts\nA Jupyter Notebook is a file with the extension .ipynb that combines code, its output, and markdown into an interactive notebook-like experience.\nA key difference is that notebooks are interactive, whereas scripts simply run from start to end. Generally, notebooks are more useful for exploratory or visual workflows (e.g. making plots, or analyzing data). It’s also a great tool for learning Python.",
     "crumbs": [
       "Module 1 - Foundations",
       "<span class='chapter-number'>5</span>  <span class='chapter-title'>Jupyter Notebooks</span>"
@@ -316,9 +316,9 @@
   {
     "objectID": "module1_foundations/jupyter_notebooks.html#terminology",
     "href": "module1_foundations/jupyter_notebooks.html#terminology",
-    "title": "Jupyter Notebooks",
-    "section": "Terminology",
-    "text": "Terminology\nThe following are fundamental concepts of Jupyter Notebooks:\n\nCell\n\nA Jupyter Notebook is a collection of cells.\n\nCode Cell\n\nA cell containing Python code, whose output shows below after execution.\n\nCell Output\n\nThe output after executing a cell, which could be many things (e.g. a number, plot, or table)\n\nMarkdown Cell\n\nA cell containing markdown for nicely formatted text.\n\nKernel\n\nResponsible for executing cells. Same as Python virtual environment for the purposes of this course.",
+    "title": "5  Jupyter Notebooks",
+    "section": "5.2 Terminology",
+    "text": "5.2 Terminology\nThe following are fundamental concepts of Jupyter Notebooks:\n\nCell\n\nA Jupyter Notebook is a collection of cells.\n\nCode Cell\n\nA cell containing Python code, whose output shows below after execution.\n\nCell Output\n\nThe output after executing a cell, which could be many things (e.g. a number, plot, or table)\n\nMarkdown Cell\n\nA cell containing markdown for nicely formatted text.\n\nKernel\n\nResponsible for executing cells. Same as Python virtual environment for the purposes of this course.",
     "crumbs": [
       "Module 1 - Foundations",
       "<span class='chapter-number'>5</span>  <span class='chapter-title'>Jupyter Notebooks</span>"
@@ -327,9 +327,9 @@
   {
     "objectID": "module1_foundations/jupyter_notebooks.html#running-a-jupyter-notebook",
     "href": "module1_foundations/jupyter_notebooks.html#running-a-jupyter-notebook",
-    "title": "Jupyter Notebooks",
-    "section": "Running a Jupyter Notebook",
-    "text": "Running a Jupyter Notebook\nThe Python extension for VS Code allows opening jupyter notebook files (.ipynb).\nUpon opening a notebook, all cells are displayed along with any saved output of those cells.\nRunning a notebook first requires selecting the kernel (i.e. the Python virtual environment). If the virtual environment has not installed the package ipykernel, then VS Code will ask to do that. Alternatively, manually install it via:\nuv pip install ipykernel\nNext, “Run All” to run all cells from top to bottom. It’s also possible to run (or re-run) cells individually in any order.\n\n\n\n\n\n\nTip\n\n\n\nIt’s good practice to organize notebooks such that they run from top to bottom.",
+    "title": "5  Jupyter Notebooks",
+    "section": "5.3 Running a Jupyter Notebook",
+    "text": "5.3 Running a Jupyter Notebook\nThe Python extension for VS Code allows opening jupyter notebook files (.ipynb).\nUpon opening a notebook, all cells are displayed along with any saved output of those cells.\nRunning a notebook first requires selecting the kernel (i.e. the Python virtual environment). If the virtual environment has not installed the package ipykernel, then VS Code will ask to do that. Alternatively, manually install it via:\nuv pip install ipykernel\nNext, “Run All” to run all cells from top to bottom. It’s also possible to run (or re-run) cells individually in any order.\n\n\n\n\n\n\nTip\n\n\n\nIt’s good practice to organize notebooks such that they run from top to bottom.",
     "crumbs": [
       "Module 1 - Foundations",
       "<span class='chapter-number'>5</span>  <span class='chapter-title'>Jupyter Notebooks</span>"
@@ -338,9 +338,9 @@
   {
     "objectID": "module1_foundations/jupyter_notebooks.html#creating-a-jupyter-notebook",
     "href": "module1_foundations/jupyter_notebooks.html#creating-a-jupyter-notebook",
-    "title": "Jupyter Notebooks",
-    "section": "Creating a Jupyter Notebook",
-    "text": "Creating a Jupyter Notebook\nCreate a Jupyter Notebook from within VS Code by opening the Command Palette (CTRL + SHIFT + P) and typing “Create: New Jupyter Notebook”.\nSave the notebook in a project folder to help VS Code automatically find the project’s virtual environment. Then, start adding and running cells.",
+    "title": "5  Jupyter Notebooks",
+    "section": "5.4 Creating a Jupyter Notebook",
+    "text": "5.4 Creating a Jupyter Notebook\nCreate a Jupyter Notebook from within VS Code by opening the Command Palette (CTRL + SHIFT + P) and typing “Create: New Jupyter Notebook”.\nSave the notebook in a project folder to help VS Code automatically find the project’s virtual environment. Then, start adding and running cells.",
     "crumbs": [
       "Module 1 - Foundations",
       "<span class='chapter-number'>5</span>  <span class='chapter-title'>Jupyter Notebooks</span>"
@@ -349,9 +349,9 @@
   {
     "objectID": "module1_foundations/jupyter_notebooks.html#useful-keyboard-shortcuts",
     "href": "module1_foundations/jupyter_notebooks.html#useful-keyboard-shortcuts",
-    "title": "Jupyter Notebooks",
-    "section": "Useful Keyboard Shortcuts",
-    "text": "Useful Keyboard Shortcuts\nThere’s a few useful keyboard shortcuts when working with notebooks:\n\nShift + Enter: Run the current cell and move to the next.\nCtrl + Enter: Run the current cell.\nA: Insert a new cell above.\nB: Insert a new cell below.",
+    "title": "5  Jupyter Notebooks",
+    "section": "5.5 Useful Keyboard Shortcuts",
+    "text": "5.5 Useful Keyboard Shortcuts\nThere’s a few useful keyboard shortcuts when working with notebooks:\n\nShift + Enter: Run the current cell and move to the next.\nCtrl + Enter: Run the current cell.\nA: Insert a new cell above.\nB: Insert a new cell below.",
     "crumbs": [
       "Module 1 - Foundations",
       "<span class='chapter-number'>5</span>  <span class='chapter-title'>Jupyter Notebooks</span>"
@@ -360,9 +360,9 @@
   {
     "objectID": "module1_foundations/jupyter_notebooks.html#additional-resources",
     "href": "module1_foundations/jupyter_notebooks.html#additional-resources",
-    "title": "Jupyter Notebooks",
-    "section": "Additional resources",
-    "text": "Additional resources\nFor additional information, refer to VS Code’s documentation on jupyter notebooks.",
+    "title": "5  Jupyter Notebooks",
+    "section": "5.6 Additional resources",
+    "text": "5.6 Additional resources\nFor additional information, refer to VS Code’s documentation on jupyter notebooks.",
     "crumbs": [
       "Module 1 - Foundations",
       "<span class='chapter-number'>5</span>  <span class='chapter-title'>Jupyter Notebooks</span>"
@@ -371,9 +371,9 @@
   {
     "objectID": "module1_foundations/jupyter_notebooks.html#example---using-jupyter-notebooks",
     "href": "module1_foundations/jupyter_notebooks.html#example---using-jupyter-notebooks",
-    "title": "Jupyter Notebooks",
-    "section": "Example - Using Jupyter Notebooks",
-    "text": "Example - Using Jupyter Notebooks",
+    "title": "5  Jupyter Notebooks",
+    "section": "5.7 Example - Using Jupyter Notebooks",
+    "text": "5.7 Example - Using Jupyter Notebooks",
     "crumbs": [
       "Module 1 - Foundations",
       "<span class='chapter-number'>5</span>  <span class='chapter-title'>Jupyter Notebooks</span>"
@@ -382,9 +382,9 @@
   {
     "objectID": "module1_foundations/python_basics.html",
     "href": "module1_foundations/python_basics.html",
-    "title": "Python Basics",
+    "title": "6  Python Basics",
     "section": "",
-    "text": "Using libraries\nThis section provides a crash course on basic Python concepts used throughout the course. It is purposefully brief, with additional resources provided at the end.\nMost functionality useful for MIKE+ modelling exists in Python packages (e.g. mikeio). Therefore, it’s important to understand how to access functionality in a Python package.",
+    "text": "6.1 Using libraries\nThis section provides a crash course on basic Python concepts used throughout the course. It is purposefully brief, with additional resources provided at the end.\nMost functionality useful for MIKE+ modelling exists in Python packages (e.g. mikeio). Therefore, it’s important to understand how to access functionality in a Python package.",
     "crumbs": [
       "Module 1 - Foundations",
       "<span class='chapter-number'>6</span>  <span class='chapter-title'>Python Basics</span>"
@@ -393,9 +393,9 @@
   {
     "objectID": "module1_foundations/python_basics.html#using-libraries",
     "href": "module1_foundations/python_basics.html#using-libraries",
-    "title": "Python Basics",
+    "title": "6  Python Basics",
     "section": "",
-    "text": "Note\n\n\n\nThe terms package, library, and module are used interchangeably throughout this course.\n\n\n\nImport libraries\nImport libraries using the import statement:\n\nimport math\n\nOr import specific functionality from a library:\n\nfrom math import sqrt\n\n\n\nObjects\nAll imports are objects containing some functionality. Objects have members accessible via the dot notation:\n\nmath.pi\n\n3.141592653589793\n\n\nDot accessors can be chained together, since all members are also objects.\n\nmath.pi.is_integer()\n\nFalse\n\n\nThere are a few common types of objects to be aware of:\n\nModules: reusable code you can import into your program.\nClasses: templates for creating objects with specific properties and behaviors.\nFunctions / Methods: blocks of code that return a result.\nData: any stored information (e.g. numbers, text).\n\nSee the type of an object with:\n\ntype(math)\n\nmodule\n\n\nSee the members of an object with:\n\ndir(math)\n\nGet help for an object:\n\nhelp(math)\n\nGood libraries have documentation. For example, see the documentation for math.\n\n\nUsing Functions / Methods\n\n\n\n\n\n\nNote\n\n\n\nThis course will use the terms ‘function’ and ‘method’ interchangeably.\n\n\nUse a function by invoking it with round brackets:\n\nsqrt(25)\n\n5.0\n\n\nBetween the brackets is the function arguments. There’s different ways of specifying arguments. For example, there could be a list of arguments:\n\nmath.pow(2, 3)\n\n8.0\n\n\n\n\nUsing Classes\nSome library functionality is provided via a class that needs to be instantiated before using it.\nBelow, the Random class is instantiated and assigned to the identifier my_random for reference later on.\n\nfrom random import Random\nmy_random = Random()\n\nAn instantiation of a class is called an instance, and is also an object whose functionality is accessible with the dot notation:\n\nmy_random.random() # returns a random number\n\n0.5366316280726797",
+    "text": "Note\n\n\n\nThe terms package, library, and module are used interchangeably throughout this course.\n\n\n\n6.1.1 Import libraries\nImport libraries using the import statement:\n\nimport math\n\nOr import specific functionality from a library:\n\nfrom math import sqrt\n\n\n\n6.1.2 Objects\nAll imports are objects containing some functionality. Objects have members accessible via the dot notation:\n\nmath.pi\n\n3.141592653589793\n\n\nDot accessors can be chained together, since all members are also objects.\n\nmath.pi.is_integer()\n\nFalse\n\n\nThere are a few common types of objects to be aware of:\n\nModules: reusable code you can import into your program.\nClasses: templates for creating objects with specific properties and behaviors.\nFunctions / Methods: blocks of code that return a result.\nData: any stored information (e.g. numbers, text).\n\nSee the type of an object with:\n\ntype(math)\n\nmodule\n\n\nSee the members of an object with:\n\ndir(math)\n\nGet help for an object:\n\nhelp(math)\n\nGood libraries have documentation. For example, see the documentation for math.\n\n\n6.1.3 Using Functions / Methods\n\n\n\n\n\n\nNote\n\n\n\nThis course will use the terms ‘function’ and ‘method’ interchangeably.\n\n\nUse a function by invoking it with round brackets:\n\nsqrt(25)\n\n5.0\n\n\nBetween the brackets is the function arguments. There’s different ways of specifying arguments. For example, there could be a list of arguments:\n\nmath.pow(2, 3)\n\n8.0\n\n\n\n\n6.1.4 Using Classes\nSome library functionality is provided via a class that needs to be instantiated before using it.\nBelow, the Random class is instantiated and assigned to the identifier my_random for reference later on.\n\nfrom random import Random\nmy_random = Random()\n\nAn instantiation of a class is called an instance, and is also an object whose functionality is accessible with the dot notation:\n\nmy_random.random() # returns a random number\n\n0.7056920378948958",
     "crumbs": [
       "Module 1 - Foundations",
       "<span class='chapter-number'>6</span>  <span class='chapter-title'>Python Basics</span>"
@@ -404,9 +404,9 @@
   {
     "objectID": "module1_foundations/python_basics.html#variables",
     "href": "module1_foundations/python_basics.html#variables",
-    "title": "Python Basics",
-    "section": "Variables",
-    "text": "Variables\nStore data/objects in named variables by using the assignment operator =.\n\nresult = 1 + 1\nresult\n\n2\n\n\n\n\n\n\n\n\nNote\n\n\n\nA valid name must be used. In general, this means it must start with a letter or underscore.\n\n\nVariable names can be referenced anywhere after their definition.\n\nresult = result * 2\nresult\n\n4",
+    "title": "6  Python Basics",
+    "section": "6.2 Variables",
+    "text": "6.2 Variables\nStore data/objects in named variables by using the assignment operator =.\n\nresult = 1 + 1\nresult\n\n2\n\n\n\n\n\n\n\n\nNote\n\n\n\nA valid name must be used. In general, this means it must start with a letter or underscore.\n\n\nVariable names can be referenced anywhere after their definition.\n\nresult = result * 2\nresult\n\n4",
     "crumbs": [
       "Module 1 - Foundations",
       "<span class='chapter-number'>6</span>  <span class='chapter-title'>Python Basics</span>"
@@ -415,9 +415,9 @@
   {
     "objectID": "module1_foundations/python_basics.html#collections",
     "href": "module1_foundations/python_basics.html#collections",
-    "title": "Python Basics",
-    "section": "Collections",
-    "text": "Collections\nA common need is to have a collection of related data. Perhaps the most common type of collection is a list, which is briefly introduced below.\nCreate a list with square brackets. Optionally include comma separated elements, otherwise an empty list is created.\n\nmy_numbers = [1, 2, 3]\nmy_numbers\n\n[1, 2, 3]\n\n\nAppend elements to an existing list.\n\nmy_numbers.append(4)\n\nAccess a specific element by indexing the list with the zero-based index. Zero refers to the first element, one the second, and so on.\n\nmy_numbers[0]\n\n1\n\n\nAccess a subset of a list by slicing it. The example below accesses elements with index 0 up to, but excluding, 2.\n\nmy_numbers[0:2]\n\n[1, 2]",
+    "title": "6  Python Basics",
+    "section": "6.3 Collections",
+    "text": "6.3 Collections\nA common need is to have a collection of related data. Perhaps the most common type of collection is a list, which is briefly introduced below.\nCreate a list with square brackets. Optionally include comma separated elements, otherwise an empty list is created.\n\nmy_numbers = [1, 2, 3]\nmy_numbers\n\n[1, 2, 3]\n\n\nAppend elements to an existing list.\n\nmy_numbers.append(4)\n\nAccess a specific element by indexing the list with the zero-based index. Zero refers to the first element, one the second, and so on.\n\nmy_numbers[0]\n\n1\n\n\nAccess a subset of a list by slicing it. The example below accesses elements with index 0 up to, but excluding, 2.\n\nmy_numbers[0:2]\n\n[1, 2]",
     "crumbs": [
       "Module 1 - Foundations",
       "<span class='chapter-number'>6</span>  <span class='chapter-title'>Python Basics</span>"
@@ -426,9 +426,9 @@
   {
     "objectID": "module1_foundations/python_basics.html#control-logic",
     "href": "module1_foundations/python_basics.html#control-logic",
-    "title": "Python Basics",
-    "section": "Control Logic",
-    "text": "Control Logic\nControl logic allows the flow of a program to be controlled via boolean conditions.\n\nConditional statements\nUse if statements to execute code only if the specified condition is true.\n\nif 100 &gt; 10:\n    print(\"100 is greater than 10\")\n\n100 is greater than 10\n\n\n\n\n\n\n\n\nNote\n\n\n\nThe code that the if statement applies to is called a block, which must be indented.\n\n\nUse else statements after an if statement to execute code only if the condition is untrue.\n\nif 100 &lt; 10:\n    print(\"100 is less than 10\")\nelse:\n    print(\"of course, 100 is not less than 10\")\n\nof course, 100 is not less than 10\n\n\n\n\nLoops\nA while loop continuously executes a block of code while the specified condition is true.\n\ni = 0\nwhile i &lt; 3:\n    print(i)\n    i = i + 1\n\n0\n1\n2\n\n\nA for loop executes a block of code per element in a specified collection.\n\nfor fruit in [\"Apple\", \"Banana\", \"Orange\"]:\n    print(fruit)\n\nApple\nBanana\nOrange",
+    "title": "6  Python Basics",
+    "section": "6.4 Control Logic",
+    "text": "6.4 Control Logic\nControl logic allows the flow of a program to be controlled via boolean conditions.\n\n6.4.1 Conditional statements\nUse if statements to execute code only if the specified condition is true.\n\nif 100 &gt; 10:\n    print(\"100 is greater than 10\")\n\n100 is greater than 10\n\n\n\n\n\n\n\n\nNote\n\n\n\nThe code that the if statement applies to is called a block, which must be indented.\n\n\nUse else statements after an if statement to execute code only if the condition is untrue.\n\nif 100 &lt; 10:\n    print(\"100 is less than 10\")\nelse:\n    print(\"of course, 100 is not less than 10\")\n\nof course, 100 is not less than 10\n\n\n\n\n6.4.2 Loops\nA while loop continuously executes a block of code while the specified condition is true.\n\ni = 0\nwhile i &lt; 3:\n    print(i)\n    i = i + 1\n\n0\n1\n2\n\n\nA for loop executes a block of code per element in a specified collection.\n\nfor fruit in [\"Apple\", \"Banana\", \"Orange\"]:\n    print(fruit)\n\nApple\nBanana\nOrange",
     "crumbs": [
       "Module 1 - Foundations",
       "<span class='chapter-number'>6</span>  <span class='chapter-title'>Python Basics</span>"
@@ -437,9 +437,9 @@
   {
     "objectID": "module1_foundations/python_basics.html#additional-resources",
     "href": "module1_foundations/python_basics.html#additional-resources",
-    "title": "Python Basics",
-    "section": "Additional resources",
-    "text": "Additional resources\nLearning Python should be a continuous endeavor through practice. Luckily there’s an abundance of high quality resources online. Here’s a few examples:\n\nOfficial Python Documentation\nLearn X in Y minutes\nFreeCodeCamp: Scientific Computing with Python\n\n\n\n\n\n\n\nTip\n\n\n\nPython is used by a wide variety of domains (e.g. web development). Try to use resources specific for engineering/science applications for a more efficient learning path.",
+    "title": "6  Python Basics",
+    "section": "6.5 Additional resources",
+    "text": "6.5 Additional resources\nLearning Python should be a continuous endeavor through practice. Luckily there’s an abundance of high quality resources online. Here’s a few examples:\n\nOfficial Python Documentation\nLearn X in Y minutes\nFreeCodeCamp: Scientific Computing with Python\n\n\n\n\n\n\n\nTip\n\n\n\nPython is used by a wide variety of domains (e.g. web development). Try to use resources specific for engineering/science applications for a more efficient learning path.",
     "crumbs": [
       "Module 1 - Foundations",
       "<span class='chapter-number'>6</span>  <span class='chapter-title'>Python Basics</span>"
@@ -448,9 +448,9 @@
   {
     "objectID": "module1_foundations/python_basics.html#example---using-pythons-interpreter",
     "href": "module1_foundations/python_basics.html#example---using-pythons-interpreter",
-    "title": "Python Basics",
-    "section": "Example - Using Python’s Interpreter",
-    "text": "Example - Using Python’s Interpreter",
+    "title": "6  Python Basics",
+    "section": "6.6 Example - Using Python’s Interpreter",
+    "text": "6.6 Example - Using Python’s Interpreter",
     "crumbs": [
       "Module 1 - Foundations",
       "<span class='chapter-number'>6</span>  <span class='chapter-title'>Python Basics</span>"
@@ -459,9 +459,9 @@
   {
     "objectID": "module1_foundations/llm_coding.html",
     "href": "module1_foundations/llm_coding.html",
-    "title": "LLMs for Coding",
+    "title": "7  LLMs for Coding",
     "section": "",
-    "text": "Ways of using LLMs\nLarge Language Models (LLMs) can significantly enhance coding efficiency. They’re also a great tool for explaining code, which is helpful for learning Python.\nLLMs for coding is an area under rapid development. Here are a few ways of using LLMs for coding, roughly in the order in which they became available for use:\nUsing LLMs is completely optional for the course. However, since GitHub Copilot is free and integrated with VS Code, our suggestion is to try it out as a learning assistant.",
+    "text": "7.1 Ways of using LLMs\nLarge Language Models (LLMs) can significantly enhance coding efficiency. They’re also a great tool for explaining code, which is helpful for learning Python.\nLLMs for coding is an area under rapid development. Here are a few ways of using LLMs for coding, roughly in the order in which they became available for use:\nUsing LLMs is completely optional for the course. However, since GitHub Copilot is free and integrated with VS Code, our suggestion is to try it out as a learning assistant.",
     "crumbs": [
       "Module 1 - Foundations",
       "<span class='chapter-number'>7</span>  <span class='chapter-title'>LLMs for Coding</span>"
@@ -470,7 +470,7 @@
   {
     "objectID": "module1_foundations/llm_coding.html#ways-of-using-llms",
     "href": "module1_foundations/llm_coding.html#ways-of-using-llms",
-    "title": "LLMs for Coding",
+    "title": "7  LLMs for Coding",
     "section": "",
     "text": "Chat interfaces via web (e.g. ChatGPT, Mistral AI)\nChat interfaces via an IDE (e.g. GitHub Copilot Chat)\nInline chat and autocompletion in IDE (e.g. GitHub Copilot)\nAgentic coding with specialized IDEs (e.g. Windsurf)",
     "crumbs": [
@@ -481,9 +481,9 @@
   {
     "objectID": "module1_foundations/llm_coding.html#ideas-of-how-to-use-llms-in-coding",
     "href": "module1_foundations/llm_coding.html#ideas-of-how-to-use-llms-in-coding",
-    "title": "LLMs for Coding",
-    "section": "Ideas of how to use LLMs in coding",
-    "text": "Ideas of how to use LLMs in coding\nA few ideas of how to use LLMs in coding:\n\nWrite scripts from scratch based on a description of what’s needed\nExplain a given script line by line to enhance understanding\nUnderstand cryptic error messages, and get potential solutions\nReview the quality of your code to see if it could be improved",
+    "title": "7  LLMs for Coding",
+    "section": "7.2 Ideas of how to use LLMs in coding",
+    "text": "7.2 Ideas of how to use LLMs in coding\nA few ideas of how to use LLMs in coding:\n\nWrite scripts from scratch based on a description of what’s needed\nExplain a given script line by line to enhance understanding\nUnderstand cryptic error messages, and get potential solutions\nReview the quality of your code to see if it could be improved",
     "crumbs": [
       "Module 1 - Foundations",
       "<span class='chapter-number'>7</span>  <span class='chapter-title'>LLMs for Coding</span>"
@@ -492,9 +492,9 @@
   {
     "objectID": "module1_foundations/llm_coding.html#example---andrej-karpathy-using-llms-for-coding",
     "href": "module1_foundations/llm_coding.html#example---andrej-karpathy-using-llms-for-coding",
-    "title": "LLMs for Coding",
-    "section": "Example - Andrej Karpathy using LLMs for coding",
-    "text": "Example - Andrej Karpathy using LLMs for coding",
+    "title": "7  LLMs for Coding",
+    "section": "7.3 Example - Andrej Karpathy using LLMs for coding",
+    "text": "7.3 Example - Andrej Karpathy using LLMs for coding",
     "crumbs": [
       "Module 1 - Foundations",
       "<span class='chapter-number'>7</span>  <span class='chapter-title'>LLMs for Coding</span>"
@@ -503,9 +503,9 @@
   {
     "objectID": "module1_foundations/scientific_python.html",
     "href": "module1_foundations/scientific_python.html",
-    "title": "Scientific Python",
+    "title": "8  Scientific Python",
     "section": "",
-    "text": "Package ecosystem for scientific Python\nPython is a general purpose programming language that’s used by a broad range of domains. MIKE+ modelling workflows most closely align with the scientific python community.\nThere are several useful packages for engineering and science. This course will use the following packages:\nCheck out packages sponsored by NumFOCUS for an overview of useful libraries.",
+    "text": "8.1 Package ecosystem for scientific Python\nPython is a general purpose programming language that’s used by a broad range of domains. MIKE+ modelling workflows most closely align with the scientific python community.\nThere are several useful packages for engineering and science. This course will use the following packages:\nCheck out packages sponsored by NumFOCUS for an overview of useful libraries.",
     "crumbs": [
       "Module 1 - Foundations",
       "<span class='chapter-number'>8</span>  <span class='chapter-title'>Scientific Python</span>"
@@ -514,7 +514,7 @@
   {
     "objectID": "module1_foundations/scientific_python.html#package-ecosystem-for-scientific-python",
     "href": "module1_foundations/scientific_python.html#package-ecosystem-for-scientific-python",
-    "title": "Scientific Python",
+    "title": "8  Scientific Python",
     "section": "",
     "text": "NumPy\nMatplotlib\npandas\n\n\n\n\n\n\n\n\nTip\n\n\n\nDHI builds their Python ecosystem on top of these packages, to enable better integration between them and allow scientists/engineers the flexibility that’s often required.",
     "crumbs": [
@@ -525,9 +525,9 @@
   {
     "objectID": "module1_foundations/scientific_python.html#numpy",
     "href": "module1_foundations/scientific_python.html#numpy",
-    "title": "Scientific Python",
-    "section": "NumPy",
-    "text": "NumPy\nNumPy is a package that essentially enables faster numerical computing on large arrays than would otherwise be possible via Python collections. It is foundational to many other packages.\nNumPy is imported as np by convention:\n\nimport numpy as np\n\n\n\n\n\n\n\nNote\n\n\n\nImport as ‘np’ simply imports numpy and creates an alias for it as ‘np’.\n\n\nCreate a NumPy array from a Python collection:\n\nmy_array = np.array([1, 2, 3])\nmy_array\n\narray([1, 2, 3])\n\n\nUse vectorized operations on arrays. For example, multiply all elements of the previous array by 2:\n\nmy_array * 2\n\narray([2, 4, 6])\n\n\nIndex and slice arrays the same way as Python collections:\n\nmy_array[0]\n\nnp.int64(1)\n\n\nPerform aggregation functions on an array (e.g. sum, mean, max):\n\nmy_array.sum()\n\nnp.int64(6)\n\n\nRefer to NumPy’s official documentation for additional information.",
+    "title": "8  Scientific Python",
+    "section": "8.2 NumPy",
+    "text": "8.2 NumPy\nNumPy is a package that essentially enables faster numerical computing on large arrays than would otherwise be possible via Python collections. It is foundational to many other packages.\nNumPy is imported as np by convention:\n\nimport numpy as np\n\n\n\n\n\n\n\nNote\n\n\n\nImport as ‘np’ simply imports numpy and creates an alias for it as ‘np’.\n\n\nCreate a NumPy array from a Python collection:\n\nmy_array = np.array([1, 2, 3])\nmy_array\n\narray([1, 2, 3])\n\n\nUse vectorized operations on arrays. For example, multiply all elements of the previous array by 2:\n\nmy_array * 2\n\narray([2, 4, 6])\n\n\nIndex and slice arrays the same way as Python collections:\n\nmy_array[0]\n\nnp.int64(1)\n\n\nPerform aggregation functions on an array (e.g. sum, mean, max):\n\nmy_array.sum()\n\nnp.int64(6)\n\n\nRefer to NumPy’s official documentation for additional information.",
     "crumbs": [
       "Module 1 - Foundations",
       "<span class='chapter-number'>8</span>  <span class='chapter-title'>Scientific Python</span>"
@@ -536,9 +536,9 @@
   {
     "objectID": "module1_foundations/scientific_python.html#pandas",
     "href": "module1_foundations/scientific_python.html#pandas",
-    "title": "Scientific Python",
-    "section": "Pandas",
-    "text": "Pandas\nPandas builds upon NumPy with a special focus on tabular data (like spreadsheets, or csv files).\nPandas is imported as ‘pd’ by convention:\n\nimport pandas as pd\n\nCreate a DataFrame, which is like a 2D labeled array (rows + columns):\n\nimport pandas as pd\ndata = [['Alice', 25], ['Bob', 30]]\ndf = pd.DataFrame(data, columns=['name', 'age'])\ndf\n\n\n\n\n\n\n\n\nname\nage\n\n\n\n\n0\nAlice\n25\n\n\n1\nBob\n30\n\n\n\n\n\n\n\nSelect a single column by name:\n\ndf['age']\n\n0    25\n1    30\nName: age, dtype: int64\n\n\nPerform aggregation operations just like as with NumPy:\n\ndf['age'].mean()\n\nnp.float64(27.5)\n\n\nImport data from a csv file into a pandas DataFrame:\n\nrainfall = pd.read_csv('data/fake_daily_rainfall.csv', index_col='date')\nrainfall.head()\n\n\n\n\n\n\n\n\nrainfall_mm\n\n\ndate\n\n\n\n\n\n2025-06-01\n17.450712\n\n\n2025-06-02\n7.926035\n\n\n2025-06-03\n19.715328\n\n\n2025-06-04\n32.845448\n\n\n2025-06-05\n6.487699\n\n\n\n\n\n\n\n\n\n\n\n\n\nNote\n\n\n\nUse the head method of a DataFrame to view the first five rows of very long DataFrames.\n\n\nCreate plots from a DataFrame:\n\nrainfall.plot(kind='bar')\n\n\n\n\n\n\n\n\nExport a DataFrame to csv, excel, or other formats:\n\nrainfall.to_csv(\"temp.csv\")\nrainfall.to_excel(\"temp.xlsx\")\n\nRefer to pandas’s official documentation for additional information.",
+    "title": "8  Scientific Python",
+    "section": "8.3 Pandas",
+    "text": "8.3 Pandas\nPandas builds upon NumPy with a special focus on tabular data (like spreadsheets, or csv files).\nPandas is imported as ‘pd’ by convention:\n\nimport pandas as pd\n\nCreate a DataFrame, which is like a 2D labeled array (rows + columns):\n\nimport pandas as pd\ndata = [['Alice', 25], ['Bob', 30]]\ndf = pd.DataFrame(data, columns=['name', 'age'])\ndf\n\n\n\n\n\n\n\n\nname\nage\n\n\n\n\n0\nAlice\n25\n\n\n1\nBob\n30\n\n\n\n\n\n\n\nSelect a single column by name:\n\ndf['age']\n\n0    25\n1    30\nName: age, dtype: int64\n\n\nPerform aggregation operations just like as with NumPy:\n\ndf['age'].mean()\n\nnp.float64(27.5)\n\n\nImport data from a csv file into a pandas DataFrame:\n\nrainfall = pd.read_csv('data/fake_daily_rainfall.csv', index_col='date')\nrainfall.head()\n\n\n\n\n\n\n\n\nrainfall_mm\n\n\ndate\n\n\n\n\n\n2025-06-01\n17.450712\n\n\n2025-06-02\n7.926035\n\n\n2025-06-03\n19.715328\n\n\n2025-06-04\n32.845448\n\n\n2025-06-05\n6.487699\n\n\n\n\n\n\n\n\n\n\n\n\n\nNote\n\n\n\nUse the head method of a DataFrame to view the first five rows of very long DataFrames.\n\n\nCreate plots from a DataFrame:\n\nrainfall.plot(kind='bar')\n\n\n\n\n\n\n\n\nExport a DataFrame to csv, excel, or other formats:\n\nrainfall.to_csv(\"temp.csv\")\nrainfall.to_excel(\"temp.xlsx\")\n\nRefer to pandas’s official documentation for additional information.",
     "crumbs": [
       "Module 1 - Foundations",
       "<span class='chapter-number'>8</span>  <span class='chapter-title'>Scientific Python</span>"
@@ -547,9 +547,9 @@
   {
     "objectID": "module1_foundations/scientific_python.html#matplotlib",
     "href": "module1_foundations/scientific_python.html#matplotlib",
-    "title": "Scientific Python",
-    "section": "Matplotlib",
-    "text": "Matplotlib\nMatplotlib is a library for creating plots and is commonly used by other libraries.\nMatplotlib is imported as ‘plt’ by convention:\n\nimport matplotlib.pyplot as plt\n\nCreate a simple line plot:\n\n# Create some data\nx = np.array([1, 2, 3, 4, 5])\ny = x ** 2\n\n# Make the plot\nplt.plot(x, y)              # Plots x vs y\nplt.title(\"My plot\")        # Gives a title to the plot\nplt.xlabel(\"X Axis\")        # Labels the x-axis\nplt.ylabel(\"Y Axis\")        # Labels the y-axis\nplt.grid()                  # Turns on grid lines\n\n\n\n\n\n\n\n\nRefer to Matplotlib’s official documentation for additional information.\nAlso, feel free to check out their example gallery for a sense of what’s possible.",
+    "title": "8  Scientific Python",
+    "section": "8.4 Matplotlib",
+    "text": "8.4 Matplotlib\nMatplotlib is a library for creating plots and is commonly used by other libraries.\nMatplotlib is imported as ‘plt’ by convention:\n\nimport matplotlib.pyplot as plt\n\nCreate a simple line plot:\n\n# Create some data\nx = np.array([1, 2, 3, 4, 5])\ny = x ** 2\n\n# Make the plot\nplt.plot(x, y)              # Plots x vs y\nplt.title(\"My plot\")        # Gives a title to the plot\nplt.xlabel(\"X Axis\")        # Labels the x-axis\nplt.ylabel(\"Y Axis\")        # Labels the y-axis\nplt.grid()                  # Turns on grid lines\n\n\n\n\n\n\n\n\nRefer to Matplotlib’s official documentation for additional information.\nAlso, feel free to check out their example gallery for a sense of what’s possible.",
     "crumbs": [
       "Module 1 - Foundations",
       "<span class='chapter-number'>8</span>  <span class='chapter-title'>Scientific Python</span>"
@@ -558,9 +558,9 @@
   {
     "objectID": "module1_foundations/scientific_python.html#example---importing-and-plotting-a-time-series-csv-file",
     "href": "module1_foundations/scientific_python.html#example---importing-and-plotting-a-time-series-csv-file",
-    "title": "Scientific Python",
-    "section": "Example - Importing and Plotting a Time Series CSV File",
-    "text": "Example - Importing and Plotting a Time Series CSV File",
+    "title": "8  Scientific Python",
+    "section": "8.5 Example - Importing and Plotting a Time Series CSV File",
+    "text": "8.5 Example - Importing and Plotting a Time Series CSV File",
     "crumbs": [
       "Module 1 - Foundations",
       "<span class='chapter-number'>8</span>  <span class='chapter-title'>Scientific Python</span>"

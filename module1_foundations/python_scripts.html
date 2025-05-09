@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Python Scripts – Getting started with Python for MIKE+</title>
+<title>4&nbsp; Python Scripts – Getting started with Python for MIKE+</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -252,13 +252,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#running-python-scripts" id="toc-running-python-scripts" class="nav-link active" data-scroll-target="#running-python-scripts">Running Python Scripts</a>
+  <li><a href="#running-python-scripts" id="toc-running-python-scripts" class="nav-link active" data-scroll-target="#running-python-scripts"><span class="header-section-number">4.1</span> Running Python Scripts</a>
   <ul class="collapse">
-  <li><a href="#running-in-terminal" id="toc-running-in-terminal" class="nav-link" data-scroll-target="#running-in-terminal">Running in Terminal</a></li>
-  <li><a href="#running-in-vs-code" id="toc-running-in-vs-code" class="nav-link" data-scroll-target="#running-in-vs-code">Running in VS Code</a></li>
+  <li><a href="#running-in-terminal" id="toc-running-in-terminal" class="nav-link" data-scroll-target="#running-in-terminal"><span class="header-section-number">4.1.1</span> Running in Terminal</a></li>
+  <li><a href="#running-in-vs-code" id="toc-running-in-vs-code" class="nav-link" data-scroll-target="#running-in-vs-code"><span class="header-section-number">4.1.2</span> Running in VS Code</a></li>
   </ul></li>
-  <li><a href="#script-dependencies" id="toc-script-dependencies" class="nav-link" data-scroll-target="#script-dependencies">Script Dependencies</a></li>
-  <li><a href="#example---running-scripts" id="toc-example---running-scripts" class="nav-link" data-scroll-target="#example---running-scripts">Example - running scripts</a></li>
+  <li><a href="#script-dependencies" id="toc-script-dependencies" class="nav-link" data-scroll-target="#script-dependencies"><span class="header-section-number">4.2</span> Script Dependencies</a></li>
+  <li><a href="#example---running-scripts" id="toc-example---running-scripts" class="nav-link" data-scroll-target="#example---running-scripts"><span class="header-section-number">4.3</span> Example - running scripts</a></li>
   </ul>
 </nav>
     </div>
@@ -267,7 +267,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../module1_foundations/index.html">Module 1 - Foundations</a></li><li class="breadcrumb-item"><a href="../module1_foundations/python_scripts.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Python Scripts</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Python Scripts</h1>
+<h1 class="title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Python Scripts</span></h1>
 </div>
 
 
@@ -285,16 +285,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <p>A Python script is a file with the extension <em>.py</em> that contains Python code that’s executable via Python’s interpreter.</p>
-<section id="running-python-scripts" class="level2">
-<h2 class="anchored" data-anchor-id="running-python-scripts">Running Python Scripts</h2>
+<section id="running-python-scripts" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="running-python-scripts"><span class="header-section-number">4.1</span> Running Python Scripts</h2>
 <p>Python is most powerful when scripts are reused. Therefore, it’s important to understand both how to run scripts others have sent you, as well as how to explain how others can use scripts you wrote.</p>
-<section id="running-in-terminal" class="level3">
-<h3 class="anchored" data-anchor-id="running-in-terminal">Running in Terminal</h3>
+<section id="running-in-terminal" class="level3" data-number="4.1.1">
+<h3 data-number="4.1.1" class="anchored" data-anchor-id="running-in-terminal"><span class="header-section-number">4.1.1</span> Running in Terminal</h3>
 <p>You can run a script from the terminal by running:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>uv run python example_script<span class="op">.</span><span class="fu">py</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="running-in-vs-code" class="level3">
-<h3 class="anchored" data-anchor-id="running-in-vs-code">Running in VS Code</h3>
+<section id="running-in-vs-code" class="level3" data-number="4.1.2">
+<h3 data-number="4.1.2" class="anchored" data-anchor-id="running-in-vs-code"><span class="header-section-number">4.1.2</span> Running in VS Code</h3>
 <p>You can run scripts from VS Code’s user interface. Under the hood, it executes the script in the terminal, so this is only a matter of preference. Refer to VS Code’s documentation on <a href="https://code.visualstudio.com/docs/python/run">how to run Python code</a>.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -311,8 +311,8 @@ Tip
 </div>
 </section>
 </section>
-<section id="script-dependencies" class="level2">
-<h2 class="anchored" data-anchor-id="script-dependencies">Script Dependencies</h2>
+<section id="script-dependencies" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="script-dependencies"><span class="header-section-number">4.2</span> Script Dependencies</h2>
 <p>As previously mentioned, Python code includes dependencies on a set of Python packages (e.g.&nbsp;mikeio). If a script is run with a virtual environment that is missing these dependencies, there’ll be an error along the lines of: <em>ModuleNotFoundError: No module named ‘mikeio’</em>. The package listed in the error message (e.g.&nbsp;mikeio) needs to be installed before running the script.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -328,8 +328,8 @@ Tip
 </div>
 </div>
 </section>
-<section id="example---running-scripts" class="level2">
-<h2 class="anchored" data-anchor-id="example---running-scripts">Example - running scripts</h2>
+<section id="example---running-scripts" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="example---running-scripts"><span class="header-section-number">4.3</span> Example - running scripts</h2>
 <div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/TL2ZS1TeZeY?si=wZ3vy2gxBk9YdtJE" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
 
 

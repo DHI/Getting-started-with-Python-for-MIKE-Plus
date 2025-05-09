@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Python Basics – Getting started with Python for MIKE+</title>
+<title>6&nbsp; Python Basics – Getting started with Python for MIKE+</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -252,22 +252,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#using-libraries" id="toc-using-libraries" class="nav-link active" data-scroll-target="#using-libraries">Using libraries</a>
+  <li><a href="#using-libraries" id="toc-using-libraries" class="nav-link active" data-scroll-target="#using-libraries"><span class="header-section-number">6.1</span> Using libraries</a>
   <ul class="collapse">
-  <li><a href="#import-libraries" id="toc-import-libraries" class="nav-link" data-scroll-target="#import-libraries">Import libraries</a></li>
-  <li><a href="#objects" id="toc-objects" class="nav-link" data-scroll-target="#objects">Objects</a></li>
-  <li><a href="#using-functions-methods" id="toc-using-functions-methods" class="nav-link" data-scroll-target="#using-functions-methods">Using Functions / Methods</a></li>
-  <li><a href="#using-classes" id="toc-using-classes" class="nav-link" data-scroll-target="#using-classes">Using Classes</a></li>
+  <li><a href="#import-libraries" id="toc-import-libraries" class="nav-link" data-scroll-target="#import-libraries"><span class="header-section-number">6.1.1</span> Import libraries</a></li>
+  <li><a href="#objects" id="toc-objects" class="nav-link" data-scroll-target="#objects"><span class="header-section-number">6.1.2</span> Objects</a></li>
+  <li><a href="#using-functions-methods" id="toc-using-functions-methods" class="nav-link" data-scroll-target="#using-functions-methods"><span class="header-section-number">6.1.3</span> Using Functions / Methods</a></li>
+  <li><a href="#using-classes" id="toc-using-classes" class="nav-link" data-scroll-target="#using-classes"><span class="header-section-number">6.1.4</span> Using Classes</a></li>
   </ul></li>
-  <li><a href="#variables" id="toc-variables" class="nav-link" data-scroll-target="#variables">Variables</a></li>
-  <li><a href="#collections" id="toc-collections" class="nav-link" data-scroll-target="#collections">Collections</a></li>
-  <li><a href="#control-logic" id="toc-control-logic" class="nav-link" data-scroll-target="#control-logic">Control Logic</a>
+  <li><a href="#variables" id="toc-variables" class="nav-link" data-scroll-target="#variables"><span class="header-section-number">6.2</span> Variables</a></li>
+  <li><a href="#collections" id="toc-collections" class="nav-link" data-scroll-target="#collections"><span class="header-section-number">6.3</span> Collections</a></li>
+  <li><a href="#control-logic" id="toc-control-logic" class="nav-link" data-scroll-target="#control-logic"><span class="header-section-number">6.4</span> Control Logic</a>
   <ul class="collapse">
-  <li><a href="#conditional-statements" id="toc-conditional-statements" class="nav-link" data-scroll-target="#conditional-statements">Conditional statements</a></li>
-  <li><a href="#loops" id="toc-loops" class="nav-link" data-scroll-target="#loops">Loops</a></li>
+  <li><a href="#conditional-statements" id="toc-conditional-statements" class="nav-link" data-scroll-target="#conditional-statements"><span class="header-section-number">6.4.1</span> Conditional statements</a></li>
+  <li><a href="#loops" id="toc-loops" class="nav-link" data-scroll-target="#loops"><span class="header-section-number">6.4.2</span> Loops</a></li>
   </ul></li>
-  <li><a href="#additional-resources" id="toc-additional-resources" class="nav-link" data-scroll-target="#additional-resources">Additional resources</a></li>
-  <li><a href="#example---using-pythons-interpreter" id="toc-example---using-pythons-interpreter" class="nav-link" data-scroll-target="#example---using-pythons-interpreter">Example - Using Python’s Interpreter</a></li>
+  <li><a href="#additional-resources" id="toc-additional-resources" class="nav-link" data-scroll-target="#additional-resources"><span class="header-section-number">6.5</span> Additional resources</a></li>
+  <li><a href="#example---using-pythons-interpreter" id="toc-example---using-pythons-interpreter" class="nav-link" data-scroll-target="#example---using-pythons-interpreter"><span class="header-section-number">6.6</span> Example - Using Python’s Interpreter</a></li>
   </ul>
 </nav>
     </div>
@@ -276,7 +276,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../module1_foundations/index.html">Module 1 - Foundations</a></li><li class="breadcrumb-item"><a href="../module1_foundations/python_basics.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Python Basics</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Python Basics</h1>
+<h1 class="title"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Python Basics</span></h1>
 </div>
 
 
@@ -307,8 +307,8 @@ Tip
 <p>Follow along by running these cells in a Jupyter Notebook. Alternatively, run them in the <a href="https://docs.python.org/3/tutorial/interpreter.html">Python Interpreter</a> which can be started with <code>uv run python</code>.</p>
 </div>
 </div>
-<section id="using-libraries" class="level2">
-<h2 class="anchored" data-anchor-id="using-libraries">Using libraries</h2>
+<section id="using-libraries" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="using-libraries"><span class="header-section-number">6.1</span> Using libraries</h2>
 <p>Most functionality useful for MIKE+ modelling exists in Python packages (e.g.&nbsp;mikeio). Therefore, it’s important to understand how to access functionality in a Python package.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -323,28 +323,28 @@ Note
 <p>The terms package, library, and module are used interchangeably throughout this course.</p>
 </div>
 </div>
-<section id="import-libraries" class="level3">
-<h3 class="anchored" data-anchor-id="import-libraries">Import libraries</h3>
+<section id="import-libraries" class="level3" data-number="6.1.1">
+<h3 data-number="6.1.1" class="anchored" data-anchor-id="import-libraries"><span class="header-section-number">6.1.1</span> Import libraries</h3>
 <p>Import libraries using the <code>import</code> statement:</p>
-<div id="8c8e10de" class="cell" data-execution_count="1">
+<div id="fdf19cb6" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> math</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Or import specific functionality from a library:</p>
-<div id="f09c1f9f" class="cell" data-execution_count="2">
+<div id="f6f08c93" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> math <span class="im">import</span> sqrt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="objects" class="level3">
-<h3 class="anchored" data-anchor-id="objects">Objects</h3>
+<section id="objects" class="level3" data-number="6.1.2">
+<h3 data-number="6.1.2" class="anchored" data-anchor-id="objects"><span class="header-section-number">6.1.2</span> Objects</h3>
 <p>All imports are <em>objects</em> containing some functionality. Objects have <em>members</em> accessible via the dot notation:</p>
-<div id="4fec83ce" class="cell" data-execution_count="3">
+<div id="89840414" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>math.pi</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="3">
 <pre><code>3.141592653589793</code></pre>
 </div>
 </div>
 <p>Dot accessors can be chained together, since all members are also objects.</p>
-<div id="a5652f93" class="cell" data-execution_count="4">
+<div id="e3705dc6" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>math.pi.is_integer()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="4">
 <pre><code>False</code></pre>
@@ -358,24 +358,24 @@ Note
 <li>Data: <em>any stored information (e.g.&nbsp;numbers, text).</em></li>
 </ol>
 <p>See the type of an object with:</p>
-<div id="9c6c48ef" class="cell" data-execution_count="5">
+<div id="5de8b63d" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="bu">type</span>(math)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="5">
 <pre><code>module</code></pre>
 </div>
 </div>
 <p>See the members of an object with:</p>
-<div id="f2b11610" class="cell" data-execution_count="6">
+<div id="a463ad9b" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="bu">dir</span>(math)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Get help for an object:</p>
-<div id="63f72734" class="cell" data-execution_count="7">
+<div id="cf391e2d" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="bu">help</span>(math)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Good libraries have documentation. For example, see the <a href="https://docs.python.org/3/library/math.html">documentation for math</a>.</p>
 </section>
-<section id="using-functions-methods" class="level3">
-<h3 class="anchored" data-anchor-id="using-functions-methods">Using Functions / Methods</h3>
+<section id="using-functions-methods" class="level3" data-number="6.1.3">
+<h3 data-number="6.1.3" class="anchored" data-anchor-id="using-functions-methods"><span class="header-section-number">6.1.3</span> Using Functions / Methods</h3>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -390,41 +390,41 @@ Note
 </div>
 </div>
 <p>Use a function by <em>invoking</em> it with round brackets:</p>
-<div id="b2f6639c" class="cell" data-execution_count="8">
+<div id="63f6970d" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>sqrt(<span class="dv">25</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="8">
 <pre><code>5.0</code></pre>
 </div>
 </div>
 <p>Between the brackets is the function <em>arguments</em>. There’s different ways of specifying arguments. For example, there could be a list of arguments:</p>
-<div id="1352ada3" class="cell" data-execution_count="9">
+<div id="e2c8e294" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>math.<span class="bu">pow</span>(<span class="dv">2</span>, <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="9">
 <pre><code>8.0</code></pre>
 </div>
 </div>
 </section>
-<section id="using-classes" class="level3">
-<h3 class="anchored" data-anchor-id="using-classes">Using Classes</h3>
+<section id="using-classes" class="level3" data-number="6.1.4">
+<h3 data-number="6.1.4" class="anchored" data-anchor-id="using-classes"><span class="header-section-number">6.1.4</span> Using Classes</h3>
 <p>Some library functionality is provided via a <em>class</em> that needs to be <em>instantiated</em> before using it.</p>
 <p>Below, the <code>Random</code> class is instantiated and assigned to the identifier <code>my_random</code> for reference later on.</p>
-<div id="3010d84c" class="cell" data-execution_count="10">
+<div id="7818f239" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> random <span class="im">import</span> Random</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>my_random <span class="op">=</span> Random()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>An instantiation of a class is called an <em>instance</em>, and is also an object whose functionality is accessible with the dot notation:</p>
-<div id="cefd3f88" class="cell" data-execution_count="11">
+<div id="b4934000" class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>my_random.random() <span class="co"># returns a random number</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="11">
-<pre><code>0.5366316280726797</code></pre>
+<pre><code>0.7056920378948958</code></pre>
 </div>
 </div>
 </section>
 </section>
-<section id="variables" class="level2">
-<h2 class="anchored" data-anchor-id="variables">Variables</h2>
+<section id="variables" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="variables"><span class="header-section-number">6.2</span> Variables</h2>
 <p>Store data/objects in named variables by using the assignment operator <code>=</code>.</p>
-<div id="60904dec" class="cell" data-execution_count="12">
+<div id="ac3c9f0f" class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> <span class="dv">1</span> <span class="op">+</span> <span class="dv">1</span></span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>result</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="12">
@@ -445,7 +445,7 @@ Note
 </div>
 </div>
 <p>Variable names can be referenced anywhere after their definition.</p>
-<div id="99dd654b" class="cell" data-execution_count="13">
+<div id="00eec249" class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> result <span class="op">*</span> <span class="dv">2</span></span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>result</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="13">
@@ -453,11 +453,11 @@ Note
 </div>
 </div>
 </section>
-<section id="collections" class="level2">
-<h2 class="anchored" data-anchor-id="collections">Collections</h2>
+<section id="collections" class="level2" data-number="6.3">
+<h2 data-number="6.3" class="anchored" data-anchor-id="collections"><span class="header-section-number">6.3</span> Collections</h2>
 <p>A common need is to have a collection of related data. Perhaps the most common type of collection is a <code>list</code>, which is briefly introduced below.</p>
 <p>Create a list with square brackets. Optionally include comma separated elements, otherwise an empty list is created.</p>
-<div id="94b81339" class="cell" data-execution_count="14">
+<div id="10308603" class="cell" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>my_numbers <span class="op">=</span> [<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>]</span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>my_numbers</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="14">
@@ -465,31 +465,31 @@ Note
 </div>
 </div>
 <p>Append elements to an existing list.</p>
-<div id="f142b98c" class="cell" data-execution_count="15">
+<div id="42877661" class="cell" data-execution_count="15">
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>my_numbers.append(<span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Access a specific element by <em>indexing</em> the list with the zero-based index. Zero refers to the first element, one the second, and so on.</p>
-<div id="21a1f12c" class="cell" data-execution_count="16">
+<div id="3f32b624" class="cell" data-execution_count="16">
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>my_numbers[<span class="dv">0</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="16">
 <pre><code>1</code></pre>
 </div>
 </div>
 <p>Access a subset of a list by <em>slicing</em> it. The example below accesses elements with index 0 up to, but excluding, 2.</p>
-<div id="10dd8e66" class="cell" data-execution_count="17">
+<div id="ac61b0c8" class="cell" data-execution_count="17">
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>my_numbers[<span class="dv">0</span>:<span class="dv">2</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="17">
 <pre><code>[1, 2]</code></pre>
 </div>
 </div>
 </section>
-<section id="control-logic" class="level2">
-<h2 class="anchored" data-anchor-id="control-logic">Control Logic</h2>
+<section id="control-logic" class="level2" data-number="6.4">
+<h2 data-number="6.4" class="anchored" data-anchor-id="control-logic"><span class="header-section-number">6.4</span> Control Logic</h2>
 <p>Control logic allows the flow of a program to be controlled via boolean conditions.</p>
-<section id="conditional-statements" class="level3">
-<h3 class="anchored" data-anchor-id="conditional-statements">Conditional statements</h3>
+<section id="conditional-statements" class="level3" data-number="6.4.1">
+<h3 data-number="6.4.1" class="anchored" data-anchor-id="conditional-statements"><span class="header-section-number">6.4.1</span> Conditional statements</h3>
 <p>Use <code>if</code> statements to execute code only if the specified condition is true.</p>
-<div id="c10f3866" class="cell" data-execution_count="18">
+<div id="9e508360" class="cell" data-execution_count="18">
 <div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="dv">100</span> <span class="op">&gt;</span> <span class="dv">10</span>:</span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"100 is greater than 10"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -510,7 +510,7 @@ Note
 </div>
 </div>
 <p>Use <code>else</code> statements after an <code>if</code> statement to execute code only if the condition is untrue.</p>
-<div id="4972f223" class="cell" data-execution_count="19">
+<div id="7974b849" class="cell" data-execution_count="19">
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="dv">100</span> <span class="op">&lt;</span> <span class="dv">10</span>:</span>
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"100 is less than 10"</span>)</span>
 <span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
@@ -520,10 +520,10 @@ Note
 </div>
 </div>
 </section>
-<section id="loops" class="level3">
-<h3 class="anchored" data-anchor-id="loops">Loops</h3>
+<section id="loops" class="level3" data-number="6.4.2">
+<h3 data-number="6.4.2" class="anchored" data-anchor-id="loops"><span class="header-section-number">6.4.2</span> Loops</h3>
 <p>A <code>while</code> loop continuously executes a block of code <em>while</em> the specified condition is true.</p>
-<div id="c73cdad9" class="cell" data-execution_count="20">
+<div id="5cdadee4" class="cell" data-execution_count="20">
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>i <span class="op">=</span> <span class="dv">0</span></span>
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> i <span class="op">&lt;</span> <span class="dv">3</span>:</span>
 <span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(i)</span>
@@ -535,7 +535,7 @@ Note
 </div>
 </div>
 <p>A <code>for</code> loop executes a block of code per element in a specified collection.</p>
-<div id="c6065a4f" class="cell" data-execution_count="21">
+<div id="3d53bdc9" class="cell" data-execution_count="21">
 <div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> fruit <span class="kw">in</span> [<span class="st">"Apple"</span>, <span class="st">"Banana"</span>, <span class="st">"Orange"</span>]:</span>
 <span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(fruit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -546,8 +546,8 @@ Orange</code></pre>
 </div>
 </section>
 </section>
-<section id="additional-resources" class="level2">
-<h2 class="anchored" data-anchor-id="additional-resources">Additional resources</h2>
+<section id="additional-resources" class="level2" data-number="6.5">
+<h2 data-number="6.5" class="anchored" data-anchor-id="additional-resources"><span class="header-section-number">6.5</span> Additional resources</h2>
 <p>Learning Python should be a continuous endeavor through practice. Luckily there’s an abundance of high quality resources online. Here’s a few examples:</p>
 <ul>
 <li><a href="https://docs.python.org/3/tutorial/">Official Python Documentation</a></li>
@@ -568,8 +568,8 @@ Tip
 </div>
 </div>
 </section>
-<section id="example---using-pythons-interpreter" class="level2">
-<h2 class="anchored" data-anchor-id="example---using-pythons-interpreter">Example - Using Python’s Interpreter</h2>
+<section id="example---using-pythons-interpreter" class="level2" data-number="6.6">
+<h2 data-number="6.6" class="anchored" data-anchor-id="example---using-pythons-interpreter"><span class="header-section-number">6.6</span> Example - Using Python’s Interpreter</h2>
 <div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/U2gxRmstAC0?si=u07FDPI3u1gtp6b5" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
 
 

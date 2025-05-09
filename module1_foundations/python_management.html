@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Python Management – Getting started with Python for MIKE+</title>
+<title>2&nbsp; Python Management – Getting started with Python for MIKE+</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -252,17 +252,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#tools" id="toc-tools" class="nav-link active" data-scroll-target="#tools">Tools</a></li>
-  <li><a href="#installing-python-with-uv" id="toc-installing-python-with-uv" class="nav-link" data-scroll-target="#installing-python-with-uv">Installing Python with uv</a></li>
-  <li><a href="#virtual-environments" id="toc-virtual-environments" class="nav-link" data-scroll-target="#virtual-environments">Virtual Environments</a></li>
-  <li><a href="#python-package-management" id="toc-python-package-management" class="nav-link" data-scroll-target="#python-package-management">Python package management</a>
+  <li><a href="#tools" id="toc-tools" class="nav-link active" data-scroll-target="#tools"><span class="header-section-number">2.1</span> Tools</a></li>
+  <li><a href="#installing-python-with-uv" id="toc-installing-python-with-uv" class="nav-link" data-scroll-target="#installing-python-with-uv"><span class="header-section-number">2.2</span> Installing Python with uv</a></li>
+  <li><a href="#virtual-environments" id="toc-virtual-environments" class="nav-link" data-scroll-target="#virtual-environments"><span class="header-section-number">2.3</span> Virtual Environments</a></li>
+  <li><a href="#python-package-management" id="toc-python-package-management" class="nav-link" data-scroll-target="#python-package-management"><span class="header-section-number">2.4</span> Python package management</a>
   <ul class="collapse">
-  <li><a href="#install-packages" id="toc-install-packages" class="nav-link" data-scroll-target="#install-packages">Install packages</a></li>
-  <li><a href="#list-installed-packages" id="toc-list-installed-packages" class="nav-link" data-scroll-target="#list-installed-packages">List installed packages</a></li>
-  <li><a href="#upgrade-packages" id="toc-upgrade-packages" class="nav-link" data-scroll-target="#upgrade-packages">Upgrade packages</a></li>
-  <li><a href="#install-specific-package-versions" id="toc-install-specific-package-versions" class="nav-link" data-scroll-target="#install-specific-package-versions">Install specific package versions</a></li>
+  <li><a href="#install-packages" id="toc-install-packages" class="nav-link" data-scroll-target="#install-packages"><span class="header-section-number">2.4.1</span> Install packages</a></li>
+  <li><a href="#list-installed-packages" id="toc-list-installed-packages" class="nav-link" data-scroll-target="#list-installed-packages"><span class="header-section-number">2.4.2</span> List installed packages</a></li>
+  <li><a href="#upgrade-packages" id="toc-upgrade-packages" class="nav-link" data-scroll-target="#upgrade-packages"><span class="header-section-number">2.4.3</span> Upgrade packages</a></li>
+  <li><a href="#install-specific-package-versions" id="toc-install-specific-package-versions" class="nav-link" data-scroll-target="#install-specific-package-versions"><span class="header-section-number">2.4.4</span> Install specific package versions</a></li>
   </ul></li>
-  <li><a href="#example-video" id="toc-example-video" class="nav-link" data-scroll-target="#example-video">Example video</a></li>
+  <li><a href="#example-video" id="toc-example-video" class="nav-link" data-scroll-target="#example-video"><span class="header-section-number">2.5</span> Example video</a></li>
   </ul>
 </nav>
     </div>
@@ -271,7 +271,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../module1_foundations/index.html">Module 1 - Foundations</a></li><li class="breadcrumb-item"><a href="../module1_foundations/python_management.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Python Management</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Python Management</h1>
+<h1 class="title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Python Management</span></h1>
 </div>
 
 
@@ -289,8 +289,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <p>Python continuously releases <a href="https://devguide.python.org/versions/">new versions</a>. Similarly, individual Python packages (<a href="https://pypi.org">hosted on PyPI</a>) also continuously release new versions. Python scripts usually have dependencies on specific Python versions and packages, which highlights the need to carefully managing these. This is similar to different versions of MIKE+: you would not expect a MIKE+ 2025 model to run with MIKE+ 2023.</p>
-<section id="tools" class="level2">
-<h2 class="anchored" data-anchor-id="tools">Tools</h2>
+<section id="tools" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="tools"><span class="header-section-number">2.1</span> Tools</h2>
 <p>There are several tools for managing Python and packages together. Two common options are:</p>
 <ol type="1">
 <li><a href="https://docs.astral.sh/uv/">uv</a></li>
@@ -313,16 +313,16 @@ Learn basics of terminals
 </div>
 </div>
 </section>
-<section id="installing-python-with-uv" class="level2">
-<h2 class="anchored" data-anchor-id="installing-python-with-uv">Installing Python with uv</h2>
+<section id="installing-python-with-uv" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="installing-python-with-uv"><span class="header-section-number">2.2</span> Installing Python with uv</h2>
 <p>You can install Python with <em>uv</em> from the command line:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>uv python install</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>By default, this installs the latest version of Python (3.13.2 at the time of writing).</p>
 <p>Confirm it installed correctly by running:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>uv run python <span class="op">--</span>version</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="virtual-environments" class="level2">
-<h2 class="anchored" data-anchor-id="virtual-environments">Virtual Environments</h2>
+<section id="virtual-environments" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="virtual-environments"><span class="header-section-number">2.3</span> Virtual Environments</h2>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -356,35 +356,35 @@ Tip
 <p>It’s good practice to create a single virtual environment in the root directory of each project. Therefore, the remainder of this course assumes you always run <em>uv</em> from within a folder containing a virtual environment.</p>
 <p>Refer to <a href="https://docs.astral.sh/uv/pip/environments/">uv’s documentation</a> for additional details.</p>
 </section>
-<section id="python-package-management" class="level2">
-<h2 class="anchored" data-anchor-id="python-package-management">Python package management</h2>
+<section id="python-package-management" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="python-package-management"><span class="header-section-number">2.4</span> Python package management</h2>
 <p><em>uv</em> provides two different approaches for Python package management. This course uses their <em>pip interface</em>. Common workflows are shown in the following sections. Refer to <a href="https://docs.astral.sh/uv/pip/">uv’s documentation</a> for more details.</p>
-<section id="install-packages" class="level3">
-<h3 class="anchored" data-anchor-id="install-packages">Install packages</h3>
+<section id="install-packages" class="level3" data-number="2.4.1">
+<h3 data-number="2.4.1" class="anchored" data-anchor-id="install-packages"><span class="header-section-number">2.4.1</span> Install packages</h3>
 <p>Install Python packages with uv as follows:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>uv pip install <span class="op">&lt;</span>package-name<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>For example, install <em>mikeio</em> as follows:</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>uv pip install mikeio</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Look at the <code>site-packages</code> folder again. Notice that it now includes mikeio and many other packages. When a package is installed, all of its dependencies are also installed automatically.</p>
 </section>
-<section id="list-installed-packages" class="level3">
-<h3 class="anchored" data-anchor-id="list-installed-packages">List installed packages</h3>
+<section id="list-installed-packages" class="level3" data-number="2.4.2">
+<h3 data-number="2.4.2" class="anchored" data-anchor-id="list-installed-packages"><span class="header-section-number">2.4.2</span> List installed packages</h3>
 <p>List all installed Python packages and their versions with:</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>uv pip list</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="upgrade-packages" class="level3">
-<h3 class="anchored" data-anchor-id="upgrade-packages">Upgrade packages</h3>
+<section id="upgrade-packages" class="level3" data-number="2.4.3">
+<h3 data-number="2.4.3" class="anchored" data-anchor-id="upgrade-packages"><span class="header-section-number">2.4.3</span> Upgrade packages</h3>
 <p>Upgrade an older package version to the latest version as follows:</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>uv pip install <span class="op">--</span>upgrade mikeio</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="install-specific-package-versions" class="level3">
-<h3 class="anchored" data-anchor-id="install-specific-package-versions">Install specific package versions</h3>
+<section id="install-specific-package-versions" class="level3" data-number="2.4.4">
+<h3 data-number="2.4.4" class="anchored" data-anchor-id="install-specific-package-versions"><span class="header-section-number">2.4.4</span> Install specific package versions</h3>
 <p>Occasionally there’s a need to install an older version of a package, which can be done as follows:</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>uv pip install mikeio<span class="op">==</span><span class="dv">1.7</span><span class="op">.</span><span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 </section>
-<section id="example-video" class="level2">
-<h2 class="anchored" data-anchor-id="example-video">Example video</h2>
+<section id="example-video" class="level2" data-number="2.5">
+<h2 data-number="2.5" class="anchored" data-anchor-id="example-video"><span class="header-section-number">2.5</span> Example video</h2>
 <div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/aOzYOZqSV60?si=0YKKOnakhujo8dPC" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
 
 
