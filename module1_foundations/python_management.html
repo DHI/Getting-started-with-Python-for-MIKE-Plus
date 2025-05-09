@@ -75,8 +75,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../site_libs/bootstrap/bootstrap-8da5b4427184b79ecddefad3d342027e.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
-<script src="../site_libs/quarto-contrib/videojs/video.min.js"></script>
-<link href="../site_libs/quarto-contrib/videojs/video-js.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -288,12 +286,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Python continuously releases <a href="https://devguide.python.org/versions/">new versions</a>. Similarly, individual Python packages (<a href="https://pypi.org">hosted on PyPI</a>) also continuously release new versions. Python scripts usually have dependencies on specific Python versions and packages, which highlights the need to carefully managing these. This is similar to different versions of MIKE+: you would not expect a MIKE+ 2025 model to run with MIKE+ 2023.</p>
 <section id="tools" class="level2">
 <h2 class="anchored" data-anchor-id="tools">Tools</h2>
-<p>There’s several tools for managing Python and packages together. Two common options are:</p>
+<p>There are several tools for managing Python and packages together. Two common options are:</p>
 <ol type="1">
 <li><a href="https://docs.astral.sh/uv/">uv</a></li>
 <li><a href="https://conda-forge.org/download/">Miniforge</a></li>
 </ol>
-<p>This course uses <em>uv</em>. Please install <em>uv</em> according to their <a href="https://docs.astral.sh/uv/getting-started/installation/">official installation instructions</a>. Use the “standalone installed” for Windows.</p>
+<p>This course uses <em>uv</em>. Please install <em>uv</em> according to their <a href="https://docs.astral.sh/uv/getting-started/installation/">official installation instructions</a>. Use the “standalone installer” for Windows.</p>
 <p>Confirm you properly installed <em>uv</em> by opening a terminal and running:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>uv <span class="op">--</span>version</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="callout callout-style-default callout-tip callout-titled">
@@ -359,17 +357,17 @@ Note
 <section id="upgrade-packages" class="level3">
 <h3 class="anchored" data-anchor-id="upgrade-packages">Upgrade packages</h3>
 <p>Upgrade an older package version to the latest version as follows:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>uv pip install <span class="op">--</span>ugprade mikeio</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>uv pip install <span class="op">--</span>upgrade mikeio</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="install-specific-package-versions" class="level3">
 <h3 class="anchored" data-anchor-id="install-specific-package-versions">Install specific package versions</h3>
-<p>Occaisonally there’s a need to install an older version of a package, which can be done as follows:</p>
+<p>Occasionally there’s a need to install an older version of a package, which can be done as follows:</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>uv pip install mikeio<span class="op">==</span><span class="dv">1.7</span><span class="op">.</span><span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 </section>
 <section id="example-video" class="level2">
 <h2 class="anchored" data-anchor-id="example-video">Example video</h2>
-<div class="quarto-video"><video id="video_shortcode_videojs_video1" class="video-js vjs-default-skin vjs-fluid" controls="" preload="auto" data-setup="{}" title=""><source src="placeholder"></video></div>
+<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/aOzYOZqSV60?si=0YKKOnakhujo8dPC" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
 
 
 </section>
@@ -818,7 +816,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     </div>
   </div>
 </footer>
-<script>videojs(video_shortcode_videojs_video1);</script>
 
 
 

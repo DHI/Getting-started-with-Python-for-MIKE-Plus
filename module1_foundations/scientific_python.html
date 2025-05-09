@@ -75,8 +75,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../site_libs/bootstrap/bootstrap-8da5b4427184b79ecddefad3d342027e.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
-<script src="../site_libs/quarto-contrib/videojs/video.min.js"></script>
-<link href="../site_libs/quarto-contrib/videojs/video-js.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -285,10 +283,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Python is a general purpose programming language that’s used by a broad range of domains. MIKE+ modelling workflows most closely align with the <em>scientific python</em> community.</p>
 <section id="package-ecosystem-for-scientific-python" class="level2">
 <h2 class="anchored" data-anchor-id="package-ecosystem-for-scientific-python">Package ecosystem for scientific Python</h2>
-<p>There’s several useful packages for engineering and science. This course will use the following packages:</p>
+<p>There are several useful packages for engineering and science. This course will use the following packages:</p>
 <ul>
 <li><a href="https://numpy.org/">NumPy</a></li>
-<li><a href="https://matplotlib.org/">Maptlotlib</a></li>
+<li><a href="https://matplotlib.org/">Matplotlib</a></li>
 <li><a href="https://pandas.pydata.org/">pandas</a></li>
 </ul>
 <p>Check out <a href="https://numfocus.org/sponsored-projects">packages sponsored by NumFOCUS</a> for an overview of useful libraries.</p>
@@ -310,7 +308,7 @@ Tip
 <h2 class="anchored" data-anchor-id="numpy">NumPy</h2>
 <p>NumPy is a package that essentially enables faster numerical computing on large arrays than would otherwise be possible via Python collections. It is foundational to many other packages.</p>
 <p>NumPy is imported as <code>np</code> by convention:</p>
-<div id="a7b5f958" class="cell" data-execution_count="1">
+<div id="669dc8a4" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
@@ -327,29 +325,29 @@ Note
 </div>
 </div>
 <p>Create a NumPy array from a Python collection:</p>
-<div id="c23a049a" class="cell" data-execution_count="2">
+<div id="bb5c89a1" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>my_array <span class="op">=</span> np.array([<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>])</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>my_array</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="2">
 <pre><code>array([1, 2, 3])</code></pre>
 </div>
 </div>
-<p>Use <em>vectorized</em> operations on arrays. For example, multiple all elements of the previous array by 2:</p>
-<div id="68a200af" class="cell" data-execution_count="3">
+<p>Use <em>vectorized</em> operations on arrays. For example, multiply all elements of the previous array by 2:</p>
+<div id="609048fc" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>my_array <span class="op">*</span> <span class="dv">2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="3">
 <pre><code>array([2, 4, 6])</code></pre>
 </div>
 </div>
 <p>Index and slice arrays the same way as Python collections:</p>
-<div id="2ebbf031" class="cell" data-execution_count="4">
+<div id="b6844263" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>my_array[<span class="dv">0</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="4">
 <pre><code>np.int64(1)</code></pre>
 </div>
 </div>
 <p>Perform aggregation functions on an array (e.g.&nbsp;sum, mean, max):</p>
-<div id="58533d5c" class="cell" data-execution_count="5">
+<div id="9e922b60" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>my_array.<span class="bu">sum</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="5">
 <pre><code>np.int64(6)</code></pre>
@@ -361,11 +359,11 @@ Note
 <h2 class="anchored" data-anchor-id="pandas">Pandas</h2>
 <p>Pandas builds upon NumPy with a special focus on tabular data (like spreadsheets, or csv files).</p>
 <p>Pandas is imported as ‘pd’ by convention:</p>
-<div id="7f6185fe" class="cell" data-execution_count="6">
+<div id="86009ca4" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Create a DataFrame, which is like a 2D labeled array (rows + columns):</p>
-<div id="ef0e087c" class="cell" data-execution_count="7">
+<div id="5d645d3a" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> [[<span class="st">'Alice'</span>, <span class="dv">25</span>], [<span class="st">'Bob'</span>, <span class="dv">30</span>]]</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.DataFrame(data, columns<span class="op">=</span>[<span class="st">'name'</span>, <span class="st">'age'</span>])</span>
@@ -400,7 +398,7 @@ Note
 </div>
 </div>
 <p>Select a single column by name:</p>
-<div id="2b10a745" class="cell" data-execution_count="8">
+<div id="9d8c26b7" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'age'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="8">
 <pre><code>0    25
@@ -409,14 +407,14 @@ Name: age, dtype: int64</code></pre>
 </div>
 </div>
 <p>Perform aggregation operations just like as with NumPy:</p>
-<div id="fe147fac" class="cell" data-execution_count="9">
+<div id="da9be527" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'age'</span>].mean()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="9">
 <pre><code>np.float64(27.5)</code></pre>
 </div>
 </div>
 <p>Import data from a csv file into a pandas DataFrame:</p>
-<div id="e3aac255" class="cell" data-execution_count="10">
+<div id="cde84d0e" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>rainfall <span class="op">=</span> pd.read_csv(<span class="st">'data/fake_daily_rainfall.csv'</span>, index_col<span class="op">=</span><span class="st">'date'</span>)</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>rainfall.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="10">
@@ -475,7 +473,7 @@ Note
 </div>
 </div>
 <p>Create plots from a DataFrame:</p>
-<div id="81ac94e2" class="cell" data-execution_count="11">
+<div id="599aa2b0" class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>rainfall.plot(kind<span class="op">=</span><span class="st">'bar'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
@@ -486,7 +484,7 @@ Note
 </div>
 </div>
 <p>Export a DataFrame to csv, excel, or other formats:</p>
-<div id="76e3056f" class="cell" data-execution_count="12">
+<div id="15ad1a4a" class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>rainfall.to_csv(<span class="st">"temp.csv"</span>)</span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>rainfall.to_excel(<span class="st">"temp.xlsx"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -496,11 +494,11 @@ Note
 <h2 class="anchored" data-anchor-id="matplotlib">Matplotlib</h2>
 <p>Matplotlib is a library for creating plots and is commonly used by other libraries.</p>
 <p>Matplotlib is imported as ‘plt’ by convention:</p>
-<div id="38341b85" class="cell" data-execution_count="14">
+<div id="2529e5ba" class="cell" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Create a simple line plot:</p>
-<div id="b64d90a0" class="cell" data-execution_count="15">
+<div id="50ece028" class="cell" data-execution_count="15">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create some data</span></span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.array([<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>])</span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> x <span class="op">**</span> <span class="dv">2</span></span>
@@ -524,7 +522,7 @@ Note
 </section>
 <section id="example---importing-and-plotting-a-time-series-csv-file" class="level2">
 <h2 class="anchored" data-anchor-id="example---importing-and-plotting-a-time-series-csv-file">Example - Importing and Plotting a Time Series CSV File</h2>
-<div class="quarto-video"><video id="video_shortcode_videojs_video1" class="video-js vjs-default-skin vjs-fluid" controls="" preload="auto" data-setup="{}" title=""><source src="placeholder"></video></div>
+<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/biRU1_LfLL8?si=Ik-65D8AsbkLyNzZ" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
 
 
 </section>
@@ -973,7 +971,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     </div>
   </div>
 </footer>
-<script>videojs(video_shortcode_videojs_video1);</script>
 
 
 
