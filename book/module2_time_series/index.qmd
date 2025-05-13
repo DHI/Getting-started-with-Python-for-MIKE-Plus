@@ -1,3 +1,34 @@
 # Introduction
 
-Coming soon...
+## Welcome to Module 2
+
+This module focuses on working with time series data, a crucial aspect of environmental modeling within the DHI ecosystem. You'll learn how to read, manipulate, analyze, and validate time series data using powerful Python libraries like `mikeio`, `pandas`, `matplotlib`, and `tsod`. Building on the foundational skills from Module 1, you'll gain practical experience in handling real-world time series datasets.
+
+## Learning Objectives
+
+By the end of this module, you will be able to:
+
+- Read time series data from dfs0 files into pandas DataFrames using `mikeio`.
+- Select and filter time series data based on items and time indices.
+- Resample time series data using `pandas`.
+- Detect and handle anomalies in time series data using `tsod`.
+- Fill missing data in time series.
+- Create dfs0 files from pandas DataFrames.
+
+## Module Structure
+
+This module is divided into the following sections:
+
+1.  **`mikeio` Overview and Installation:** Learn about the `mikeio` package and how to install it in your existing environment.
+2.  **Reading DFS0 Data:** Reading dfs0 files into pandas DataFrames and selecting specific data.
+3.  **Time Series Selection and Resampling:** Manipulating time series data including data selection, resampling, and indexing.
+4.  **`tsod` Overview and Anomaly Detection:** Learn about the `tsod` package and its usage.
+5.  **Data Cleaning:** Detect anomalies, filling missing data.
+6.  **Creating DFS0 Files:** Creating dfs0 files from pandas DataFrames.
+7.  **Homework:** Practice what you've learned with hands-on exercises.
+
+## Prerequisites
+
+-   Basic understanding of Python syntax and data structures (covered in Module 1).
+-   Familiarity with `pandas` DataFrames (covered in Module 1).
+-   Working knowledge of Visual Studio Code and your terminal environment (covered in Module 1).

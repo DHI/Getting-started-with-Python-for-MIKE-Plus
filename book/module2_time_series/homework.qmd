@@ -1,0 +1,31 @@
+# Module 2: Time Series - Homework
+
+## Instructions
+
+Complete the following exercises to reinforce your understanding of time series analysis using `mikeio`, `pandas`, and `tsod`. Save your code in a Jupyter Notebook and submit the notebook file.
+
+## Exercise 1
+
+1.  **Download Data:** Download time series data (e.g., rainfall data) in CSV format from a public source (e.g., a government weather website).
+2.  **Read into DataFrame:** Read the CSV file into a pandas DataFrame. Inspect the data to verify the column and date format.
+3.  **Cleaning:** Clean the data of missing values or obvious errors.
+4.  **Convert to DFS0:** Convert the DataFrame to a dfs0 file using `mikeio`.
+
+## Exercise 2
+
+1.  **Simulated Flow Data:** Create a synthetic flow meter time series with simulated outliers and missing data.
+2.  **`tsod` for Anomaly Detection:** Use `tsod` to detect and replace the anomalies with `NaN`.
+3.  **Interpolation:** Fill the `NaN` values using linear interpolation.
+4.  **Resampling:** Resample to a weekly scale.
+
+## Exercise 3
+
+1. **Reading Data:** Read the example dfs0 from exercise 1 into a pandas dataframe.
+2. **Visualization:** Plot the rainfall data from the DataFrame using `matplotlib`. Add labels and title.
+3. **Statistic Calculations:** Calculate and print descriptive statistics (mean, std, min, max) for the data.
+
+## Submission Guidelines
+
+-   Submit your Jupyter Notebook (`.ipynb`) file containing the solutions to the exercises.
+-   Include clear and concise comments in your code to explain your steps.
+-   Ensure your code is executable and produces the expected outputs.

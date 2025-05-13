@@ -11,11 +11,11 @@ book:
     - "Rocco Palmitessa"
   date: "2025-05-15"
 
-  url: https://dhi.github.io/getting-started-with-python-for-mike-plus/
+  #url: https://dhi.github.io/getting-started-with-python-for-mike-plus/
 
-  comments:
-    giscus:
-      repo: dhi/getting-started-with-python-for-mike-plus
+  #comments:
+  #  giscus:
+  #    repo: dhi/getting-started-with-python-for-mike-plus
 
   sidebar:
     logo: images/logos/DHI_Logo_Pos_RGB_noMargin.png
@@ -37,8 +37,15 @@ book:
         - module1_foundations/homework.qmd
 
     - part: "Module 2 - Time Series"
-      #chapters:
-      # - module2_time_series\index.qmd
+      chapters:
+       - module2_time_series/index.qmd
+       - module2_time_series/mikeio_overview.qmd
+       - module2_time_series/reading_dfs0.qmd
+       - module2_time_series/timeseries_selection.qmd
+       - module2_time_series/tsod_overview.qmd
+       - module2_time_series/data_cleaning.qmd
+       - module2_time_series/creating_dfs0.qmd
+       - module2_time_series/homework.qmd
 
     - part: "Module 3 - Network Results"
       #chapters:

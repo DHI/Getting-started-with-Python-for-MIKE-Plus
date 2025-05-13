@@ -1,0 +1,29 @@
+# Reading DFS0 Data with `mikeio`
+
+This section dives into reading dfs0 files and converting the data into a pandas DataFrame. The DataFrames allow users to use familiar code structures and skills for data exploration. The `mikeio` package simplifies the process of interacting with dfs0 files, allowing you to efficiently extract and analyze time series data.
+
+## Key Concepts: Reading DFS0 to DataFrame
+
+The `mikeio.read()` method is the primary tool for reading dfs0 files into a `mikeio.Dataset` object. You can use it like this: `mikeio.read(filename)`. This function efficiently parses the dfs0 file and organizes the data for further analysis. For a quick list of methods, you can use `help(mikeio.read)` in an interactive Python environment.
+
+Once you have a `mikeio.Dataset` object, you'll often want to convert it into a pandas DataFrame. This allows you to leverage the powerful data manipulation and analysis capabilities of pandas. The `.to_dataframe()` method makes this conversion easy. For detailed guides, see the [pandas documentation on dataframes](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.html).
+
+Sometimes, you only need specific time series from a dfs0 file. The `mikeio.read()` method allows you to specify which items to load, reducing memory usage and improving performance. This is especially useful when dealing with large dfs0 files containing many time series. See the [documentation for selecting items with mikeio](https://github.com/DHI/mikeio) for more information.
+
+When working with dfs0 files, you might encounter errors such as "file not found" or "invalid file format." These errors can occur due to incorrect file paths or corrupted files. Carefully check the file path and ensure that the file is a valid dfs0 file to avoid these issues.
+
+## Key Concepts: Data Selection and Inspection
+
+After reading the dfs0 data into a DataFrame, it's important to inspect the DataFrame and understand its structure and content. Pandas provides several useful methods for this purpose. The `head()` and `tail()` methods display the first and last few rows of the DataFrame, respectively. The `info()` method provides a summary of the DataFrame, including the data types of each column and the number of non-null values. The `describe()` method calculates descriptive statistics for each column, such as mean, standard deviation, minimum, and maximum.
+
+Selecting specific columns is also a common task. You can select columns by referring to their names, which correspond to the dfs0 "item" names. For example, if your dfs0 file contains rainfall data and flow data, you can select the rainfall data by using `df['rainfall']`, where `df` is the DataFrame object.
+
+It's important to note that the DataFrame index represents the time axis of the time series data. This allows you to easily perform time-based selection and analysis, as you'll see in the next section.
+
+## Link Guidance
+
+Refer to the official [`mikeio` documentation](https://github.com/DHI/mikeio) for detailed guides on reading and manipulating dfs0 files. Also, consult the official [`pandas` documentation](https://pandas.pydata.org/docs/) for in-depth information on DataFrame operations.
+
+## Video - Reading DFS0 Data and Inspecting the DataFrame (5-10 min)
+
+The video below demonstrates how to read a dfs0 file into a pandas DataFrame using `mikeio`. It also shows how to select specific items and inspect the resulting DataFrame using `head()`, `tail()`, and `info()`.
