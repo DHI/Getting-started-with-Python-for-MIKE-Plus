@@ -39,12 +39,14 @@ book:
     - part: "Module 2 - Time Series"
       chapters:
        - module2_time_series/index.qmd
-       - module2_time_series/mikeio_overview.qmd
-       - module2_time_series/reading_dfs0.qmd
-       - module2_time_series/timeseries_selection.qmd
-       - module2_time_series/tsod_overview.qmd
-       - module2_time_series/data_cleaning.qmd
-       - module2_time_series/creating_dfs0.qmd
+       - module2_time_series/01-introduction-to-mikeio.qmd
+       - module2_time_series/02-reading-dfs0-with-mikeio.qmd
+       - module2_time_series/03-selecting-data-from-dfs0.qmd
+       - module2_time_series/04-plotting-time-series-data.qmd
+       - module2_time_series/05-resampling-time-series.qmd
+       - module2_time_series/06-introduction-to-tsod.qmd
+       - module2_time_series/07-data-validation-and-cleaning.qmd
+       - module2_time_series/08-creating-dfs0-files.qmd
        - module2_time_series/homework.qmd
 
     - part: "Module 3 - Network Results"

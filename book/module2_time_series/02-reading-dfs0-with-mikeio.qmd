@@ -1,0 +1,92 @@
+# Reading `.dfs0` Files with `mikeio`
+
+This section focuses on how to use the `mikeio` Python package to read time series data stored in DHI's native `.dfs0` file format. You'll learn how to load this data and convert it into `pandas` DataFrames, which are essential for further analysis and manipulation in Python.
+
+## Introduction to `.dfs0` Files
+-   `.dfs0` files are DHI's standard format for storing **time series data**. This is a common file type you will encounter when working with MIKE+ models.
+-   Each file can contain one or more "**items**" or data series. For example, a single `.dfs0` file might store rainfall measurements from several different gauges, or water level and discharge at a specific monitoring station.
+-   Data is stored with **timestamps**, making `.dfs0` files suitable for any time-dependent measurements or model results, such as boundary conditions, calibration data, or simulation outputs.
+-   You'll frequently encounter `.dfs0` files as inputs to or outputs from your MIKE+ projects. Being able to read and write them with Python is a key skill for automating workflows.
+
+## Reading a `.dfs0` File
+-   The primary function in `mikeio` for reading various Dfs file types (including `.dfs0`, `.dfs1`, `.dfs2`, `.dfsu`, etc.) is `mikeio.read()`.
+-   When `mikeio.read()` is used with a `.dfs0` file, it typically returns a `Dataset` object if the file contains multiple items, or a `DataArray` object if only a single item is read or present in the file. These objects act as containers for the data, time information, and associated metadata for each item.
+-   Let's see a basic example:
+
+    ```python
+    import mikeio
+
+    # Assuming you have a dfs0 file named 'rainfall.dfs0' in a 'data' subfolder
+    # Adjust the path if your file is located elsewhere.
+    dfs0_file = "data/rainfall.dfs0"
+    ds = mikeio.read(dfs0_file)
+
+    # Print the Dataset object to see a summary of its contents
+    print(ds)
+    ```
+-   The `Dataset` object `ds` (or `DataArray` if it's a single item) holds all the information from the `.dfs0` file. Printing it, as shown above, gives you a quick overview, including the number of items, time range, and item names.
+
+## Converting to a `pandas` DataFrame
+-   While `mikeio`'s `Dataset` and `DataArray` objects are powerful for interacting with DHI file formats, `pandas` DataFrames are the workhorse for most data analysis and manipulation tasks in Python. They offer a vast array of functionalities for cleaning, transforming, analyzing, and visualizing data.
+-   Fortunately, `mikeio` makes it very easy to convert the data read from a `.dfs0` file into a `pandas` DataFrame using the `.to_dataframe()` method.
+
+    ```python
+    import mikeio
+    import pandas as pd # It's a standard convention to import pandas as pd
+
+    dfs0_file = "data/rainfall.dfs0"
+    ds = mikeio.read(dfs0_file)
+
+    # Convert the entire Dataset to a pandas DataFrame
+    df = ds.to_dataframe()
+
+    # Display the first 5 rows of the DataFrame
+    print("First 5 rows of the DataFrame:")
+    print(df.head())
+
+    # Display summary information about the DataFrame
+    print("\nDataFrame Info:")
+    df.info()
+    ```
+-   **Key characteristics of the resulting `pandas` DataFrame:**
+    -   The **index** of the DataFrame will be a `pandas.DatetimeIndex`, representing the timestamps from the `.dfs0` file. This is crucial for time series operations.
+    -   Each **column** in the DataFrame will correspond to an item in the `.dfs0` file. The column names will be derived from the item names defined in the `.dfs0` file.
+-   This `df` DataFrame is now ready for you to apply all the powerful operations you learned (or will be learning) with `pandas`!
+
+::: {.callout-tip}
+## Exploring Your Data with `pandas`
+Once you have your time series data in a `pandas` DataFrame, remember these useful methods (many ofwhich were introduced in Module 1) for initial exploration:
+-   `df.head()`: View the first few rows.
+-   `df.tail()`: View the last few rows.
+-   `df.info()`: Get a concise summary of the DataFrame (index type, column types, non-null values, memory usage).
+-   `df.describe()`: Generate descriptive statistics for each numerical column (count, mean, std, min, max, quartiles).
+:::
+
+## Understanding Item Information
+-   Each item in a `.dfs0` file has associated metadata beyond just its name. This typically includes its EUM (European Union Measurement) type (e.g., "Rainfall," "Water Level") and EUM unit (e.g., "mm," "meter").
+-   You can access this important metadata directly from the `mikeio` `Dataset` object before or after converting to a DataFrame. This information is vital for understanding your data, ensuring correct units in plots and calculations, and for creating new `.dfs0` files later.
+
+    ```python
+    import mikeio
+
+    dfs0_file = "data/rainfall.dfs0"
+    ds = mikeio.read(dfs0_file)
+
+    print("Item Information:")
+    for item in ds.items:
+        # The .type and .unit attributes are EUMType and EUMUnit objects
+        # Printing them directly gives a readable representation
+        print(f"  Name: {item.name}, Type: {item.type}, Unit: {item.unit}")
+    ```
+-   This information is crucial for:
+    -   Correctly interpreting the data.
+    -   Labeling plots accurately.
+    -   Performing unit conversions if necessary.
+    -   Ensuring consistency when merging data or writing new `.dfs0` files.
+
+## Video - Example: Reading a `.dfs0` and Converting to DataFrame (5-10 min)
+-   This video will walk you through a practical example of reading a sample `.dfs0` file using `mikeio`.
+-   It will demonstrate converting the `Dataset` to a `pandas` DataFrame and performing initial explorations like `.head()`, `.info()`, and `.describe()`.
+-   An example data file is provided for you to follow along:
+    -   Download: `[link_to_sample_rainfall_dfs0]{download="sample_rainfall.dfs0"}`
+-   {{< video URL_TO_READING_DFS0_VIDEO >}}

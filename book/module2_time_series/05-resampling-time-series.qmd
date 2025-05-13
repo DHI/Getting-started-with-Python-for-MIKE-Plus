@@ -1,0 +1,115 @@
+# Resampling Time Series Data
+
+## Introduction to Resampling
+- **Resampling** is the process of changing the frequency of your time series data. This is a common task in time series analysis.
+- There are two main types of resampling:
+    1.  **Upsampling:** Increasing the frequency (e.g., from daily to hourly). This usually involves filling or interpolating new data points.
+    2.  **Downsampling:** Decreasing the frequency (e.g., from hourly to daily). This usually involves aggregating data within the new, coarser time periods.
+- *pandas* provides a powerful `resample()` method for `Series` and `DataFrames` with a `DatetimeIndex`.
+
+## Why Resample?
+- **Data Aggregation:** Summarize data over longer periods (e.g., calculate total daily rainfall from hourly data, or mean monthly temperature from daily data).
+- **Synchronization:** Align time series that have different frequencies before comparing or combining them.
+- **Feature Engineering:** Create new features for models (e.g., weekly averages).
+- **Noise Reduction:** Downsampling can smooth out high-frequency noise.
+
+## Downsampling with `pandas.resample()`
+- When downsampling, you need to specify:
+    1.  The **new frequency** (the "rule").
+    2.  An **aggregation function** to apply to the data points within each new interval (e.g., `mean()`, `sum()`, `min()`, `max()`, `count()`).
+  ```python
+  import mikeio
+  import pandas as pd
+
+  # Assume you have an hourly flow dfs0 file in your data folder
+  dfs0_file = "data/hourly_flow.dfs0" # Adjust path as needed
+  ds = mikeio.read(dfs0_file)
+  df_hourly = ds.to_dataframe()
+  print("Original Hourly Data:")
+  print(df_hourly.head())
+
+  # Resample to daily sum (e.g., total daily volume from hourly flow rates)
+  # Rule 'D' stands for daily frequency
+  df_daily_sum = df_hourly.resample('D').sum()
+  print("\nDaily Sum:")
+  print(df_daily_sum.head())
+
+  # Resample to daily mean
+  df_daily_mean = df_hourly.resample('D').mean()
+  print("\nDaily Mean:")
+  print(df_daily_mean.head())
+
+  # Resample to monthly maximum
+  # Rule 'M' or 'ME' for month-end frequency, 'MS' for month-start
+  df_monthly_max = df_hourly.resample('ME').max()
+  print("\nMonthly Max:")
+  print(df_monthly_max.head())
+  ```
+
+## Common Resampling Rules
+- *pandas* `resample()` uses offset aliases for frequency rules. Some common ones:
+    - `'S'`: Second
+    - `'T'` or `'min'`: Minute
+    - `'H'`: Hour
+    - `'D'`: Calendar day
+    - `'B'`: Business day
+    - `'W'`: Weekly
+    - `'M'` or `'ME'`: Month end
+    - `'MS'`: Month start
+    - `'Q'` or `'QE'`: Quarter end
+    - `'A'` or `'YE'`: Year end
+- You can also combine these with multiples, e.g., `'2H'` for 2-hourly, `'15min'` for 15-minute.
+- Refer to the [*pandas* documentation on offset aliases](https://pandas.pydata.org/pandas-docs/stable/user_guide/timeseries.html#offset-aliases) for a full list.
+
+## Upsampling and Filling Missing Data
+- When upsampling (e.g., daily to hourly), new time steps are created that don't have original data. You need to decide how to fill these.
+  ```python
+  # df_daily_mean is assumed to be available from the previous downsampling example.
+  # If running this snippet independently, ensure df_daily_mean is defined.
+  # For example, using the output from the previous section:
+  if 'df_daily_mean' not in locals():
+      # Create a dummy df_daily_mean if it doesn't exist for standalone execution
+      print("Warning: df_daily_mean not found. Creating a dummy DataFrame for upsampling example.")
+      idx = pd.date_range('2023-01-01', '2023-01-03', freq='D')
+      dummy_data = {'Flow': [10.0, 12.5, 15.0]} # Example data
+      df_daily_mean = pd.DataFrame(dummy_data, index=idx)
+      print("Using dummy df_daily_mean:")
+      print(df_daily_mean)
+
+  df_daily = df_daily_mean # Use the daily mean from previous example
+
+  # Upsample to hourly frequency, then fill NaN values
+  # .asfreq() creates new rows with NaNs for the new timestamps
+  df_hourly_upsampled_raw = df_daily.resample('H').asfreq()
+  print("\nUpsampled to Hourly (raw, with NaNs):")
+  print(df_hourly_upsampled_raw.head(25)) # Show more rows to see NaNs
+
+  # Forward fill: propagate last valid observation forward
+  df_hourly_ffill = df_daily.resample('H').ffill()
+  print("\nUpsampled to Hourly (forward fill):")
+  print(df_hourly_ffill.head(25))
+
+  # Backward fill: propagate next valid observation backward
+  df_hourly_bfill = df_daily.resample('H').bfill()
+  print("\nUpsampled to Hourly (backward fill):")
+  print(df_hourly_bfill.head(25))
+
+  # Interpolate (linear by default for regularly spaced time series)
+  # For time series, .interpolate(method='time') can be more appropriate if original index is irregular,
+  # but for regular upsampling using .resample(), default linear is often sufficient.
+  df_hourly_interp = df_daily.resample('H').interpolate()
+  print("\nUpsampled to Hourly (interpolate):")
+  print(df_hourly_interp.head(25))
+  ```
+- The choice of filling method (`ffill()`, `bfill()`, `interpolate()`, or a specific value) depends on the nature of your data and the analysis goals.
+
+::: {.callout-caution}
+## Implications of Resampling
+Resampling, especially upsampling, involves making assumptions about the data. Always consider if the chosen aggregation or interpolation method is appropriate for your specific data and the questions you are trying to answer. Misapplied resampling can lead to incorrect conclusions.
+:::
+
+## Video - Example: Resampling Time Series Data in `pandas` (5-10 min)
+- This video will demonstrate both downsampling (e.g., hourly to daily sum/mean) and upsampling (e.g., daily to hourly with `ffill()`/`interpolate()`).
+- It will highlight common resampling rules and aggregation/filling methods.
+- Example data file: `[link_to_sample_hourly_data_dfs0]{download="sample_hourly_data.dfs0"}`
+- {{< video URL_TO_RESAMPLING_VIDEO >}}

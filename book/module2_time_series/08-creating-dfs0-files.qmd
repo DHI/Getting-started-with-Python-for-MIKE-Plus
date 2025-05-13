@@ -1,0 +1,163 @@
+# Creating `.dfs0` Files with `mikeio`
+
+## Introduction
+After processing your time series data in `pandas`—for example, through resampling, cleaning, or analysis—you'll often need to save it back into a `.dfs0` file. This format is essential for use in MIKE+ or other DHI software, ensuring seamless integration into your modelling workflows.
+
+The `mikeio` Python package provides the tools to create `.dfs0` files directly from `pandas` DataFrames, bridging the gap between your Python-based data manipulation and DHI's modelling environment.
+
+## Preparing Your `pandas` DataFrame
+Before you can create a `.dfs0` file, it's crucial to ensure your `pandas` DataFrame is correctly formatted. Adhering to these points will prevent errors and ensure data integrity:
+
+1.  **`DatetimeIndex`:** The DataFrame's index must be a `pandas.DatetimeIndex`. This is fundamental for time series data as `.dfs0` files are inherently time-based.
+2.  **Data Types:** All columns intended for the `.dfs0` file should contain numeric data, typically integers or floating-point numbers.
+3.  **Column Names:** The column names in your `pandas` DataFrame will become the "item names" in the resulting `.dfs0` file. Choose descriptive and clear names.
+4.  **Handling `NaN`s:** `pandas` uses `np.nan` to represent missing data. `.dfs0` files employ a specific "delete value" (often a very small negative number like -1e-35) for this purpose. Fortunately, `mikeio` generally handles this conversion automatically when writing the file.
+
+## Defining Item Information
+When creating a `.dfs0` file, each data item (which corresponds to a column in your DataFrame) requires metadata. This metadata primarily includes the item's type (e.g., "Rainfall", "Water Level") and its unit (e.g., "mm", "meter").
+
+`mikeio` uses `mikeio.ItemInfo` objects to encapsulate this information. You typically define these using EUM (European Environment Agency Unit Markup) type and unit strings, or by leveraging predefined enums within `mikeio` or `mikecore.eum`. A comprehensive list of EUM types and units can often be found in DHI documentation, or by inspecting existing `.dfs0` files created by MIKE software.
+
+```python
+import mikeio
+from mikecore.eum import eumQuantity # For accessing EUM definitions, if needed
+
+# Example ItemInfo objects
+
+# Using mikeio's EUMType and EUMUnit enums (preferred if available and known)
+# Note: The exact enum names (e.g., mikeio.EUMType.Rainfall) might depend on your mikeio version.
+# Consult mikeio documentation or examples for the most current enum paths.
+try:
+    item_flow_simple = mikeio.ItemInfo(name="Simulated Flow", 
+                                       item_type=mikeio.EUMType.Discharge, 
+                                       unit=mikeio.EUMUnit.cubic_meter_per_second)
+    item_rainfall_enum = mikeio.ItemInfo("Catchment Rainfall", 
+                                         item_type=mikeio.EUMType.Rainfall, 
+                                         unit=mikeio.EUMUnit.millimeter_per_hour)
+except AttributeError: # Fallback if EUMType/EUMUnit enums are not directly on mikeio
+    print("Note: mikeio.EUMType or mikeio.EUMUnit enums not found directly. Using string fallbacks for ItemInfo.")
+    item_flow_simple = mikeio.ItemInfo(name="Simulated Flow", item_type="Discharge", unit="m^3/s")
+    item_rainfall_enum = mikeio.ItemInfo("Catchment Rainfall", item_type="Rainfall", unit="mm/hr")
+
+
+# Using eumQuantity from mikecore.eum (can be more specific but sometimes more complex to find)
+# To find available quantities: print(eumQuantity.AllowableQuantities)
+# item_waterlevel_eumq = mikeio.ItemInfo("Water Level Observed", eumQuantity.Water_Level) 
+# This line is commented out as direct usage of eumQuantity can be involved.
+
+# More generic string-based approach (often robust and easier for custom types)
+item1_info_generic = mikeio.ItemInfo("Processed Rainfall Data", item_type="Rainfall", unit="mm/h")
+item2_info_generic = mikeio.ItemInfo("Cleaned River Flow", item_type="Discharge", unit="m^3/s")
+
+# For the examples below, we'll primarily use the string-based or assumed EUMType/Unit enums.
+```
+*(The exact way to specify `EUMType` and `EUMUnit` might vary slightly with `mikeio` versions or might require more specific `eumQuantity` strings. Always check `mikeio` examples and documentation for current best practices. String-based `item_type` and `unit` are often a reliable starting point.)*
+
+::: {.callout-tip}
+## Finding EUM Types and Units
+The easiest way to determine the correct EUM types and units for your data is often to:
+1.  Create a dummy `.dfs0` file in MIKE Zero or MIKE+ containing items with the desired data types and units.
+2.  Read this dummy `.dfs0` file using `mikeio`.
+3.  Inspect the `ds.items[j].type` (e.g., `ds.items[j].type.name` or `ds.items[j].type.display_name`) and `ds.items[j].unit` (e.g., `ds.items[j].unit.name` or `ds.items[j].unit.display_name`) attributes for each item `j`.
+:::
+
+## Creating the `.dfs0` File
+Once your `pandas` DataFrame is prepared and you have defined the `ItemInfo` for each column, you can create the `.dfs0` file. `mikeio` offers a couple of ways to do this, primarily through the `mikeio.Dataset().write()` method or using the `mikeio.dfs0.Dfs0()` class and its `create()` method. The `Dataset` approach is quite general for various Dfs types.
+
+Here's a step-by-step example:
+
+```python
+import pandas as pd
+import numpy as np
+import mikeio
+# from datetime import datetime # Not strictly needed here as pd.date_range creates DatetimeIndex
+
+# 1. Create a sample pandas DataFrame (simulating processed data)
+# Ensure it has a DatetimeIndex
+rng = pd.date_range('2023-03-10 00:00:00', periods=12, freq='H')
+data_payload = {
+    'Rainfall_Gauge_Processed': np.random.rand(12) * 5 + np.sin(np.linspace(0, 2*np.pi, 12))*2,
+    'Flow_Site_Cleaned': np.random.rand(12) * 50 + np.arange(0, 120, 10)
+}
+df_to_save = pd.DataFrame(data_payload, index=rng)
+df_to_save.iloc[2, 0] = np.nan # Introduce a NaN value to test delete value handling
+df_to_save.iloc[5, 1] = np.nan # Another NaN
+
+print("DataFrame to save:")
+print(df_to_save)
+
+# 2. Define ItemInfo for each column in the DataFrame
+# These should correspond to the columns in your DataFrame.
+# Using mikeio's EUMType/EUMUnit enums or string fallbacks as discussed earlier.
+try:
+    items_metadata = [
+        mikeio.ItemInfo("Rainfall_Gauge_Processed", mikeio.EUMType.Rainfall, mikeio.EUMUnit.millimeter_per_hour),
+        mikeio.ItemInfo("Flow_Site_Cleaned", mikeio.EUMType.Discharge, mikeio.EUMUnit.cubic_meter_per_second)
+    ]
+except AttributeError: # Fallback for ItemInfo definition
+    items_metadata = [
+        mikeio.ItemInfo(name="Rainfall_Gauge_Processed", item_type="Rainfall", unit="mm/hr"),
+        mikeio.ItemInfo(name="Flow_Site_Cleaned", item_type="Discharge", unit="m3/s")
+    ]
+
+
+# 3. Create and write the dfs0 file
+output_dfs0_path = "output/my_processed_timeseries.dfs0" # Ensure 'output' directory exists
+
+# Using mikeio.Dataset approach
+# The data argument expects a list of numpy arrays, one for each item.
+data_list_for_dfs0 = [df_to_save[col].values for col in df_to_save.columns]
+
+ds_output = mikeio.Dataset(data=data_list_for_dfs0,
+                           time=df_to_save.index,
+                           items=items_metadata)
+ds_output.write(output_dfs0_path)
+
+# Alternative: Using mikeio.dfs0.Dfs0().create()
+# This API might be more specific for dfs0 files and sometimes more convenient.
+# (Check mikeio documentation for the most current recommended usage of Dfs0 class)
+#
+# from mikeio.dfs0 import Dfs0 # Ensure Dfs0 is imported if using this method
+# dfs0_writer = Dfs0()
+#
+# If passing a DataFrame directly (some versions of mikeio might support this, matching columns to items by name):
+# dfs0_writer.create(filename=output_dfs0_path, data=df_to_save, items=items_metadata)
+#
+# Or, more explicitly with a list of numpy arrays for data:
+# dfs0_writer.create(filename=output_dfs0_path, 
+#                    data=data_list_for_dfs0, 
+#                    datetimes=df_to_save.index, 
+#                    items=items_metadata)
+
+print(f"\nSuccessfully created dfs0 file: {output_dfs0_path}")
+
+# Verify (optional, but good practice): Read the created file back
+ds_check_read = mikeio.read(output_dfs0_path)
+print("\nVerification - Data read back from the created .dfs0 file:")
+print(ds_check_read.to_dataframe())
+
+print("\nVerification - Item metadata from the created .dfs0 file:")
+for item_obj in ds_check_read.items:
+    # Accessing display_name or name can vary; try preferred, then fallback
+    type_display = getattr(item_obj.type, 'display_name', getattr(item_obj.type, 'name', str(item_obj.type)))
+    unit_display = getattr(item_obj.unit, 'display_name', getattr(item_obj.unit, 'name', str(item_obj.unit)))
+    print(f"Item: {item_obj.name}, Type: {type_display}, Unit: {unit_display}")
+
+```
+Before running the script, ensure the `output` directory (or any specified path) exists, or create it programmatically if needed. The `mikeio` library will automatically handle the conversion of the `pandas` `DatetimeIndex` to the time format required by `.dfs0` files and will convert `np.nan` values to the appropriate DHI delete value.
+
+::: {.callout-caution}
+## `mikeio` API for Writing Files
+The exact API calls and parameters for creating `.dfs0` files (e.g., `mikeio.Dataset().write()` versus `mikeio.dfs0.Dfs0().create()`, or the specific arguments for `items`, `data`, `time`/`datetimes`) can evolve with different versions of `mikeio`.
+
+Always refer to the [latest `mikeio` documentation and examples](https://github.com/DHI/mikeio/tree/main/notebooks) on the official DHI GitHub repository for the most current, accurate, and recommended usage patterns. The example above provides a general structure based on common `mikeio` patterns. The usage of `eumQuantity` or specific `EUMType`/`EUMUnit` enums can be particularly version-sensitive; using string representations for `item_type` and `unit` in `ItemInfo` is often a more robust approach for beginners or when precise enum paths are uncertain.
+:::
+
+## Video - Example: Creating a `.dfs0` File from a `pandas` DataFrame (5-10 min)
+- This video will walk through the practical steps of:
+    - Preparing a `pandas` DataFrame suitable for export.
+    - Defining `mikeio.ItemInfo` for the data columns.
+    - Using `mikeio` to write the DataFrame to a new `.dfs0` file.
+- It will also demonstrate how to quickly verify the created `.dfs0` file by reading it back into Python with `mikeio` and inspecting its contents.
+- Example: The video will likely use a DataFrame similar to one created or modified in previous examples, or generate a new sample DataFrame for demonstration.
+- {{< video URL_TO_CREATING_DFS0_VIDEO >}}

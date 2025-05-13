@@ -1,0 +1,57 @@
+# Introduction to `tsod` for Anomaly Detection
+
+## What is `tsod`?
+- `tsod` (Time Series Outlier Detection) is a Python package developed by DHI, designed specifically to identify anomalies or outliers in time series data.
+- It provides implementations of various outlier detection algorithms, which you can apply to your datasets.
+- This functionality is very useful for data validation and cleaning steps, which are crucial before performing further analysis or using the data as input for MIKE+ models.
+- **Why `tsod`?** Identifying and handling outliers is a critical step in ensuring the quality and reliability of your data. `tsod` offers several common techniques for this purpose, packaged in an easy-to-use Python library that integrates well with tools like `pandas`.
+- **Official Documentation/Source:** You can find more information, detailed documentation, and the source code for `tsod` on its [DHI `tsod` GitHub repository](https://github.com/DHI/tsod) and on the [Python Package Index (PyPI)](https://pypi.org/project/tsod/).
+
+## Installing `tsod`
+- Similar to how you installed `mikeio` in earlier sections, you can install `tsod` into your project's virtual environment using `uv`.
+- Open your terminal (e.g., PowerShell within VS Code, or your preferred terminal) that is activated in your project's virtual environment, and run the following command:
+  ```powershell
+  uv pip install tsod
+  ```
+- This command instructs `uv` to use `pip` (Python's package installer) to download `tsod` and its necessary dependencies, installing them into your current Python environment.
+- **Verification:** After the installation completes, you can verify it by opening a Python interpreter (or a new Python script/Jupyter Notebook cell) and trying to import the package:
+  ```python
+  import tsod
+  # Note: tsod might not have a readily available __version__ attribute like some other packages.
+  # The primary check is that the import tsod command runs without raising an ImportError.
+  print("tsod imported successfully.")
+  ```
+  If this code runs without an error message, `tsod` has been installed correctly and is ready to use.
+
+## Why Detect Outliers?
+Outliers in time series data can significantly impact your analyses and model results. They can arise from various sources, such as:
+- Measurement errors (e.g., a sensor malfunctioning temporarily).
+- Data entry or transmission errors.
+- Genuine, but rare and extreme, events (which might be valid data points but still statistically "outlying").
+
+Identifying these outliers is important because it allows you to:
+- **Improve data quality:** By enabling you to correct, remove, or flag erroneous data points.
+- **Enhance model performance:** Many statistical models and machine learning algorithms can be sensitive to outliers, which might skew results or lead to poor model fitting.
+- **Gain insights:** Sometimes, an outlier might indicate an interesting or unusual event that warrants further investigation, rather than being an error.
+
+## "Cookie Cutter" Approach to Anomaly Detection
+- For this introductory module, our goal is to get you started with basic anomaly detection. We'll focus on a simple, "cookie cutter" method. This means using a straightforward algorithm from `tsod` with sensible default parameters that works well for many common scenarios.
+- `tsod` offers various algorithms. For instance, some methods are based on deviations from a statistical measure like the mean or median (e.g., identifying points that are a certain number of standard deviations away, similar to a Z-score approach), while others might use range-based detection.
+- The objective here is not to make you an expert in the complex theory of outlier detection, but rather to equip you with the ability to apply a basic, practical tool for a common data validation task you'll encounter when working with time series data for MIKE+.
+
+::: {.callout-note}
+## What is an "Outlier"?
+It's important to understand that defining an "outlier" can be subjective and highly dependent on the context of your data and your specific project goals.
+- Some outliers are clearly errors (e.g., a water level sensor reporting a negative value when it's impossible).
+- Others might be valid but extreme data points (e.g., an exceptionally high rainfall value during a major storm).
+The methods provided in `tsod` primarily help identify points that are *statistically unusual* compared to the rest of the time series. Your domain knowledge as a MIKE+ modeler will then be crucial to interpret whether an identified outlier represents an error that needs correction or a significant event that should be retained or investigated further.
+:::
+
+## Next Steps
+- In the next section, we will explore how to apply a specific `tsod` detection method to a sample time series. We'll see how to identify anomalies and then discuss common strategies for handling them, such as removal or imputation, to prepare your data for further use.
+
+## Video - `tsod` Introduction and Setup Example (5-10 min)
+- This video will provide a brief overview of the purpose of the `tsod` package.
+- It will demonstrate the process of installing `tsod` into your Python project environment using `uv`.
+- The video may also briefly navigate to the `tsod` GitHub page or PyPI to show you where to find its documentation and examples for future reference.
+- {{< video URL_TO_TSOD_INTRO_SETUP_VIDEO >}}
