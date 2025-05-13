@@ -1,0 +1,179 @@
+# Detecting and Handling Anomalies with `tsod` and Pandas
+
+Now that we've introduced `tsod`, let's walk through a practical example of using it to detect anomalies in a time series and then discuss how to handle these anomalies using Pandas.
+
+## Example: Using a `tsod` Detector
+
+The module outline mentions a "cookie cutter method." This often implies a common, straightforward approach. If `tsod` has a specific detector named this way, we'd use it. Otherwise, we'll use a common type of detector, like one based on deviations from a rolling mean (often called a Sigma detector or Z-score detector).
+
+Let's assume `tsod` provides a detector, for instance, `SigmaDetector`, which identifies points that are a certain number of standard deviations away from a rolling mean.
+
+```python
+#| echo: true
+#| output: true
+#| eval: false # Requires a sample DataFrame 'df_timeseries' with a 'Value' column
+# For demonstration, creating sample data with anomalies:
+# import pandas as pd
+# import numpy as np
+# time_idx = pd.date_range("2023-01-01", periods=100, freq="H")
+# normal_data = np.sin(np.linspace(0, 20, 100)) * 5 + 10
+# anomalies_indices = [10, 50, 80]
+# anomalous_data = normal_data.copy()
+# anomalous_data[anomalies_indices] = [30, -5, 40] # Introduce some anomalies
+# df_timeseries = pd.DataFrame({"Value": anomalous_data}, index=time_idx)
+# print("Original data with anomalies (sample):")
+# print(df_timeseries.iloc[8:13]) # Show around one anomaly
+# print(df_timeseries.iloc[48:53])
+# print(df_timeseries.iloc[78:83])
+
+
+# from tsod.detectors import SigmaDetector # Assuming SigmaDetector is available in tsod
+
+# Assuming df_timeseries['Value'] is the Pandas Series we want to analyze
+# series_to_check = df_timeseries['Value']
+
+# Instantiate the detector
+# window_size: The number of observations used for calculating the rolling mean and std.
+# n_sigma: The number of standard deviations from the mean to set the threshold.
+# detector = SigmaDetector(window_size=12, n_sigma=3) 
+
+# Detect anomalies
+# anomalies_mask = detector.detect(series_to_check) # Returns a boolean Series
+
+# print(f"\nDetected {anomalies_mask.sum()} anomalies.")
+# print("Anomalous data points identified by tsod:")
+# print(series_to_check[anomalies_mask])
+```
+
+**Explanation of the (Hypothetical) `SigmaDetector` Example:**
+
+1.  **`from tsod.detectors import SigmaDetector`**: We import the specific detector class.
+2.  **`series_to_check = df_timeseries['Value']`**: We select the Pandas Series containing the data to analyze.
+3.  **`detector = SigmaDetector(window_size=12, n_sigma=3)`**:
+    *   We create an instance of the detector.
+    *   `window_size=12`: The detector calculates mean and standard deviation over a rolling window of 12 data points.
+    *   `n_sigma=3`: Any point that falls more than 3 standard deviations away from the rolling mean is considered an anomaly.
+4.  **`anomalies_mask = detector.detect(series_to_check)`**: The `.detect()` method is called on the data. It returns a boolean Pandas Series with the same index as `series_to_check`. `True` indicates an anomaly, `False` indicates a normal point.
+5.  **`anomalies_mask.sum()`**: Since `True` is 1 and `False` is 0, summing the boolean mask gives the total number of anomalies detected.
+6.  **`series_to_check[anomalies_mask]`**: This uses boolean indexing to display the actual values that were flagged as anomalies.
+
+::: {.callout-note title="Choosing a Detector and Parameters"}
+The choice of detector and its parameters (like `window_size` and `n_sigma`) is crucial and data-dependent.
+*   A smaller `window_size` makes the detector more sensitive to local changes.
+*   A smaller `n_sigma` (or lower threshold) makes the detector more sensitive, potentially flagging more points.
+Experimentation and domain knowledge are often needed to tune these. Always refer to the `tsod` documentation for details on available detectors.
+:::
+
+## Replacing Detected Anomalies with `NaN`
+
+Once you have the `anomalies_mask`, a common first step is to replace the anomalous values with `np.nan` (Not a Number). This marks them as missing data, which can then be handled by imputation techniques.
+
+```python
+#| echo: true
+#| output: true
+#| eval: false # Assumes series_to_check and anomalies_mask exist from previous step
+import numpy as np
+
+# It's good practice to work on a copy if you want to preserve the original
+# series_with_nans = series_to_check.copy()
+# series_with_nans[anomalies_mask] = np.nan
+
+# print("\nData with anomalies replaced by NaN (sample around an anomaly):")
+# Display original vs NaN-replaced around one of the known anomaly indices (e.g., index 10)
+# original_anomaly_loc = series_to_check.index[10] # Assuming original index 10 was anomalous
+# if original_anomaly_loc in series_with_nans.index:
+#    print("Original value at anomaly location:", series_to_check.loc[original_anomaly_loc])
+#    print("Value after NaN replacement:", series_with_nans.loc[original_anomaly_loc])
+#    print("\nContext around NaN:")
+#    print(series_with_nans.iloc[8:13])
+# else:
+#    print("Could not find original anomaly location in series_with_nans for demonstration.")
+```
+
+## Filling `NaN` Values with Pandas
+
+After replacing anomalies with `NaN`, you need to decide how to fill these gaps. Pandas provides several methods:
+
+*   **` .fillna(method='ffill')` (Forward Fill):** Propagates the last valid observation forward.
+*   **` .fillna(method='bfill')` (Backward Fill):** Propagates the next valid observation backward.
+*   **` .interpolate(method='linear')`:** Fills `NaN`s using linear interpolation between the nearest valid points. This is often a good choice for sensor data if anomalies are isolated.
+*   **` .fillna(value)`:** Fills all `NaN`s with a specific value (e.g., `series_with_nans.fillna(0)` or `series_with_nans.fillna(series_with_nans.mean())`).
+
+```python
+#| echo: true
+#| output: true
+#| eval: false # Assumes series_with_nans exists
+
+# Fill NaNs using linear interpolation
+# series_cleaned_interpolated = series_with_nans.interpolate(method='linear')
+# print("\nData after NaN filling with linear interpolation (sample around an anomaly):")
+# if original_anomaly_loc in series_cleaned_interpolated.index: # Use the same location as above
+#    print(series_cleaned_interpolated.iloc[8:13])
+# else:
+#    print("Could not find original anomaly location for demonstration.")
+
+
+# Alternative: Forward fill
+# series_cleaned_ffill = series_with_nans.ffill()
+# print("\nData after NaN filling with forward fill (sample around an anomaly):")
+# if original_anomaly_loc in series_cleaned_ffill.index:
+#    print(series_cleaned_ffill.iloc[8:13])
+# else:
+#    print("Could not find original anomaly location for demonstration.")
+```
+
+::: {.callout-tip title="Choosing the Right Imputation Method"}
+The best method for filling `NaN`s depends on your data's characteristics and the context.
+*   **Linear interpolation** is often suitable for continuous sensor readings where anomalies are brief.
+*   **Forward fill** might be better if a value is expected to persist until a new reading.
+*   Filling with a mean or median might be acceptable if anomalies are few and don't significantly skew these statistics.
+Avoid methods that might introduce unrealistic patterns or mask important information.
+:::
+
+## Visualizing the Effect
+
+Plotting the data at each step (original, with NaNs, cleaned) is highly recommended to understand the impact of your anomaly detection and handling process.
+
+```python
+#| echo: true
+#| output: false # This cell generates plots, output can be verbose in markdown
+#| eval: false # Assumes all series (series_to_check, series_with_nans, series_cleaned_interpolated) exist
+# import matplotlib.pyplot as plt
+
+# plt.figure(figsize=(15, 10))
+
+# plt.subplot(3, 1, 1)
+# series_to_check.plot(title='Original Data with Anomalies', legend=True, label='Original')
+# series_to_check[anomalies_mask].plot(marker='o', linestyle='None', color='red', label='Detected Anomalies')
+# plt.legend()
+# plt.grid(True)
+
+# plt.subplot(3, 1, 2)
+# series_with_nans.plot(title='Data with Anomalies Replaced by NaN', legend=True, label='NaN-replaced')
+# plt.grid(True)
+# plt.legend()
+
+# plt.subplot(3, 1, 3)
+# series_cleaned_interpolated.plot(title='Data after Linear Interpolation of NaNs', legend=True, label='Interpolated', color='green')
+# plt.grid(True)
+# plt.legend()
+
+# plt.tight_layout()
+# plt.show()
+```
+
+## Video - Anomaly Detection and Data Cleaning Workflow
+
+*This section would ideally contain a short video (5-10 mins).*
+
+**Video Description:** This video would demonstrate:
+1.  Loading a sample time series with some visible anomalies.
+2.  Applying a `tsod` detector (e.g., `SigmaDetector`) to identify these anomalies.
+3.  Showing the boolean mask and the identified anomalous data points.
+4.  Replacing anomalies with `np.nan`.
+5.  Applying `interpolate()` and `ffill()` to fill the `NaN` values.
+6.  Using `matplotlib` to plot the original data, anomalies, data with NaNs, and the final cleaned/imputed data to visually assess the results.
+
+---
+comments: false
+---

@@ -1,0 +1,134 @@
+# Resampling Time Series Data
+
+Resampling is a common operation in time series analysis that involves changing the frequency of your data. This could mean aggregating data to a coarser time resolution (downsampling) or interpolating data to a finer resolution (upsampling). Pandas provides a powerful `.resample()` method for these tasks.
+
+## What is Resampling?
+
+*   **Downsampling:** Aggregating data from a higher frequency to a lower frequency.
+    *   Example: Converting hourly data to daily averages or sums.
+*   **Upsampling:** Increasing the frequency of data, typically by inserting new time steps and filling their values using an interpolation method.
+    *   Example: Converting daily data to hourly data by forward-filling or linear interpolation.
+
+## Why Resample?
+
+*   **Alignment:** Match datasets that have different time frequencies for comparison or combined analysis.
+*   **Aggregation:** Summarize data over longer periods (e.g., daily totals from minute-by-minute readings).
+*   **Noise Reduction:** Downsampling (e.g., by averaging) can smooth out noisy data.
+*   **Filling Gaps (carefully):** Upsampling with interpolation can fill missing time steps, but this must be done with caution and understanding of the data.
+
+## Resampling with Pandas `.resample()`
+
+The `.resample()` method in Pandas is called on a Series or DataFrame that has a `DatetimeIndex`.
+
+*   **`rule` argument:** Specifies the target frequency. Pandas uses "offset aliases" for this (e.g., `'H'` for hourly, `'D'` for daily, `'M'` for month-end frequency).
+    *   See [Pandas Offset Aliases Documentation](https://pandas.pydata.org/pandas-docs/stable/user_guide/timeseries.html#offset-aliases) for a full list.
+*   **Aggregation/Interpolation method:** After calling `.resample()`, you apply a method to compute values for the new frequency:
+    *   **Downsampling:** `.mean()`, `.sum()`, `.min()`, `.max()`, `.first()`, `.last()`, `.median()`, `.std()`, etc.
+    *   **Upsampling:** `.interpolate()`, `.ffill()` (forward fill), `.bfill()` (backward fill).
+
+## Downsampling Example
+
+Let's say we have hourly data and want to calculate daily mean values.
+
+```python
+#| echo: true
+#| output: true
+#| eval: false # Assumes df is a DataFrame with hourly DatetimeIndex and numeric data
+# For demonstration, creating sample hourly data:
+# import pandas as pd
+# import numpy as np
+# time_idx_hourly = pd.date_range("2023-01-01 00:00:00", "2023-01-03 23:00:00", freq="H")
+# data_hourly = {"Value": np.random.rand(len(time_idx_hourly)) * 100}
+# df_hourly = pd.DataFrame(data_hourly, index=time_idx_hourly)
+# print("Original Hourly Data (head):")
+# print(df_hourly.head())
+
+# Downsample to daily mean
+# daily_mean_df = df_hourly.resample('D').mean()
+# print("\nDaily Mean Data (head):")
+# print(daily_mean_df.head())
+
+# Downsample to daily sum
+# daily_sum_df = df_hourly.resample('D').sum()
+# print("\nDaily Sum Data (head):")
+# print(daily_sum_df.head())
+```
+
+The `.resample('D')` groups the data by day, and `.mean()` calculates the average for each day.
+
+## Upsampling Example (with Interpolation)
+
+Now, let's say we have daily data and want to estimate hourly values.
+
+```python
+#| echo: true
+#| output: true
+#| eval: false # Assumes daily_mean_df exists or create sample daily data
+# For demonstration, creating sample daily data:
+# import pandas as pd
+# import numpy as np
+# time_idx_daily = pd.date_range("2023-01-01", "2023-01-05", freq="D")
+# data_daily = {"Value_Daily": [10, 12, 11, 15, 14]}
+# df_daily = pd.DataFrame(data_daily, index=time_idx_daily)
+# print("Original Daily Data:")
+# print(df_daily)
+
+# Upsample to hourly using forward fill (propagates last valid observation forward)
+# hourly_ffill_df = df_daily.resample('H').ffill()
+# print("\nHourly Data (Forward Fill) (head):")
+# print(hourly_ffill_df.head(25)) # Show more than 24 to see next day's value propagate
+
+# Upsample to hourly using linear interpolation
+# hourly_interpolated_df = df_daily.resample('H').interpolate(method='linear')
+# print("\nHourly Data (Linear Interpolation) (head):")
+# print(hourly_interpolated_df.head(25))
+```
+
+::: {.callout-caution title="Be Careful with Upsampling!"}
+Upsampling *creates* data points that didn't originally exist. The method you choose for filling these new points (e.g., `ffill`, `bfill`, `interpolate`) can significantly impact your results.
+
+*   **`ffill()` (forward fill):** Good if you assume a value persists until the next known measurement.
+*   **`interpolate(method='linear')`:** Assumes a linear trend between known points. May not be suitable for all types of data (e.g., discrete events like rainfall, where 0s might be more appropriate between events).
+
+Always consider if upsampling and the chosen interpolation method make sense for your specific dataset and analytical goals.
+:::
+
+## Common Resampling Rules (`rule` argument)
+
+Here's a list of some frequently used offset aliases for the `rule` argument:
+
+| Alias       | Description        |
+| :---------- | :----------------- |
+| `S`         | Second             |
+| `T` or `min`| Minute             |
+| `H`         | Hour               |
+| `D`         | Calendar day       |
+| `B`         | Business day       |
+| `W`         | Weekly (Sunday)    |
+| `W-MON`     | Weekly (Monday)    |
+| `M`         | Month end          |
+| `MS`        | Month start        |
+| `Q`         | Quarter end        |
+| `QS`        | Quarter start      |
+| `A` or `Y`  | Year end           |
+| `AS` or `YS`| Year start         |
+| `_L` suffix | (e.g., `H_L`) Left-hand label for intervals (e.g. `resample('3H_L')` groups `[00:00, 03:00, 06:00, ...]`) |
+| `_R` suffix | (e.g., `H_R`) Right-hand label for intervals (e.g. `resample('3H_R')` groups `[03:00, 06:00, 09:00, ...]`) |
+
+You can also specify multiples, like `'2H'` for 2-hour frequency.
+
+## Video - Resampling Time Series in Pandas
+
+*This section would ideally contain a short video (5-10 mins).*
+
+**Video Description:** This video would showcase:
+
+1.  Loading a sample time series DataFrame (e.g., hourly data).
+2.  Performing downsampling (e.g., to daily means and sums) using `.resample().mean()` and `.resample().sum()`.
+3.  Plotting the original and downsampled data to visualize the effect.
+4.  Performing upsampling (e.g., from daily to hourly) using `.resample().ffill()` and `.resample().interpolate('linear')`.
+5.  Discussing and visualizing the differences between `ffill` and `linear` interpolation for upsampling.
+
+---
+comments: false
+---

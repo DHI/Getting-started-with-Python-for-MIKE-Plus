@@ -1,0 +1,180 @@
+# Selecting Time Series Data
+
+After loading time series data, you often need to select specific subsets for analysis. This might involve choosing particular variables (items) or time periods, whether using a Pandas DataFrame or directly with `mikeio` during the read process.
+
+## Why Select Data?
+
+Selecting data helps to:
+
+*   **Focus:** Concentrate your analysis on the most relevant parts of your dataset.
+*   **Efficiency:** Reduce memory usage and computation time by working with smaller datasets.
+*   **Clarity:** Simplify visualizations and interpretations by excluding irrelevant data.
+
+## Selecting Items (Variables)
+
+Specific items, which become columns in a Pandas DataFrame, can be selected either during data reading with `mikeio` or after loading into a DataFrame.
+
+### During Read (with `mikeio`)
+
+To efficiently read only specific items from a `.dfs0` file, use the `items` argument in `mikeio.read()`. This avoids loading unnecessary data into memory.
+
+```python
+#| echo: true
+#| output: true
+#| eval: false # Assumes dfs0_filepath is defined and file exists
+import mikeio
+import pandas as pd
+
+# dfs0_filepath = "data/sample_timeseries.dfs0" # Ensure this file exists
+
+# First, determine available items
+# temp_ds = mikeio.read(dfs0_filepath)
+# print("Available items:")
+# for item_info in temp_ds.items:
+#    print(f"- Name: '{item_info.name}' (Index: {temp_ds.items.index(item_info)})")
+
+# Example: Read specific items by name
+# selected_items_by_name = ["WaterLevel_m", "Flow_m3s"] # Replace with actual item names
+# ds_selected_names = mikeio.read(dfs0_filepath, items=selected_items_by_name)
+# df_selected_names = ds_selected_names.to_dataframe()
+# print("\nDataFrame with items selected by name:")
+# print(df_selected_names.head())
+
+# Example: Read specific items by index
+# selected_items_by_index = [0] # Reads the first item
+# ds_selected_indices = mikeio.read(dfs0_filepath, items=selected_items_by_index)
+# df_selected_indices = ds_selected_indices.to_dataframe()
+# print("\nDataFrame with item selected by index 0:")
+# print(df_selected_indices.head())
+```
+
+*Running this code with a valid `dfs0_filepath` and appropriate item names or indices will display DataFrames containing only the specified items.*
+
+### After Read (with Pandas)
+
+If the entire `.dfs0` file is already in a DataFrame, use standard Pandas column selection, as covered in Module 1.
+
+```python
+#| echo: true
+#| output: true
+#| eval: false # Assumes df is a DataFrame loaded from a dfs0 file
+# Assuming 'df' contains all items from a dfs0 file
+# df = mikeio.read(dfs0_filepath).to_dataframe() # Example: load all items
+
+# Select a single item (column) - returns a Pandas Series
+# water_level_series = df["WaterLevel_m"] # Use an actual column name
+# print("\nSelected 'WaterLevel_m' Series (head):")
+# print(water_level_series.head())
+
+# Select multiple items (columns) - returns a new DataFrame
+# selected_df_pandas = df[["WaterLevel_m", "Flow_m3s"]] # Use actual column names
+# print("\nSelected 'WaterLevel_m' and 'Flow_m3s' DataFrame (head):")
+# print(selected_df_pandas.head())
+```
+
+::: {.callout-tip}
+## Discovering Item Names
+
+To select items by name with `mikeio`, their exact names are required. Discover them by:
+
+1.  Reading the file without item selection: `ds_all = mikeio.read(filepath)`
+2.  Inspecting `ds_all.items`: `for item in ds_all.items: print(item.name)`
+
+Alternatively, DHI software like MIKE View or MIKE Zero can display item names.
+:::
+
+## Selecting Time Steps/Periods
+
+Data for specific time steps or periods can be selected either during the `mikeio` read operation or afterwards using Pandas.
+
+### During Read (with `mikeio`)
+
+When reading with `mikeio`, specify a time range or specific time steps using:
+
+*   **`time_steps` argument:** A list of integer indices for desired time steps (e.g., `time_steps=[0, 1, 100]`).
+*   **`time` span (or `start_time`, `end_time` arguments):** A period defined by datetime objects or strings (e.g., `'2023-01-01'`).
+
+```python
+#| echo: true
+#| output: true
+#| eval: false # Assumes dfs0_filepath is defined and file exists
+import mikeio
+
+# dfs0_filepath = "data/sample_timeseries.dfs0"
+
+# Example: Read data for a specific time period
+# ISO format 'YYYY-MM-DD HH:MM:SS' is generally safe for date strings.
+# start_dt = "2023-01-01 00:00:00"
+# end_dt = "2023-01-01 05:00:00" 
+# ds_time_period = mikeio.read(dfs0_filepath, time=(start_dt, end_dt))
+# df_time_period = ds_time_period.to_dataframe()
+# print(f"\nDataFrame for period {start_dt} to {end_dt}:")
+# print(df_time_period)
+
+# Example: Read specific time steps by index (e.g., first three)
+# ds_time_indices = mikeio.read(dfs0_filepath, time_steps=[0, 1, 2])
+# df_time_indices = ds_time_indices.to_dataframe()
+# print("\nDataFrame for first 3 time steps by index:")
+# print(df_time_indices)
+```
+
+### After Read (with Pandas)
+
+For DataFrames with a `DatetimeIndex` (default from `mikeio`), Pandas provides powerful time-based indexing via `.loc`:
+
+```python
+#| echo: true
+#| output: true
+#| eval: false # Assumes df is a DataFrame with a DatetimeIndex
+# Assuming 'df' is a DataFrame with a DatetimeIndex
+# df = mikeio.read(dfs0_filepath).to_dataframe() # Example: load all time steps
+
+# Select a specific date/timestamp (if it exists)
+# specific_date_data = df.loc["2023-01-01 02:00:00"] # Use an actual timestamp
+# print("\nData for '2023-01-01 02:00:00':")
+# print(specific_date_data)
+
+# Select an inclusive date range
+# date_range_data = df.loc["2023-01-01 00:00:00":"2023-01-01 05:00:00"]
+# print("\nData for range '2023-01-01 00:00:00' to '2023-01-01 05:00:00':")
+# print(date_range_data)
+
+# Select data by year or month (partial string matching)
+# data_for_year_2023 = df.loc["2023"]
+# data_for_jan_2023 = df.loc["2023-01"]
+# print("\nData for January 2023 (head):")
+# print(data_for_jan_2023.head())
+```
+
+::: {.callout-caution title="DatetimeIndex is Key!"}
+Powerful Pandas time-based selections like `df.loc["2023"]` or `df.loc["2023-01":"2023-03"]` require the DataFrame's index to be a `pd.DatetimeIndex`. `mikeio` typically handles this when converting `.dfs0` data to a DataFrame via `.to_dataframe()`. Verify with `df.info()` or `type(df.index)`.
+:::
+
+## Combining Item and Time Selection
+
+Combine item and time selection methods:
+
+*   **With `mikeio`:** Pass both `items` and `time` (or related time arguments) to `mikeio.read()`.
+*   **With Pandas:** Perform sequential selections, e.g., select columns (items), then filter rows by time.
+
+    ```python
+    #| echo: true
+    #| output: false
+    # Example with Pandas (assuming df_all_data exists)
+    # selected_items_and_time = df_all_data[["Item1_name", "Item2_name"]].loc["2023-01-01":"2023-01-31"]
+    ```
+
+## Video - Demonstrating Data Selection Techniques
+
+*A short video (5-10 mins) in this section would demonstrate the practical application of these selection techniques.*
+
+**Video Description:** This video would show:
+
+1.  Reading a `.dfs0` file and inspecting its items and time range.
+2.  Using `mikeio.read()` with `items` and `time` arguments to load subsets.
+3.  Employing Pandas `[]` and `.loc` on a DataFrame with a `DatetimeIndex` for selections.
+4.  Comparing DataFrames resulting from different selection approaches.
+
+---
+comments: false
+---
