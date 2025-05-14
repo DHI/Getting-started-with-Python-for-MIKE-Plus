@@ -1,0 +1,154 @@
+# Plotting Time Series Data
+
+## Introduction
+Visualizing time series data is crucial for understanding trends, patterns, anomalies, and for communicating your results effectively. `pandas` DataFrames and Series come with built-in `.plot()` methods, which conveniently use `matplotlib` (another powerful Python library) under the hood. This allows you to quickly generate common plots directly from your data.
+
+In this section, you'll learn how to create, customize, and save basic time series plots.
+
+## Basic Time Series Plotting
+The most common visualization for time series data is a line plot, where time is represented on the x-axis and the data values are on the y-axis. If your `pandas` DataFrame's index is a `DatetimeIndex` (which it will be when you load data from a `.dfs0` file using `mikeio` and convert it to a DataFrame), `pandas` plotting handles the time axis formatting automatically.
+
+Here's how you can generate basic plots:
+
+```python
+import mikeio
+import pandas as pd
+import matplotlib.pyplot as plt # Import pyplot for show() and further customization
+
+# Assume 'data/rainfall.dfs0' contains rainfall data for 'Rainfall_Gauge1'
+dfs0_file = "data/rainfall.dfs0"
+ds = mikeio.read(dfs0_file)
+df = ds.to_dataframe()
+
+# Plot a single item (Series)
+# Let's assume 'Rainfall_Gauge1' is the name of the first item in the dfs0 file
+# or the specific column you are interested in.
+df["Rainfall_Gauge1"].plot(figsize=(10, 5)) # figsize controls plot dimensions (width, height in inches)
+plt.title("Rainfall Data for Gauge 1")
+plt.xlabel("Time")
+# Dynamically get the unit from the mikeio Dataset's item information
+# This assumes "Rainfall_Gauge1" is the first item or its unit is representative.
+plt.ylabel(f"Rainfall ({ds.items[0].unit})")
+plt.grid(True) # Add a grid for better readability
+plt.show() # Display the plot
+
+# Plot all numeric items in a DataFrame (each item as a separate line)
+if len(df.columns) > 1: # Check if there are multiple columns to plot
+    df.plot(figsize=(12, 6))
+    plt.title("All Time Series Items")
+    plt.xlabel("Time")
+    plt.ylabel("Value") # Generic Y-label as units might differ
+    plt.legend(title="Items") # Add a legend to identify different lines
+    plt.grid(True)
+    plt.show()
+else:
+    print("DataFrame has only one column, already plotted above or similar.")
+
+```
+
+-   **Key elements in the code:**
+    -   `df["ColumnName"].plot()`: Plots a single column (a `pandas` Series).
+    -   `df.plot()`: Plots all numeric columns in the DataFrame. Each column gets its own line.
+    -   `figsize=(width, height)`: A tuple specifying the figure size in inches.
+    -   `plt.title("Your Title")`: Sets the title of the plot.
+    -   `plt.xlabel("X-axis Label")`: Sets the label for the x-axis.
+    -   `plt.ylabel("Y-axis Label")`: Sets the label for the y-axis.
+    -   `plt.legend()`: Displays the legend, useful when plotting multiple lines. `title="Items"` sets a title for the legend box.
+    -   `plt.grid(True)`: Adds a grid to the plot, which can make it easier to read values.
+    -   `plt.show()`: Essential for displaying the plot, especially when running Python scripts outside of environments like Jupyter Notebooks that automatically display plots.
+
+::: {.callout-note}
+## `matplotlib.pyplot`
+`pandas` plotting is a convenient wrapper around `matplotlib`, a comprehensive library for creating static, animated, and interactive visualizations in Python. For more advanced customization (e.g., multiple subplots on the same figure, complex annotations, fine-grained control over every plot element), you would use `matplotlib.pyplot` functions directly. We touch on basics here; extensive `matplotlib` usage is beyond this module's scope. You can refer to the [official `matplotlib` tutorials](https://matplotlib.org/stable/tutorials/index.html) for more in-depth information.
+:::
+
+## Customizing Plots
+The `.plot()` method accepts various arguments to customize the appearance of your plot.
+
+-   **Common arguments:**
+    -   `kind`: A string specifying the type of plot (e.g., `'line'`, `'bar'`, `'hist'`, `'scatter'`). The default is `'line'` for Series/DataFrames with a DatetimeIndex.
+    -   `figsize=(width, height)`: Tuple for figure size in inches.
+    -   `title`: String for the plot title.
+    -   `xlabel`, `ylabel`: Strings for axis labels.
+    -   `legend`: Boolean, whether to display the legend (True by default if multiple lines).
+    -   `grid`: Boolean, whether to display a grid.
+    -   `style`: A string defining the line style and marker (e.g., `'-'` for solid line, `'--'` for dashed, `':'` for dotted, `'.--'` for points connected by dashed line).
+    -   `color`: A string specifying the color of the line/markers (e.g., `'blue'`, `'green'`, `'#FF5733'`).
+
+Here's an example of a customized plot:
+```python
+# Assuming df and ds are still available from the previous example
+# and "Rainfall_Gauge1" is the column we want to plot.
+# Also, let's assume the unit for "Rainfall_Gauge1" is 'mm' for this example.
+gauge1_unit = "mm" # Or dynamically: gauge1_unit = ds.items[0].unit
+if hasattr(ds.items[0], 'unit'): # Check if unit attribute exists
+    gauge1_unit = ds.items[0].unit
+
+df["Rainfall_Gauge1"].plot(
+    kind='line',
+    style='.--',         # Dashed line with point markers
+    color='blue',
+    figsize=(10, 5),
+    title="Customized Rainfall Plot for Gauge 1",
+    grid=True
+)
+plt.xlabel("Time")
+plt.ylabel(f"Rainfall ({gauge1_unit})") # Units are important!
+plt.show()
+```
+
+## Plotting Specific Time Ranges
+You can easily combine `pandas`' powerful data selection capabilities (which you learned about earlier) with plotting to visualize specific periods of interest.
+
+```python
+# Assuming df is available and contains "Rainfall_Gauge1"
+# Select data for a specific period first, then plot
+df_event = df["2023-01-15 00:00:00":"2023-01-15 12:00:00"] # Example date range
+
+# Check if df_event is empty before plotting
+if not df_event.empty:
+    df_event["Rainfall_Gauge1"].plot(
+        figsize=(10,5),
+        title="Rainfall during Event (2023-01-15)"
+    )
+    # Assuming unit is 'mm' for this specific item/example
+    # Or use gauge1_unit as defined in the previous example
+    plt.ylabel(f"Rainfall ({gauge1_unit})")
+    plt.xlabel("Time")
+    plt.grid(True)
+    plt.show()
+else:
+    print("No data available for the selected event period to plot.")
+```
+
+## Saving Plots
+After creating a plot, you'll often want to save it to a file (e.g., for reports or presentations). You can do this using `plt.savefig()`.
+
+```python
+# Assuming df and "Rainfall_Gauge1" are available
+df["Rainfall_Gauge1"].plot(figsize=(10, 5))
+plt.title("Rainfall Data for Gauge 1")
+plt.xlabel("Time")
+plt.ylabel(f"Rainfall ({gauge1_unit})") # Using gauge1_unit from previous example
+plt.grid(True)
+
+# Ensure the 'plots' directory exists, or specify a full path
+# You might need to create it manually or using Python's os module:
+# import os
+# if not os.path.exists("plots"):
+#     os.makedirs("plots")
+plt.savefig("plots/rainfall_plot.png") # Saves as PNG. Other formats: .pdf, .jpg, .svg
+plt.show() # You can still show the plot after saving if desired
+```
+Make sure the `plots` directory (or any directory you specify in the path) exists before running the script, or your program might raise an error.
+
+::: {.callout-tip}
+## Interactive Plotting in Jupyter Notebooks
+If you are working within a Jupyter Notebook (covered in Module 1), plots will often appear "inline" directly below the code cell that generates them after you run the cell. You might see or use magic commands like `%matplotlib inline` (for static inline plots) or `%matplotlib widget` (for interactive plots that can be zoomed/panned) at the start of your notebook. In many Jupyter setups, `plt.show()` might not be strictly necessary for the plot to appear, but it's good practice to include it for script compatibility and explicit control.
+:::
+
+## Video - Example: Basic Time Series Plotting with `pandas` (5-10 min)
+- This video will demonstrate creating line plots from time series data in a `pandas` DataFrame.
+- It will cover plotting single and multiple items, basic customizations (title, labels, color, style), and saving a plot to a file.
+- Example data file: `[link_to_sample_rainfall_dfs0]{download="sample_rainfall.dfs0"}`
+- {{< video URL_TO_PLOTTING_VIDEO >}}

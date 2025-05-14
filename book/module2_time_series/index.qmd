@@ -1,45 +1,50 @@
-# Welcome to Module 2: Time Series Data! {.unnumbered}
+# Welcome to Module 2! {.unnumbered}
 
-In this module, we'll dive into the world of time series data, a fundamental data type in many engineering and scientific fields, especially when working with DHI's MIKE software. You'll learn how to manage, analyze, and visualize time series data using Python, building upon the foundational skills you acquired in Module 1.
+- In this module, we'll dive into handling time series data, a cornerstone of working with MIKE+ models and hydrological/environmental data.
+- You'll learn how to use powerful Python packages like *mikeio* to read and write DHI's native *.dfs0* time series files, *pandas* for data manipulation and analysis, *matplotlib* for visualization, and *tsod* for basic data validation.
+- This module builds directly on the foundational skills you developed in Module 1, including your setup of VS Code, *uv*, and basic Python/*pandas* knowledge.
 
-Our focus will be on:
+## Learning Objectives
+Upon completion of this module, you will be able to:
+- Understand the purpose and basic usage of the *mikeio* library for interacting with *.dfs0* files.
+- Read time series data from *.dfs0* files into *pandas* DataFrames.
+- Select specific data items and time periods from your time series.
+- Create basic plots of time series data using *pandas* and *matplotlib*.
+- Resample time series data to different temporal resolutions.
+- Understand the purpose and basic usage of the *tsod* library for time series outlier detection.
+- Perform basic data validation tasks, such as identifying and handling outliers or missing data.
+- Create new *.dfs0* files from *pandas* DataFrames.
 
-1.  **MIKE IO (`mikeio`):** Understanding and using this key DHI package to read and write `.dfs0` files, the standard format for time series data in the MIKE ecosystem.
-2.  **Pandas for Time Series:** Leveraging the power of Pandas to manipulate, select, and resample time series data effectively.
-3.  **Plotting:** Creating insightful visualizations of your time series data using `matplotlib` via Pandas.
-4.  **Data Validation (`tsod`):** Introducing basic data validation techniques, including anomaly detection and data cleaning using the `tsod` package.
-
-By the end of this module, you'll be able to confidently import time series data from `.dfs0` files, perform common analytical tasks, validate your data, and export your results back to `.dfs0` format.
-
-Don’t worry if some concepts seem new; we'll build them step-by-step, and you'll have plenty of opportunities to practice.
-
-## Python Packages for This Module
-
-We will be using the following core Python packages in this module. If you followed Module 1, your environment should be ready. We'll cover installation for `mikeio` and `tsod` as we introduce them.
-
-| Package                                                                                                | Description                                                                                                                               |
-| :----------------------------------------------------------------------------------------------------- | :---------------------------------------------------------------------------------------------------------------------------------------- |
-| [![Pandas](/images/logos/pandas_logo.png){width="150"}](https://pandas.pydata.org/)                    | Powerful library for data manipulation and analysis, especially for tabular data and time series. We'll focus on its time series features. |
-| [![Matplotlib](/images/logos/matplotlib_logo.png){width="150"}](https://matplotlib.org/)               | A comprehensive library for creating static, interactive, and animated visualizations in Python. Used by Pandas for plotting.       |
-| [![MIKE IO](/images/logos/MIKE-IO-Logo-Pos-RGB-nomargin.png){width="185"}](https://github.com/DHI/mikeio) | DHI's open-source Python library to read, write, and manipulate MIKE files like `.dfs0`, `.dfs1`, `.dfs2`, `.dfs3`, `.dfsu`, and `.mesh`.    |
-| `tsod`                                                                                                 | A Python package for time series outlier detection, useful for data validation and cleaning. (Assumed DHI-related or commonly used)     |
-
-*(Note: Placeholder image paths `/images/logos/...` are used above. These would need to be actual paths in a real course structure.)*
+## Module Structure
+This module is structured as follows:
+1.  **Introduction to *mikeio***: Understanding the *mikeio* package and its role in the DHI ecosystem.
+2.  **Reading *.dfs0* Files**: How to load time series data from *.dfs0* files into *pandas* DataFrames.
+3.  **Selecting Time Series Data**: Techniques for selecting specific items and time ranges from your data, both with *mikeio* and *pandas*.
+4.  **Plotting Time Series Data**: Basic visualization of time series using *pandas* built-in plotting capabilities (which use *matplotlib*).
+5.  **Resampling Time Series**: Changing the frequency of your time series data (e.g., from hourly to daily).
+6.  **Introduction to *tsod***: Getting acquainted with the *tsod* package for time series outlier detection.
+7.  **Data Validation and Cleaning**: Applying *tsod* for anomaly detection and methods for handling missing data (`NaN` values).
+8.  **Creating *.dfs0* Files**: Writing your processed *pandas* DataFrames back into the *.dfs0* format.
+9.  **Homework**: Practical exercises to solidify your understanding and skills.
 
 ## Prerequisites
+- Completion of Module 1, including:
+    - Setup of VS Code, *uv*, and a Python environment.
+    - Basic familiarity with the terminal/PowerShell.
+    - Fundamental Python concepts (variables, data types, functions, importing modules).
+    - Basic *pandas* operations (DataFrame creation, selection, simple manipulations - as covered in Module 1).
+    - Basic *matplotlib* plotting (as introduced in Module 1).
+- Access to a working MIKE+ installation is beneficial for context but not strictly required for most exercises in this module.
+- Course project folder set up as per Module 1 instructions.
 
-This module assumes you have:
+## Python Packages Used in this Module
+We will be working primarily with the following Python packages. Installation will be covered where new.
+-   ***mikeio***: For reading and writing DHI-specific file formats, especially *.dfs0*.
+-   ***pandas***: For data manipulation and analysis of time series.
+-   ***matplotlib***: For creating static, interactive, and animated visualizations in Python (used by *pandas* for plotting).
+-   ***tsod***: For time series outlier detection.
+-   ***numpy***: Often used implicitly with *pandas* (e.g., for `np.nan`).
 
-*   Completed Module 1 or are comfortable with:
-    *   Setting up and using Visual Studio Code.
-    *   Basic terminal/PowerShell commands.
-    *   Managing Python environments and packages with `uv`.
-    *   Fundamental Python syntax (variables, data types, functions, imports).
-    *   Basic Pandas operations (creating DataFrames, selecting columns, simple filtering – as covered in Module 1 with CSV data).
-*   Access to course materials, including any provided `.dfs0` sample files.
-
-Let's begin by exploring `mikeio`!
-
----
-comments: false
----
+## Video - Module 2 Overview (5-10 min)
+- This video will provide a brief walkthrough of the topics covered in Module 2, highlight the key skills you'll acquire, and show how this module fits into your journey of automating workflows with Python and DHI tools.
+- {{< video URL_TO_MODULE_OVERVIEW_VIDEO >}}
