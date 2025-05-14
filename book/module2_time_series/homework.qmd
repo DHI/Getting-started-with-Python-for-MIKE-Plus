@@ -1,131 +1,159 @@
 # Homework {.unnumbered}
 
-## Instructions
+These exercises are designed to help you solidify your understanding of the concepts covered in Module 2. You'll get hands-on practice reading, manipulating, validating, and writing `dfs0` files using the powerful combination of `mikeio`, `pandas`, and `tsod`.
 
-Welcome to your Module 2 homework! These exercises are designed to help you solidify your understanding of working with time series data using Python, `mikeio`, `pandas`, `matplotlib`, and `tsod`.
+**General Setup for Exercises:**
 
--   Create a new Jupyter Notebook (e.g., `module02_homework.ipynb`) or Python script (e.g., `module02_homework.py`) in your course project folder for this assignment. We recommend using a Jupyter Notebook for ease of displaying plots and intermediate results.
--   For each exercise, write Python code to accomplish the specified task.
--   Add comments to your code to explain your logic and steps. This is good practice for yourself and for anyone else reading your code.
--   If you are using a Python script, ensure your outputs (e.g., printed DataFrames, messages) are clear. If using a Jupyter Notebook, make sure the outputs of your cells are visible.
--   You will need the following sample data files. Please download them and place them into a `data` subfolder within your current course project folder (e.g., if your project is `my_mike_python_course`, create `my_mike_python_course/data/` and save the files there).
-    -   `[link_to_homework_rain_dfs0]{download="homework_rain_data.dfs0"}` (This file contains hourly rainfall data for multiple gauges.)
-    -   `[link_to_homework_flow_dfs0]{download="homework_flow_data.dfs0"}` (This file contains 15-minute interval flow data, which may include some anomalies and missing values.)
+1.  Within your main course project folder, create a new subfolder dedicated to this module's homework, for example, `module2_homework`.
+2.  Before running any scripts, ensure that your `uv` virtual environment, which includes `pandas`, `matplotlib`, `mikeio`, and `tsod`, is activated in your VS Code terminal.
+3.  You will need to download data files for specific exercises; these will be linked directly in the exercise instructions. Make sure to save them into your `module2_homework` subfolder.
 
-Let's get started!
+---
 
-## Exercise 1: Reading and Basic Exploration of Rainfall Data
+**Exercise 1: Project Setup and Reading `dfs0`**
 
-This exercise focuses on getting familiar with reading `.dfs0` files and performing initial data exploration.
+1.  Download the sample time series file: [rain_data_raw.dfs0](data/homework/rain_data_raw.dfs0){download="rain_data_raw.dfs0"}. Save it into your `module2_homework` folder.
+2.  Create a new Python script file within your `module2_homework` folder, for instance, `process_rain_data.py`.
+3.  In your script, begin by importing the necessary libraries:
 
-1.  **Install `mikeio`**: If you haven't already installed `mikeio` in your project's Python environment, open your terminal (e.g., PowerShell in VS Code) and run:
-
-    ```powershell
-    uv pip install mikeio
+    ```{python}
+    #| output: false
+    import mikeio
+    import pandas as pd
     ```
 
-2.  **Read Rainfall Data**: Use `mikeio` to read the `homework_rain_data.dfs0` file into a `mikeio` `Dataset` object.
-3.  **Inspect Items**: Print the names, EUM (European Union Measurement) types, and EUM units of all items present in the dataset. This will help you understand what data you're working with.
+4.  Continue your script to:
+    *   Read the `rain_data_raw.dfs0` file into a `mikeio` `Dataset` object.
+    *   Convert this `Dataset` object into a `pandas` DataFrame.
+    *   Print the `.head()` and `.info()` of the DataFrame.
+    Now, write the Python code to perform these steps. After running your script, observe the output in your terminal to understand the DataFrame's initial structure and data types.
+
+**Exercise 2: Data Selection**
+
+Using the DataFrame you created in Exercise 1:
+
+1.  The `dfs0` file might contain data from multiple rainfall gauges. Let's say you are specifically interested in a gauge named "Gauge_A2". If this item name doesn't exist in your data (check the output from `.info()` in Exercise 1), please choose one of the available item names. Select only this item's data into a new DataFrame or Series. You can achieve this using standard `pandas` column selection, for example, `your_df['item_name_here']`.
+2.  From this single selected item's data, narrow down your focus further. Select only the records for a specific period, such as the entire month of July 2022. (Adjust the year and month if your dataset's time range is different). Remember, `pandas` allows slicing a `DatetimeIndex` with string representations of dates, like `your_series['YYYY-MM']`.
+3.  Print the `.head()` of this finally selected, time-filtered data to verify your selection.
+
+**Exercise 3: Resampling Time Series**
+
+Using the full-period data for the single item you selected in Exercise 2 (e.g., "Gauge_A2", *before* the time range selection in step 2.2, or reload it if that's simpler):
+
+1.  The raw data is often at a fine temporal resolution (e.g., 5-minute or 10-minute intervals). Your task is to resample this data to calculate the **total hourly rainfall**. You'll use the `.resample()` method in `pandas` with an appropriate rule (e.g., `'H'` for hourly) followed by an aggregation method like `.sum()`.
+2.  Print the `.head()` of the resulting hourly resampled DataFrame.
+3.  *Optional Challenge:* Resample the same original data to determine the **mean daily rainfall**. Print the `.head()` of this daily data as well.
+
+**Exercise 4: Basic Anomaly Detection with `tsod`**
+
+Now, take the **hourly resampled rainfall Series** you generated in Exercise 3:
+
+1.  Import an appropriate outlier detector from the `tsod` library. For instance, you could use `tsod.RangeOutlierDetector` if you have a good idea of reasonable minimum/maximum rainfall intensity, or `tsod.StddevOutlierDetector` with a multiplier (e.g., 3 standard deviations).
+
+    ```{python}
+    #| output: false
+    # Example import, choose one or explore others
+    from tsod import StddevOutlierDetector 
+    # from tsod import RangeOutlierDetector 
+    import numpy as np # We'll likely need numpy later
+    ```
+
+2.  Instantiate and apply your chosen detector to your hourly rainfall Series. This typically involves creating an instance of the detector class and then calling its `.detect()` method on your `pandas` Series.
+3.  The detector will usually return a boolean Series, where `True` indicates a potential outlier. Print the total number of outliers detected by using `.sum()` on this boolean Series (since `True` values are treated as 1 and `False` as 0 in a sum).
+
+**Exercise 5: Handling Anomalies and Missing Data**
+
+Continuing with the hourly rainfall Series and the detected outliers from Exercise 4:
+
+1.  A common strategy for handling identified outliers is to replace them with `np.nan` (Not a Number). Use the boolean Series from your `tsod` detector to assign `np.nan` to the outlier locations in your hourly rainfall Series. (You've already imported `numpy as np` in the previous step's example).
+2.  Verify your action by checking how many `NaN` values are now present in your Series using `.isna().sum()`.
+3.  Now, fill these `NaN` values. A simple and often effective method for time series data is forward fill (`ffill`). Apply this using the `.fillna(method='ffill')` method on your Series.
+4.  Print the `.head()` of the cleaned (outliers replaced and `NaN`s filled) Series to see the result.
+
+**Exercise 6: Creating a New `dfs0` File**
+
+With the cleaned (outliers handled, `NaN`s filled) hourly rainfall `pandas` Series from Exercise 5, let's save it back to a `dfs0` file:
+
+1.  Create a `mikeio.DataArray` from your cleaned `pandas` Series. When doing so, you'll need to provide the data itself, the time index, and crucial metadata via a `mikeio.ItemInfo` object. For example:
 
     ```python
-    # Example of how to access item info (adapt for all items)
-    # for item in ds.items:
-    #     print(f"Name: {item.name}, Type: {item.type}, Unit: {item.unit}")
+    #| output: false
+    #| include: false
+    # Assume 'cleaned_series' is your pandas Series from Exercise 5
+    # and 'mikeio' is imported. This is a conceptual setup.
+    # For the actual exercise, you'll use your actual Series.
+    import pandas as pd
+    import mikeio
+    # Dummy data for demonstration of ItemInfo structure
+    idx = pd.date_range("2023-01-01", periods=5, freq="H")
+    data = [1,2,3,4,5]
+    cleaned_series = pd.Series(data=data, index=idx)
+    # End dummy data
     ```
 
-4.  **Convert to `pandas` DataFrame**: Convert the `mikeio` `Dataset` into a `pandas` DataFrame. This is a common step for leveraging `pandas`' powerful data analysis tools.
-5.  **Display Initial Data**: Display the first 10 rows of the `pandas` DataFrame using the `.head()` method.
-6.  **Summary Statistics**: Print summary statistics for the DataFrame using the `.describe()` method. This will give you a quick overview of the data distribution (count, mean, standard deviation, min, max, quartiles).
+    Now, to create the `DataArray`:
+    
+    ```{python}
+    #| eval: false
+    # This is an example structure; adapt it with your actual 'cleaned_series'
+    item_name = "Processed_Rainfall_Gauge_A2"
+    item_type = mikeio.EUMType.Rainfall 
+    item_unit = mikeio.EUMUnit.mm_per_hour # Adjust if your sum was total mm
 
-## Exercise 2: Selecting and Plotting Rainfall Data
+    da = mikeio.DataArray(
+        data=cleaned_series.values, # Use .values for numpy array
+        time=cleaned_series.index,
+        item=mikeio.ItemInfo(name=item_name, itemtype=item_type, unit=item_unit)
+    )
+    ```
+    Adjust the `name`, `itemtype`, and `unit` as appropriate for your data. For instance, if your hourly sum represents total millimeters for that hour, `mikeio.EUMUnit.mm_per_hour` (or simply `mikeio.EUMUnit.mm` if the rate aspect is implied by the hourly step) would be suitable.
 
-Now, let's practice selecting specific data and visualizing it. You'll use the `pandas` DataFrame containing rainfall data from Exercise 1.
-
-1.  **Select Specific Gauge**: From your DataFrame, select all data for one specific rainfall gauge. You'll need to use one of the item names you found in Exercise 1.3 (e.g., "Gauge_A", "RG1" - check your output). This will result in a `pandas` Series.
-2.  **Select Specific Time Period**: From the selected gauge's data (the Series from step 1), select data for a specific 24-hour period (e.g., "2023-05-10" or another date present in your data).
-3.  **Plot Selected Data**: Create a line plot of the rainfall for your selected gauge over the selected 24-hour period.
-    *   Ensure your plot has a clear **title** (e.g., "Rainfall for Gauge_A on 2023-05-10").
-    *   Label the **x-axis** appropriately (e.g., "Time").
-    *   Label the **y-axis** with the quantity and its unit (e.g., "Rainfall (mm)" - get the unit from your item inspection in Ex 1.3).
-    *   Add a **grid** to the plot for better readability.
-    *   Use `matplotlib.pyplot` for displaying the plot (`plt.show()`).
-4.  **Save Plot**: Save your plot as an image file (e.g., `rainfall_gauge_A_20230510.png`). Make sure to create an `output/plots` subfolder in your project directory if it doesn't exist, and save the image there.
-
-## Exercise 3: Resampling Flow Data
-
-This exercise deals with changing the temporal frequency of time series data using resampling.
-
-1.  **Read Flow Data**: Read the `homework_flow_data.dfs0` file. This time, convert it directly to a `pandas` DataFrame upon reading (or read as a `Dataset` and then convert).
-2.  **Resample Data**: The flow data is provided at 15-minute intervals. Resample this data to:
-    a.  **Hourly mean flow**: Calculate the average flow for each hour.
-    b.  **Daily total flow (aggregate)**: Calculate an aggregate daily flow.
-
-        ::: {.callout-tip}
-        #### Calculating Daily Total Flow
-        For "daily total flow" from a rate like m�/s, a true volumetric total would involve summing (rate � interval_duration) over the day. For this exercise, to keep it simpler, you can calculate a daily aggregate by **summing** the 15-minute flow rate values for each day. This gives a value representing the sum of observed rates over the day, not a true volume in m�.
-        :::
-
-3.  **Display Resampled Data**: Print the `.head()` of both the hourly mean flow DataFrame and the daily total flow DataFrame.
-4.  **Plot Original vs. Resampled**: For one of the flow items (columns) in your DataFrame:
-    *   Plot the original 15-minute flow data.
-    *   On the *same* plot, overlay its corresponding hourly mean flow data.
-    *   Choose a 3-day period for the plot that clearly shows the difference between the original and resampled data.
-    *   Use different colors for the two series and include a legend to distinguish them.
-    *   Add a title and appropriate axis labels.
-
-## Exercise 4: Anomaly Detection and Cleaning Flow Data
-
-Data often contains errors or anomalies. This exercise introduces basic anomaly detection and data cleaning. You'll use the original 15-minute flow DataFrame from Exercise 3.
-
-1.  **Install `tsod`**: If you haven't already installed `tsod` in your project's Python environment, open your terminal and run:
-
-    ```powershell
-    uv pip install tsod numpy
+2.  Next, create a `mikeio.Dataset` to hold your `DataArray`. A `Dataset` is essentially a list of `DataArray`s.
+    
+    ```{python}
+    #| eval: false
+    # Assuming 'da' is the DataArray from the previous step
+    ds = mikeio.Dataset([da])
     ```
 
-    (`numpy` is often a dependency but good to ensure it's there for `np.nan`).
-2.  **Select Flow Item**: Choose one flow item (column) from your 15-minute flow DataFrame to work with.
-3.  **Detect Anomalies**: Use the `tsod.detectors.SigmaDetector` to identify anomalies in the selected flow item (Series).
-    *   You can experiment with parameters. For example, `n_sigma=3.5`.
-    *   For `window_size`, you could use `None` for a global standard deviation, or a rolling window (e.g., `window_size=24*4` for a 24-hour rolling window, as data is 15-minute interval).
-    The `detect()` method will return a boolean Series (True for anomalies).
-4.  **Handle Anomalies**: Create a new `pandas` Series by making a copy of your selected flow item. In this new Series, replace the values identified as anomalies (where the boolean Series from step 3 is `True`) with `np.nan` (Not a Number).
-5.  **Fill Missing Values**: Fill the `np.nan` values in this new, cleaned Series using linear interpolation. For time series, `interpolate(method='time')` is often a good choice.
-6.  **Visualize Cleaning**: Create a plot that shows:
-    *   The original flow data for the selected item.
-    *   The points identified as anomalies (e.g., plot them as distinct markers, like red circles, on top of the original data).
-    *   The cleaned (interpolated) flow data.
-    *   Choose a time period for the plot that clearly demonstrates where anomalies were detected and how the interpolation has filled the gaps. Include a legend.
-
-## Exercise 5: Creating a `.dfs0` File
-
-After processing data, you'll often want to save it back to a DHI-specific format.
-
-1.  **Prepare Data**: Take the cleaned (interpolated) flow Series from Exercise 4, step 5.
-2.  **Create DataFrame for Saving**: Create a new `pandas` DataFrame that contains *only* this single cleaned flow Series.
-3.  **Define Item Information**: Define appropriate `mikeio.ItemInfo` for this cleaned flow data.
-    *   Choose a descriptive name for the item (e.g., "Cleaned_Flow_GaugeX", replacing X with the gauge identifier if known).
-    *   Use an appropriate EUM type (e.g., `mikeio.EUMType.Discharge`) and EUM unit (e.g., `mikeio.EUMUnit.cubic_meter_per_second`). Refer to `mikeio` documentation or examples from the module for precise `EUMType` and `EUMUnit` usage.
-
-    ```python
-    # Example ItemInfo (adjust type and unit strings/enums as needed for your mikeio version):
-    # items = [
-    #     mikeio.ItemInfo("Cleaned_Flow_Gauge_XYZ", 
-    #                      item_type=mikeio.EUMType.Discharge, 
-    #                      unit=mikeio.EUMUnit.cubic_meter_per_second)
-    # ]
-    # Or using string fallbacks if enums are problematic:
-    # items = [
-    #     mikeio.ItemInfo(name="Cleaned_Flow_Gauge_XYZ", item_type="Discharge", unit="m^3/s")
-    # ]
+3.  Finally, write this `Dataset` to a new `dfs0` file. Name it `processed_hourly_rain.dfs0` and save it in your homework folder. Use the `.to_dfs()` method of the `Dataset` object.
+    
+    ```{python}
+    #| eval: false
+    # Assuming 'ds' is the Dataset from the previous step
+    output_filepath = "processed_hourly_rain.dfs0" 
+    ds.to_dfs(output_filepath)
+    print(f"Processed data saved to {output_filepath}")
     ```
 
-4.  **Write to `.dfs0`**: Write this new DataFrame to a `.dfs0` file.
-    *   Name the file `cleaned_flow_output.dfs0`.
-    *   Save it in your `output` subfolder (create this folder if it doesn't exist).
-5.  **Bonus Task**: To verify your file creation, read back the `cleaned_flow_output.dfs0` file you just created using `mikeio.read()` and print the `.head()` of its `pandas` DataFrame representation. Also, print the item information to check if it was saved correctly.
+**Exercise 7 (Optional): Visualization**
 
-Good luck, and we hope you enjoy applying what you've learned in Module 2!
+To better understand the impact of your data processing steps:
+
+1.  Using `matplotlib` (which you encountered in Module 1), create a plot that visualizes the following three Series:
+    *   The original hourly resampled data (from Exercise 3, before any outlier handling).
+    *   The data after you replaced the detected outliers with `np.nan` (from Exercise 5, before filling).
+    *   The final cleaned and filled data (from Exercise 5, after filling `NaN`s).
+    Plot them on the same axes for direct comparison, or on separate subplots if that's clearer. This will help you visually assess the changes made during the cleaning process. Remember to import `matplotlib.pyplot as plt`.
+
+---
+
+## Practice Exercises (Optional) {.unnumbered}
+
+For those looking for more practice, consider these additional tasks:
+
+*   Download the [optional_flow_data.dfs0](data/homework/optional_flow_data.dfs0){download="optional_flow_data.dfs0"} file. This file contains flow data.
+*   Apply the complete workflow you've learned:
+    1.  Read the `dfs0` file.
+    2.  Select a specific item or time range if desired.
+    3.  Resample the data if appropriate for its type (e.g., calculating daily averages from hourly flow).
+    4.  Validate the data using a `tsod` detector.
+    5.  Clean the data by handling outliers and filling `NaN`s.
+    6.  Write the processed data to a new `dfs0` file.
+*   Experiment with different `tsod` detectors or adjust the parameters of the detectors you've already used. Observe how these changes affect outlier detection.
+*   Explore various `NaN` filling strategies (e.g., `bfill`, linear interpolation with `.interpolate()`, or filling with the mean/median of the series). Visualize and consider the impact of each method on your time series.
+
+For a guided approach to these optional exercises or further exploration, you can refer to the supplementary Jupyter Notebook: [M2_Optional_Practice.ipynb](notebooks/M2_Optional_Practice.ipynb){download="M2_Optional_Practice.ipynb"} (Note: This is a placeholder filename; the actual notebook will be provided with the course materials).
 
 ---
 comments: false

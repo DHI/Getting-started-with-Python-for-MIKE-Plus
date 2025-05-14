@@ -1,0 +1,74 @@
+# Resampling Time Series Data
+
+Resampling is a frequent operation in time series analysis, involving the adjustment of your data's time frequency. This can mean either **downsampling**, where you aggregate data from a higher frequency to a lower one (for instance, converting 10-minute data into hourly or daily summaries), or **upsampling**, where you increase the frequency, such as transforming daily data into hourly data, which typically requires some form of interpolation. The *pandas* library offers robust tools for these tasks.
+
+## Why Resample Time Series Data?
+
+There are several compelling reasons to resample your time series data. You might need to align datasets with differing time resolutions for comparative analysis or to combine them effectively. Aggregation is another common use, such as calculating total daily rainfall from hourly records or determining average monthly temperatures from daily figures. Downsampling can also serve to reduce noise in high-frequency data, providing a smoother representation. Furthermore, many hydrological models require input data at specific time steps, making resampling a necessary preparatory step.
+
+## Using `pandas.DataFrame.resample()`
+
+The primary method for resampling in *pandas* is `.resample()`, which is usually called on a DataFrame or Series that possesses a `DatetimeIndex`. The process generally involves two main steps:
+
+1.  **Specify the Target Frequency:** You provide a rule or offset string to define the new frequency. Common examples include `'D'` for daily, `'H'` for hourly, or `'15T'` for 15-minute intervals.
+2.  **Apply an Aggregation/Interpolation Method:** After specifying the new frequency, you must dictate how the data should be aggregated or interpolated. This is done by chaining methods like `.mean()`, `.sum()`, `.min()`, `.max()`, `.first()`, `.last()`, or `.interpolate()`.
+
+Let's look at a few examples. To downsample high-frequency data to **daily means**, you could use:
+
+```{python}
+#| echo: true
+#| output: true
+# Assume 'df' is a DataFrame with high-frequency data and a DatetimeIndex.
+# For demonstration, let's create a sample df:
+import pandas as pd
+import numpy as np
+rng = pd.date_range('2023-01-01 00:00', periods=144, freq='10T') # 24 hours of 10-min data
+df_sample_values = pd.DataFrame({'value': np.random.rand(len(rng))}, index=rng)
+
+daily_means = df_sample_values['value'].resample('D').mean()
+print(daily_means.head())
+```
+
+Similarly, to calculate **total hourly sums**, perhaps for rainfall data:
+
+```{python}
+#| echo: true
+#| output: true
+# Assume 'df_sample_rainfall' has 10-minute rainfall data.
+df_sample_rainfall = pd.DataFrame({'rainfall_mm': np.random.randint(0,2,size=len(rng))}, index=rng)
+
+hourly_sums = df_sample_rainfall['rainfall_mm'].resample('H').sum()
+print(hourly_sums.head())
+```
+
+Upsampling, such as converting daily data to hourly, requires a method to fill the newly created time points. A common approach is to use forward fill (`.ffill()`):
+
+```{python}
+#| echo: true
+#| output: true
+# Assume 'daily_data_series' is a Series with daily data and a DatetimeIndex.
+# For demonstration, let's create a sample daily_data_series:
+daily_rng = pd.date_range('2023-01-01', periods=3, freq='D')
+daily_data_series = pd.Series([10, 12, 11], index=daily_rng, name='temp_C')
+
+hourly_upsampled = daily_data_series.resample('H').ffill()
+print(hourly_upsampled.head())
+```
+
+::: {.callout-tip}
+## Ensure `DatetimeIndex`
+For the `.resample()` method to function correctly, your DataFrame's index **must** be a `DatetimeIndex`. This is typically the case when you load `dfs0` data using `mikeio` and convert it to a DataFrame. If your index is not already a `DatetimeIndex`, you might need to use `pd.to_datetime()` to convert an existing column to datetime objects and then `df.set_index()` to set that column as the DataFrame's index.
+:::
+
+For a comprehensive list of resampling rules, offset aliases, and available aggregation methods, refer to the [Pandas `resample()` documentation](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.resample.html).
+
+## Video - Example: Resampling Time Series Data (5-10 min)
+
+The following video demonstrates these resampling techniques in action:
+
+{{< video https://www.youtube.com/embed/placeholder_video_id >}}
+
+*   Shows a *pandas* DataFrame with a high-frequency time series (e.g., 10-minute data).
+*   Demonstrates downsampling to hourly data using `.resample('H').sum()`.
+*   Shows the resulting DataFrame, highlighting the change in frequency and values.
+*   Optionally, demonstrates upsampling with a simple fill method like `.ffill()`.

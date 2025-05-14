@@ -1,0 +1,57 @@
+# Introducing MIKE IO
+
+This section introduces `mikeio`, a key Python package from DHI for working with MIKE file formats, which will be instrumental as we explore time series data.
+
+## What is MIKE IO?
+
+[MIKE IO](https://github.com/DHI/mikeio) is a versatile Python library developed by DHI. Its primary purpose is to simplify the process of reading, writing, and manipulating data from various MIKE file formats. These formats include the time series files (`dfs0`) we'll focus on in this module, as well as `dfs1`, `dfs2`, `dfs3`, `dfsu` (flexible mesh files), and standard mesh files. Essentially, `mikeio` acts as a crucial bridge, connecting the robust MIKE software ecosystem with the powerful capabilities of the scientific Python stack.
+
+::: {.callout-note}
+## MIKE IO in the DHI Python Ecosystem
+`mikeio` serves as a foundational package within DHI's Python ecosystem. Other specialized DHI Python packages, such as `mikeio1d` (designed for 1D model results) and `mikepluspy` (for direct interactions with MIKE+ projects), often build upon or complement the functionalities provided by `mikeio`.
+:::
+
+## Why Use MIKE IO for Time Series Data (`dfs0`)?
+
+For this course, and especially in this module dedicated to time series, `mikeio` is indispensable for several reasons:
+
+*   **Reading `dfs0` files:** It allows you to programmatically access time series data stored in `.dfs0` files. These files are commonly used for meteorological data, boundary conditions, and observed data time series in MIKE+ workflows.
+*   **Integrating with `pandas`:** `mikeio` makes it straightforward to convert `dfs0` data into `pandas` DataFrames. This enables you to leverage the powerful data analysis and manipulation capabilities of `pandas` that you learned about in Module 1.
+*   **Writing `dfs0` files:** You can easily export processed or newly created time series data from `pandas` DataFrames back into the `.dfs0` format, making it ready for use in MIKE+ or other DHI tools.
+*   **Automation:** By scripting these operations, `mikeio` helps automate repetitive tasks involving `dfs0` data, leading to significant time savings and improved efficiency.
+
+## Setting up MIKE IO
+
+You will install `mikeio` using `uv`, the Python package and environment manager we introduced in Module 1.
+
+::: {.callout-tip}
+## Activate Your Environment
+Before installing any new packages, always ensure that your project's virtual environment (the one created with `uv`) is activated in your terminal. If you need a refresher on how to do this, please refer back to the instructions in Module 1.
+:::
+
+1.  **Install `mikeio`:**
+    Open your terminal (for instance, PowerShell integrated within VS Code) and, after confirming your virtual environment is active, run the following command:
+
+    ```powershell
+    uv pip install mikeio
+    ```
+
+2.  **Verify Installation:**
+    You can confirm that `mikeio` has been installed correctly by importing it in a Python script or an interactive Python session and checking its version. This also ensures it's accessible within your environment.
+
+    ```{python}
+    #| output: true
+    import mikeio
+    print(f"MIKE IO version: {mikeio.__version__}")
+    ```
+
+    If the installation was successful, this script will print the installed version of `mikeio`.
+
+## Key MIKE IO Concepts for `dfs0` Files
+
+When working with `dfs0` files (and indeed other DHI formats) using `mikeio`, you'll primarily encounter two important types of objects:
+
+*   **`DataArray`**: This object represents a single time series (or, in other contexts, a spatial field). It bundles the actual data values with a time axis and essential metadata, such as the item's name and its type (e.g., "Discharge," "Water Level").
+*   **`Dataset`**: A `Dataset` acts as a container for one or more `DataArray` objects. In the context of `dfs0` files, a `Dataset` typically holds multiple time series items that are grouped together within that single file.
+
+You'll see these `DataArray` and `Dataset` objects in action as we proceed to read data from and write data to `dfs0` files in the upcoming sections.

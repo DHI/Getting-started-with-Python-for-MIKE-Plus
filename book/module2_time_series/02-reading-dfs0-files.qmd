@@ -1,0 +1,75 @@
+# Reading `dfs0` Files with `mikeio`
+
+This section covers how to read time series data from `dfs0` files using `mikeio` and convert it into `pandas` DataFrames for easier manipulation.
+
+## Reading `dfs0` Files
+
+The primary function in `mikeio` for reading `dfs0` files, along with other dfs formats, is `mikeio.read()`. To use it, you simply provide the path to your `.dfs0` file.
+
+For example, to read a file (ensure you have a `sample.dfs0` file in a `data` subdirectory or update the path accordingly):
+
+```{python}
+#| output: false
+import mikeio
+import pandas as pd # Often used with mikeio
+
+# Replace with the actual path to your dfs0 file
+dfs0_file_path = "data/sample.dfs0" 
+ds = mikeio.read(dfs0_file_path) 
+```
+After this line executes, the variable `ds` will hold the data read from your `dfs0` file.
+
+### The `Dataset` Object
+
+The `mikeio.read()` function returns a `Dataset` object. This object acts as a container, holding all the time series items (like different sensor readings or model outputs), along with their corresponding data values and time information, directly from the `dfs0` file.
+
+You can get a quick overview of the `Dataset` by printing it. Assuming `ds` was loaded as shown in the previous step:
+
+```{python}
+#| output: true
+# Ensure 'ds' is loaded from a dfs0 file as shown in the previous code block.
+# If you are running this cell independently, make sure to load 'ds' first, for example:
+# import mikeio
+# ds = mikeio.read("data/sample.dfs0") 
+
+print(ds)
+```
+The output typically shows you the number of items, their names, and information about the time axis of the data.
+
+## Converting `mikeio` `Dataset` to a Pandas DataFrame
+
+While the `mikeio` `Dataset` object is useful for direct DHI file interaction, a `pandas` DataFrame is often more convenient for most data analysis and manipulation tasks in Python. `mikeio` makes this conversion straightforward with the `.to_dataframe()` method, available on `Dataset` objects.
+
+You can convert your `Dataset` to a DataFrame as follows (again, assuming `ds` is already loaded):
+
+```{python}
+#| output: true
+# Ensure 'ds' is loaded from a dfs0 file from a previous step.
+# The next line will cause an error if 'ds' is not defined.
+df = ds.to_dataframe()
+print(df.head())
+```
+The `df.head()` command will display the first few rows of your new DataFrame, allowing you to quickly inspect its structure.
+
+### Structure of the Resulting DataFrame
+
+The `pandas` DataFrame created by the `.to_dataframe()` method is structured conveniently for time series analysis:
+
+*   It will have a `DatetimeIndex` representing the time steps from your `dfs0` file. This special index makes time-based selections and operations very efficient.
+*   The columns of the DataFrame will correspond to each item (individual time series) found in the `dfs0` file. The column names are usually taken directly from the item names defined within the `dfs0` file.
+
+::: {.callout-tip}
+## Exploring Your Data in Pandas
+Once your data is in a Pandas DataFrame, you can use all the familiar Pandas operations learned in Module 1 to explore it:
+*   `df.head()` to see the first few rows.
+*   `df.info()` to get a summary of data types and non-null values.
+*   `df.describe()` for descriptive statistics.
+*   `df.plot()` for quick visualizations (if `matplotlib` is configured).
+Refer to the [Pandas documentation](https://pandas.pydata.org/pandas-docs/stable/) for a full range of capabilities.
+:::
+
+## Video - Example: Reading `dfs0` and Converting to DataFrame (5-10 min)
+
+The following video demonstrates these steps: opening a terminal in VS Code, running a Python script to read a `dfs0` file with `mikeio`, inspecting the `Dataset` object, converting it to a `pandas` DataFrame, and briefly displaying the DataFrame's content.
+
+{{< video https://www.youtube.com/embed/placeholder_video_id >}}

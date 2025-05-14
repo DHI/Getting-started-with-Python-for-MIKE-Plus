@@ -1,0 +1,107 @@
+# Data Validation and Cleaning with `tsod` and `pandas`
+
+This section brings together the outlier detection power of `tsod` with the versatile data manipulation capabilities of `pandas`. You'll learn how to identify anomalous data points in your time series and then apply common strategies for handling these, effectively cleaning your data for further analysis or model input.
+
+## Detecting Anomalies with `tsod`
+
+Once you have your time series data in a `pandas` Series, you can employ `tsod` to pinpoint unusual observations. `tsod` offers various detectors; for instance, you might use a `StddevOutlierDetector` to identify points that deviate significantly from a rolling mean, or a `RangeOutlierDetector` for values outside a plausible physical range.
+
+Let's assume you have a `pandas` Series, say `my_time_series`, and have chosen and configured an appropriate `tsod` detector. Applying the detector is straightforward:
+
+```{python}
+#| output: false
+# Assume 'my_time_series' is a pandas Series 
+# and 'detector' is an initialized tsod detector object, e.g.:
+# import tsod
+# detector = tsod.StddevOutlierDetector(n_stddev=3)
+
+# outlier_flags = detector.detect(my_time_series)
+# 'outlier_flags' would now be a boolean Series (True for outliers)
+```
+
+The `detect()` method typically returns a boolean `pandas` Series of the same length as your input, where `True` indicates an outlier and `False` indicates a normal data point.
+
+## Marking Anomalies as `NaN`
+
+A common and effective strategy after identifying outliers is to replace them with `NaN` (Not a Number). This explicitly flags these data points as missing or unreliable, and `pandas` is well-equipped to handle `NaN` values in subsequent operations. Using the boolean Series from `tsod` (let's call it `outlier_flags`), you can easily set the corresponding values in your original Series to `NaN`.
+
+```{python}
+#| output: false
+import numpy as np
+# Assume 'my_time_series' is your pandas Series 
+# and 'outlier_flags' is the boolean Series from tsod
+
+# my_time_series[outlier_flags] = np.nan
+# Outliers in 'my_time_series' are now replaced with NaN
+```
+
+::: {.callout-note}
+## `numpy.nan` for Missing Data
+`np.nan` is the standard representation for missing numerical data in `pandas` and `numpy`. To use it, you'll need to import `numpy`, conventionally as `np`:
+`import numpy as np`
+:::
+
+## Strategies for Filling `NaN` Values using `pandas`
+
+After marking outliers as `NaN`, or if your dataset initially contained missing values, you'll often need to fill these `NaN`s. Many analytical functions and time series models cannot process `NaN` values or may produce misleading results. `pandas` provides several convenient methods, primarily through the `.fillna()` and `.interpolate()` functions, to address this.
+
+Why bother filling `NaN`s?
+*   Many statistical functions in `pandas` and other libraries ignore `NaN`s by default, but some might error or behave unexpectedly.
+*   Time series models, particularly for forecasting, often require a complete, continuous dataset without gaps.
+
+Here are some common strategies for filling `NaN`s, assuming you have a Series `my_time_series_with_nans`:
+
+*   **Forward Fill (`ffill`):** This method propagates the last valid observation forward to fill `NaN`s. It's often suitable for sensor data where values tend to persist until a new reading is available.
+
+```{python}
+#| output: false
+# Assume 'my_time_series_with_nans' is a pandas Series containing NaNs
+# filled_ffill = my_time_series_with_nans.fillna(method='ffill')
+```
+
+*   **Backward Fill (`bfill`):** Conversely, `bfill` propagates the next valid observation backward.
+
+```{python}
+#| output: false
+# Assume 'my_time_series_with_nans' is a pandas Series containing NaNs
+# filled_bfill = my_time_series_with_nans.fillna(method='bfill')
+```
+
+*   **Interpolation:** This method fills `NaN`s using various interpolation techniques. Linear interpolation is a common choice, estimating missing values based on a straight line between adjacent valid points.
+
+```{python}
+#| output: false
+# Assume 'my_time_series_with_nans' is a pandas Series containing NaNs
+# interpolated_linear = my_time_series_with_nans.interpolate(method='linear')
+```
+
+*   **Filling with a Constant:** You can also replace `NaN`s with a specific constant value, such as zero, the mean, or the median of the series.
+
+```{python}
+#| output: false
+# Assume 'my_time_series_with_nans' is a pandas Series containing NaNs
+# series_mean = my_time_series_with_nans.mean()
+# filled_with_mean = my_time_series_with_nans.fillna(series_mean)
+```
+
+::: {.callout-caution}
+## Choosing a Filling Method
+The choice of `NaN` filling method is critical and depends heavily on your data's characteristics and what you intend to do with it.
+*   `ffill` is often appropriate for data where values are expected to remain constant between measurements.
+*   Interpolation can provide smoother results but might introduce artificial patterns if the underlying data isn't suited for it.
+*   Filling with a mean or median can reduce the overall variance of your dataset and mask genuine data features.
+Always consider the potential implications of your chosen method on subsequent analyses.
+:::
+
+Visualizing your time series before and after outlier handling and `NaN` filling is a crucial step. Plotting the data helps you assess the impact of these operations and ensure they've had the intended effect without unduly distorting your data.
+
+## Video - Example: Anomaly Detection and `NaN` Handling (5-10 min)
+
+The following video demonstrates a practical example of these concepts:
+*   Starting with a `pandas` Series containing some apparent outliers.
+*   Applying a `tsod` detector to identify these anomalies.
+*   Using the `tsod` output to convert outliers to `np.nan`.
+*   Illustrating `fillna()` (e.g., `ffill`) and `interpolate()` methods to handle the `NaN` values.
+*   Briefly plotting the original, `NaN`-marked, and filled series to visually compare the results.
+
+{{< video https://www.youtube.com/embed/placeholder_video_id >}}

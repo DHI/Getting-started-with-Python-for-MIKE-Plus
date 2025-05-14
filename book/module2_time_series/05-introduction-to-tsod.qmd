@@ -1,0 +1,55 @@
+# Introduction to `tsod` for Data Validation
+
+Time series data, which forms the backbone of many MIKE+ modelling tasks, can sometimes be less than perfect. The `tsod` Python package is a valuable tool designed specifically for **t**ime **s**eries **o**utlier **d**etection, helping you identify and address these imperfections. This section will introduce you to `tsod` and how to get it set up in your environment.
+
+## What is `tsod`?
+
+[`tsod`](https://github.com/DHI/tsod) is an open-source Python package, also developed by DHI, that offers a collection of methods for detecting outliers or anomalies. It's specifically tailored for working with univariate time series data, meaning it looks at one variable over time (like a single rainfall gauge record or a specific flow measurement).
+
+## Why Use `tsod` for Data Validation?
+
+You might wonder why dedicating a tool to outlier detection is necessary. Time series data, especially when sourced from sensors or external systems, often contains errors, unexpected spikes, or other unusual values known as outliers. These can arise from various causes, such as sensor malfunctions, data transmission errors, or even genuine but extreme environmental events.
+
+Identifying and appropriately handling these outliers is a crucial step in data validation for several compelling reasons:
+
+*   **Statistical Integrity:** Outliers can significantly skew statistical analyses, leading to misleading conclusions.
+*   **Model Performance:** If used as input, anomalous data can negatively impact the performance and reliability of your MIKE+ models.
+*   **Data Quality:** Cleaning your data improves its overall quality and boosts your confidence in any subsequent results or decisions based on it.
+
+`tsod` provides a convenient and standardized way to apply established outlier detection techniques without needing to implement complex algorithms from scratch.
+
+## Setting up `tsod`
+
+Just like *mikeio*, you'll install *tsod* using *uv* within your activated Python virtual environment. Remember to always ensure your project's environment is active in your terminal before installing new packages.
+
+1.  **Install `tsod`:**
+    Open your terminal (e.g., PowerShell in VS Code) and run the following command:
+
+    ```powershell
+    uv pip install tsod
+    ```
+
+2.  **Verify Installation (Optional):**
+    To confirm that *tsod* has been installed correctly, you can try importing it in a Python script or an interactive Python session.
+
+    ```{python}
+    #| output: false
+    # Try importing tsod to check if it's installed
+    import tsod
+    print("tsod imported successfully!") # This line is just for feedback if run in a script
+    ```
+
+    ::: {.callout-note}
+    Unlike some packages, simply importing `tsod` might not directly display a version number via an attribute like `tsod.__version__` at the top level. Successfully importing it without errors is usually a good indication that the installation was successful.
+    :::
+
+## Overview of a "Cookie-Cutter" Anomaly Detection Approach with `tsod`
+
+For this module, we'll focus on a straightforward, "cookie-cutter" approach to applying an outlier detection method from *tsod*. While *tsod* offers various sophisticated detectors, understanding a basic workflow will provide a solid foundation. This typical workflow involves a few key steps:
+
+1.  **Selecting a Detector:** *tsod* provides a range of detectors, each based on different principles (e.g., statistical measures like standard deviation, value ranges, or more complex algorithms). We will begin with a relatively simple one.
+2.  **Instantiating the Detector:** Once a detector is chosen, you'll create an instance of its class. This sometimes involves providing specific parameters to customize its behavior, such as a window size for calculations or a multiplier for a standard deviation threshold.
+3.  **Applying the Detector:** The instantiated detector object will have a method (often named `.detect()`) that you apply to your `pandas` Series (which represents a single time series item).
+4.  **Interpreting Results:** The detector then returns information identifying which data points are considered outliers. This is often a boolean `pandas` Series, where `True` indicates an outlier.
+
+In the next section, we'll put this conceptual workflow into practice by applying a `tsod` detector to identify outliers in a sample time series and then discuss strategies for handling them.
