@@ -1,83 +1,124 @@
 # Creating `dfs0` Files from `pandas` DataFrames
 
-After meticulously processing your time series data in `pandas`—perhaps by resampling, cleaning, or validating it—you'll often need to save it back into a `dfs0` file. This format is standard for use in MIKE+ or other DHI software, and `mikeio` makes this export process straightforward. The general workflow involves ensuring your `pandas` DataFrame is correctly prepared, converting relevant data columns into `mikeio.DataArray` objects, collecting these into a `mikeio.Dataset`, and finally, writing this `Dataset` to a `.dfs0` file.
+After you've meticulously processed your time series data in `pandas`—perhaps through resampling, cleaning, or validation—you'll often need to save it back into a `.dfs0` file. This step is crucial for integrating your results with MIKE+ or other DHI software, or for archiving purposes. Fortunately, the *mikeio* library provides a straightforward way to accomplish this.
 
-## Preparing Your Pandas DataFrame
+The general workflow involves a few key steps:
+1.  Ensuring your `pandas` DataFrame is correctly prepared.
+2.  Converting each relevant column (a `pandas` Series) from your DataFrame into a `mikeio.DataArray`.
+3.  Collecting these `mikeio.DataArray` objects into a `mikeio.Dataset`.
+4.  Writing this `mikeio.Dataset` to a `.dfs0` file.
 
-Before you can export your data, it's crucial to ensure your `pandas` DataFrame is suitably formatted. First, the DataFrame **must** have a `DatetimeIndex`, as this provides the time information for your series. Second, the columns you intend to export should have meaningful names; these names can directly translate into item names within the `dfs0` file. Lastly, ensure the data itself is numeric, typically floats or integers.
+Let's walk through this process.
 
-Let's assume you have a processed DataFrame named `processed_df`.
+## Preparing Your `pandas` DataFrame
+
+Before exporting, your `pandas` DataFrame needs to be in good shape. Pay attention to these aspects:
+
+*   **`DatetimeIndex`:** Crucially, your DataFrame must have a `DatetimeIndex`. This index provides the time stamps for your data.
+*   **Column Names:** The column names in your DataFrame will ideally become the item names in the `.dfs0` file. Choose meaningful names.
+*   **Data Types:** Ensure the data you intend to export is numeric, typically floats or integers.
+
+For example, suppose you have a processed DataFrame `df_processed`:
+
+```{python}
+import pandas as pd
+import numpy as np
+import mikeio
+
+# Example processed DataFrame
+time_index = pd.date_range(start="2023-01-01", periods=3, freq="H")
+data = {
+    "WaterLevel_SensorA": [1.2, 1.3, 1.25],
+    "Flow_SensorB": [5.5, 5.8, 5.6]
+}
+df_processed = pd.DataFrame(data, index=time_index)
+df_processed
+```
 
 ## Creating `mikeio.DataArray` Objects
 
-A `mikeio.DataArray` is the `mikeio` representation of a single time series item, complete with its data, time axis, and metadata. You will need to create one `DataArray` for each `pandas` Series (i.e., each column from your DataFrame) that you wish to include in your `dfs0` file.
+A `mikeio.DataArray` represents a single time series item—think of it as one column of data with its associated time information and metadata. You'll create a `mikeio.DataArray` for each `pandas` Series (column) you wish to include in your `.dfs0` file.
 
-To create a `DataArray`, you'll primarily use the `data` (your `pandas` Series), `time` (the `DatetimeIndex`), and an `item` argument. The `item` argument takes a `mikeio.ItemInfo` object, which describes the data, including its name, EUM type (e.g., water level, discharge), and EUM unit.
+When creating a `mikeio.DataArray`, you'll specify:
+*   `data`: The `pandas` Series or NumPy array containing the actual data values.
+*   `time`: The `DatetimeIndex` from your `pandas` DataFrame or Series.
+*   `item`: A `mikeio.ItemInfo` object that describes the item, including its name, type, and unit.
 
-Here's how you might create a `DataArray` from a column in `processed_df`:
+Here's how you might create a `mikeio.DataArray` for the "WaterLevel_SensorA" column:
 
-```python
-import pandas as pd
-import mikeio
+```{python}
+water_level_series = df_processed["WaterLevel_SensorA"]
+item_info_wl = mikeio.ItemInfo(
+    name="WaterLevel_SensorA",
+    itemtype=mikeio.EUMType.Water_Level,
+    unit=mikeio.EUMUnit.meter
+)
 
-# Assume processed_df is a pre-existing DataFrame with a DatetimeIndex
-# For example:
-index = pd.date_range(start='2023-01-01', periods=3, freq='H')
-data = {'WaterLevel_m': [1.0, 1.1, 1.2], 'Discharge_m3s': [10, 12, 11]}
-processed_df = pd.DataFrame(data, index=index)
-
-item_info_wl = mikeio.ItemInfo("Processed Water Level", 
-                               mikeio.EUMType.Water_Level, 
-                               mikeio.EUMUnit.meter)
-da_water_level = mikeio.DataArray(data=processed_df['WaterLevel_m'],
-                                  time=processed_df.index,
-                                  item=item_info_wl)
+da_water_level = mikeio.DataArray(
+    data=water_level_series.values,
+    time=water_level_series.index,
+    item=item_info_wl
+)
+da_water_level
 ```
 
 ::: {.callout-tip}
 ## Item Information (`ItemInfo` and `EUMType`)
-Specifying correct item information using `mikeio.ItemInfo`, along with `mikeio.EUMType` and `mikeio.EUMUnit`, is important for ensuring compatibility and proper interpretation by MIKE software. For instance, use `mikeio.EUMType.Rainfall` and `mikeio.EUMUnit.mm_per_hour` for precipitation data. You can find comprehensive details on available `EUMType`s, `EUMUnit`s, and creating `ItemInfo` objects in the [MIKE IO documentation](https://dhi.github.io/mikeio/api-dfs.html#iteminfo). While you can use generic types if unsure, specific types are always better for robust MIKE integration.
+Specifying correct item information using `mikeio.ItemInfo` and `mikeio.EUMType` is vital for ensuring your `.dfs0` file is fully compatible with MIKE software. For instance, using `mikeio.EUMType.Rainfall` for precipitation data or `mikeio.EUMType.Discharge` for flow helps MIKE applications interpret the data correctly.
+
+You can explore the available `EUMType` options and learn more about `ItemInfo` in the [MIKE IO API documentation](https://dhi.github.io/mikeio/api-dfs.html#iteminfo). While you can use generic types if you're unsure, specific EUM types significantly enhance integration with the MIKE ecosystem.
 :::
 
 ## Assembling `DataArray`s into a `mikeio.Dataset`
 
-Once you have your individual `DataArray` objects, the next step is to collect them into a `mikeio.Dataset`. A `Dataset` is essentially a container for one or more `DataArray`s that share the same time axis.
+A `mikeio.Dataset` acts as a container for one or more `mikeio.DataArray` objects. If you have multiple items to save (like our "WaterLevel_SensorA" and "Flow_SensorB"), you'll create a `DataArray` for each and then group them into a `Dataset`.
 
-Continuing the example, if we also had a discharge column:
+Let's create another `DataArray` for the flow data and then assemble the `Dataset`:
 
-```python
-item_info_q = mikeio.ItemInfo("Simulated Discharge", 
-                              mikeio.EUMType.Discharge, 
-                              mikeio.EUMUnit.m3_per_sec)
-da_discharge = mikeio.DataArray(data=processed_df['Discharge_m3s'],
-                                time=processed_df.index,
-                                item=item_info_q)
+```{python}
+flow_series = df_processed["Flow_SensorB"]
+item_info_flow = mikeio.ItemInfo(
+    name="Flow_SensorB",
+    itemtype=mikeio.EUMType.Discharge,
+    unit=mikeio.EUMUnit.m3_per_s
+)
 
-dataset_to_save = mikeio.Dataset([da_water_level, da_discharge])
+da_flow = mikeio.DataArray(
+    data=flow_series.values,
+    time=flow_series.index,
+    item=item_info_flow
+)
+
+# Create a list of DataArrays
+data_arrays = [da_water_level, da_flow]
+
+# Create the Dataset
+ds_to_save = mikeio.Dataset(data=data_arrays)
+ds_to_save
 ```
-
-If you only have one `DataArray`, you still place it within a list when creating the `Dataset`.
 
 ## Writing the `Dataset` to a `dfs0` File
 
-The final step is to write your `Dataset` object to a `.dfs0` file. This is accomplished using the `.to_dfs()` method of the `Dataset`. You simply provide the desired file path and name for your new `dfs0` file.
+With your `mikeio.Dataset` prepared, the final step is to write it to a `.dfs0` file. This is done using the `.to_dfs()` method of the `Dataset` object. You simply provide the desired file path.
 
-```python
-output_dfs0_path = "data/processed_timeseries.dfs0"
-dataset_to_save.to_dfs(output_dfs0_path)
+```{python}
+#| output: false
+# For demonstration, we won't actually write a file here in the docs
+# but this is how you would do it:
+# ds_to_save.to_dfs("data/processed_output.dfs0")
 
-print(f"Data successfully saved to {output_dfs0_path}")
+# To confirm it works, we can print a success message
+print("Dataset would be saved to 'data/processed_output.dfs0'")
 ```
 
-And with that, your processed time series data, originating from a `pandas` DataFrame, is now neatly packaged in `dfs0` format, ready for use in your MIKE+ modelling workflows or other DHI applications.
+And that's it! Your processed time series data, complete with appropriate metadata, is now saved in the `.dfs0` format, ready for use in your MIKE+ projects or other DHI tools.
 
 ## Video - Example: Creating a `dfs0` File (5-10 min)
-*   Start with a processed `pandas` DataFrame.
-*   Demonstrate creating `mikeio.DataArray` objects for a couple of columns, including setting basic `ItemInfo`.
-*   Show creating a `mikeio.Dataset` from these `DataArray`s.
-*   Illustrate saving the `Dataset` to a new `.dfs0` file using `.to_dfs()`.
-*   Optionally, briefly open the created `dfs0` file in MIKE Zero or another tool to verify its contents (if feasible to show quickly).
+This video will walk you through:
+*   Starting with a processed `pandas` DataFrame.
+*   Creating `mikeio.DataArray` objects for a couple of columns, including setting `ItemInfo` with `EUMType` and `EUMUnit`.
+*   Assembling these `DataArray`s into a `mikeio.Dataset`.
+*   Saving the `Dataset` to a new `.dfs0` file using the `.to_dfs()` method.
+*   (Optional) A quick look at the created `.dfs0` file in a tool like MIKE Zero to verify its contents.
 
-```markdown
-{{< video https://www.youtube.com/embed/placeholder_video_id_for_creating_dfs0 >}}
-```
+{{< video https://www.youtube.com/embed/placeholder_video_id >}}

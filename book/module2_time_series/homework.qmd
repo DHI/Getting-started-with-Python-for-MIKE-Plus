@@ -1,289 +1,246 @@
----
-comments: false
----
-
 # Homework {.unnumbered}
 
-These exercises are designed to help you practice the concepts you've learned in Module 2. You'll get hands-on experience reading, manipulating, validating, and writing `dfs0` files using `mikeio`, `pandas`, and `tsod`.
+These exercises are designed to help you solidify your understanding of the concepts covered in Module 2. You'll get hands-on practice with reading, manipulating, validating, and writing `dfs0` files using `mikeio`, `pandas`, and `tsod`.
 
-**General Setup for Exercises:**
+Before you begin, please set up your project environment:
 
-1.  Begin by creating a new subfolder named `module2_homework` within your main course project folder. This is where you'll save your scripts and data for these exercises.
-2.  Before running any Python scripts, always ensure your `uv` virtual environment (which should include `pandas`, `matplotlib`, `mikeio`, and `tsod` from previous setups) is activated in your VS Code terminal.
-3.  You'll need to download specific data files for some exercises; links are provided. Make sure to save these files directly into your `module2_homework` subfolder.
+1.  Create a new subfolder within your main course project folder specifically for this module's homework (e.g., `module2_homework`).
+2.  Ensure your `uv` virtual environment, which should include `pandas`, `matplotlib`, `mikeio`, and `tsod`, is activated in your VS Code terminal whenever you run Python scripts.
+3.  You'll need to download data files for these exercises. Place them directly into your `module2_homework` subfolder.
 
 ---
 
-**Exercise 1: Project Setup and Reading `dfs0` Data**
+**Exercise 1: Project Setup and Reading `dfs0`**
 
-First, download the sample time series file: [rain_data_raw.dfs0](data/homework/rain_data_raw.dfs0){download="rain_data_raw.dfs0"}. Save it into your `module2_homework` folder.
-Now, create a new Python script in the same folder, perhaps naming it `process_rain_data.py`.
+Your first task is to read a `dfs0` file and get a first look at its contents.
 
-In your script, you'll start by importing the `mikeio` and `pandas` libraries.
+1.  Begin by downloading the sample time series file: [rain_data_raw.dfs0](data/homework/rain_data_raw.dfs0){download="rain_data_raw.dfs0"}. Save it into your `module2_homework` folder.
+2.  Create a new Python script in this folder, for instance, named `process_rain_data.py`.
+3.  In your script, you will need to import `mikeio` and `pandas`. Then, read the `rain_data_raw.dfs0` file into a `mikeio` `Dataset` object.
 
-```{python}
-#| echo: true
-import mikeio
-import pandas as pd
-```
+    ```{python}
+    import mikeio
+    import pandas as pd
 
-With the libraries imported, read the `rain_data_raw.dfs0` file into a `mikeio` `Dataset`. Then, convert this `Dataset` into a `pandas` DataFrame, which will make it easier to work with.
+    ds = mikeio.read("data/homework/rain_data_raw.dfs0")
+    ds
+    ```
 
-```{python}
-#| echo: true
-#| output: false
-# Make sure 'rain_data_raw.dfs0' is in your 'module2_homework' folder
-dfs0_file_path = "rain_data_raw.dfs0"
-ds = mikeio.read(dfs0_file_path)
-df_rain_raw = ds.to_dataframe()
-```
+4.  Next, convert this `Dataset` into a `pandas` DataFrame. To understand its structure, print the first few rows using `.head()` and then display its summary information using `.info()`. Add these steps to your script. For example, after creating your DataFrame `df`:
 
-To get a first look at your data's structure, print the head and info of the DataFrame. This will show you the first few rows and provide a summary of columns, data types, and non-null values.
-
-```{python}
-#| echo: true
-#| output: true
-# Assuming df_rain_raw is your DataFrame from the previous step
-# print(df_rain_raw.head()) # Uncomment to view the first few rows
-# df_rain_raw.info()      # Uncomment to view DataFrame summary
-print("Examine the output from df_rain_raw.head() and df_rain_raw.info() in your console.")
-```
-
-Take a moment to observe the output in your terminal. What are the item names? What is the time range of the data?
+    ```{python}
+    # Ensure ds is loaded from the previous step
+    # ds = mikeio.read("data/homework/rain_data_raw.dfs0")
+    df = ds.to_dataframe()
+    df.head()
+    ```
+    And then:
+    ```python}
+    # df.info() # Run this in your script to see the output
+    ```
+    Observe the output in your terminal. What are the item names? What is the time range and frequency?
 
 **Exercise 2: Data Selection**
 
-Using the `df_rain_raw` DataFrame from Exercise 1, let's practice selecting specific data.
+Now, let's practice selecting specific parts of the data from the DataFrame you created in Exercise 1.
 
-1.  The `dfs0` file might contain data from multiple rainfall gauges. Your task is to select data for only one specific gauge. If an item named "Gauge_A2" exists (check your `.info()` output from Exercise 1), use that. Otherwise, pick any one available item name from your DataFrame. Store this selected data in a new DataFrame or Series.
-
-    ```{python}
-    #| echo: true
-    #| output: false
-    # Replace "Gauge_A2" if it doesn't exist, with an actual item name from your df_rain_raw
-    # For example, if your first column name is 'Rainfall_Gauge1', use that.
-    # selected_item_name = df_rain_raw.columns[0] # A way to pick the first item if unsure
-    selected_item_name = "Gauge_A2" # Or your chosen item name
-    single_gauge_data = df_rain_raw[[selected_item_name]] # Use double brackets to keep it a DataFrame
-    # or single_gauge_series = df_rain_raw[selected_item_name] # For a Series
-    ```
-
-2.  From this `single_gauge_data`, further refine your selection to include records only for a specific period. Let's aim for the entire month of July 2022. If your data's time range is different, please adjust the year and month accordingly to select a single month's worth of data.
+1.  The `dfs0` file might contain data from multiple rainfall gauges. For this exercise, imagine you're interested in a gauge named "Gauge_A2". If "Gauge_A2" isn't present (check your `.info()` output from Exercise 1), pick one of the available item names. Select only this item's data into a new DataFrame or a pandas Series. For instance, if your DataFrame is `df` and the item name is `"Gauge_A2"`:
 
     ```{python}
-    #| echo: true
-    #| output: false
-    # Assuming single_gauge_data has a DatetimeIndex
-    # Adjust '2022-07' if your data has a different time range
-    july_2022_data = single_gauge_data.loc["2022-07"]
+    # Assume df is the DataFrame from Exercise 1
+    # df = mikeio.read("data/homework/rain_data_raw.dfs0").to_dataframe()
+    selected_item_name = "Gauge_A2" # Replace if not available
+    # Check if the item exists before selecting
+    if selected_item_name not in df.columns:
+        if len(df.columns) > 0:
+            selected_item_name = df.columns[0] # Fallback to the first item
+            print(f"'{selected_item_name}' not found, using '{selected_item_name}' instead.")
+        else:
+            print("DataFrame has no columns.")
+
+    gauge_data = df[[selected_item_name]] # Select as DataFrame
+    gauge_data.head()
     ```
 
-    ::: {.callout-tip}
-    Remember that `pandas` allows for partial string indexing for `DatetimeIndex`. For example, `df.loc["2022"]` would select all data for the year 2022, and `df.loc["2022-07"]` selects all data for July 2022.
-    :::
-
-3.  Finally, print the `.head()` of this time-filtered data to see the result.
+2.  From this selected item's data (`gauge_data`), further narrow down your selection to include only records for a specific time period. Let's aim for the entire month of July 2022. If your data's time range doesn't cover this, please adjust the year and month accordingly (e.g., `'2022-07-01'` to `'2022-07-31'`).
 
     ```{python}
-    #| echo: true
-    #| output: true
-    # print(july_2022_data.head()) # Uncomment to view the result
-    print("Examine the head of your July 2022 data in the console.")
+    # Assume gauge_data is from the previous step
+    # And selected_item_name is defined
+    # df_full = mikeio.read("data/homework/rain_data_raw.dfs0").to_dataframe()
+    # if selected_item_name not in df_full.columns:
+    #    selected_item_name = df_full.columns[0] if len(df_full.columns) > 0 else None
+    # gauge_data = df_full[[selected_item_name]] if selected_item_name else pd.DataFrame()
+
+    # Check if gauge_data has a DatetimeIndex
+    if isinstance(gauge_data.index, pd.DatetimeIndex):
+        july_data = gauge_data["2022-07-01":"2022-07-31"]
+        july_data.head()
+    else:
+        print("gauge_data does not have a DatetimeIndex. Skipping time selection.")
+        pd.DataFrame().head() # Show empty DataFrame if no DatetimeIndex
     ```
+3.  Print the `.head()` of this finally selected data (`july_data`) to verify your selection.
 
 **Exercise 3: Resampling Time Series**
 
-Now, let's work with the `single_gauge_data` (containing the full period for your selected gauge, before the July 2022 selection). If you overwrote it, reload it from `df_rain_raw`.
+Resampling is a common task. Let's use the data for your chosen gauge (e.g., "Gauge_A2") from *before* you selected the specific month in Exercise 2.2 (or simply re-select the full period for that single item if it's easier).
 
-1.  The raw data is likely at a fine temporal resolution (e.g., 5-minute or 10-minute). Your task is to resample this data to calculate the **total hourly rainfall**.
-
-    ```{python}
-    #| echo: true
-    #| output: false
-    # Assuming single_gauge_data is your DataFrame/Series with a DatetimeIndex
-    hourly_rainfall_total = single_gauge_data.resample('H').sum()
-    ```
-
-2.  Print the `.head()` of the hourly resampled DataFrame to verify your operation.
+1.  The raw data might be at a fine temporal resolution (e.g., 5-minute or 10-minute intervals). Your task is to resample this data to calculate the **total hourly rainfall**. You'll use the `.resample()` method followed by `.sum()`.
 
     ```{python}
-    #| echo: true
-    #| output: true
-    # print(hourly_rainfall_total.head()) # Uncomment to view
-    print("Examine the head of your hourly resampled rainfall data.")
+    # Assume df is the full DataFrame from Exercise 1
+    # and selected_item_name is defined
+    # df = mikeio.read("data/homework/rain_data_raw.dfs0").to_dataframe()
+    # if selected_item_name not in df.columns:
+    #     selected_item_name = df.columns[0] if len(df.columns) > 0 else None
+    
+    if selected_item_name and selected_item_name in df.columns:
+        gauge_full_period = df[[selected_item_name]]
+        hourly_rainfall = gauge_full_period.resample('H').sum()
+        hourly_rainfall.head()
+    else:
+        print(f"Item '{selected_item_name}' not available for resampling.")
+        pd.DataFrame().head() # Show empty DataFrame
     ```
 
-3.  *Optional Challenge:* Resample the same `single_gauge_data` to determine the **mean daily rainfall**. Print its `.head()`.
+2.  Print the `.head()` of the resulting hourly resampled DataFrame to see the aggregated values.
+3.  *Optional Challenge:* Try resampling the same gauge data to calculate the **mean daily rainfall**. Print its `.head()` as well.
 
 **Exercise 4: Basic Anomaly Detection with `tsod`**
 
-We'll use the **hourly resampled rainfall Series** (or the first column of `hourly_rainfall_total` if it's a DataFrame) from Exercise 3 for this task.
+Let's use the **hourly resampled rainfall Series** (e.g., `hourly_rainfall[selected_item_name]`) from Exercise 3 for anomaly detection.
 
-1.  Import a suitable detector from the `tsod` library. For rainfall, `tsod.RangeOutlierDetector` could be useful if you know reasonable minimum (e.g., 0) and maximum plausible hourly intensities. Alternatively, `tsod.StddevOutlierDetector` can identify points that deviate significantly from the mean. Let's try `StddevOutlierDetector` with a multiplier of 3.
+1.  First, import an appropriate detector from `tsod`. For rainfall, `tsod.RangeOutlierDetector` could be useful if you have an idea of plausible minimum/maximum intensities (e.g., min_val=0, max_val=50 mm/hr). Alternatively, `tsod.StddevOutlierDetector(multiplier=3)` detects points that are more than 3 standard deviations from the mean. Choose one.
 
     ```{python}
-    #| echo: true
-    #| output: false
-    from tsod.detectors import StddevOutlierDetector
-    import numpy as np # tsod might return NaNs which are fine
+    import tsod
+    import numpy as np # For np.nan later
 
-    # If hourly_rainfall_total is a DataFrame, select the series:
-    # hourly_rainfall_series = hourly_rainfall_total[selected_item_name]
-    # If it's already a Series, you can use it directly.
-    # For this example, let's assume it's a series:
-    # hourly_rainfall_series = hourly_rainfall_total # if it was a series
-    # Ensure you have a pandas Series for the detector
-    if isinstance(hourly_rainfall_total, pd.DataFrame):
-        hourly_rainfall_series = hourly_rainfall_total.iloc[:, 0] # take the first column
+    # Assume hourly_rainfall DataFrame from Exercise 3 and selected_item_name is defined
+    # For demonstration, let's recreate a sample series if hourly_rainfall isn't available
+    # if 'hourly_rainfall' not in locals() or hourly_rainfall.empty:
+    #    index = pd.date_range('2023-01-01', periods=5, freq='H')
+    #    data = {'SampleRain': [1, 2, 55, 4, 5]}
+    #    hourly_rainfall = pd.DataFrame(data, index=index)
+    #    selected_item_name = 'SampleRain'
+        
+    if not hourly_rainfall.empty and selected_item_name in hourly_rainfall.columns:
+        hourly_series = hourly_rainfall[selected_item_name]
+        detector = tsod.RangeOutlierDetector(min_val=0, max_val=50) # Example range
+        outliers_boolean_series = detector.detect(hourly_series)
+        outliers_boolean_series.head()
     else:
-        hourly_rainfall_series = hourly_rainfall_total
-    
-    detector = StddevOutlierDetector(window_size=5, n_stddev=3) # Example parameters
+        print("Hourly rainfall data not available for anomaly detection.")
+        pd.Series(dtype=bool).head() # Show empty Series
     ```
 
-2.  Apply the initialized detector to your hourly rainfall Series. The `.detect()` method is typically used.
-
-    ```{python}
-    #| echo: true
-    #| output: false
-    # The detect method often returns a boolean Series
-    outliers_bool_series = detector.detect(hourly_rainfall_series)
-    ```
-
-3.  The result from the detector is often a boolean Series (True for outliers, False otherwise). Determine how many outliers were detected by summing this boolean Series.
-
-    ```{python}
-    #| echo: true
-    #| output: true
-    # num_outliers = outliers_bool_series.sum()
-    # print(f"Number of outliers detected: {num_outliers}")
-    print("The sum of the boolean outlier series will show the count of outliers.")
-    ```
+2.  Apply the chosen detector to your hourly rainfall Series. This will return a boolean Series where `True` indicates an outlier.
+3.  Print the number of outliers detected. You can do this by summing the boolean Series (since `True` evaluates to 1 and `False` to 0). For example: `print(outliers_boolean_series.sum())`.
 
 **Exercise 5: Handling Anomalies and Missing Data**
 
-Continuing with your hourly rainfall Series (`hourly_rainfall_series`) and the `outliers_bool_series` from Exercise 4:
+Continuing with your hourly rainfall Series and the `outliers_boolean_series` from Exercise 4:
 
-1.  A common strategy is to replace identified outliers with `np.nan` (Not a Number). First, ensure you've imported `numpy`. Then, use the boolean series to mark outliers as `np.nan` in your rainfall series.
-
-    ```{python}
-    #| echo: true
-    #| output: false
-    import numpy as np
-
-    hourly_rainfall_cleaned = hourly_rainfall_series.copy() # Work on a copy
-    hourly_rainfall_cleaned[outliers_bool_series] = np.nan
-    ```
-
-2.  Verify by checking how many `NaN` values are now present in your `hourly_rainfall_cleaned` Series using `.isna().sum()`.
+1.  Replace the values identified as outliers in your hourly rainfall Series with `np.nan` (Not a Number). Remember to `import numpy as np`. You can use boolean indexing for this.
 
     ```{python}
-    #| echo: true
-    #| output: true
-    # nan_count = hourly_rainfall_cleaned.isna().sum()
-    # print(f"Number of NaN values after marking outliers: {nan_count}")
-    print("Check the count of NaN values in your console.")
+    # Assume hourly_series and outliers_boolean_series from Exercise 4 are available
+    # if 'hourly_series' not in locals(): # For standalone execution
+    #    idx = pd.date_range('2023-01-01', periods=5, freq='H')
+    #    hourly_series = pd.Series([1, 2, 55, 4, 5], index=idx, name='SampleRain')
+    #    outliers_boolean_series = pd.Series([False, False, True, False, False], index=idx)
+
+    hourly_series_with_nans = hourly_series.copy()
+    hourly_series_with_nans[outliers_boolean_series] = np.nan
+    hourly_series_with_nans.head()
     ```
 
-3.  Now, fill these `NaN` values. A simple and often effective method for time series is `ffill` (forward fill), which propagates the last valid observation forward.
+2.  Check how many `NaN` values are now present in your Series using `.isna().sum()`.
+3.  Now, fill these `NaN` values. A common method is forward fill (`ffill`), which propagates the last valid observation forward. Apply this to your Series.
 
     ```{python}
-    #| echo: true
-    #| output: false
-    hourly_rainfall_filled = hourly_rainfall_cleaned.fillna(method='ffill')
-    # You might still have NaNs at the beginning if the series started with outliers
-    # Consider a .bfill() as well if needed, or a specific value fill.
-    hourly_rainfall_filled = hourly_rainfall_filled.fillna(0) # Example: fill remaining NaNs with 0
+    # Assume hourly_series_with_nans from the previous step
+    # if 'hourly_series_with_nans' not in locals(): # For standalone execution
+    #    idx = pd.date_range('2023-01-01', periods=5, freq='H')
+    #    hourly_series_with_nans = pd.Series([1, 2, np.nan, 4, 5], index=idx, name='SampleRain')
+
+    cleaned_hourly_series = hourly_series_with_nans.fillna(method='ffill')
+    cleaned_hourly_series.head()
     ```
 
-4.  Print the `.head()` of this fully cleaned and filled Series to see the result.
-
-    ```{python}
-    #| echo: true
-    #| output: true
-    # print(hourly_rainfall_filled.head()) # Uncomment to view
-    print("Examine the head of your cleaned and filled rainfall data.")
-    ```
+4.  Print the `.head()` of this `cleaned_hourly_series` to see the result.
 
 **Exercise 6: Creating a New `dfs0` File**
 
-Let's use the cleaned and filled hourly rainfall `pandas` Series (`hourly_rainfall_filled`) from Exercise 5 to create a new `dfs0` file.
+You now have a cleaned hourly rainfall `pandas` Series (`cleaned_hourly_series`) from Exercise 5. Let's save this back to a `dfs0` file.
 
-1.  First, create a `mikeio.DataArray` from this Series. It's important to provide not only the data and time index but also appropriate item information using `mikeio.ItemInfo`. This includes a name for your item, its type (e.g., `mikeio.EUMType.Rainfall`), and its unit (e.g., `mikeio.EUMUnit.mm_per_hour` if you summed hourly rainfall in mm).
+1.  To write to `dfs0` with proper metadata, you'll create a `mikeio.DataArray`. This requires the data itself (your `cleaned_hourly_series`), its time index, and `mikeio.ItemInfo`. For `ItemInfo`, choose a suitable name (e.g., `'Processed_Rainfall_Gauge_A2'`), item type (e.g., `mikeio.EUMType.Rainfall`), and unit (e.g., `mikeio.EUMUnit.mm_per_hour` – ensure this unit matches how you calculated total hourly rainfall).
 
     ```{python}
-    #| echo: true
-    #| output: false
-    from mikeio.eum import EUMType, EUMUnit
+    # Assume cleaned_hourly_series and selected_item_name from previous exercises
+    # For standalone execution:
+    # if 'cleaned_hourly_series' not in locals():
+    #    idx = pd.date_range('2023-01-01', periods=5, freq='H')
+    #    cleaned_hourly_series = pd.Series([1, 2, 2, 4, 5], index=idx, name='SampleRain')
+    #    selected_item_name = 'SampleRain' # or a default name if not set
 
-    # Ensure hourly_rainfall_filled is a pandas Series with a DatetimeIndex
-    item_name_processed = f"Processed_{selected_item_name}_Hourly"
-    
-    data_array = mikeio.DataArray(
-        data=hourly_rainfall_filled, # Your pandas Series
-        time=hourly_rainfall_filled.index,
-        item=mikeio.ItemInfo(name=item_name_processed, itemtype=EUMType.Rainfall, unit=EUMUnit.mm_per_hour)
+    item_name_processed = f"Processed_{selected_item_name}"
+    item_info = mikeio.ItemInfo(
+        name=item_name_processed,
+        itemtype=mikeio.EUMType.Rainfall,
+        unit=mikeio.EUMUnit.mm_per_hour
     )
+    
+    da = mikeio.DataArray(
+        data=cleaned_hourly_series,
+        time=cleaned_hourly_series.index,
+        item=item_info
+    )
+    da
     ```
-    ::: {.callout-note}
-    Refer to the [MIKE IO documentation](https://dhi.github.io/mikeio/api-dfs.html#iteminfo) for more details on `ItemInfo`, `EUMType`, and `EUMUnit` to ensure your data is correctly described for MIKE software.
-    :::
 
-2.  Next, create a `mikeio.Dataset` which will contain your `DataArray`. A `Dataset` can hold multiple `DataArray`s, but for this exercise, one is sufficient.
+2.  Next, create a `mikeio.Dataset` object. A Dataset can contain one or more DataArrays.
 
     ```{python}
-    #| echo: true
-    #| output: false
-    dataset_to_save = mikeio.Dataset([data_array])
+    # Assume da (DataArray) from the previous step
+    # if 'da' not in locals(): # For standalone execution
+    #    # ... (recreate da as above) ...
+    #    pass # Placeholder for actual recreation if needed
+
+    ds_processed = mikeio.Dataset([da])
+    ds_processed
     ```
 
 3.  Finally, write this `Dataset` to a new `dfs0` file. Name it `processed_hourly_rain.dfs0` and save it in your `module2_homework` folder.
 
-    ```{python}
-    #| echo: true
-    #| output: false
-    output_dfs0_path = "processed_hourly_rain.dfs0"
-    dataset_to_save.to_dfs(output_dfs0_path)
-    print(f"Processed data saved to {output_dfs0_path}")
+    ```python}
+    # ds_processed.to_dfs0("data/homework/processed_hourly_rain.dfs0")
+    # print("Processed data written to processed_hourly_rain.dfs0")
     ```
-    You've now successfully created a `dfs0` file from your processed `pandas` data!
+    (This block is intended for execution in your script, the output is a file.)
 
 **Exercise 7 (Optional): Visualization**
 
-To better understand the impact of your data processing steps, use `matplotlib` (which you encountered in Module 1) to create a comparative plot.
+To better understand the impact of your data processing, use `matplotlib` (which you were introduced to in Module 1) to create a plot.
 
-1.  Generate a plot that displays:
-    *   The original hourly resampled data (from Exercise 3, e.g., `hourly_rainfall_series`).
-    *   The data after replacing outliers with `np.nan` (from Exercise 5, e.g., `hourly_rainfall_cleaned`).
-    *   The final cleaned and filled data (from Exercise 5, e.g., `hourly_rainfall_filled`).
-
-    Plotting them on the same axes can be effective, or use subplots if that's clearer for your data. This will help you visually assess the changes made during the validation and cleaning process.
-
-    ```{python}
-    #| echo: true
-    #| output: true # Set to true to see plot in supported environments, or save to file
-    import matplotlib.pyplot as plt
-
-    # plt.figure(figsize=(12, 6))
-    # hourly_rainfall_series.plot(label='Original Hourly Resampled', alpha=0.7)
-    # hourly_rainfall_cleaned.plot(label='Outliers as NaN', linestyle='--', alpha=0.7)
-    # hourly_rainfall_filled.plot(label='Cleaned and Filled', linestyle=':', alpha=0.9)
-    # plt.title(f'Rainfall Data Processing for {selected_item_name}')
-    # plt.xlabel('Time')
-    # plt.ylabel('Hourly Rainfall (mm)') # Adjust unit if different
-    # plt.legend()
-    # plt.show() # Or plt.savefig('comparison_plot.png')
-    print("Uncomment the matplotlib code to generate and display/save your comparison plot.")
-    ```
+1.  Try to show the following on the same plot (or on separate subplots):
+    *   The original hourly resampled data (from Exercise 3, before outlier handling).
+    *   The data after you replaced outliers with `np.nan` (from Exercise 5, before filling).
+    *   The final cleaned and filled data (from Exercise 5, after `ffill`).
+2.  This will help you visually confirm how the outliers were identified and how the `NaN` values were handled. Remember to add labels and a legend to your plot for clarity.
 
 ---
 
 ## Practice Exercises (Optional) {.unnumbered}
 
-For additional practice and to reinforce your learning:
+If you'd like more practice, consider these additional tasks:
 
 *   Download the [optional_flow_data.dfs0](data/homework/optional_flow_data.dfs0){download="optional_flow_data.dfs0"} file.
-*   Try applying the full workflow you've just practiced (read, select, resample if appropriate, validate with `tsod`, clean, and write to a new `dfs0`) to this flow data.
-*   Experiment with different `tsod` detectors or adjust their parameters. How do these changes affect the outcome?
-*   Explore various `NaN` filling strategies (e.g., `bfill`, `interpolate`, filling with a mean or median) and observe their impact on the data, perhaps by plotting.
-*   A Jupyter Notebook with guided solutions or further exploration for these optional exercises can be found here: [link_to_optional_notebook.ipynb](notebooks/M2_Optional_Practice.ipynb){download="M2_Optional_Practice.ipynb"} (This is a placeholder link; a notebook may be provided separately by your instructor).
+*   Try to apply the full workflow you've just practiced (read, select, perhaps resample if appropriate for the data's nature, validate with `tsod`, clean, and write to a new `dfs0` file) to this flow data.
+*   Experiment with different `tsod` detectors or adjust the parameters of the detectors you've already used. How do the results change?
+*   Explore different `NaN` filling strategies available in `pandas` (e.g., `bfill`, `interpolate`) and observe their impact on the data, perhaps by plotting the results.
+
+For guided solutions or further exploration of these optional exercises, you can refer to this Jupyter Notebook: [M2_Optional_Practice.ipynb](notebooks/M2_Optional_Practice.ipynb){download="M2_Optional_Practice.ipynb"} (Note: this is a placeholder link and may not be active).
+
+Good luck with your practice! These exercises are key to building your confidence and skills in handling time series data with Python for MIKE+ workflows.
