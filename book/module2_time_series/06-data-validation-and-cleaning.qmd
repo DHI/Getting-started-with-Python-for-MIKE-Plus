@@ -1,107 +1,131 @@
 # Data Validation and Cleaning with `tsod` and `pandas`
 
-This section brings together the outlier detection power of `tsod` with the versatile data manipulation capabilities of `pandas`. You'll learn how to identify anomalous data points in your time series and then apply common strategies for handling these, effectively cleaning your data for further analysis or model input.
+This section combines the outlier detection capabilities of `tsod` with `pandas` functionalities to validate time series data and handle missing or anomalous values. Effectively identifying and addressing outliers or missing data points is crucial for ensuring the quality and reliability of your analyses and model inputs.
 
 ## Detecting Anomalies with `tsod`
 
-Once you have your time series data in a `pandas` Series, you can employ `tsod` to pinpoint unusual observations. `tsod` offers various detectors; for instance, you might use a `StddevOutlierDetector` to identify points that deviate significantly from a rolling mean, or a `RangeOutlierDetector` for values outside a plausible physical range.
+Once you have your time series data in a `pandas` Series, you can use `tsod` to identify potential anomalies. `tsod` offers various detection algorithms; for this introduction, we'll conceptually use a straightforward approach like one based on standard deviations.
 
-Let's assume you have a `pandas` Series, say `my_time_series`, and have chosen and configured an appropriate `tsod` detector. Applying the detector is straightforward:
+Let's start by creating a sample `pandas` Series that includes some unusual values. This will serve as our `my_time_series` for the examples that follow.
 
 ```{python}
-#| output: false
-# Assume 'my_time_series' is a pandas Series 
-# and 'detector' is an initialized tsod detector object, e.g.:
-# import tsod
-# detector = tsod.StddevOutlierDetector(n_stddev=3)
+#| output: true
+import pandas as pd
+import numpy as np # We'll use np.nan later
 
-# outlier_flags = detector.detect(my_time_series)
-# 'outlier_flags' would now be a boolean Series (True for outliers)
+# Sample time series data with a couple of obvious outliers
+data_values = [10, 11, 10, 12, 100, 13, 12, 11, -50, 10]
+time_index = pd.to_datetime(['2023-01-01 00:00', '2023-01-01 00:10', 
+                             '2023-01-01 00:20', '2023-01-01 00:30', 
+                             '2023-01-01 00:40', '2023-01-01 00:50', 
+                             '2023-01-01 01:00', '2023-01-01 01:10', 
+                             '2023-01-01 01:20', '2023-01-01 01:30'])
+my_time_series = pd.Series(data_values, index=time_index, name="value")
+print("Original Series sample:")
+print(my_time_series.head())
 ```
 
-The `detect()` method typically returns a boolean `pandas` Series of the same length as your input, where `True` indicates an outlier and `False` indicates a normal data point.
+Now, we can apply a `tsod` detector. For instance, `StddevOutlierDetector` identifies points that deviate significantly from a rolling mean. The detector's `.detect()` method typically returns a boolean Series, where `True` indicates an outlier.
+
+```{python}
+#| output: true
+from tsod.detectors import StddevOutlierDetector
+
+# Instantiate a detector (parameters may vary based on data)
+detector = StddevOutlierDetector(window_size=5, n_stddev=2.0) 
+outlier_flags = detector.detect(my_time_series)
+print(f"Boolean flags for outliers (first 5): \n{outlier_flags.head()}")
+print(f"Total outliers detected: {outlier_flags.sum()}")
+```
+
+The `outlier_flags` Series now tells us which data points `tsod` considers anomalous based on the chosen detector and its parameters.
 
 ## Marking Anomalies as `NaN`
 
-A common and effective strategy after identifying outliers is to replace them with `NaN` (Not a Number). This explicitly flags these data points as missing or unreliable, and `pandas` is well-equipped to handle `NaN` values in subsequent operations. Using the boolean Series from `tsod` (let's call it `outlier_flags`), you can easily set the corresponding values in your original Series to `NaN`.
-
-```{python}
-#| output: false
-import numpy as np
-# Assume 'my_time_series' is your pandas Series 
-# and 'outlier_flags' is the boolean Series from tsod
-
-# my_time_series[outlier_flags] = np.nan
-# Outliers in 'my_time_series' are now replaced with NaN
-```
+A common first step after detecting outliers is to replace them with `NaN` (Not a Number). This explicitly marks these data points as missing or unreliable, making them easy to handle with `pandas`'s built-in functions.
 
 ::: {.callout-note}
 ## `numpy.nan` for Missing Data
-`np.nan` is the standard representation for missing numerical data in `pandas` and `numpy`. To use it, you'll need to import `numpy`, conventionally as `np`:
+`np.nan` is the standard way to represent missing or undefined numerical data in `pandas` and `numpy`. To use it, you typically need to import `numpy`:
 `import numpy as np`
+(We imported it in the first code block.)
 :::
+
+Using the boolean `outlier_flags` Series from `tsod`, we can select the outlier values in our original Series and assign `np.nan` to them. It's good practice to work on a copy if you want to preserve the original data.
+
+```{python}
+#| output: true
+# Create a copy to modify
+my_time_series_with_nan = my_time_series.copy()
+# Replace outliers with NaN
+my_time_series_with_nan[outlier_flags] = np.nan
+print("Series with outliers marked as NaN:")
+print(my_time_series_with_nan)
+```
 
 ## Strategies for Filling `NaN` Values using `pandas`
 
-After marking outliers as `NaN`, or if your dataset initially contained missing values, you'll often need to fill these `NaN`s. Many analytical functions and time series models cannot process `NaN` values or may produce misleading results. `pandas` provides several convenient methods, primarily through the `.fillna()` and `.interpolate()` functions, to address this.
+Once outliers are marked as `NaN`, or if your data initially contained missing values, you'll often need to decide how to handle them. Many analyses or models cannot process `NaN` values directly. `pandas` provides several methods, primarily through the `.fillna()` and `.interpolate()` functions, to address this.
 
-Why bother filling `NaN`s?
-*   Many statistical functions in `pandas` and other libraries ignore `NaN`s by default, but some might error or behave unexpectedly.
-*   Time series models, particularly for forecasting, often require a complete, continuous dataset without gaps.
+Filling `NaN`s is important because:
+*   Many statistical functions in `pandas` and other libraries ignore `NaN`s by default, or may error.
+*   Time series models often require continuous data without gaps.
 
-Here are some common strategies for filling `NaN`s, assuming you have a Series `my_time_series_with_nans`:
+Here are a few common strategies:
 
-*   **Forward Fill (`ffill`):** This method propagates the last valid observation forward to fill `NaN`s. It's often suitable for sensor data where values tend to persist until a new reading is available.
+*   **Forward Fill (`ffill`):** This method propagates the last valid observation forward to fill the `NaN`. It's often suitable for sensor data where values tend to persist until a new reading is recorded.
 
-```{python}
-#| output: false
-# Assume 'my_time_series_with_nans' is a pandas Series containing NaNs
-# filled_ffill = my_time_series_with_nans.fillna(method='ffill')
-```
+    ```{python}
+    #| output: true
+    # Assuming my_time_series_with_nan from the previous step
+    filled_ffill = my_time_series_with_nan.fillna(method='ffill')
+    print("Forward filled Series (NaNs at start might remain):")
+    print(filled_ffill)
+    ```
 
-*   **Backward Fill (`bfill`):** Conversely, `bfill` propagates the next valid observation backward.
+*   **Backward Fill (`bfill`):** Conversely, this method propagates the next valid observation backward to fill the `NaN`.
 
-```{python}
-#| output: false
-# Assume 'my_time_series_with_nans' is a pandas Series containing NaNs
-# filled_bfill = my_time_series_with_nans.fillna(method='bfill')
-```
+    ```{python}
+    #| output: true
+    filled_bfill = my_time_series_with_nan.fillna(method='bfill')
+    print("Backward filled Series (NaNs at end might remain):")
+    print(filled_bfill)
+    ```
 
-*   **Interpolation:** This method fills `NaN`s using various interpolation techniques. Linear interpolation is a common choice, estimating missing values based on a straight line between adjacent valid points.
+*   **Interpolation:** This fills `NaN`s using an interpolation method. Linear interpolation (`method='linear'`) is common, drawing a straight line between available data points.
 
-```{python}
-#| output: false
-# Assume 'my_time_series_with_nans' is a pandas Series containing NaNs
-# interpolated_linear = my_time_series_with_nans.interpolate(method='linear')
-```
+    ```{python}
+    #| output: true
+    filled_interpolate = my_time_series_with_nan.interpolate(method='linear')
+    print("Linearly interpolated Series:")
+    print(filled_interpolate)
+    ```
 
-*   **Filling with a Constant:** You can also replace `NaN`s with a specific constant value, such as zero, the mean, or the median of the series.
+*   **Filling with a Constant:** You can also replace `NaN`s with a specific value, such as the mean or median of the series, or zero.
 
-```{python}
-#| output: false
-# Assume 'my_time_series_with_nans' is a pandas Series containing NaNs
-# series_mean = my_time_series_with_nans.mean()
-# filled_with_mean = my_time_series_with_nans.fillna(series_mean)
-```
+    ```{python}
+    #| output: true
+    series_mean = my_time_series_with_nan.mean()
+    filled_mean = my_time_series_with_nan.fillna(series_mean)
+    print(f"Series filled with mean ({series_mean:.2f}):")
+    print(filled_mean)
+    ```
 
 ::: {.callout-caution}
 ## Choosing a Filling Method
 The choice of `NaN` filling method is critical and depends heavily on your data's characteristics and what you intend to do with it.
-*   `ffill` is often appropriate for data where values are expected to remain constant between measurements.
-*   Interpolation can provide smoother results but might introduce artificial patterns if the underlying data isn't suited for it.
-*   Filling with a mean or median can reduce the overall variance of your dataset and mask genuine data features.
-Always consider the potential implications of your chosen method on subsequent analyses.
+*   `ffill` can be appropriate for data where values are expected to hold until a new measurement.
+*   Interpolation might be suitable for smoother data but can create artificial trends or patterns if not used carefully.
+*   Filling with a mean or median can reduce variance and might mask important features or periods of genuinely missing data.
+Always consider the implications and, if possible, validate the chosen method against domain knowledge or by observing its impact on subsequent analyses.
 :::
 
-Visualizing your time series before and after outlier handling and `NaN` filling is a crucial step. Plotting the data helps you assess the impact of these operations and ensure they've had the intended effect without unduly distorting your data.
+Visualizing your time series before and after outlier handling and `NaN` filling is highly recommended. Plotting the data can help you assess the impact of these operations and ensure they make sense in the context of your data.
 
 ## Video - Example: Anomaly Detection and `NaN` Handling (5-10 min)
 
-The following video demonstrates a practical example of these concepts:
-*   Starting with a `pandas` Series containing some apparent outliers.
-*   Applying a `tsod` detector to identify these anomalies.
-*   Using the `tsod` output to convert outliers to `np.nan`.
-*   Illustrating `fillna()` (e.g., `ffill`) and `interpolate()` methods to handle the `NaN` values.
-*   Briefly plotting the original, `NaN`-marked, and filled series to visually compare the results.
-
-{{< video https://www.youtube.com/embed/placeholder_video_id >}}
+*   Show a `pandas` Series with some apparent outliers.
+*   Demonstrate applying a `tsod` detector.
+*   Show how to use the `tsod` output to set outliers to `np.nan`.
+*   Illustrate one or two `fillna()` methods (e.g., `ffill` and `interpolate`) on the Series.
+*   Briefly plot the original, `NaN`-marked, and filled series to show the effects.

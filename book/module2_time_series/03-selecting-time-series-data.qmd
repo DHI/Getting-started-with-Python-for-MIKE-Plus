@@ -1,100 +1,149 @@
 # Selecting Time Series Data
 
-Once your `dfs0` data is loaded into Python, either as a `mikeio` `Dataset` or, more commonly, a `pandas` DataFrame, you'll often need to isolate specific parts of it. This might involve focusing on particular items (variables like rainfall or water level) or extracting data from specific time periods. This section will guide you through these essential selection techniques.
+Once your `dfs0` data is loaded, either as a `mikeio` `Dataset` or, more commonly for manipulation, as a `pandas` DataFrame, you'll often need to select specific parts of it. This might involve focusing on particular items (which represent variables like water level or flow) or isolating data from specific time periods. Understanding how to perform these selections efficiently is key to preparing your data for analysis or model input.
 
 ## Recap: Pandas DataFrame Selection
 
-In Module 1, you learned several ways to select data from `pandas` DataFrames. As a quick reminder, these included:
-
-*   Selecting columns by their names: `df['column_name']` or `df[['col1', 'col2']]`.
-*   Selecting rows by their index labels (which for time series is often a timestamp): `df.loc['some_timestamp']`.
-*   Using boolean indexing to filter rows based on conditions.
-
-We will now build upon these foundational `pandas` skills, applying them specifically to the context of time series data, often indexed by date and time.
+Recall from Module 1 that `pandas` offers powerful and flexible ways to select data from DataFrames. You're likely familiar with selecting columns by their names, for instance, using `df['column_name']` for a single column or `df[['col1', 'col2']]` for multiple columns. You also learned about selecting rows by their index label, which is especially useful for `DatetimeIndex` objects using `df.loc['timestamp']`, and the power of boolean indexing to filter data based on conditions. We will now build upon these foundational skills, focusing on selections particularly relevant to time series data commonly found in MIKE+ workflows.
 
 ## Selecting Specific Items (Columns)
 
-When working with `dfs0` files, which can contain multiple time series items, you have a couple of primary strategies for selecting only the items you need. You can do this either when initially reading the file with `mikeio` or after the data is loaded into a `pandas` DataFrame.
+When working with `dfs0` files, which can contain multiple time series items, you have a couple of primary strategies to select specific items. These items will typically become the columns in your `pandas` DataFrame.
 
 *   **During `mikeio.read()`:**
-    The `mikeio.read()` function is quite flexible, allowing you to specify which items to load using its `items` argument. This can be particularly efficient if you're dealing with very large `dfs0` files and only need a small subset of the data, as it avoids loading everything into memory.
+    One efficient approach is to select items at the point of reading the `dfs0` file. The `mikeio.read()` function includes an `items` argument that allows you to specify which items to load. This can be particularly useful for large `dfs0` files, as it prevents loading unnecessary data into memory.
 
-    To select items by their names, you can provide a list of strings:
+    You can specify items by their exact names. For example, to read only items named "WaterLevel" and "Discharge" from `data/sample.dfs0`:
 
     ```{python}
-    #| eval: false
-    # Assuming 'your_file.dfs0' contains items 'Rainfall_Gauge1', 'WaterLevel_Station2'
-    # ds = mikeio.read("your_file.dfs0", items=["Rainfall_Gauge1", "WaterLevel_Station2"])
+    #| output: false
+    import mikeio
+    
+    # Assuming "data/sample.dfs0" contains items "WaterLevel" and "Discharge"
+    ds_by_name = mikeio.read("data/sample.dfs0", 
+                             items=["WaterLevel", "Discharge"])
+    # ds_by_name will now only contain data for these two items.
     ```
 
-    Alternatively, you can select items by their zero-based index (e.g., 0 for the first item, 1 for the second):
+    Alternatively, if you know their numerical order (which is zero-based, meaning the first item is at index 0), you can select them by index:
 
     ```{python}
-    #| eval: false
-    # To select the first and third items from the dfs0 file
-    # ds = mikeio.read("your_file.dfs0", items=[0, 2])
+    #| output: false
+    import mikeio
+    
+    # Assuming you want the first (index 0) and third (index 2) items
+    ds_by_index = mikeio.read("data/sample.dfs0", items=[0, 2])
+    # ds_by_index will contain data for the items at these positions.
     ```
 
 *   **From a Pandas DataFrame:**
-    Once your `dfs0` data has been converted to a `pandas` DataFrame, you can use the standard DataFrame column selection techniques you're already familiar with from Module 1.
+    Once your data is loaded into a `pandas` DataFrame, you can use the standard column selection techniques you learned in Module 1. This is often more flexible if you need to explore the data first (e.g., using `df.info()` or `df.head()`) before deciding which items to keep.
 
-    To select a single item (which becomes a `pandas` Series):
+    To select a single column (item), simply use its name. Let's imagine your DataFrame `df` has a column named 'Temperature':
 
     ```{python}
-    #| eval: false
-    # Assuming 'df' is your DataFrame and 'WaterLevel' is an item name
-    # water_level_series = df['WaterLevel']
+    #| output: false
+    import pandas as pd
+    
+    # Sample DataFrame setup for demonstration
+    data = {'Temperature': [20, 21, 22], 'Pressure': [1010, 1012, 1011]}
+    index = pd.to_datetime(['2023-01-01 00:00', '2023-01-01 01:00', '2023-01-01 02:00'])
+    df = pd.DataFrame(data, index=index)
+    
+    # Select the 'Temperature' column
+    temperature_series = df['Temperature']
+    # print(temperature_series.head())
     ```
 
-    And to select multiple items (which results in a new DataFrame):
+    For multiple columns, provide a list of column names. If `df` also contains 'Humidity':
 
     ```{python}
-    #| eval: false
-    # selected_items_df = df[['WaterLevel', 'Discharge']]
+    #| output: false
+    import pandas as pd
+    
+    # Sample DataFrame setup for demonstration
+    data = {'Temperature': [20, 21, 22], 'Pressure': [1010, 1012, 1011], 'Humidity': [60, 62, 61]}
+    index = pd.to_datetime(['2023-01-01 00:00', '2023-01-01 01:00', '2023-01-01 02:00'])
+    df = pd.DataFrame(data, index=index)
+    
+    # Select 'Temperature' and 'Humidity' columns
+    selected_columns_df = df[['Temperature', 'Humidity']]
+    # print(selected_columns_df.head())
     ```
 
 ## Selecting Specific Time Steps or Ranges
 
-Just as you can select specific items, you'll frequently need to filter your time series data for particular time steps or ranges. This can also be done at the point of reading the file or afterwards using `pandas`.
+Just as you can select specific items, you'll frequently need to filter your time series data for particular time steps or date ranges. Again, this can be done either during the initial read operation with `mikeio` or afterwards using `pandas`.
 
 *   **During `mikeio.read()`:**
-    `mikeio` allows you to specify a time range when reading a file using the `time` argument. You can provide a start time, an end time, or both. The `time` argument is flexible and can accept various string formats for dates or specific timestamps.
+    `mikeio` allows you to specify a start and/or end time when reading data using the `time` argument. This is efficient for large files as it only loads the data within your specified window. The `time` argument can accept various string formats for dates or specific timestamps.
 
-    For instance, to read data only for the month of January 2023:
+    For example, to read data from `data/sample.dfs0` only for the period from January 1st, 2023, to January 7th, 2023:
 
     ```{python}
-    #| eval: false
-    # ds = mikeio.read("your_file.dfs0", time=("2023-01-01", "2023-01-31 23:59:59"))
+    #| output: false
+    import mikeio
+    
+    # Reads data only for the specified date range
+    ds_time_slice_mikeio = mikeio.read("data/sample.dfs0", 
+                                       time=("2023-01-01", "2023-01-07"))
+    # ds_time_slice_mikeio will contain data only within this time window.
     ```
 
 *   **From a Pandas DataFrame (with `DatetimeIndex`):**
-    `pandas` truly shines when it comes to time series selection, especially when your DataFrame has a **`DatetimeIndex`**. This special index type is typically created for you by `mikeio` when converting data from a `dfs0` file.
+    `pandas` truly shines when it comes to time series selection, especially if your DataFrame has a `DatetimeIndex` (which is typically the case when loading `dfs0` files via `mikeio` and converting them to DataFrames).
 
-    You can easily slice the DataFrame using date strings to select a specific range:
+    *   **Slicing by date strings:** You can easily select a range of dates using string representations. `pandas` is quite intelligent in parsing these date strings. For example, to select all data between '2023-03-15 08:00:00' and '2023-03-15 12:00:00' from a DataFrame `df`:
 
-    ```{python}
-    #| eval: false
-    # Assuming 'df' has a DatetimeIndex
-    # january_data = df["2023-01-01":"2023-01-31"]
-    ```
+        ```{python}
+        #| output: false
+        import pandas as pd
+        
+        # Sample DataFrame setup for demonstration
+        time_rng = pd.date_range('2023-03-15 00:00:00', periods=24, freq='H')
+        df_sample_time = pd.DataFrame({'value': range(24)}, index=time_rng)
+        
+        # Select the specific time slice
+        time_slice_df = df_sample_time.loc['2023-03-15 08:00:00':'2023-03-15 12:00:00']
+        # print(time_slice_df)
+        ```
 
-    `pandas` also supports partial string indexing, which is very convenient for common time-based selections. For example, to select all data for a specific year:
+    *   **Partial string indexing:** `pandas` also supports partial string indexing, which is very convenient for selecting, say, all data for a specific year or month.
+        To select all data for the year 2022:
 
-    ```{python}
-    #| eval: false
-    # data_for_2022 = df["2022"]
-    ```
+        ```{python}
+        #| output: false
+        import pandas as pd
+        
+        # Sample DataFrame setup for demonstration
+        time_rng_years = pd.date_range('2021-12-30', periods=750, freq='D') # Approx 2 years
+        df_years = pd.DataFrame({'value': range(750)}, index=time_rng_years)
+        
+        # Select all data for 2022
+        data_2022 = df_years.loc['2022']
+        # print(data_2022.head())
+        # print(data_2022.tail()) # To confirm it ends within 2022
+        ```
 
-    Or to select all data for a specific month within a year:
+        And to select all data for May 2023:
 
-    ```{python}
-    #| eval: false
-    # july_2022_data = df["2022-07"]
-    ```
+        ```{python}
+        #| output: false
+        import pandas as pd
+        
+        # Sample DataFrame setup for demonstration
+        time_rng_months = pd.date_range('2023-01-01', periods=200, freq='D') 
+        df_months = pd.DataFrame({'value': range(200)}, index=time_rng_months)
+        
+        # Select all data for May 2023
+        data_may_2023 = df_months.loc['2023-05']
+        # print(data_may_2023.head())
+        # print(data_may_2023.tail()) # To confirm it's all within May 2023
+        ```
 
 ::: {.callout-note}
 ## Efficiency and Workflow
-Selecting data during the `mikeio.read()` operation can be more memory-efficient for very large `dfs0` files, as it avoids loading unnecessary data into memory from the start. However, once the data is in a `pandas` DataFrame, you have greater flexibility for iterative exploration and more complex selection logic. Choose the approach that best suits your immediate needs and the size of your data.
+Selecting data during the `mikeio.read()` operation can be more memory-efficient for very large `dfs0` files, as it avoids loading unnecessary data into memory. However, selecting from a `pandas` DataFrame offers more flexibility once the data is loaded, allowing for more interactive exploration and complex conditional selections. Choose the approach that best suits your needs and the size of your data.
 :::
 
 For more advanced selection techniques and a deeper dive into time-based indexing, refer to the official [Pandas documentation on Time Series / Date functionality](https://pandas.pydata.org/pandas-docs/stable/user_guide/timeseries.html).
