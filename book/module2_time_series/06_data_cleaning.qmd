@@ -1,57 +1,154 @@
 # Data Cleaning
 
-Data cleaning is an essential step in any MIKE+ modelling workflow to ensure your input data is reliable and your models perform optimally. High-quality data leads to more trustworthy model outcomes. This section will cover how to handle missing values, often represented as `NaN`s, and then introduce `tsod`, a Python package from DHI for detecting and addressing anomalies in your time series data.
+Data cleaning is an essential step in any MIKE+ modelling workflow to ensure your input data is complete. This section covers handling missing values (e.g. nan). Additionally, it introduces the topic of detecting anomalies in time series data.
 
 ## Missing Values
 
-Missing values can significantly impact your model results if not handled appropriately. In Pandas, and by extension in the scientific Python ecosystem, missing numerical data is typically represented by `NaN`, which stands for "Not a Number". These `NaN`s can arise from various sources, such as sensor malfunctions during data collection, gaps that occur during data transmission, or they might be the result of previous data processing or cleaning steps.
+DHI's modelling engines typically require complete datasets for calculations, and thus dfs0 files, which are often used as inputs, should not contain missing values. For example, a rainfall boundary condition cannot have the value `nan`.
 
-You can easily check for the presence and count of `NaN`s in a Pandas DataFrame column. For instance, let's create a small sample DataFrame and then determine how many missing values are in the 'WaterLevel' column:
+::: {.callout-note}
+Missing numerical data is typically represented by `nan`. These arise from various sources, such as sensor malfunctions during data collection, gaps that occur during data transmission, or they might be the result of previous data processing or cleaning steps.
+:::
 
 ```{python}
-import pandas as pd
+#| echo: false
+#| output: false
+#| warning: false
+#| message: false
+import mikeio
 import numpy as np
+np.random.seed(42)
+df = mikeio.read("data/single_water_level.dfs0").to_dataframe()
+df.loc["1993-12-06"] = np.nan # simulate gap
+```
 
-data = {'WaterLevel': [1.0, 1.2, np.nan, 1.3, 1.1, np.nan, 1.5]}
-df_sample = pd.DataFrame(data)
-df_sample['WaterLevel'].isnull().sum()
+Assume we have a DateFrame with missing values on 1993-12-06:
+
+```{python}
+#| code-fold: true
+#| code-summary: "Show Plotting Code"
+ax = df.plot()
+ax.axvspan(
+    xmin="1993-12-06 00:00",
+    xmax="1993-12-07 00:00",
+    color='grey',
+    alpha=0.3,
+    label="Missing Data"
+)
+ax.legend(loc="upper right")
+```
+
+Count the number of missing values (e.g. `nan`) for each time series by summing the result of `isna()`.
+
+```{python}
+df.isna().sum()
 ```
 
 ## Imputation
 
-It's often necessary to fill these `NaN`s, a process known as imputation. DHI's modelling engines typically require complete datasets for calculations, and thus DFS0 files, which are often used as inputs, should not contain missing values. Furthermore, many analytical algorithms perform better or exclusively with complete data.
+The process of filling missing values is known as imputation. 
 
-For `NaN`s that occur *between* valid data points (sometimes called bounded `NaN`s), using the `.interpolate()` method is a common and effective approach. Linear interpolation is a general choice, and if your DataFrame has a `DatetimeIndex`, using `method='time'` can provide more accurate interpolation based on the time intervals.
-
-Here's how you can apply linear interpolation to fill the bounded `NaN`s in our sample 'WaterLevel' column. We'll make a copy to preserve the original:
+For missing values *between* valid data points (i.e. bounded), using the `.interpolate()` method is a common and effective approach.
 
 ```{python}
-df_interpolated = df_sample.copy()
-df_interpolated['WaterLevel'] = df_interpolated['WaterLevel'].interpolate(method='linear')
-df_interpolated
+df_interpolated = df.interpolate(method='time')
 ```
-
-For `NaN`s that appear at the very beginning or end of your dataset (unbounded `NaN`s), the `.fillna()` method is more suitable. You can use `method='ffill'` (forward fill) to propagate the last valid observation forward, or `method='bfill'` (backward fill) to use the next valid observation to fill the gap.
-
-Let's imagine our 'WaterLevel' data had a leading `NaN` (and to illustrate, a trailing one as well):
 
 ```{python}
-data_unbounded_nan = {'WaterLevel': [np.nan, 1.0, 1.2, 1.3, np.nan]}
-df_unbounded_nan = pd.DataFrame(data_unbounded_nan)
-df_unbounded_nan['WaterLevel'] = df_unbounded_nan['WaterLevel'].fillna(method='bfill')
-df_unbounded_nan['WaterLevel'] = df_unbounded_nan['WaterLevel'].fillna(method='ffill') # For any trailing
-df_unbounded_nan
+#| code-fold: true
+#| code-summary: "Show Plotting Code"
+ax = df.plot()
+ax.axvspan(
+    xmin="1993-12-06 00:00",
+    xmax="1993-12-07 00:00",
+    color='grey',
+    alpha=0.3,
+    label="Missing Data"
+)
+df_interpolated.columns = ["Interpolation"]
+df_interpolated.loc["1993-12-06"].plot(ax=ax)
+ax.legend(loc="upper right")
 ```
 
-You can also replace `NaN`s with a specific constant value, such as the mean or median of the column, or zero. However, this approach should be used cautiously as it can introduce bias into your dataset or misrepresent the underlying process.
+::: {.callout-note}
+The example above uses `method='time'`, which is a linear interpolation that considers non-equidistant `DatetimeIndex` indices. Refer to [Pandas's documentation](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.interpolate.html) for additional interpolation methods, such as polynomial.
+:::
+
+For missing values appearing at the very beginning or end of your dataset (i.e. unbounded), you can make use of:
+
+- `.fillna()`
+- `.ffill()`
+- `.bfill()`
 
 ::: {.callout-tip}
-These `NaN` imputation methods, such as `.fillna()` and `.interpolate()`, reuse skills and concepts you might have encountered in the "Resampling" section. The techniques for handling data gaps are quite versatile.
+Recall: these imputation methods were introduced in the section on resampling, where upsampling introduced `nan` values.
 :::
 
-::: {.callout-caution}
-The choice of `NaN` imputation method can significantly impact your subsequent analysis and model results. Always consider the nature and context of your data, and the potential implications of the chosen imputation strategy.
-:::
+Same example as above, but using `ffill()`.
+
+```{python}
+df_interpolated = df.ffill()
+```
+
+```{python}
+#| code-fold: true
+#| code-summary: "Show Plotting Code"
+ax = df.plot()
+ax.axvspan(
+    xmin="1993-12-06 00:00",
+    xmax="1993-12-07 00:00",
+    color='grey',
+    alpha=0.3,
+    label="Missing Data"
+)
+df_interpolated.columns = ["Interpolation"]
+df_interpolated.loc["1993-12-06"].plot(ax=ax)
+ax.legend(loc="upper right")
+```
+
+Same example as above, but using `bfill()`.
+
+```{python}
+df_interpolated = df.bfill()
+```
+
+```{python}
+#| code-fold: true
+#| code-summary: "Show Plotting Code"
+ax = df.plot()
+ax.axvspan(
+    xmin="1993-12-06 00:00",
+    xmax="1993-12-07 00:00",
+    color='grey',
+    alpha=0.3,
+    label="Missing Data"
+)
+df_interpolated.columns = ["Interpolation"]
+df_interpolated.loc["1993-12-06"].plot(ax=ax)
+ax.legend(loc="upper right")
+```
+
+Same example as above, but using `fillna()`. 
+
+```{python}
+df_interpolated = df.fillna(0.1) # specify the value to fill with
+```
+
+```{python}
+#| code-fold: true
+#| code-summary: "Show Plotting Code"
+ax = df.plot()
+ax.axvspan(
+    xmin="1993-12-06 00:00",
+    xmax="1993-12-07 00:00",
+    color='grey',
+    alpha=0.3,
+    label="Missing Data"
+)
+df_interpolated.columns = ["Interpolation"]
+df_interpolated.loc["1993-12-06"].plot(ax=ax)
+ax.legend(loc="upper right")
+```
 
 ## Anomaly Detection (Rule-Based)
 
@@ -59,13 +156,11 @@ The choice of `NaN` imputation method can significantly impact your subsequent a
 Short on time? This section provides an introduction to a useful package but can be considered optional for core module understanding.
 :::
 
-Beyond clearly missing values, time series data can also contain anomalies�data points that deviate significantly from the general pattern or expected behavior. Identifying and addressing these anomalies is crucial for building robust MIKE+ models. The `tsod` Python package, developed by DHI, provides a suite of tools for rule-based anomaly detection in time series.
+Beyond clearly missing values, time series data can also contain anomalies. Identifying and addressing these anomalies is crucial for building robust MIKE+ models. 
 
-Anomaly detection is a broad and complex field; this section serves as a basic introduction to what `tsod` offers. For more comprehensive information, examples, and advanced usage, you are encouraged to visit the [tsod GitHub repository](https://github.com/DHI/tsod).
+Anomaly detection is a broad and complex field. This section offers a basic introduction to rule-based anomaly detection using DHI's [tsod Python package](https://github.com/DHI/tsod).
 
 ### Install `tsod`
-
-First, if you haven't already, you'll need to install `tsod` into your Python environment. You can do this using `uv`:
 
 ```powershell
 uv pip install tsod
@@ -73,13 +168,24 @@ uv pip install tsod
 
 ### The Detector Concept
 
-`tsod` operates using a concept called "detectors." Each detector is designed to implement a specific rule or heuristic to identify anomalies. For example, there are detectors for values falling outside a predefined range (`RangeDetector`), for values that remain constant over an extended period (`ConstantValueDetector`), for identifying sudden large changes or differences between consecutive points (`DiffDetector`), or for flagging points that deviate significantly from a rolling standard deviation (`RollingStdDetector`). When applied to a time series, these detectors output a boolean mask (a Series of `True`/`False` values) of the same length as the input, where `True` indicates a detected anomaly at that position.
+`tsod` operates using a concept called "detectors." Each detector is designed to implement a specific rule or heuristic to identify anomalies. Example anomaly detectors:
 
-::: {.callout-tip}
-`tsod` offers a variety of detectors beyond those mentioned. It's highly recommended to check the official `tsod` documentation for a full list, detailed explanations, and usage examples for each detector.
-:::
+*   **RangeDetector:** Flags values outside a set range.
+*   **ConstantValueDetector:** Detects unchanging values over time.
+*   **DiffDetector:** Catches large changes between points.
+*   **RollingStdDetector:**  Finds points far from rolling standard deviation.
 
-### Workflow: Detect, Visualize, NaN, Impute
+There's also the `CombinedDetector`, which allows combining the rules of several detectors.
+
+### Detecting Anomalies
+
+ ```{python}
+from tsod.detectors import RangeDetector
+
+detector = RollingStdDetector(window_size=3, n_std=1.5)
+anomaly_mask = detector.detect(series_anomaly)
+anomaly_mask
+```
 
 Let's walk through a minimal example workflow using the `RollingStdDetector` to illustrate the typical process:
 
