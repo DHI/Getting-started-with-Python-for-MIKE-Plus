@@ -1,0 +1,185 @@
+# Data Visualization
+
+Visualizing time series data is a critical step in any MIKE+ modelling workflow. Effective plots can help understand data quality, model behavior, the agreement between simulations and observations, as well as communicating key findings.
+
+::: {.callout-note}
+Module 4 will delve deeper into creating plots and calculating statistics for model calibration and validation using the `ModelSkill` package.
+:::
+
+## Why Visualize Data?
+
+Visual inspection of data serves several key purposes in the modelling process:
+
+-   **Validate input data:** Quickly identify anomalies, gaps, or questionable patterns in input time series like rainfall, flow, or water levels.
+-   **Grasp system behavior:** Understand underlying trends, seasonality, and extreme events within your datasets.
+-   **Calibrate/validate:** Graphically compare simulated results against observed data to assess model performance.
+-   **Diagnose model errors:** Pinpoint discrepancies in timing, magnitude, or overall patterns between model output and reality.
+-   **Communicate results:** Create clear visuals to share modelling outcomes, impacts of different scenarios, or model performance metrics with stakeholders.
+
+## Simple Statistics
+
+Before diving into plots, it's often useful to get a quick numerical summary of your data. 
+
+Assuming you have a DataFrame `df` containing your time series with both observed and model data:
+
+```{python}
+#| echo: false
+#| output: false
+#| warning: false
+#| message: false
+import mikeio
+import numpy as np
+np.random.seed(42)
+df = mikeio.read("data/single_water_level.dfs0").to_dataframe()
+df.columns = ["Model"]
+df["Observed"] = df.iloc[:,0] + np.random.normal(0, 0.1, len(df))  # add some noise to simulate real data
+```
+```{python}
+df.head()
+```
+
+The `describe()` method provides useful statistics of each column in the DataFrame.
+
+```{python}
+df.describe()
+```
+
+## Useful Time Series Plots
+
+This section showcases a few useful plot types for time series data in MIKE+ modelling.
+
+### Line Plots
+
+Line plots are essential for visualizing temporal patterns in hydraulic data like flows, water levels, or rainfall. They are also the primary way to compare simulated versus observed time series.
+
+You can plot a single series directly from a DataFrame column:
+
+```{python}
+df['Observed'].plot(
+    title='Observed Flow Over Time',
+    xlabel='Time',
+    ylabel='Flow (m$^3$/s)'
+)
+```
+
+Compare two time series, such as observed and modelled flow:
+
+```{python}
+df[['Observed', 'Model']].plot(
+    title='Flow Comparison: Observed vs. Model',
+    ylabel='Flow (m$^3$/s)'
+)
+```
+
+### Rolling Mean / Moving Average Plot
+
+This plot helps smooth out noisy time series data, such as high-frequency sensor readings for flow or water level. This smoothing can make it easier to visualize underlying trends or long-term patterns.
+
+```{python}
+df['Observed_Rolling_Mean'] = df['Observed'].rolling(window=6).mean()
+
+df[['Observed', 'Observed_Rolling_Mean']].plot(
+    title='Observed 6-Hour Rolling Mean',
+    ylabel='Flow (m$^3$/s)'
+)
+```
+
+::: {.callout-tip}
+Adjust the `window` size in the `.rolling()` method to control the amount of smoothing. Larger windows result in smoother trends but might obscure shorter-term variations.
+:::
+
+### Scatter Plots
+
+Scatter plots are particularly useful for model calibration. By plotting paired observed values against simulated values, you can assess point-by-point agreement.
+
+```{python}
+ax = df.plot.scatter(
+    x='Observed',
+    y='Model',
+    alpha=0.5, # so we can see overlapping points better
+    title='Observed vs. Model'
+)
+
+# plot 1:1 line
+max_val = max(df['Observed'].max(), df['Model'].max())
+min_val = min(df['Observed'].min(), df['Model'].min())
+ax.plot([min_val, max_val], [min_val, max_val], 'k--', label='1:1 Line')  # black dashed line
+ax.legend()
+```
+
+::: {.callout-note}
+Points clustering around the 1:1 line (the dashed line in the example) indicate good agreement.
+:::
+
+### Box Plots
+
+To understand seasonal variability in your data (e.g. diurnal or seasonal flow patterns), box plots can be effective.
+
+```{python}
+df['Day'] = df.index.day_name()
+ax = df.boxplot(column='Observed', by='Day')
+ax.get_figure().suptitle("") # remove figure title, just use axes title
+ax.set_title("Flows by Day of Week")
+ax.set_ylabel("Water level (m)")
+```
+
+### Cumulative Sum Plots
+
+Cumulative sum plots are excellent for assessing overall water balance or comparing total accumulated volumes (e.g., rainfall, runoff) between observed and simulated data over a period.
+
+```{python}
+#| echo: false
+#| output: false
+#| warning: false
+#| message: false
+ds = mikeio.read("data/discharge.dfs0")
+df_discharge = ds.to_dataframe()
+```
+
+```{python}
+df_discharge.cumsum().plot(ylabel="Cumulated Discharge (m$^3$/s)")
+```
+
+::: {.callout-note}
+Cumulative sums for mass balance require calculating volume differentials. The example below is a simplified approach, recognizing they time series share the same time axis.
+:::
+
+### Distribution Plots
+
+Histograms help you examine the frequency distribution of variables, such as water levels or flows. This can be useful for comparing the overall statistical profile of observed versus simulated data or understanding the prevalence of certain magnitudes.
+
+```{python}
+#| echo: false
+#| output: false
+#| warning: false
+#| message: false
+df = df[['Observed', 'Model']]
+```
+```{python}
+df.plot.hist(bins=15, alpha=0.5)
+```
+
+Similarly, review frequency distribution with KDE plots:
+
+```{python}
+df.plot.kde()
+```
+
+## Saving Plots
+
+Easily save plots for inclusion in reports via `plt.savefig()`.
+
+```{python}
+import matplotlib.pyplot as plt
+
+ax = df['Observed'].plot(title='Daily Average Flow', ylabel="Flow ($m^3/s$)")
+plt.savefig("my_plot.png")
+```
+```{python}
+#| echo: false
+#| output: false
+#| warning: false
+#| message: false
+import os
+os.remove("my_plot.png")
+```

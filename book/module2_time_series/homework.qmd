@@ -1,246 +1,207 @@
 # Homework {.unnumbered}
 
-These exercises are designed to help you solidify your understanding of the concepts covered in Module 2. You'll get hands-on practice with reading, manipulating, validating, and writing `dfs0` files using `mikeio`, `pandas`, and `tsod`.
+These exercises will guide you through a complete workflow: loading data from a common format (CSV), cleaning and preparing it using Pandas, visualizing it, and finally, converting it into a DFS0 file suitable for MIKE+ using MIKE IO.
 
-Before you begin, please set up your project environment:
+**Exercise 1: Load, Inspect, and Prepare Rainfall Data from CSV**
 
-1.  Create a new subfolder within your main course project folder specifically for this module's homework (e.g., `module2_homework`).
-2.  Ensure your `uv` virtual environment, which should include `pandas`, `matplotlib`, `mikeio`, and `tsod`, is activated in your VS Code terminal whenever you run Python scripts.
-3.  You'll need to download data files for these exercises. Place them directly into your `module2_homework` subfolder.
+This exercise focuses on ingesting external data into a familiar Pandas DataFrame structure, performing initial inspections, and basic preparations.
 
----
-
-**Exercise 1: Project Setup and Reading `dfs0`**
-
-Your first task is to read a `dfs0` file and get a first look at its contents.
-
-1.  Begin by downloading the sample time series file: [rain_data_raw.dfs0](data/homework/rain_data_raw.dfs0){download="rain_data_raw.dfs0"}. Save it into your `module2_homework` folder.
-2.  Create a new Python script in this folder, for instance, named `process_rain_data.py`.
-3.  In your script, you will need to import `mikeio` and `pandas`. Then, read the `rain_data_raw.dfs0` file into a `mikeio` `Dataset` object.
+1.  First, ensure that `mikeio`, `pandas`, and `matplotlib` are installed in your Python environment. If you need a reminder on how to do this, please refer to the setup instructions in Module 1.
+2.  Download the rainfall data CSV file. Click [here to download `rainfall_data.csv`](data/homework/rainfall_data.csv){download="rainfall_data.csv"} and save it into your project folder, perhaps in a `data/homework/` subdirectory.
+3.  Now, load the `rainfall_data.csv` file into a Pandas DataFrame. You can use the `pd.read_csv()` function for this.
 
     ```{python}
-    import mikeio
     import pandas as pd
-
-    ds = mikeio.read("data/homework/rain_data_raw.dfs0")
-    ds
-    ```
-
-4.  Next, convert this `Dataset` into a `pandas` DataFrame. To understand its structure, print the first few rows using `.head()` and then display its summary information using `.info()`. Add these steps to your script. For example, after creating your DataFrame `df`:
-
-    ```{python}
-    # Ensure ds is loaded from the previous step
-    # ds = mikeio.read("data/homework/rain_data_raw.dfs0")
-    df = ds.to_dataframe()
-    df.head()
-    ```
-    And then:
-    ```python}
-    # df.info() # Run this in your script to see the output
-    ```
-    Observe the output in your terminal. What are the item names? What is the time range and frequency?
-
-**Exercise 2: Data Selection**
-
-Now, let's practice selecting specific parts of the data from the DataFrame you created in Exercise 1.
-
-1.  The `dfs0` file might contain data from multiple rainfall gauges. For this exercise, imagine you're interested in a gauge named "Gauge_A2". If "Gauge_A2" isn't present (check your `.info()` output from Exercise 1), pick one of the available item names. Select only this item's data into a new DataFrame or a pandas Series. For instance, if your DataFrame is `df` and the item name is `"Gauge_A2"`:
-
-    ```{python}
-    # Assume df is the DataFrame from Exercise 1
-    # df = mikeio.read("data/homework/rain_data_raw.dfs0").to_dataframe()
-    selected_item_name = "Gauge_A2" # Replace if not available
-    # Check if the item exists before selecting
-    if selected_item_name not in df.columns:
-        if len(df.columns) > 0:
-            selected_item_name = df.columns[0] # Fallback to the first item
-            print(f"'{selected_item_name}' not found, using '{selected_item_name}' instead.")
-        else:
-            print("DataFrame has no columns.")
-
-    gauge_data = df[[selected_item_name]] # Select as DataFrame
-    gauge_data.head()
-    ```
-
-2.  From this selected item's data (`gauge_data`), further narrow down your selection to include only records for a specific time period. Let's aim for the entire month of July 2022. If your data's time range doesn't cover this, please adjust the year and month accordingly (e.g., `'2022-07-01'` to `'2022-07-31'`).
-
-    ```{python}
-    # Assume gauge_data is from the previous step
-    # And selected_item_name is defined
-    # df_full = mikeio.read("data/homework/rain_data_raw.dfs0").to_dataframe()
-    # if selected_item_name not in df_full.columns:
-    #    selected_item_name = df_full.columns[0] if len(df_full.columns) > 0 else None
-    # gauge_data = df_full[[selected_item_name]] if selected_item_name else pd.DataFrame()
-
-    # Check if gauge_data has a DatetimeIndex
-    if isinstance(gauge_data.index, pd.DatetimeIndex):
-        july_data = gauge_data["2022-07-01":"2022-07-31"]
-        july_data.head()
-    else:
-        print("gauge_data does not have a DatetimeIndex. Skipping time selection.")
-        pd.DataFrame().head() # Show empty DataFrame if no DatetimeIndex
-    ```
-3.  Print the `.head()` of this finally selected data (`july_data`) to verify your selection.
-
-**Exercise 3: Resampling Time Series**
-
-Resampling is a common task. Let's use the data for your chosen gauge (e.g., "Gauge_A2") from *before* you selected the specific month in Exercise 2.2 (or simply re-select the full period for that single item if it's easier).
-
-1.  The raw data might be at a fine temporal resolution (e.g., 5-minute or 10-minute intervals). Your task is to resample this data to calculate the **total hourly rainfall**. You'll use the `.resample()` method followed by `.sum()`.
-
-    ```{python}
-    # Assume df is the full DataFrame from Exercise 1
-    # and selected_item_name is defined
-    # df = mikeio.read("data/homework/rain_data_raw.dfs0").to_dataframe()
-    # if selected_item_name not in df.columns:
-    #     selected_item_name = df.columns[0] if len(df.columns) > 0 else None
     
-    if selected_item_name and selected_item_name in df.columns:
-        gauge_full_period = df[[selected_item_name]]
-        hourly_rainfall = gauge_full_period.resample('H').sum()
-        hourly_rainfall.head()
-    else:
-        print(f"Item '{selected_item_name}' not available for resampling.")
-        pd.DataFrame().head() # Show empty DataFrame
+    # Assuming the file is in 'data/homework/rainfall_data.csv' relative to your script/notebook
+    csv_filepath = "data/homework/rainfall_data.csv" 
+    df = pd.read_csv(csv_filepath)
     ```
 
-2.  Print the `.head()` of the resulting hourly resampled DataFrame to see the aggregated values.
-3.  *Optional Challenge:* Try resampling the same gauge data to calculate the **mean daily rainfall**. Print its `.head()` as well.
+4.  Inspect the DataFrame to understand its structure and content:
+    *   Display the first 5 rows using the `.head()` method. This gives you a quick look at the data.
 
-**Exercise 4: Basic Anomaly Detection with `tsod`**
+        ```{python}
+        df.head()
+        ```
 
-Let's use the **hourly resampled rainfall Series** (e.g., `hourly_rainfall[selected_item_name]`) from Exercise 3 for anomaly detection.
+    *   Print summary information using the `.info()` method. This will show column data types and non-null counts.
 
-1.  First, import an appropriate detector from `tsod`. For rainfall, `tsod.RangeOutlierDetector` could be useful if you have an idea of plausible minimum/maximum intensities (e.g., min_val=0, max_val=50 mm/hr). Alternatively, `tsod.StddevOutlierDetector(multiplier=3)` detects points that are more than 3 standard deviations from the mean. Choose one.
+        ```{python}
+        df.info()
+        ```
+
+5.  The 'Timestamp' column currently likely holds strings but should represent time. Convert this column to datetime objects using `pd.to_datetime()`, and then set this 'Timestamp' column as the DataFrame's index using `df.set_index()`.
 
     ```{python}
-    import tsod
-    import numpy as np # For np.nan later
-
-    # Assume hourly_rainfall DataFrame from Exercise 3 and selected_item_name is defined
-    # For demonstration, let's recreate a sample series if hourly_rainfall isn't available
-    # if 'hourly_rainfall' not in locals() or hourly_rainfall.empty:
-    #    index = pd.date_range('2023-01-01', periods=5, freq='H')
-    #    data = {'SampleRain': [1, 2, 55, 4, 5]}
-    #    hourly_rainfall = pd.DataFrame(data, index=index)
-    #    selected_item_name = 'SampleRain'
-        
-    if not hourly_rainfall.empty and selected_item_name in hourly_rainfall.columns:
-        hourly_series = hourly_rainfall[selected_item_name]
-        detector = tsod.RangeOutlierDetector(min_val=0, max_val=50) # Example range
-        outliers_boolean_series = detector.detect(hourly_series)
-        outliers_boolean_series.head()
-    else:
-        print("Hourly rainfall data not available for anomaly detection.")
-        pd.Series(dtype=bool).head() # Show empty Series
+    df['Timestamp'] = pd.to_datetime(df['Timestamp'])
+    df = df.set_index('Timestamp')
     ```
 
-2.  Apply the chosen detector to your hourly rainfall Series. This will return a boolean Series where `True` indicates an outlier.
-3.  Print the number of outliers detected. You can do this by summing the boolean Series (since `True` evaluates to 1 and `False` to 0). For example: `print(outliers_boolean_series.sum())`.
-
-**Exercise 5: Handling Anomalies and Missing Data**
-
-Continuing with your hourly rainfall Series and the `outliers_boolean_series` from Exercise 4:
-
-1.  Replace the values identified as outliers in your hourly rainfall Series with `np.nan` (Not a Number). Remember to `import numpy as np`. You can use boolean indexing for this.
+6.  Re-check the DataFrame's structure using `.info()` again. Confirm that the index is now a `DatetimeIndex` and note the data type of the 'Rainfall_mm' column.
 
     ```{python}
-    # Assume hourly_series and outliers_boolean_series from Exercise 4 are available
-    # if 'hourly_series' not in locals(): # For standalone execution
-    #    idx = pd.date_range('2023-01-01', periods=5, freq='H')
-    #    hourly_series = pd.Series([1, 2, 55, 4, 5], index=idx, name='SampleRain')
-    #    outliers_boolean_series = pd.Series([False, False, True, False, False], index=idx)
-
-    hourly_series_with_nans = hourly_series.copy()
-    hourly_series_with_nans[outliers_boolean_series] = np.nan
-    hourly_series_with_nans.head()
+    df.info()
     ```
 
-2.  Check how many `NaN` values are now present in your Series using `.isna().sum()`.
-3.  Now, fill these `NaN` values. A common method is forward fill (`ffill`), which propagates the last valid observation forward. Apply this to your Series.
+7.  Use the `.describe()` method on the 'Rainfall_mm' column to get summary statistics. What are the mean, min, and max rainfall values? Do these values seem reasonable for hourly rainfall data?
 
     ```{python}
-    # Assume hourly_series_with_nans from the previous step
-    # if 'hourly_series_with_nans' not in locals(): # For standalone execution
-    #    idx = pd.date_range('2023-01-01', periods=5, freq='H')
-    #    hourly_series_with_nans = pd.Series([1, 2, np.nan, 4, 5], index=idx, name='SampleRain')
-
-    cleaned_hourly_series = hourly_series_with_nans.fillna(method='ffill')
-    cleaned_hourly_series.head()
+    df['Rainfall_mm'].describe()
     ```
 
-4.  Print the `.head()` of this `cleaned_hourly_series` to see the result.
+**Exercise 2: Clean Data and Define MIKE IO Metadata**
 
-**Exercise 6: Creating a New `dfs0` File**
+Before converting to DFS0, data often needs cleaning. Additionally, MIKE IO requires specific metadata for proper interpretation of the data within MIKE software.
 
-You now have a cleaned hourly rainfall `pandas` Series (`cleaned_hourly_series`) from Exercise 5. Let's save this back to a `dfs0` file.
-
-1.  To write to `dfs0` with proper metadata, you'll create a `mikeio.DataArray`. This requires the data itself (your `cleaned_hourly_series`), its time index, and `mikeio.ItemInfo`. For `ItemInfo`, choose a suitable name (e.g., `'Processed_Rainfall_Gauge_A2'`), item type (e.g., `mikeio.EUMType.Rainfall`), and unit (e.g., `mikeio.EUMUnit.mm_per_hour` – ensure this unit matches how you calculated total hourly rainfall).
+1.  Check if there are any missing values (NaNs) in the 'Rainfall_mm' column. The `.isnull().sum()` combination is very useful here.
 
     ```{python}
-    # Assume cleaned_hourly_series and selected_item_name from previous exercises
-    # For standalone execution:
-    # if 'cleaned_hourly_series' not in locals():
-    #    idx = pd.date_range('2023-01-01', periods=5, freq='H')
-    #    cleaned_hourly_series = pd.Series([1, 2, 2, 4, 5], index=idx, name='SampleRain')
-    #    selected_item_name = 'SampleRain' # or a default name if not set
+    df['Rainfall_mm'].isnull().sum()
+    ```
 
-    item_name_processed = f"Processed_{selected_item_name}"
-    item_info = mikeio.ItemInfo(
-        name=item_name_processed,
-        itemtype=mikeio.EUMType.Rainfall,
-        unit=mikeio.EUMUnit.mm_per_hour
-    )
+2.  If missing values exist (the previous command would show a count greater than zero), impute them using linear interpolation. This is a common method for filling gaps in time series data. Apply the `.interpolate(method='linear')` method directly to the 'Rainfall_mm' column.
+    *   After interpolation, verify that no missing values remain by running the check from step 1 again.
+
+    ```{python}
+    df['Rainfall_mm'] = df['Rainfall_mm'].interpolate(method='linear')
+    df['Rainfall_mm'].isnull().sum()
+    ```
+
+3.  Identify the appropriate MIKE IO metadata for your rainfall data. This involves determining the item name, EUM Type, EUM Unit, and Data Value Type.
+
+    *   **Item Name**: This will typically be the column name from your DataFrame. In this case, it's 'Rainfall_mm'.
+    *   **EUM Type**: What is the DHI EUM Type for rainfall?
+        *   Hint: You'll need to import `EUMType` from `mikeio.eum`. You can then explore its attributes to find a suitable type for rainfall (e.g., `mikeio.eum.EUMType.Rainfall`).
+    *   **EUM Unit**: What is the DHI EUM Unit for rainfall measured in millimeters?
+        *   Hint: Similar to EUM Type, import `EUMUnit` from `mikeio.eum` and find the unit for millimeters (e.g., `mikeio.eum.EUMUnit.mm`).
+    *   **Data Value Type**: Given that the rainfall data represents the total amount that has fallen *within* each time step (e.g., the total mm in the hour ending at the timestamp), what `data_value_type` is most appropriate? Common options include 'Instantaneous', 'Accumulated', 'StepAccumulated', 'MeanStepBackward', 'MeanStepForward'.
+
+        ::: {.callout-tip}
+        'StepAccumulated' is often used for incremental rainfall totals recorded over a time step, like hourly rainfall.
+        :::
+
+**Exercise 3: Visualize Cleaned Rainfall Data and Save Plot**
+
+Visualizing the data is a crucial step to ensure it looks as expected before further processing or file conversion.
+
+1.  Using the cleaned Pandas DataFrame from Exercise 2 (after NaN imputation):
+    *   Create a line plot of the 'Rainfall_mm' time series. The `.plot()` method on a Pandas Series makes this straightforward.
+
+    ```{python}
+    # Ensure matplotlib is available for plotting
+    import matplotlib.pyplot as plt
     
-    da = mikeio.DataArray(
-        data=cleaned_hourly_series,
-        time=cleaned_hourly_series.index,
-        item=item_info
-    )
-    da
+    df['Rainfall_mm'].plot()
     ```
 
-2.  Next, create a `mikeio.Dataset` object. A Dataset can contain one or more DataArrays.
+2.  Customize your plot to make it more informative:
+    *   Add a title (e.g., "Hourly Rainfall Data").
+    *   Set an appropriate label for the y-axis (e.g., "Rainfall (mm)").
+    *   Ensure the x-axis (time) is clearly labeled (Pandas often does this well by default if the index is a DatetimeIndex).
+    *   Hint: You can use `plt.title()`, `plt.ylabel()`, `plt.xlabel()` from `matplotlib.pyplot` *after* calling `df.plot()`, or pass arguments like `title` and `ylabel` directly to the `.plot()` method.
 
     ```{python}
-    # Assume da (DataArray) from the previous step
-    # if 'da' not in locals(): # For standalone execution
-    #    # ... (recreate da as above) ...
-    #    pass # Placeholder for actual recreation if needed
-
-    ds_processed = mikeio.Dataset([da])
-    ds_processed
+    df['Rainfall_mm'].plot(title='Hourly Rainfall Data', ylabel='Rainfall (mm)', xlabel='Time')
+    plt.show() # Ensures the plot is displayed
     ```
 
-3.  Finally, write this `Dataset` to a new `dfs0` file. Name it `processed_hourly_rain.dfs0` and save it in your `module2_homework` folder.
+3.  Save the plot as a PNG file named `rainfall_timeseries.png`.
+    *   Hint: If using `matplotlib.pyplot` (often imported as `plt`), use `plt.savefig()`. Remember to call this *before* `plt.show()` if you are in a script, or ensure the plot object is correctly handled in a Jupyter environment.
 
-    ```python}
-    # ds_processed.to_dfs0("data/homework/processed_hourly_rain.dfs0")
-    # print("Processed data written to processed_hourly_rain.dfs0")
+    ```{python}
+    # Assuming the plot from the previous step is still the active one
+    # For this example, we'll replot and save
+    df['Rainfall_mm'].plot(title='Hourly Rainfall Data', ylabel='Rainfall (mm)', xlabel='Time')
+    plt.savefig('rainfall_timeseries.png')
+    plt.close() # Closes the plot figure to free up memory
     ```
-    (This block is intended for execution in your script, the output is a file.)
 
-**Exercise 7 (Optional): Visualization**
+**Exercise 4: Create DFS0 File with MIKE IO**
 
-To better understand the impact of your data processing, use `matplotlib` (which you were introduced to in Module 1) to create a plot.
+This exercise converts your prepared Pandas DataFrame into a MIKE IO `Dataset` object with the correct metadata, and then writes it to a DFS0 file.
 
-1.  Try to show the following on the same plot (or on separate subplots):
-    *   The original hourly resampled data (from Exercise 3, before outlier handling).
-    *   The data after you replaced outliers with `np.nan` (from Exercise 5, before filling).
-    *   The final cleaned and filled data (from Exercise 5, after `ffill`).
-2.  This will help you visually confirm how the outliers were identified and how the `NaN` values were handled. Remember to add labels and a legend to your plot for clarity.
+1.  Import `ItemInfo` from `mikeio`. You'll also need `EUMType` and `EUMUnit` if you haven't imported them already.
 
----
+    ```{python}
+    from mikeio import ItemInfo
+    from mikeio.eum import EUMType, EUMUnit
+    import mikeio # For mikeio.from_pandas
+    ```
 
-## Practice Exercises (Optional) {.unnumbered}
+2.  Create an `ItemInfo` object for your rainfall data series. Use 'Rainfall_mm' for the `name` argument, and the `EUMType`, `EUMUnit`, and `data_value_type` you identified in Exercise 2. For example, `EUMType.Rainfall`, `EUMUnit.mm`, and `data_value_type="StepAccumulated"`.
 
-If you'd like more practice, consider these additional tasks:
+    ```{python}
+    item_rainfall = ItemInfo(
+        name='Rainfall_mm', 
+        itemtype=EUMType.Rainfall, 
+        unit=EUMUnit.mm, 
+        data_value_type='StepAccumulated'
+    )
+    print(item_rainfall)
+    ```
 
-*   Download the [optional_flow_data.dfs0](data/homework/optional_flow_data.dfs0){download="optional_flow_data.dfs0"} file.
-*   Try to apply the full workflow you've just practiced (read, select, perhaps resample if appropriate for the data's nature, validate with `tsod`, clean, and write to a new `dfs0` file) to this flow data.
-*   Experiment with different `tsod` detectors or adjust the parameters of the detectors you've already used. How do the results change?
-*   Explore different `NaN` filling strategies available in `pandas` (e.g., `bfill`, `interpolate`) and observe their impact on the data, perhaps by plotting the results.
+3.  Convert your cleaned Pandas DataFrame (from Exercise 2) to a `mikeio.Dataset` using `mikeio.from_pandas()`.
+    *   Pass your DataFrame as the first argument.
+    *   Pass a Python list containing your single `ItemInfo` object (e.g., `[item_rainfall]`) to the `items` argument.
 
-For guided solutions or further exploration of these optional exercises, you can refer to this Jupyter Notebook: [M2_Optional_Practice.ipynb](notebooks/M2_Optional_Practice.ipynb){download="M2_Optional_Practice.ipynb"} (Note: this is a placeholder link and may not be active).
+    ```{python}
+    ds = mikeio.from_pandas(df, items=[item_rainfall])
+    ```
 
-Good luck with your practice! These exercises are key to building your confidence and skills in handling time series data with Python for MIKE+ workflows.
+4.  Inspect the created `Dataset` by printing its `items` attribute (e.g., `print(ds.items)`). Verify that the name, type, unit, and data value type match what you intended.
+
+    ```{python}
+    print(ds.items)
+    ```
+
+5.  Save the `Dataset` to a DFS0 file named `rainfall_output.dfs0` using the `.to_dfs()` method of the `Dataset` object.
+
+    ```{python}
+    ds.to_dfs("rainfall_output.dfs0")
+    ```
+
+**Exercise 5: Verify the Created DFS0 File**
+
+It's good practice to verify that the file you created is correct and contains the data as expected.
+
+1.  Read the `rainfall_output.dfs0` file you just created back into a new `mikeio.Dataset` object using `mikeio.read()`.
+
+    ```{python}
+    ds_verify = mikeio.read("rainfall_output.dfs0")
+    ```
+
+2.  Inspect the `items` attribute of this new `Dataset`. Does the metadata look correct and match what you specified?
+
+    ```{python}
+    print(ds_verify.items)
+    ```
+
+3.  Convert this new `Dataset` object back into a Pandas DataFrame using its `.to_dataframe()` method.
+
+    ```{python}
+    df_verify = ds_verify.to_dataframe()
+    ```
+
+4.  Display the `head()` and `info()` of this new DataFrame. Compare it to the DataFrame you had before saving to DFS0 (from Exercise 2 or 3, after cleaning). Are they consistent in terms of data, index, and column names?
+
+    ```{python}
+    df_verify.head()
+    ```
+
+    ```{python}
+    df_verify.info()
+    ```
+
+5.  (Optional) Use the `.describe()` method on the rainfall column of this newly loaded DataFrame. Do the statistics match those from Exercise 1, step 7 (or rather, the statistics of the cleaned data before saving)?
+
+    ```{python}
+    df_verify['Rainfall_mm'].describe()
+    ```
+
+**Practice Exercises (optional)**
+
+For further practice, consider exploring the following:
+*   Try loading a DFS0 file with multiple items.
+*   Experiment with different resampling techniques on your rainfall data (e.g., calculating daily totals).
+*   Explore other `data_value_type` options when creating `ItemInfo` and observe how MIKE+ might interpret them differently (you might need to check MIKE+ documentation for this).

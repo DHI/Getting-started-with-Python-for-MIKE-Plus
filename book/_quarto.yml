@@ -6,6 +6,8 @@ project:
 
 execute:
   error: true
+  warning: false     # Hide warnings
+  #output: false
 
 book:
   title: "Getting started with Python for MIKE+"
@@ -42,13 +44,20 @@ book:
     - part: "Module 2 - Time Series"
       chapters:
        - module2_time_series/index.qmd
-       - module2_time_series/01-introducing-mikeio.qmd
-       - module2_time_series/02-reading-dfs0-files.qmd
-       - module2_time_series/03-selecting-time-series-data.qmd
-       - module2_time_series/04-resampling-time-series.qmd
-       - module2_time_series/05-introduction-to-tsod.qmd
-       - module2_time_series/06-data-validation-and-cleaning.qmd
-       - module2_time_series/07-creating-dfs0-files.qmd
+       - module2_time_series/01_mikeio.qmd
+       - module2_time_series/02_reading_dfs0.qmd
+       - module2_time_series/03_data_selection.qmd
+       - module2_time_series/04_resampling.qmd
+       - module2_time_series/05_visualization.qmd
+       - module2_time_series/06_data_cleaning.qmd
+       - module2_time_series/07_writing_dfs0.qmd
+       #- module2_time_series/01-introducing-mikeio.qmd
+       #- module2_time_series/02-reading-dfs0-files.qmd
+       #- module2_time_series/03-selecting-time-series-data.qmd
+       #- module2_time_series/04-resampling-time-series.qmd
+       #- module2_time_series/05-introduction-to-tsod.qmd
+       #- module2_time_series/06-data-validation-and-cleaning.qmd
+       #- module2_time_series/07-creating-dfs0-files.qmd
        - module2_time_series/homework.qmd
 
     - part: "Module 3 - Network Results"
@@ -77,5 +86,6 @@ format:
     theme:
       light: cosmo
       dark: cyborg
+    css: styles.css
   #pdf:
   #  documentclass: scrreprt

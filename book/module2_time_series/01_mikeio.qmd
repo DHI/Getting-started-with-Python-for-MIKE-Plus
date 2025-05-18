@@ -1,0 +1,98 @@
+# MIKE IO Basics
+
+This section introduces *MIKE IO*, a fundamental DHI Python package. You'll learn what MIKE IO is, the scope of its usage in this course, how to install it, and grasp its basic concepts. We provide a brief overview here; the next section delves into more detail.
+
+## What is MIKE IO?
+
+MIKE IO is an open-source Python package developed by DHI, which you might recall from [Module 1](..\module1_foundations\github.qmd). It empowers modelers with full flexibility by bridging the gap between various MIKE file formats and [Scientific Python](..\module1_foundations\scientific_python.qmd)'s rich and powerful package ecosystem.
+
+<div style="padding:56.25% 0 0 0;position:relative;"><iframe src="https://player.vimeo.com/video/708275619?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media" style="position:absolute;top:0;left:0;width:100%;height:100%;" title="MIKE IO | Read, write, and analyze MIKE dfs files with Python"></iframe></div><script src="https://player.vimeo.com/api/player.js"></script>
+
+## Usage in course
+
+For MIKE+ modelers, a key file format is `dfs0`, DHI's standard for tabular time series data. You're likely familiar with `dfs0` files for storing data such as rainfall, water levels, or discharge.
+
+This course primarily focuses on the `dfs0` functionality of MIKE IO, since it's most relevant for handling time series data in MIKE+. While MIKE IO also supports other formats like `dfs2`, `dfsu`, and `mesh` files, they are intermediate topics beyond the scope of this introductory course.
+
+::: {.callout-tip title="Alternative ways of using MIKE IO" collapse="true"}
+It's important to note that this course primarily focuses on using MIKE IO to get time series data into Pandas DataFrames. This approach is chosen to:
+
+*   Reduce the initial learning curve for Python beginners by leveraging Pandas skills.
+*   Provide a method that is sufficiently powerful for most common time series tasks in MIKE+ modelling.
+
+MIKE IO itself has a lot of other useful functionalities, especially for working directly with `Dataset` and `DataArray` objects, and for handling multidimensional data (like `dfs2` or `dfsu` files). We encourage you explore the official MIKE IO documentation after mastering the basics of Pandas.
+:::
+
+## Installation
+
+Install MIKE IO with:
+
+```powershell
+uv pip install mikeio
+```
+
+::: {.callout-tip}
+Always check the official MIKE IO's documentation for the most up-to-date installation instructions and information on the latest versions.
+:::
+
+## Quick glance
+
+Let's take a quick look at some core MIKE IO objects and how to access them. When you read a `dfs0` file, MIKE IO typically returns a `Dataset` object. 
+
+```{python}
+#| output: false
+import mikeio
+
+ds = mikeio.read("data/sirius_idf_rainfall.dfs0")
+```
+::: {.callout-note}
+Example dfs0 is from MIKE+ Example Project: Sirius.
+:::
+
+This `Dataset` object, `ds`, holds the data and metadata. You can easily access its contents, such as the items:
+
+```{python}
+#| output: false
+ds.items
+```
+
+The time axis is a Pandas `DatetimeIndex`, shared between all items:
+
+```{python}
+#| output: false
+ds.time
+```
+
+To access data for a specific item, you can select it from the `Dataset`, which returns a `DataArray` object:
+
+```{python}
+#| output: false
+da = ds[0] # Access the first item from ds.items
+```
+
+## Key Concepts 
+
+Understanding a few key concepts in MIKE IO will be helpful as you progress through this course:
+
+<img src="..\images\dataset_dataarray.png" style="float: left; margin-right: 1em; width: 30%;">
+
+Dataset
+: A `Dataset` is a collection of one or more `DataArray` objects that share the same time axis. Think of it as the entire content of a `dfs0` file.
+
+DataArray
+: A `DataArray` holds the data for a single item, including its time series values and associated metadata. This is comparable to a single column in a `dfs0` file when viewed in a tabular format.
+
+Items
+: Each `DataArray` within a `Dataset` represents an "item." An item is characterized by its name, type (e.g., water level, discharge), unit (e.g., meters, m$^3$/s), and value type (e.g., instantaneous, accumulated), which are crucial for correct data interpretation in MIKE software.
+
+
+## Additional reading (optional) {.clear}
+
+The following sections of [MIKE IO's documentation](https://dhi.github.io/mikeio/) are particularly relevant for this course:
+
+-   [Getting started](https://dhi.github.io/mikeio/user-guide/getting-started.html)
+-   [Data Structures](https://dhi.github.io/mikeio/user-guide/data-structures.html)
+-   [DataArray](https://dhi.github.io/mikeio/user-guide/dataarray.html)
+-   [Dataset](https://dhi.github.io/mikeio/user-guide/dataset.html)
+-   [Dfs0](https://dhi.github.io/mikeio/user-guide/dfs0.html)
+-   [EUM (Units and Types)](https://dhi.github.io/mikeio/user-guide/eum.html)

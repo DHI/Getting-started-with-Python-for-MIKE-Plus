@@ -1,66 +1,10 @@
-# Welcome to Module 2: Time Series! {.unnumbered}
+# Welcome to Module 2! {.unnumbered}
 
-In this module, you'll dive into working with time series data, a fundamental aspect of hydrological modeling and analysis. We will focus on `dfs0` files, the standard DHI format for time series, and leverage the power of Python packages to efficiently manipulate and prepare your data. You'll learn how `mikeio` simplifies interaction with DHI file formats, use `pandas` for versatile data manipulation, and get an introduction to `tsod` for performing basic data validation tasks.
+This module launches you into the practical world of time series data, a fundamental component of nearly all MIKE+ modelling projects. Our focus is on empowering you to efficiently handle, analyze, and prepare time series for your MIKE+ workflows:
 
-## Learning Objectives
+- Convert dfs0 to Pandas DataFrame
+- Select, resample, and clean data
+- Visualize time series data
+- Convert Pandas DataFrame to dfs0
 
-By the end of this module, you will be able to:
-
-*   Understand the role and benefits of the `mikeio` package for handling DHI file formats.
-*   Install and set up `mikeio` and `tsod` in your existing Python environment.
-*   Read time series data from `dfs0` files into `pandas` DataFrames.
-*   Select specific items (variables) and time periods from your time series data.
-*   Resample time series data to different temporal resolutions using `pandas`.
-*   Perform basic data validation by detecting and handling outliers/anomalies using `tsod` and `pandas`.
-*   Create new `dfs0` files from `pandas` DataFrames.
-
-::: {.callout-note}
-These skills form the bedrock for automating many common data processing tasks in MIKE+ projects, enhancing both efficiency and reproducibility.
-:::
-
-## Relevance to Your Work
-
-Effectively managing time series data is crucial for many tasks you encounter as a MIKE+ modeler. This includes preparing model inputs like rainfall series or boundary conditions, analyzing model outputs, and calibrating your models against observed data. This module will equip you with Python skills to automate and enhance these workflows, moving beyond potentially time-consuming manual data processing. For instance, reading a `dfs0` file and inspecting its contents becomes a straightforward task:
-
-```{python}
-import mikeio
-import pandas as pd
-
-# Ensure a sample file named "sample.dfs0" exists in a "data" subfolder
-# For now, we'll create a dummy one if it doesn't exist for this example to run
-from pathlib import Path
-data_dir = Path("data")
-data_dir.mkdir(exist_ok=True)
-sample_dfs0_path = data_dir / "sample.dfs0"
-if not sample_dfs0_path.exists():
-    # Create a simple dummy dfs0 file for demonstration
-    dummy_df = pd.DataFrame(
-        {'ItemA': [1,2,3], 'ItemB': [4,5,6]},
-        index=pd.to_datetime(['2023-01-01', '2023-01-02', '2023-01-03'])
-    )
-    ds = mikeio.Dataset(dummy_df)
-    ds.to_dfs0(sample_dfs0_path)
-
-# Actual example starts here
-ds = mikeio.read("data/sample.dfs0")
-df = ds.to_dataframe()
-df.head()
-```
-
-This ability to programmatically access and manipulate your time series data opens up new possibilities for more robust and flexible analyses.
-
-## Prerequisites
-
-This module assumes you have completed Module 1 or are comfortable with:
-
-*   Basic Python syntax and data types.
-*   Working with `pandas` DataFrames (creating, selecting, basic operations).
-*   Using Visual Studio Code as your IDE.
-*   Managing Python environments and packages with `uv`.
-*   Navigating your system using the terminal.
-
-::: {.callout-tip}
-If you need a refresher on any of these topics, consider revisiting the relevant sections from Module 1 before proceeding with this module.
-:::
-
-Let's begin enhancing your time series data handling capabilities!
+You'll build on knowledge of Pandas, and be introduced to a new library: MIKE IO. Let's go!

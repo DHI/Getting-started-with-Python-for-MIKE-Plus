@@ -1,0 +1,110 @@
+# Read dfs0 to Pandas
+
+This section guides you through loading time series data from `dfs0` files into Pandas DataFrames. This approach allows you to leverage your existing Pandas skills, learned in Module 1, for powerful time series analysis and manipulation.
+
+## Workflow
+
+The general workflow for working with `dfs0` data is as follows:
+
+1. Read `dfs0` file into Dataset
+2. Subset Dataset for specific items and times (optional)
+3. Convert Dataset (or DataArray) to DataFrame
+4. Perform some additional analysis via the DataFrame
+
+## Datasets
+
+The primary function for reading MIKE IO files is `mikeio.read()`. It returns a `Dataset` object, which is a container for one or more `DataArray` objects (e.g. a specific time series).
+
+Reading a dfs0 file into a Dataset is as simple as calling the `read()` method with the dfs0 file path as the argument:
+
+```{python}
+#| echo: false
+#| output: false
+#| warning: false
+#| message: false
+import mikeio
+```
+```{python}
+ds = mikeio.read("data/sirius_idf_rainfall.dfs0")
+ds
+```
+
+Notice the representation of the `Dataset` object shows information about:
+
+- Total number of time steps
+- Timestamps for first and last time step
+- All the items (i.e. DataArrays) available
+
+::: {.callout-tip title="Read() loads entire dfs0 into memory by default" collapse="true"}
+By default, `mikeio.read()` loads the entire `dfs0` file into memory. This is fine for smaller files, but for very large `dfs0` files, you might want to load only specific items or a particular time range to conserve memory and improve performance. You can do this directly with the `items` or `time` arguments in the `read()` function. For example, to read only the first item (index 0):
+
+```{python}
+ds = mikeio.read("data/sirius_idf_rainfall.dfs0", items=0)
+ds
+```
+
+Similarly, to read only the data for the first time step (index 0):
+
+```{python}
+ds = mikeio.read("data/sirius_idf_rainfall.dfs0", time=0)
+ds
+```
+:::
+
+## DataArrays
+
+`DataArray` objects are accessed via the `Dataset` object after reading.
+
+Select a specific `DataArray` from the `Dataset` by its index or its name. For example, to select the first `DataArray` by its index:
+
+```{python}
+da = ds[0]
+da
+```
+
+Alternatively, select a `DataArray` by its name using square brackets:
+
+```{python}
+da = ds[" F=20"]
+da
+```
+
+Notice the representation of the `DataArray` object is also informative, just like the `Dataset` object.
+
+## Convert to Pandas
+
+You can convert an entire `Dataset` (which might contain multiple time series) into a Pandas DataFrame. Each item in the `Dataset` will become a column in the DataFrame.
+
+```{python}
+import pandas as pd
+
+ds = mikeio.read("data/sirius_idf_rainfall.dfs0")
+df = ds.to_dataframe()
+df.head()
+```
+
+Similarly, a single `DataArray` can be converted to a Pandas DataFrame (which will have one data column).
+
+```{python}
+da = ds[" F=20"]
+df_T20 = da.to_dataframe()
+df_T20.head()
+```
+
+Once your data is in a DataFrame, you can use all of Pandas' powerful methods. For instance, you can easily plot a time series:
+
+```{python}
+df_T20.plot(
+    title="Rainfall for Return Period F=20",
+    ylabel="Rainfall (mm/hr)"
+)
+```
+
+Or get some descriptive statistics:
+```{python}
+df.describe().T
+```
+
+::: {.callout-note title="Learning Python's scientific ecosystem pays off..."}
+Notice that using a common structure for data (e.g. DataFrame) unlocks familiar analyses independent of the original data source file format (e.g. dfs0, csv). This is an example of why converting data into a format compatible with the scientific Python ecosystem is useful.
+:::
