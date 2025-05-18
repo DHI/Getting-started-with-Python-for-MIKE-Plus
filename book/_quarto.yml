@@ -4,6 +4,11 @@
 project:
   type: book
 
+execute:
+  error: true
+  warning: false     # Hide warnings
+  #output: false
+
 book:
   title: "Getting started with Python for MIKE+"
   author:
@@ -37,8 +42,16 @@ book:
         - module1_foundations/homework.qmd
 
     - part: "Module 2 - Time Series"
-      #chapters:
-      # - module2_time_series\index.qmd
+      chapters:
+       - module2_time_series/index.qmd
+       - module2_time_series/01_mikeio.qmd
+       - module2_time_series/02_reading_dfs0.qmd
+       - module2_time_series/03_data_selection.qmd
+       - module2_time_series/04_resampling.qmd
+       - module2_time_series/05_visualization.qmd
+       - module2_time_series/06_data_cleaning.qmd
+       - module2_time_series/07_writing_dfs0.qmd
+       - module2_time_series/homework.qmd
 
     - part: "Module 3 - Network Results"
       #chapters:
@@ -66,5 +79,6 @@ format:
     theme:
       light: cosmo
       dark: cyborg
+    css: styles.css
   #pdf:
   #  documentclass: scrreprt

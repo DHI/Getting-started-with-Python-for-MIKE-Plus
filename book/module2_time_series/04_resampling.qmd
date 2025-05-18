@@ -1,0 +1,178 @@
+# Resampling
+
+Resampling is a powerful technique for changing the frequency of time series data, a common task when working with MIKE+ model inputs or outputs.
+
+## What is Resampling?
+
+At its core, resampling involves adjusting the time steps in your data. There are two main types:
+
+*   **Downsampling:** reducing the frequency of data points (e.g., hourly to daily rainfall).
+*   **Upsampling:** increasing the frequency of data points (e.g., hourly to minutely discharge).
+
+A prerequisite for resampling in Pandas is that the DataFrame must have a `DatetimeIndex`. This will be the case if it was created via MIKE IO's `to_dataframe()` method.
+
+::: {.callout-tip}
+If a DataFrame's index is time-like but not already a `DatetimeIndex`, you can usually convert it with:
+
+```python
+df.index = pd.to_datetime(df.index)
+```
+:::
+
+## Why Resample?
+
+Two common motivations for resampling time series data in MIKE+ modelling are:
+
+*   **Aligning Series:** comparing time series that were recorded at different frequencies (e.g., aligning 15-minute model results with hourly observations).
+*   **Smoothing Data:** reducing noise to highlight underlying trends by aggregating data over longer periods (e.g., hourly average flow from noisy instantaneous readings).
+
+## How to resample (with Pandas)
+
+Pandas provides a straightforward `resample()` method for time series data. 
+
+The general syntax is: `df.resample(<rule>).<aggregation_or_fill_method>()`.
+
+**rule**
+: A string specifying the target frequency (e.g., 'D' for daily).
+
+**aggregation_or_fill_method**
+: A function to apply to the data within each new time bin. For downsampling, this is typically an aggregation like `.mean()` or `.sum()`. For upsampling, this is a fill method like `.ffill()` or `.interpolate()`.
+
+```{python}
+#| echo: false
+#| output: false
+#| warning: false
+#| message: false
+import mikeio
+ds = mikeio.read("data/single_water_level.dfs0")
+df = ds.to_dataframe()
+```
+
+A quick example for illustration with the following DataFrame:
+
+```{python}
+df.head()
+```
+
+To resample this half-hourly data to daily mean values:
+
+```{python}
+df_daily_mean = df.resample('D').mean()
+df_daily_mean.head()
+```
+
+```{python}
+#| code-fold: true
+#| code-summary: "Show Plotting Code"
+ax = df.plot()
+df_daily_mean.plot(ax=ax)
+ax.legend(["Original", "Downsampled"])
+```
+
+## Common Frequency Rules
+
+Pandas offers many frequency aliases (rules). Some of the most common include:
+
+*   `"M"`: Month-end frequency
+*   `"W"`: Weekly frequency (defaults to Sunday)
+*   `"D"`: Calendar day frequency
+*   `"H"`: Hourly frequency
+*   `"15min"`: 15-minute frequency
+
+::: {.callout-note}
+For a comprehensive list of frequency strings (offset aliases), refer to the [Pandas documentation on Time Series / Date functionality](https://pandas.pydata.org/pandas-docs/stable/user_guide/timeseries.html#offset-aliases).
+:::
+
+## Aggregation Methods (Downsampling)
+
+When downsampling, you are reducing the number of data points, so you need to decide how to aggregate the values within each new, larger time period. Common aggregation methods include:
+
+*   `.mean()`: calculate the average of the values.
+*   `.sum()`: calculate the sum of the values.
+*   `.first()`: select the first value in the period.
+*   `.last()`: select the last value in the period.
+*   `.min()`: find the minimum value.
+*   `.max()`: find the maximum value.
+
+::: {.callout-tip}
+The choice of aggregation method depends on the nature of your data and what you want to represent. For instance, rainfall is often summed, while water levels or flows might be averaged.
+:::
+
+Resample to daily values by choosing the maximum value on each day.
+
+```{python}
+df_daily_max = df.resample('D').max()
+df_daily_max.head()
+```
+
+Or, choose the minimum value on each day.
+
+```{python}
+df_daily_min = df.resample('D').min()
+df_daily_min.head()
+```
+
+Compare these two aggregation methods with a plot.
+
+```{python}
+#| code-fold: true
+#| code-summary: "Show Plotting Code"
+ax = df.plot(color='grey')
+df_daily_mean.plot(ax=ax, linestyle="--")
+df_daily_min.plot(ax=ax, linestyle="--")
+df_daily_max.plot(ax=ax, linestyle="--")
+ax.legend(["Original", "Downsample (mean)", "Downsample (min)", "Downsample (max)"])
+ax.grid(which="both")
+```
+
+## Fill Methods (Upsampling)
+
+When upsampling, you are increasing the number of data points, which means you'll have new time steps with no existing data. You need to specify a method to fill these gaps. Common fill methods include:
+
+*   `.ffill()` (forward fill): propagate the last valid observation forward.
+*   `.bfill()` (backward fill): use the next valid observation to fill the gap.
+*   `.interpolate()`: fill `nan` values using an interpolation method (e.g., linear, spline).
+
+::: {.callout-note}
+`nan` stands for 'not a number', which is a common way to represent missing values. See [NumPy's nan](https://numpy.org/doc/stable/reference/constants.html#numpy.nan).
+:::
+
+Recall our original DataFrame had half-hourly time steps:
+```{python}
+df.head(2) # show only first two rows
+```
+
+Upsample this to a resolution of one minute, comparing `ffill` and `bfill`:
+
+```{python}
+df.resample("5min").ffill().head()
+```
+
+```{python}
+df.resample("5min").bfill().head()
+```
+
+Compare the difference between these two. Find the new time stamps and how their values were chosen.
+
+Depending on use case, a more appropriate approach may be filling gaps with linear interpolation:
+
+```{python}
+df_interpolated = df.resample('5min').interpolate(method='linear')
+df_interpolated.head()
+```
+
+Compare interpolation to original data for a zoomed-in time period:
+
+```{python}
+#| code-fold: true
+#| code-summary: "Show Plotting Code"
+subset = slice("1993-12-02 00:00:00", "1993-12-02 08:00:00")
+ax = df.loc[subset].plot(color="grey", alpha=0.7, linewidth=8)
+df_interpolated.loc[subset].plot(ax=ax, linestyle="--")
+ax.legend(["Original", "Interpolated"])
+```
+
+
+::: {.callout-note}
+Upsampling should be done with caution, as it involves making assumptions about the data between known points. The choice of fill method can significantly impact the resulting time series.
+:::

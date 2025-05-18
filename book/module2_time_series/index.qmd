@@ -1,3 +1,14 @@
-# Introduction
+---
+comments: false
+---
 
-Coming soon...
+# Welcome to Module 2! {.unnumbered}
+
+This module launches you into the practical world of time series data, a fundamental component of nearly all MIKE+ modelling projects. Our focus is on empowering you to efficiently handle, analyze, and prepare time series for your MIKE+ workflows:
+
+- Convert dfs0 to Pandas DataFrame
+- Select, resample, and clean data
+- Visualize time series data
+- Convert Pandas DataFrame to dfs0
+
+You'll build on your knowledge of Pandas, and be introduced to a new library: MIKE IO. Let's go!

@@ -1,0 +1,159 @@
+# Writing dfs0
+
+Creating dfs0 files is a common need for MIKE+ modellers (e.g. rainfall from csv). This section focuses on how to create dfs0 files from a Pandas DataFrame.
+
+## Workflow
+
+The general workflow for creating `dfs0` files from a `DataFrame` is as follows:
+
+1. Map `ItemInfo` objects to each column (optional)
+2. Create a `Dataset` object from the `DataFrame`
+3. Save the `Dataset` object to a `dfs0` file.
+
+## Example Source Data
+
+The following DataFrame will be used in this section as an example.
+
+```{python}
+import pandas as pd
+
+df = pd.read_csv(
+    "data/rain_events_2021_july.csv",
+    index_col="time",
+    parse_dates=True
+)
+df.head()
+```
+
+Get familiar with the data. Notice:
+
+- The time axis is non-equidistant
+- Values represent rainfall depth since the last time step.
+- Rainfall events always start at values of zero.
+
+```{python}
+df.describe().T
+```
+
+```{python}
+df.plot()
+```
+
+```{python}
+df.plot.hist(bins=50)
+```
+
+This subset shows the division between two rainfall events:
+
+```{python}
+df.loc["2021-07-25 17:32:00":"2021-07-25 20:30:00"]
+```
+
+## DataFrame to Dataset
+
+Converting a `DataFrame` to a `Dataset` is straightforward using `mikeio.from_pandas()`:
+
+```{python}
+#| echo: false
+#| output: false
+#| warning: false
+#| message: false
+import mikeio
+```
+
+```{python}
+ds = mikeio.from_pandas(df)
+ds
+```
+
+::: {.callout-tip}
+Ensure your DataFrame's index is a `DatetimeIndex` for time series dfs0 files. This is crucial for MIKE IO to correctly interpret the time information.
+:::
+
+Notice that the item type and unit are "undefined". Let's inspect the `ItemInfo` MIKE IO used by default:
+
+```{python}
+item = ds[0].item
+print(f"Item Name: {item.name}")
+print(f"Item Type: {item.type.name}")
+print(f"Item Unit: {item.unit.name}")
+print(f"Item Data Value Type: {item.data_value_type.name}")
+```
+
+This highlights the need to almost always define item metadata before calling `from_pandas()`.
+
+::: {.callout-caution}
+Providing accurate `ItemInfo` is key for ensuring compatibility with MIKE software and correctly interpreting the meaning of your data within the MIKE ecosystem.
+:::
+
+## Item Metadata
+
+Please review [MIKE IO's user guide on EUM](https://dhi.github.io/mikeio/user-guide/eum.html) before proceeding.
+
+Create an `ItemInfo` object for our example rainfall data:
+
+```{python}
+item = mikeio.ItemInfo(
+    name = "Rainfall",
+    itemtype = mikeio.EUMType.Rainfall_Depth,
+    unit = mikeio.EUMUnit.millimeter,
+    data_value_type= "StepAccumulated",
+)
+item
+```
+
+::: {.callout-note title="Data Value Type" collapse="true"}
+The `Data Value Type` specifies how data values relate to time steps. Common options include:
+
+*   **Instantaneous**: Value at a specific point in time.
+*   **Accumulated**: Value aggregated over the entire period up to the timestamp.
+*   **StepAccumulated**: Value aggregated over the preceding time interval.
+*   **MeanStepBackward**: Average value over the preceding time interval.
+
+Refer to MIKE+ documentation for explanation of these options.
+:::
+
+Let's recreate the `Dataset` using the `ItemInfo` object for our rainfall.
+
+```{python}
+ds = mikeio.from_pandas(df, items=[item])
+ds
+```
+
+Notice the item info is now correct on the `Dataset`.
+
+::: {.callout-tip title="Mapping items to column by name" collapse="true"}
+The order of `items` matches the order of the `DataFrame` columns. You may prefer to explicitly name the columns:
+
+```{python}
+mikeio.from_pandas(df, items={
+    "rainfall" : item
+})
+```
+:::
+
+## Dataset to dfs0
+
+The final step is to save your carefully prepared `Dataset` object, now containing the correct data and metadata, to a dfs0 file. This is done using the `.to_dfs()` method of the `Dataset` object.
+
+```{python}
+ds.to_dfs("rainfall.dfs0")
+```
+
+This will create a file named `rainfall.dfs0` ready to be used in MIKE+.
+
+Confirm it worked by reading the dfs0 file back into a `Dataset` (optional).
+
+```{python}
+ds_validation = mikeio.read("rainfall.dfs0")
+ds_validation
+```
+
+```{python}
+#| echo: false
+#| output: false
+#| warning: false
+#| message: false
+import os
+os.remove("rainfall.dfs0")
+```

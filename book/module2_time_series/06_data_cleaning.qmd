@@ -1,0 +1,258 @@
+# Data Cleaning
+
+Data cleaning is an essential step in any MIKE+ modelling workflow to ensure your input data is complete. This section covers handling missing values (e.g. nan). Additionally, it introduces the topic of detecting anomalies in time series data.
+
+## Missing Values
+
+DHI's modelling engines typically require complete datasets for calculations, and thus dfs0 files, which are often used as inputs, should not contain missing values. For example, a rainfall boundary condition cannot have the value `nan`.
+
+::: {.callout-note}
+Missing numerical data is typically represented by `nan`. These arise from various sources, such as sensor malfunctions during data collection, gaps that occur during data transmission, or they might be the result of previous data processing or cleaning steps.
+:::
+
+```{python}
+#| echo: false
+#| output: false
+#| warning: false
+#| message: false
+import mikeio
+import numpy as np
+np.random.seed(42)
+df = mikeio.read("data/single_water_level.dfs0").to_dataframe()
+df.loc["1993-12-06"] = np.nan # simulate gap
+```
+
+Assume we have a DataFrame with missing values on 1993-12-06:
+
+```{python}
+#| code-fold: true
+#| code-summary: "Show Plotting Code"
+ax = df.plot()
+ax.axvspan(
+    xmin="1993-12-06 00:00",
+    xmax="1993-12-07 00:00",
+    color='grey',
+    alpha=0.3,
+    label="Missing Data"
+)
+ax.legend(loc="upper right")
+```
+
+Count the number of missing values (e.g. `nan`) for each time series by summing the result of `isna()`.
+
+```{python}
+df.isna().sum()
+```
+
+## Imputation
+
+The process of filling missing values is known as imputation. 
+
+For missing values *between* valid data points (i.e. bounded), using the `.interpolate()` method is a common and effective approach.
+
+```{python}
+df_interpolated = df.interpolate(method='time')
+```
+
+```{python}
+#| code-fold: true
+#| code-summary: "Show Plotting Code"
+ax = df.plot()
+ax.axvspan(
+    xmin="1993-12-06 00:00",
+    xmax="1993-12-07 00:00",
+    color='grey',
+    alpha=0.3,
+    label="Missing Data"
+)
+df_interpolated.columns = ["Interpolation"]
+df_interpolated.loc["1993-12-06"].plot(ax=ax)
+ax.legend(loc="upper right")
+```
+
+::: {.callout-note}
+The example above uses `method='time'`, which is a linear interpolation that considers non-equidistant `DatetimeIndex` indices. Refer to [Pandas's documentation](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.interpolate.html) for additional interpolation methods, such as polynomial.
+:::
+
+For missing values appearing at the very beginning or end of your dataset (i.e. unbounded), you can make use of:
+
+- `.fillna()`
+- `.ffill()`
+- `.bfill()`
+
+::: {.callout-tip}
+Recall: these imputation methods were introduced in the section on resampling, where upsampling introduced `nan` values.
+:::
+
+Same example as above, but using `ffill()`.
+
+```{python}
+df_interpolated = df.ffill()
+```
+
+```{python}
+#| code-fold: true
+#| code-summary: "Show Plotting Code"
+ax = df.plot()
+ax.axvspan(
+    xmin="1993-12-06 00:00",
+    xmax="1993-12-07 00:00",
+    color='grey',
+    alpha=0.3,
+    label="Missing Data"
+)
+df_interpolated.columns = ["Interpolation"]
+df_interpolated.loc["1993-12-06"].plot(ax=ax)
+ax.legend(loc="upper right")
+```
+
+Same example as above, but using `bfill()`.
+
+```{python}
+df_interpolated = df.bfill()
+```
+
+```{python}
+#| code-fold: true
+#| code-summary: "Show Plotting Code"
+ax = df.plot()
+ax.axvspan(
+    xmin="1993-12-06 00:00",
+    xmax="1993-12-07 00:00",
+    color='grey',
+    alpha=0.3,
+    label="Missing Data"
+)
+df_interpolated.columns = ["Interpolation"]
+df_interpolated.loc["1993-12-06"].plot(ax=ax)
+ax.legend(loc="upper right")
+```
+
+Same example as above, but using `fillna()`. 
+
+```{python}
+df_interpolated = df.fillna(0.1) # specify the value to fill with
+```
+
+```{python}
+#| code-fold: true
+#| code-summary: "Show Plotting Code"
+ax = df.plot()
+ax.axvspan(
+    xmin="1993-12-06 00:00",
+    xmax="1993-12-07 00:00",
+    color='grey',
+    alpha=0.3,
+    label="Missing Data"
+)
+df_interpolated.columns = ["Interpolation"]
+df_interpolated.loc["1993-12-06"].plot(ax=ax)
+ax.legend(loc="upper right")
+```
+
+## Anomaly Detection (Rule-Based)
+
+::: {.callout-tip}
+Short on time? This section provides an introduction to a useful package but can be considered optional for core module understanding.
+:::
+
+Beyond clearly missing values, time series data can also contain anomalies. Identifying and addressing these anomalies is crucial for building robust MIKE+ models. 
+
+Anomaly detection is a broad and complex field. This section offers a basic introduction to rule-based anomaly detection using DHI's [tsod Python package](https://github.com/DHI/tsod).
+
+### Install tsod
+
+```powershell
+uv pip install tsod
+```
+
+### The Detector Concept
+
+`tsod` operates using a concept called "detectors." Each detector is designed to implement a specific rule or heuristic to identify anomalies. Example anomaly detectors:
+
+*   `RangeDetector`: Flags values outside a set range.
+*   `ConstantValueDetector`: Detects unchanging values over time.
+*   `DiffDetector`: Catches large changes between points.
+*   `RollingStdDetector`:  Finds points far from rolling standard deviation.
+
+There's also the `CombinedDetector`, which allows combining the rules of several detectors.
+
+### Detecting Anomalies
+
+```{python}
+#| echo: false
+#| output: false
+#| warning: false
+#| message: false
+import mikeio
+df = mikeio.read("data/single_water_level.dfs0").to_dataframe()
+```
+
+Plot the initial time series.
+```{python}
+ts = df["ST 2: WL (m)"]
+ts.plot()
+```
+
+::: {.callout-note}
+*tsod* operates on `Series`. Select the subject `Series` from the `DataFrame` object as needed.
+:::
+
+Select and instantiate a detector. If we know water levels must be in the range -0.4m to 0.4m, then a `RangeDetector` should be used.
+
+```{python}
+from tsod.detectors import RangeDetector
+
+detector = RangeDetector(
+    min_value = -0.4,
+    max_value = 0.4
+)
+detector
+```
+
+Detect anomalies for a given `Series` using the `detect()` method of the instantiated detector.
+
+```{python}
+anomaly_mask = detector.detect(ts)
+anomaly_mask.head()
+```
+
+::: {.callout-note}
+A *mask* refers to a boolean indexer. In the example above, values are *true* for anomalies and false otherwise.
+:::
+
+Plot the detected anomalies.
+
+```{python}
+ax = ts.plot()
+ts[anomaly_mask].plot(
+    ax=ax,
+    style='ro',
+    label="Anomaly",
+    alpha=0.5
+)
+ax.legend()
+
+# horizontal lines to validate ranges
+ax.axhline(0.4, color='grey', alpha=0.5)
+ax.axhline(-0.4, color='grey', alpha=0.5)
+```
+
+Replace anomalies with `nan`.
+
+```{python}
+import numpy as np
+
+ts_cleaned = ts.copy()
+ts_cleaned[anomaly_mask] = np.nan
+ts_cleaned.plot()
+```
+
+### Impute anomalies
+
+Impute anomalies by treating them just like missing values.
+
+```{python}
+ts_cleaned = ts_cleaned.interpolate(method='time')
+ts_cleaned.plot()
+```

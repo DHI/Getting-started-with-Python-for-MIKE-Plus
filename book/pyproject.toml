@@ -5,9 +5,11 @@ requires-python = ">=3.12"
 dependencies = [
     "cowsay>=6.1",
     "ipykernel>=6.29.5",
+    "mikeio>=2.6.0",
     "mikeio1d>=1.0.3",
     "nbclient>=0.10.2",
     "nbformat>=5.10.4",
     "openpyxl>=3.1.5",
     "pyyaml>=6.0.2",
+    "tsod>=0.2.0",
 ]
