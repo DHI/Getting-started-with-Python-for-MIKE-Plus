@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>6&nbsp; Python Basics – Getting started with Python for MIKE+</title>
+<title>14&nbsp; Data Cleaning – Getting started with Python for MIKE+</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -65,8 +65,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../module1_foundations/llm_coding.html" rel="next">
-<link href="../module1_foundations/jupyter_notebooks.html" rel="prev">
+<link href="../module2_time_series/07_writing_dfs0.html" rel="next">
+<link href="../module2_time_series/05_visualization.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
@@ -284,7 +284,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../module1_foundations/index.html">Module 1 - Foundations</a></li><li class="breadcrumb-item"><a href="../module1_foundations/python_basics.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Python Basics</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../module2_time_series/index.html">Module 2 - Time Series</a></li><li class="breadcrumb-item"><a href="../module2_time_series/06_data_cleaning.html"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Data Cleaning</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -368,7 +368,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../module1_foundations/python_basics.html" class="sidebar-item-text sidebar-link active">
+  <a href="../module1_foundations/python_basics.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Python Basics</span></span></a>
   </div>
 </li>
@@ -439,7 +439,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../module2_time_series/06_data_cleaning.html" class="sidebar-item-text sidebar-link">
+  <a href="../module2_time_series/06_data_cleaning.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Data Cleaning</span></span></a>
   </div>
 </li>
@@ -483,22 +483,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#using-libraries" id="toc-using-libraries" class="nav-link active" data-scroll-target="#using-libraries"><span class="header-section-number">6.1</span> Using libraries</a>
+  <li><a href="#missing-values" id="toc-missing-values" class="nav-link active" data-scroll-target="#missing-values"><span class="header-section-number">14.1</span> Missing Values</a></li>
+  <li><a href="#imputation" id="toc-imputation" class="nav-link" data-scroll-target="#imputation"><span class="header-section-number">14.2</span> Imputation</a></li>
+  <li><a href="#anomaly-detection-rule-based" id="toc-anomaly-detection-rule-based" class="nav-link" data-scroll-target="#anomaly-detection-rule-based"><span class="header-section-number">14.3</span> Anomaly Detection (Rule-Based)</a>
   <ul class="collapse">
-  <li><a href="#import-libraries" id="toc-import-libraries" class="nav-link" data-scroll-target="#import-libraries"><span class="header-section-number">6.1.1</span> Import libraries</a></li>
-  <li><a href="#objects" id="toc-objects" class="nav-link" data-scroll-target="#objects"><span class="header-section-number">6.1.2</span> Objects</a></li>
-  <li><a href="#using-functions-methods" id="toc-using-functions-methods" class="nav-link" data-scroll-target="#using-functions-methods"><span class="header-section-number">6.1.3</span> Using Functions / Methods</a></li>
-  <li><a href="#using-classes" id="toc-using-classes" class="nav-link" data-scroll-target="#using-classes"><span class="header-section-number">6.1.4</span> Using Classes</a></li>
+  <li><a href="#install-tsod" id="toc-install-tsod" class="nav-link" data-scroll-target="#install-tsod"><span class="header-section-number">14.3.1</span> Install tsod</a></li>
+  <li><a href="#the-detector-concept" id="toc-the-detector-concept" class="nav-link" data-scroll-target="#the-detector-concept"><span class="header-section-number">14.3.2</span> The Detector Concept</a></li>
+  <li><a href="#detecting-anomalies" id="toc-detecting-anomalies" class="nav-link" data-scroll-target="#detecting-anomalies"><span class="header-section-number">14.3.3</span> Detecting Anomalies</a></li>
+  <li><a href="#impute-anomalies" id="toc-impute-anomalies" class="nav-link" data-scroll-target="#impute-anomalies"><span class="header-section-number">14.3.4</span> Impute anomalies</a></li>
   </ul></li>
-  <li><a href="#variables" id="toc-variables" class="nav-link" data-scroll-target="#variables"><span class="header-section-number">6.2</span> Variables</a></li>
-  <li><a href="#collections" id="toc-collections" class="nav-link" data-scroll-target="#collections"><span class="header-section-number">6.3</span> Collections</a></li>
-  <li><a href="#control-logic" id="toc-control-logic" class="nav-link" data-scroll-target="#control-logic"><span class="header-section-number">6.4</span> Control Logic</a>
-  <ul class="collapse">
-  <li><a href="#conditional-statements" id="toc-conditional-statements" class="nav-link" data-scroll-target="#conditional-statements"><span class="header-section-number">6.4.1</span> Conditional statements</a></li>
-  <li><a href="#loops" id="toc-loops" class="nav-link" data-scroll-target="#loops"><span class="header-section-number">6.4.2</span> Loops</a></li>
-  </ul></li>
-  <li><a href="#additional-resources" id="toc-additional-resources" class="nav-link" data-scroll-target="#additional-resources"><span class="header-section-number">6.5</span> Additional resources</a></li>
-  <li><a href="#example---using-pythons-interpreter" id="toc-example---using-pythons-interpreter" class="nav-link" data-scroll-target="#example---using-pythons-interpreter"><span class="header-section-number">6.6</span> Example - Using Python’s Interpreter</a></li>
   </ul>
 </nav>
     </div>
@@ -506,9 +499,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <main class="content" id="quarto-document-content">
 
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../module1_foundations/index.html">Module 1 - Foundations</a></li><li class="breadcrumb-item"><a href="../module1_foundations/python_basics.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Python Basics</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../module2_time_series/index.html">Module 2 - Time Series</a></li><li class="breadcrumb-item"><a href="../module2_time_series/06_data_cleaning.html"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Data Cleaning</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Python Basics</span></h1>
+<h1 class="title"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Data Cleaning</span></h1>
 </div>
 
 
@@ -525,23 +518,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>This section provides a crash course on basic Python concepts used throughout the course. It is purposefully brief, with additional resources provided at the end.</p>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Tip
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Follow along by running these cells in a Jupyter Notebook. Alternatively, run them in the <a href="https://docs.python.org/3/tutorial/interpreter.html">Python Interpreter</a> which can be started with <code>uv run python</code>.</p>
-</div>
-</div>
-<section id="using-libraries" class="level2" data-number="6.1">
-<h2 data-number="6.1" class="anchored" data-anchor-id="using-libraries"><span class="header-section-number">6.1</span> Using libraries</h2>
-<p>Most functionality useful for MIKE+ modelling exists in Python packages (e.g.&nbsp;mikeio). Therefore, it’s important to understand how to access functionality in a Python package.</p>
+<p>Data cleaning is an essential step in any MIKE+ modelling workflow to ensure your input data is complete. This section covers handling missing values (e.g.&nbsp;nan). Additionally, it introduces the topic of detecting anomalies in time series data.</p>
+<section id="missing-values" class="level2" data-number="14.1">
+<h2 data-number="14.1" class="anchored" data-anchor-id="missing-values"><span class="header-section-number">14.1</span> Missing Values</h2>
+<p>DHI’s modelling engines typically require complete datasets for calculations, and thus dfs0 files, which are often used as inputs, should not contain missing values. For example, a rainfall boundary condition cannot have the value <code>nan</code>.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -552,115 +532,68 @@ Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>The terms package, library, and module are used interchangeably throughout this course.</p>
+<p>Missing numerical data is typically represented by <code>nan</code>. These arise from various sources, such as sensor malfunctions during data collection, gaps that occur during data transmission, or they might be the result of previous data processing or cleaning steps.</p>
 </div>
 </div>
-<section id="import-libraries" class="level3" data-number="6.1.1">
-<h3 data-number="6.1.1" class="anchored" data-anchor-id="import-libraries"><span class="header-section-number">6.1.1</span> Import libraries</h3>
-<p>Import libraries using the <code>import</code> statement:</p>
-<div id="e3a32ef1" class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> math</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Assume we have a DataFrame with missing values on 1993-12-06:</p>
+<div id="df73200d" class="cell" data-execution_count="2">
+<details class="code-fold">
+<summary>Show Plotting Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> df.plot()</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>ax.axvspan(</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    xmin<span class="op">=</span><span class="st">"1993-12-06 00:00"</span>,</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    xmax<span class="op">=</span><span class="st">"1993-12-07 00:00"</span>,</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    color<span class="op">=</span><span class="st">'grey'</span>,</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    alpha<span class="op">=</span><span class="fl">0.3</span>,</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    label<span class="op">=</span><span class="st">"Missing Data"</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>ax.legend(loc<span class="op">=</span><span class="st">"upper right"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="06_data_cleaning_files/figure-html/cell-3-output-1.png" class="img-fluid figure-img"></p>
+</figure>
 </div>
-<p>Or import specific functionality from a library:</p>
-<div id="7d6904b6" class="cell" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> math <span class="im">import</span> sqrt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section>
-<section id="objects" class="level3" data-number="6.1.2">
-<h3 data-number="6.1.2" class="anchored" data-anchor-id="objects"><span class="header-section-number">6.1.2</span> Objects</h3>
-<p>All imports are <em>objects</em> containing some functionality. Objects have <em>members</em> accessible via the dot notation:</p>
-<div id="416bd24d" class="cell" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>math.pi</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Count the number of missing values (e.g.&nbsp;<code>nan</code>) for each time series by summing the result of <code>isna()</code>.</p>
+<div id="8effe758" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>df.isna().<span class="bu">sum</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="3">
-<pre><code>3.141592653589793</code></pre>
-</div>
-</div>
-<p>Dot accessors can be chained together, since all members are also objects.</p>
-<div id="bd991218" class="cell" data-execution_count="4">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>math.pi.is_integer()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="4">
-<pre><code>False</code></pre>
-</div>
-</div>
-<p>There are a few common types of objects to be aware of:</p>
-<ol type="1">
-<li>Modules: <em>reusable code you can import into your program.</em></li>
-<li>Classes: <em>templates for creating objects with specific properties and behaviors.</em></li>
-<li>Functions / Methods: <em>blocks of code that return a result.</em></li>
-<li>Data: <em>any stored information (e.g.&nbsp;numbers, text).</em></li>
-</ol>
-<p>See the type of an object with:</p>
-<div id="2c3953c9" class="cell" data-execution_count="5">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="bu">type</span>(math)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="5">
-<pre><code>module</code></pre>
-</div>
-</div>
-<p>See the members of an object with:</p>
-<div id="54e6a5a7" class="cell" data-execution_count="6">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="bu">dir</span>(math)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>Get help for an object:</p>
-<div id="43c8f98a" class="cell" data-execution_count="7">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="bu">help</span>(math)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>Good libraries have documentation. For example, see the <a href="https://docs.python.org/3/library/math.html">documentation for math</a>.</p>
-</section>
-<section id="using-functions-methods" class="level3" data-number="6.1.3">
-<h3 data-number="6.1.3" class="anchored" data-anchor-id="using-functions-methods"><span class="header-section-number">6.1.3</span> Using Functions / Methods</h3>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Note
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>This course will use the terms ‘function’ and ‘method’ interchangeably.</p>
-</div>
-</div>
-<p>Use a function by <em>invoking</em> it with round brackets:</p>
-<div id="afb286c5" class="cell" data-execution_count="8">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>sqrt(<span class="dv">25</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="8">
-<pre><code>5.0</code></pre>
-</div>
-</div>
-<p>Between the brackets is the function <em>arguments</em>. There’s different ways of specifying arguments. For example, there could be a list of arguments:</p>
-<div id="cac9447a" class="cell" data-execution_count="9">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>math.<span class="bu">pow</span>(<span class="dv">2</span>, <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="9">
-<pre><code>8.0</code></pre>
+<pre><code>ST 2: WL (m)    48
+dtype: int64</code></pre>
 </div>
 </div>
 </section>
-<section id="using-classes" class="level3" data-number="6.1.4">
-<h3 data-number="6.1.4" class="anchored" data-anchor-id="using-classes"><span class="header-section-number">6.1.4</span> Using Classes</h3>
-<p>Some library functionality is provided via a <em>class</em> that needs to be <em>instantiated</em> before using it.</p>
-<p>Below, the <code>Random</code> class is instantiated and assigned to the identifier <code>my_random</code> for reference later on.</p>
-<div id="ea1c5cdf" class="cell" data-execution_count="10">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> random <span class="im">import</span> Random</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>my_random <span class="op">=</span> Random()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="imputation" class="level2" data-number="14.2">
+<h2 data-number="14.2" class="anchored" data-anchor-id="imputation"><span class="header-section-number">14.2</span> Imputation</h2>
+<p>The process of filling missing values is known as imputation.</p>
+<p>For missing values <em>between</em> valid data points (i.e.&nbsp;bounded), using the <code>.interpolate()</code> method is a common and effective approach.</p>
+<div id="09324055" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>df_interpolated <span class="op">=</span> df.interpolate(method<span class="op">=</span><span class="st">'time'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>An instantiation of a class is called an <em>instance</em>, and is also an object whose functionality is accessible with the dot notation:</p>
-<div id="4e1ddeb1" class="cell" data-execution_count="11">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>my_random.random() <span class="co"># returns a random number</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="11">
-<pre><code>0.9995012671207436</code></pre>
+<div id="59173471" class="cell" data-execution_count="5">
+<details class="code-fold">
+<summary>Show Plotting Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> df.plot()</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>ax.axvspan(</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    xmin<span class="op">=</span><span class="st">"1993-12-06 00:00"</span>,</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    xmax<span class="op">=</span><span class="st">"1993-12-07 00:00"</span>,</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    color<span class="op">=</span><span class="st">'grey'</span>,</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    alpha<span class="op">=</span><span class="fl">0.3</span>,</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    label<span class="op">=</span><span class="st">"Missing Data"</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>df_interpolated.columns <span class="op">=</span> [<span class="st">"Interpolation"</span>]</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>df_interpolated.loc[<span class="st">"1993-12-06"</span>].plot(ax<span class="op">=</span>ax)</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>ax.legend(loc<span class="op">=</span><span class="st">"upper right"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="06_data_cleaning_files/figure-html/cell-6-output-1.png" class="img-fluid figure-img"></p>
+</figure>
 </div>
-</div>
-</section>
-</section>
-<section id="variables" class="level2" data-number="6.2">
-<h2 data-number="6.2" class="anchored" data-anchor-id="variables"><span class="header-section-number">6.2</span> Variables</h2>
-<p>Store data/objects in named variables by using the assignment operator <code>=</code>.</p>
-<div id="0dfa2fe7" class="cell" data-execution_count="12">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> <span class="dv">1</span> <span class="op">+</span> <span class="dv">1</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>result</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="12">
-<pre><code>2</code></pre>
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
@@ -673,118 +606,14 @@ Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>A valid name must be used. In general, this means it must start with a letter or underscore.</p>
+<p>The example above uses <code>method='time'</code>, which is a linear interpolation that considers non-equidistant <code>DatetimeIndex</code> indices. Refer to <a href="https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.interpolate.html">Pandas’s documentation</a> for additional interpolation methods, such as polynomial.</p>
 </div>
 </div>
-<p>Variable names can be referenced anywhere after their definition.</p>
-<div id="6d9a5ba9" class="cell" data-execution_count="13">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> result <span class="op">*</span> <span class="dv">2</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>result</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="13">
-<pre><code>4</code></pre>
-</div>
-</div>
-</section>
-<section id="collections" class="level2" data-number="6.3">
-<h2 data-number="6.3" class="anchored" data-anchor-id="collections"><span class="header-section-number">6.3</span> Collections</h2>
-<p>A common need is to have a collection of related data. Perhaps the most common type of collection is a <code>list</code>, which is briefly introduced below.</p>
-<p>Create a list with square brackets. Optionally include comma separated elements, otherwise an empty list is created.</p>
-<div id="4dedae98" class="cell" data-execution_count="14">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>my_numbers <span class="op">=</span> [<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>]</span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>my_numbers</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="14">
-<pre><code>[1, 2, 3]</code></pre>
-</div>
-</div>
-<p>Append elements to an existing list.</p>
-<div id="8a8e61d4" class="cell" data-execution_count="15">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>my_numbers.append(<span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>Access a specific element by <em>indexing</em> the list with the zero-based index. Zero refers to the first element, one the second, and so on.</p>
-<div id="72abbb53" class="cell" data-execution_count="16">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>my_numbers[<span class="dv">0</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="16">
-<pre><code>1</code></pre>
-</div>
-</div>
-<p>Access a subset of a list by <em>slicing</em> it. The example below accesses elements with index 0 up to, but excluding, 2.</p>
-<div id="7bb8cfbe" class="cell" data-execution_count="17">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>my_numbers[<span class="dv">0</span>:<span class="dv">2</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="17">
-<pre><code>[1, 2]</code></pre>
-</div>
-</div>
-</section>
-<section id="control-logic" class="level2" data-number="6.4">
-<h2 data-number="6.4" class="anchored" data-anchor-id="control-logic"><span class="header-section-number">6.4</span> Control Logic</h2>
-<p>Control logic allows the flow of a program to be controlled via boolean conditions.</p>
-<section id="conditional-statements" class="level3" data-number="6.4.1">
-<h3 data-number="6.4.1" class="anchored" data-anchor-id="conditional-statements"><span class="header-section-number">6.4.1</span> Conditional statements</h3>
-<p>Use <code>if</code> statements to execute code only if the specified condition is true.</p>
-<div id="0b2caa61" class="cell" data-execution_count="18">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="dv">100</span> <span class="op">&gt;</span> <span class="dv">10</span>:</span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"100 is greater than 10"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>100 is greater than 10</code></pre>
-</div>
-</div>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Note
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>The code that the <code>if</code> statement applies to is called a <em>block</em>, which must be indented.</p>
-</div>
-</div>
-<p>Use <code>else</code> statements after an <code>if</code> statement to execute code only if the condition is untrue.</p>
-<div id="99b3631b" class="cell" data-execution_count="19">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="dv">100</span> <span class="op">&lt;</span> <span class="dv">10</span>:</span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"100 is less than 10"</span>)</span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
-<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"of course, 100 is not less than 10"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>of course, 100 is not less than 10</code></pre>
-</div>
-</div>
-</section>
-<section id="loops" class="level3" data-number="6.4.2">
-<h3 data-number="6.4.2" class="anchored" data-anchor-id="loops"><span class="header-section-number">6.4.2</span> Loops</h3>
-<p>A <code>while</code> loop continuously executes a block of code <em>while</em> the specified condition is true.</p>
-<div id="60e6ecd2" class="cell" data-execution_count="20">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>i <span class="op">=</span> <span class="dv">0</span></span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> i <span class="op">&lt;</span> <span class="dv">3</span>:</span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(i)</span>
-<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>    i <span class="op">=</span> i <span class="op">+</span> <span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>0
-1
-2</code></pre>
-</div>
-</div>
-<p>A <code>for</code> loop executes a block of code per element in a specified collection.</p>
-<div id="66035150" class="cell" data-execution_count="21">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> fruit <span class="kw">in</span> [<span class="st">"Apple"</span>, <span class="st">"Banana"</span>, <span class="st">"Orange"</span>]:</span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(fruit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Apple
-Banana
-Orange</code></pre>
-</div>
-</div>
-</section>
-</section>
-<section id="additional-resources" class="level2" data-number="6.5">
-<h2 data-number="6.5" class="anchored" data-anchor-id="additional-resources"><span class="header-section-number">6.5</span> Additional resources</h2>
-<p>Learning Python should be a continuous endeavor through practice. Luckily there’s an abundance of high quality resources online. Here’s a few examples:</p>
+<p>For missing values appearing at the very beginning or end of your dataset (i.e.&nbsp;unbounded), you can make use of:</p>
 <ul>
-<li><a href="https://docs.python.org/3/tutorial/">Official Python Documentation</a></li>
-<li><a href="https://learnxinyminutes.com/python/">Learn X in Y minutes</a></li>
-<li><a href="https://www.freecodecamp.org/learn/scientific-computing-with-python/">FreeCodeCamp: Scientific Computing with Python</a></li>
+<li><code>.fillna()</code></li>
+<li><code>.ffill()</code></li>
+<li><code>.bfill()</code></li>
 </ul>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -796,15 +625,244 @@ Tip
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Python is used by a wide variety of domains (e.g.&nbsp;web development). Try to use resources specific for engineering/science applications for a more efficient learning path.</p>
+<p>Recall: these imputation methods were introduced in the section on resampling, where upsampling introduced <code>nan</code> values.</p>
+</div>
+</div>
+<p>Same example as above, but using <code>ffill()</code>.</p>
+<div id="7f8d287e" class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>df_interpolated <span class="op">=</span> df.ffill()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="3b87e533" class="cell" data-execution_count="7">
+<details class="code-fold">
+<summary>Show Plotting Code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> df.plot()</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>ax.axvspan(</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    xmin<span class="op">=</span><span class="st">"1993-12-06 00:00"</span>,</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    xmax<span class="op">=</span><span class="st">"1993-12-07 00:00"</span>,</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    color<span class="op">=</span><span class="st">'grey'</span>,</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    alpha<span class="op">=</span><span class="fl">0.3</span>,</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    label<span class="op">=</span><span class="st">"Missing Data"</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>df_interpolated.columns <span class="op">=</span> [<span class="st">"Interpolation"</span>]</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>df_interpolated.loc[<span class="st">"1993-12-06"</span>].plot(ax<span class="op">=</span>ax)</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>ax.legend(loc<span class="op">=</span><span class="st">"upper right"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="06_data_cleaning_files/figure-html/cell-8-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Same example as above, but using <code>bfill()</code>.</p>
+<div id="927d5080" class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>df_interpolated <span class="op">=</span> df.bfill()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="d278c3f6" class="cell" data-execution_count="9">
+<details class="code-fold">
+<summary>Show Plotting Code</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> df.plot()</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>ax.axvspan(</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    xmin<span class="op">=</span><span class="st">"1993-12-06 00:00"</span>,</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    xmax<span class="op">=</span><span class="st">"1993-12-07 00:00"</span>,</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    color<span class="op">=</span><span class="st">'grey'</span>,</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    alpha<span class="op">=</span><span class="fl">0.3</span>,</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    label<span class="op">=</span><span class="st">"Missing Data"</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>df_interpolated.columns <span class="op">=</span> [<span class="st">"Interpolation"</span>]</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>df_interpolated.loc[<span class="st">"1993-12-06"</span>].plot(ax<span class="op">=</span>ax)</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>ax.legend(loc<span class="op">=</span><span class="st">"upper right"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="06_data_cleaning_files/figure-html/cell-10-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Same example as above, but using <code>fillna()</code>.</p>
+<div id="9ee6255f" class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>df_interpolated <span class="op">=</span> df.fillna(<span class="fl">0.1</span>) <span class="co"># specify the value to fill with</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="d38799ad" class="cell" data-execution_count="11">
+<details class="code-fold">
+<summary>Show Plotting Code</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> df.plot()</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>ax.axvspan(</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    xmin<span class="op">=</span><span class="st">"1993-12-06 00:00"</span>,</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    xmax<span class="op">=</span><span class="st">"1993-12-07 00:00"</span>,</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    color<span class="op">=</span><span class="st">'grey'</span>,</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    alpha<span class="op">=</span><span class="fl">0.3</span>,</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>    label<span class="op">=</span><span class="st">"Missing Data"</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>df_interpolated.columns <span class="op">=</span> [<span class="st">"Interpolation"</span>]</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>df_interpolated.loc[<span class="st">"1993-12-06"</span>].plot(ax<span class="op">=</span>ax)</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>ax.legend(loc<span class="op">=</span><span class="st">"upper right"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="06_data_cleaning_files/figure-html/cell-12-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
 </div>
 </div>
 </section>
-<section id="example---using-pythons-interpreter" class="level2" data-number="6.6">
-<h2 data-number="6.6" class="anchored" data-anchor-id="example---using-pythons-interpreter"><span class="header-section-number">6.6</span> Example - Using Python’s Interpreter</h2>
-<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/U2gxRmstAC0?si=u07FDPI3u1gtp6b5" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
+<section id="anomaly-detection-rule-based" class="level2" data-number="14.3">
+<h2 data-number="14.3" class="anchored" data-anchor-id="anomaly-detection-rule-based"><span class="header-section-number">14.3</span> Anomaly Detection (Rule-Based)</h2>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Short on time? This section provides an introduction to a useful package but can be considered optional for core module understanding.</p>
+</div>
+</div>
+<p>Beyond clearly missing values, time series data can also contain anomalies. Identifying and addressing these anomalies is crucial for building robust MIKE+ models.</p>
+<p>Anomaly detection is a broad and complex field. This section offers a basic introduction to rule-based anomaly detection using DHI’s <a href="https://github.com/DHI/tsod">tsod Python package</a>.</p>
+<section id="install-tsod" class="level3" data-number="14.3.1">
+<h3 data-number="14.3.1" class="anchored" data-anchor-id="install-tsod"><span class="header-section-number">14.3.1</span> Install tsod</h3>
+<div class="sourceCode" id="cb12"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>uv pip install tsod</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="the-detector-concept" class="level3" data-number="14.3.2">
+<h3 data-number="14.3.2" class="anchored" data-anchor-id="the-detector-concept"><span class="header-section-number">14.3.2</span> The Detector Concept</h3>
+<p><code>tsod</code> operates using a concept called “detectors.” Each detector is designed to implement a specific rule or heuristic to identify anomalies. Example anomaly detectors:</p>
+<ul>
+<li><code>RangeDetector</code>: Flags values outside a set range.</li>
+<li><code>ConstantValueDetector</code>: Detects unchanging values over time.</li>
+<li><code>DiffDetector</code>: Catches large changes between points.</li>
+<li><code>RollingStdDetector</code>: Finds points far from rolling standard deviation.</li>
+</ul>
+<p>There’s also the <code>CombinedDetector</code>, which allows combining the rules of several detectors.</p>
+</section>
+<section id="detecting-anomalies" class="level3" data-number="14.3.3">
+<h3 data-number="14.3.3" class="anchored" data-anchor-id="detecting-anomalies"><span class="header-section-number">14.3.3</span> Detecting Anomalies</h3>
+<p>Plot the initial time series.</p>
+<div id="8c385d89" class="cell" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>ts <span class="op">=</span> df[<span class="st">"ST 2: WL (m)"</span>]</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>ts.plot()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="06_data_cleaning_files/figure-html/cell-14-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><em>tsod</em> operates on <code>Series</code>. Select the subject <code>Series</code> from the <code>DataFrame</code> object as needed.</p>
+</div>
+</div>
+<p>Select and instantiate a detector. If we know water levels must be in the range -0.4m to 0.4m, then a <code>RangeDetector</code> should be used.</p>
+<div id="6337d05d" class="cell" data-execution_count="14">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> tsod.detectors <span class="im">import</span> RangeDetector</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>detector <span class="op">=</span> RangeDetector(</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    min_value <span class="op">=</span> <span class="op">-</span><span class="fl">0.4</span>,</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>    max_value <span class="op">=</span> <span class="fl">0.4</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>detector</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="14">
+<pre><code>RangeDetector(min: -4.0e-01, max: 4.0e-01)</code></pre>
+</div>
+</div>
+<p>Detect anomalies for a given <code>Series</code> using the <code>detect()</code> method of the instantiated detector.</p>
+<div id="8eeb67ed" class="cell" data-execution_count="15">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>anomaly_mask <span class="op">=</span> detector.detect(ts)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>anomaly_mask.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="15">
+<pre><code>1993-12-02 00:00:00    False
+1993-12-02 00:30:00    False
+1993-12-02 01:00:00    False
+1993-12-02 01:30:00    False
+1993-12-02 02:00:00    False
+Freq: 30min, Name: ST 2: WL (m), dtype: bool</code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A <em>mask</em> refers to a boolean indexer. In the example above, values are <em>true</em> for anomalies and false otherwise.</p>
+</div>
+</div>
+<p>Plot the detected anomalies.</p>
+<div id="1f60c890" class="cell" data-execution_count="16">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> ts.plot()</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>ts[anomaly_mask].plot(</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    ax<span class="op">=</span>ax,</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>    style<span class="op">=</span><span class="st">'ro'</span>,</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>    label<span class="op">=</span><span class="st">"Anomaly"</span>,</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>    alpha<span class="op">=</span><span class="fl">0.5</span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>ax.legend()</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a><span class="co"># horizontal lines to validate ranges</span></span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>ax.axhline(<span class="fl">0.4</span>, color<span class="op">=</span><span class="st">'grey'</span>, alpha<span class="op">=</span><span class="fl">0.5</span>)</span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>ax.axhline(<span class="op">-</span><span class="fl">0.4</span>, color<span class="op">=</span><span class="st">'grey'</span>, alpha<span class="op">=</span><span class="fl">0.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="06_data_cleaning_files/figure-html/cell-17-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Replace anomalies with <code>nan</code>.</p>
+<div id="fc323690" class="cell" data-execution_count="17">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>ts_cleaned <span class="op">=</span> ts.copy()</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>ts_cleaned[anomaly_mask] <span class="op">=</span> np.nan</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>ts_cleaned.plot()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="06_data_cleaning_files/figure-html/cell-18-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="impute-anomalies" class="level3" data-number="14.3.4">
+<h3 data-number="14.3.4" class="anchored" data-anchor-id="impute-anomalies"><span class="header-section-number">14.3.4</span> Impute anomalies</h3>
+<p>Impute anomalies by treating them just like missing values.</p>
+<div id="f50b9d22" class="cell" data-execution_count="18">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>ts_cleaned <span class="op">=</span> ts_cleaned.interpolate(method<span class="op">=</span><span class="st">'time'</span>)</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>ts_cleaned.plot()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="06_data_cleaning_files/figure-html/cell-19-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
@@ -1254,13 +1312,13 @@ Tip
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../module1_foundations/jupyter_notebooks.html" class="pagination-link" aria-label="Jupyter Notebooks">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Jupyter Notebooks</span></span>
+      <a href="../module2_time_series/05_visualization.html" class="pagination-link" aria-label="Data Visualization">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Data Visualization</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../module1_foundations/llm_coding.html" class="pagination-link" aria-label="LLMs for Coding">
-        <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">LLMs for Coding</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../module2_time_series/07_writing_dfs0.html" class="pagination-link" aria-label="Writing dfs0">
+        <span class="nav-page-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Writing dfs0</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

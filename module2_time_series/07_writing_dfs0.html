@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>6&nbsp; Python Basics – Getting started with Python for MIKE+</title>
+<title>15&nbsp; Writing dfs0 – Getting started with Python for MIKE+</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -58,15 +58,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../site_libs/quarto-nav/headroom.min.js"></script>
 <script src="../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../module1_foundations/llm_coding.html" rel="next">
-<link href="../module1_foundations/jupyter_notebooks.html" rel="prev">
+<link href="../module2_time_series/homework.html" rel="next">
+<link href="../module2_time_series/06_data_cleaning.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
@@ -108,6 +108,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
 
 <link rel="stylesheet" href="../styles.css">
@@ -284,7 +287,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../module1_foundations/index.html">Module 1 - Foundations</a></li><li class="breadcrumb-item"><a href="../module1_foundations/python_basics.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Python Basics</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../module2_time_series/index.html">Module 2 - Time Series</a></li><li class="breadcrumb-item"><a href="../module2_time_series/07_writing_dfs0.html"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Writing dfs0</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -368,7 +371,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../module1_foundations/python_basics.html" class="sidebar-item-text sidebar-link active">
+  <a href="../module1_foundations/python_basics.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Python Basics</span></span></a>
   </div>
 </li>
@@ -445,7 +448,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../module2_time_series/07_writing_dfs0.html" class="sidebar-item-text sidebar-link">
+  <a href="../module2_time_series/07_writing_dfs0.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Writing dfs0</span></span></a>
   </div>
 </li>
@@ -483,22 +486,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#using-libraries" id="toc-using-libraries" class="nav-link active" data-scroll-target="#using-libraries"><span class="header-section-number">6.1</span> Using libraries</a>
-  <ul class="collapse">
-  <li><a href="#import-libraries" id="toc-import-libraries" class="nav-link" data-scroll-target="#import-libraries"><span class="header-section-number">6.1.1</span> Import libraries</a></li>
-  <li><a href="#objects" id="toc-objects" class="nav-link" data-scroll-target="#objects"><span class="header-section-number">6.1.2</span> Objects</a></li>
-  <li><a href="#using-functions-methods" id="toc-using-functions-methods" class="nav-link" data-scroll-target="#using-functions-methods"><span class="header-section-number">6.1.3</span> Using Functions / Methods</a></li>
-  <li><a href="#using-classes" id="toc-using-classes" class="nav-link" data-scroll-target="#using-classes"><span class="header-section-number">6.1.4</span> Using Classes</a></li>
-  </ul></li>
-  <li><a href="#variables" id="toc-variables" class="nav-link" data-scroll-target="#variables"><span class="header-section-number">6.2</span> Variables</a></li>
-  <li><a href="#collections" id="toc-collections" class="nav-link" data-scroll-target="#collections"><span class="header-section-number">6.3</span> Collections</a></li>
-  <li><a href="#control-logic" id="toc-control-logic" class="nav-link" data-scroll-target="#control-logic"><span class="header-section-number">6.4</span> Control Logic</a>
-  <ul class="collapse">
-  <li><a href="#conditional-statements" id="toc-conditional-statements" class="nav-link" data-scroll-target="#conditional-statements"><span class="header-section-number">6.4.1</span> Conditional statements</a></li>
-  <li><a href="#loops" id="toc-loops" class="nav-link" data-scroll-target="#loops"><span class="header-section-number">6.4.2</span> Loops</a></li>
-  </ul></li>
-  <li><a href="#additional-resources" id="toc-additional-resources" class="nav-link" data-scroll-target="#additional-resources"><span class="header-section-number">6.5</span> Additional resources</a></li>
-  <li><a href="#example---using-pythons-interpreter" id="toc-example---using-pythons-interpreter" class="nav-link" data-scroll-target="#example---using-pythons-interpreter"><span class="header-section-number">6.6</span> Example - Using Python’s Interpreter</a></li>
+  <li><a href="#workflow" id="toc-workflow" class="nav-link active" data-scroll-target="#workflow"><span class="header-section-number">15.1</span> Workflow</a></li>
+  <li><a href="#example-source-data" id="toc-example-source-data" class="nav-link" data-scroll-target="#example-source-data"><span class="header-section-number">15.2</span> Example Source Data</a></li>
+  <li><a href="#dataframe-to-dataset" id="toc-dataframe-to-dataset" class="nav-link" data-scroll-target="#dataframe-to-dataset"><span class="header-section-number">15.3</span> DataFrame to Dataset</a></li>
+  <li><a href="#item-metadata" id="toc-item-metadata" class="nav-link" data-scroll-target="#item-metadata"><span class="header-section-number">15.4</span> Item Metadata</a></li>
+  <li><a href="#dataset-to-dfs0" id="toc-dataset-to-dfs0" class="nav-link" data-scroll-target="#dataset-to-dfs0"><span class="header-section-number">15.5</span> Dataset to dfs0</a></li>
   </ul>
 </nav>
     </div>
@@ -506,9 +498,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <main class="content" id="quarto-document-content">
 
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../module1_foundations/index.html">Module 1 - Foundations</a></li><li class="breadcrumb-item"><a href="../module1_foundations/python_basics.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Python Basics</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../module2_time_series/index.html">Module 2 - Time Series</a></li><li class="breadcrumb-item"><a href="../module2_time_series/07_writing_dfs0.html"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Writing dfs0</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Python Basics</span></h1>
+<h1 class="title"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Writing dfs0</span></h1>
 </div>
 
 
@@ -525,267 +517,199 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>This section provides a crash course on basic Python concepts used throughout the course. It is purposefully brief, with additional resources provided at the end.</p>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Tip
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Follow along by running these cells in a Jupyter Notebook. Alternatively, run them in the <a href="https://docs.python.org/3/tutorial/interpreter.html">Python Interpreter</a> which can be started with <code>uv run python</code>.</p>
-</div>
-</div>
-<section id="using-libraries" class="level2" data-number="6.1">
-<h2 data-number="6.1" class="anchored" data-anchor-id="using-libraries"><span class="header-section-number">6.1</span> Using libraries</h2>
-<p>Most functionality useful for MIKE+ modelling exists in Python packages (e.g.&nbsp;mikeio). Therefore, it’s important to understand how to access functionality in a Python package.</p>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Note
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>The terms package, library, and module are used interchangeably throughout this course.</p>
-</div>
-</div>
-<section id="import-libraries" class="level3" data-number="6.1.1">
-<h3 data-number="6.1.1" class="anchored" data-anchor-id="import-libraries"><span class="header-section-number">6.1.1</span> Import libraries</h3>
-<p>Import libraries using the <code>import</code> statement:</p>
-<div id="e3a32ef1" class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> math</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>Or import specific functionality from a library:</p>
-<div id="7d6904b6" class="cell" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> math <span class="im">import</span> sqrt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="objects" class="level3" data-number="6.1.2">
-<h3 data-number="6.1.2" class="anchored" data-anchor-id="objects"><span class="header-section-number">6.1.2</span> Objects</h3>
-<p>All imports are <em>objects</em> containing some functionality. Objects have <em>members</em> accessible via the dot notation:</p>
-<div id="416bd24d" class="cell" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>math.pi</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="3">
-<pre><code>3.141592653589793</code></pre>
-</div>
-</div>
-<p>Dot accessors can be chained together, since all members are also objects.</p>
-<div id="bd991218" class="cell" data-execution_count="4">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>math.pi.is_integer()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="4">
-<pre><code>False</code></pre>
-</div>
-</div>
-<p>There are a few common types of objects to be aware of:</p>
+<p>Creating dfs0 files is a common need for MIKE+ modellers (e.g.&nbsp;rainfall from csv). This section focuses on how to create dfs0 files from a Pandas DataFrame.</p>
+<section id="workflow" class="level2" data-number="15.1">
+<h2 data-number="15.1" class="anchored" data-anchor-id="workflow"><span class="header-section-number">15.1</span> Workflow</h2>
+<p>The general workflow for creating <code>dfs0</code> files from a <code>DataFrame</code> is as follows:</p>
 <ol type="1">
-<li>Modules: <em>reusable code you can import into your program.</em></li>
-<li>Classes: <em>templates for creating objects with specific properties and behaviors.</em></li>
-<li>Functions / Methods: <em>blocks of code that return a result.</em></li>
-<li>Data: <em>any stored information (e.g.&nbsp;numbers, text).</em></li>
+<li>Map <code>ItemInfo</code> objects to each column (optional)</li>
+<li>Create a <code>Dataset</code> object from the <code>DataFrame</code></li>
+<li>Save the <code>Dataset</code> object to a <code>dfs0</code> file.</li>
 </ol>
-<p>See the type of an object with:</p>
-<div id="2c3953c9" class="cell" data-execution_count="5">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="bu">type</span>(math)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="5">
-<pre><code>module</code></pre>
-</div>
-</div>
-<p>See the members of an object with:</p>
-<div id="54e6a5a7" class="cell" data-execution_count="6">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="bu">dir</span>(math)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>Get help for an object:</p>
-<div id="43c8f98a" class="cell" data-execution_count="7">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="bu">help</span>(math)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>Good libraries have documentation. For example, see the <a href="https://docs.python.org/3/library/math.html">documentation for math</a>.</p>
 </section>
-<section id="using-functions-methods" class="level3" data-number="6.1.3">
-<h3 data-number="6.1.3" class="anchored" data-anchor-id="using-functions-methods"><span class="header-section-number">6.1.3</span> Using Functions / Methods</h3>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Note
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>This course will use the terms ‘function’ and ‘method’ interchangeably.</p>
-</div>
-</div>
-<p>Use a function by <em>invoking</em> it with round brackets:</p>
-<div id="afb286c5" class="cell" data-execution_count="8">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>sqrt(<span class="dv">25</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="8">
-<pre><code>5.0</code></pre>
-</div>
-</div>
-<p>Between the brackets is the function <em>arguments</em>. There’s different ways of specifying arguments. For example, there could be a list of arguments:</p>
-<div id="cac9447a" class="cell" data-execution_count="9">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>math.<span class="bu">pow</span>(<span class="dv">2</span>, <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="9">
-<pre><code>8.0</code></pre>
-</div>
-</div>
-</section>
-<section id="using-classes" class="level3" data-number="6.1.4">
-<h3 data-number="6.1.4" class="anchored" data-anchor-id="using-classes"><span class="header-section-number">6.1.4</span> Using Classes</h3>
-<p>Some library functionality is provided via a <em>class</em> that needs to be <em>instantiated</em> before using it.</p>
-<p>Below, the <code>Random</code> class is instantiated and assigned to the identifier <code>my_random</code> for reference later on.</p>
-<div id="ea1c5cdf" class="cell" data-execution_count="10">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> random <span class="im">import</span> Random</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>my_random <span class="op">=</span> Random()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>An instantiation of a class is called an <em>instance</em>, and is also an object whose functionality is accessible with the dot notation:</p>
-<div id="4e1ddeb1" class="cell" data-execution_count="11">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>my_random.random() <span class="co"># returns a random number</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="11">
-<pre><code>0.9995012671207436</code></pre>
-</div>
-</div>
-</section>
-</section>
-<section id="variables" class="level2" data-number="6.2">
-<h2 data-number="6.2" class="anchored" data-anchor-id="variables"><span class="header-section-number">6.2</span> Variables</h2>
-<p>Store data/objects in named variables by using the assignment operator <code>=</code>.</p>
-<div id="0dfa2fe7" class="cell" data-execution_count="12">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> <span class="dv">1</span> <span class="op">+</span> <span class="dv">1</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>result</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="12">
-<pre><code>2</code></pre>
+<section id="example-source-data" class="level2" data-number="15.2">
+<h2 data-number="15.2" class="anchored" data-anchor-id="example-source-data"><span class="header-section-number">15.2</span> Example Source Data</h2>
+<p>The following DataFrame will be used in this section as an example.</p>
+<div id="825e5c5b" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"data/rain_events_2021_july.csv"</span>,</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    index_col<span class="op">=</span><span class="st">"time"</span>,</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    parse_dates<span class="op">=</span><span class="va">True</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>df.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="1">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">rainfall</th>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">time</th>
+<th data-quarto-table-cell-role="th"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2021-07-02 09:51:00</td>
+<td>0.000</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">2021-07-02 09:52:00</td>
+<td>3.333</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2021-07-02 09:53:00</td>
+<td>0.333</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">2021-07-02 09:54:00</td>
+<td>0.333</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2021-07-02 09:55:00</td>
+<td>0.333</td>
+</tr>
+</tbody>
+</table>
+
 </div>
 </div>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
 </div>
-<div class="callout-title-container flex-fill">
-Note
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>A valid name must be used. In general, this means it must start with a letter or underscore.</p>
-</div>
-</div>
-<p>Variable names can be referenced anywhere after their definition.</p>
-<div id="6d9a5ba9" class="cell" data-execution_count="13">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> result <span class="op">*</span> <span class="dv">2</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>result</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="13">
-<pre><code>4</code></pre>
-</div>
-</div>
-</section>
-<section id="collections" class="level2" data-number="6.3">
-<h2 data-number="6.3" class="anchored" data-anchor-id="collections"><span class="header-section-number">6.3</span> Collections</h2>
-<p>A common need is to have a collection of related data. Perhaps the most common type of collection is a <code>list</code>, which is briefly introduced below.</p>
-<p>Create a list with square brackets. Optionally include comma separated elements, otherwise an empty list is created.</p>
-<div id="4dedae98" class="cell" data-execution_count="14">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>my_numbers <span class="op">=</span> [<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>]</span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>my_numbers</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="14">
-<pre><code>[1, 2, 3]</code></pre>
-</div>
-</div>
-<p>Append elements to an existing list.</p>
-<div id="8a8e61d4" class="cell" data-execution_count="15">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>my_numbers.append(<span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>Access a specific element by <em>indexing</em> the list with the zero-based index. Zero refers to the first element, one the second, and so on.</p>
-<div id="72abbb53" class="cell" data-execution_count="16">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>my_numbers[<span class="dv">0</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="16">
-<pre><code>1</code></pre>
-</div>
-</div>
-<p>Access a subset of a list by <em>slicing</em> it. The example below accesses elements with index 0 up to, but excluding, 2.</p>
-<div id="7bb8cfbe" class="cell" data-execution_count="17">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>my_numbers[<span class="dv">0</span>:<span class="dv">2</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="17">
-<pre><code>[1, 2]</code></pre>
-</div>
-</div>
-</section>
-<section id="control-logic" class="level2" data-number="6.4">
-<h2 data-number="6.4" class="anchored" data-anchor-id="control-logic"><span class="header-section-number">6.4</span> Control Logic</h2>
-<p>Control logic allows the flow of a program to be controlled via boolean conditions.</p>
-<section id="conditional-statements" class="level3" data-number="6.4.1">
-<h3 data-number="6.4.1" class="anchored" data-anchor-id="conditional-statements"><span class="header-section-number">6.4.1</span> Conditional statements</h3>
-<p>Use <code>if</code> statements to execute code only if the specified condition is true.</p>
-<div id="0b2caa61" class="cell" data-execution_count="18">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="dv">100</span> <span class="op">&gt;</span> <span class="dv">10</span>:</span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"100 is greater than 10"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>100 is greater than 10</code></pre>
-</div>
-</div>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Note
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>The code that the <code>if</code> statement applies to is called a <em>block</em>, which must be indented.</p>
-</div>
-</div>
-<p>Use <code>else</code> statements after an <code>if</code> statement to execute code only if the condition is untrue.</p>
-<div id="99b3631b" class="cell" data-execution_count="19">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="dv">100</span> <span class="op">&lt;</span> <span class="dv">10</span>:</span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"100 is less than 10"</span>)</span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
-<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"of course, 100 is not less than 10"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>of course, 100 is not less than 10</code></pre>
-</div>
-</div>
-</section>
-<section id="loops" class="level3" data-number="6.4.2">
-<h3 data-number="6.4.2" class="anchored" data-anchor-id="loops"><span class="header-section-number">6.4.2</span> Loops</h3>
-<p>A <code>while</code> loop continuously executes a block of code <em>while</em> the specified condition is true.</p>
-<div id="60e6ecd2" class="cell" data-execution_count="20">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>i <span class="op">=</span> <span class="dv">0</span></span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> i <span class="op">&lt;</span> <span class="dv">3</span>:</span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(i)</span>
-<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>    i <span class="op">=</span> i <span class="op">+</span> <span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>0
-1
-2</code></pre>
-</div>
-</div>
-<p>A <code>for</code> loop executes a block of code per element in a specified collection.</p>
-<div id="66035150" class="cell" data-execution_count="21">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> fruit <span class="kw">in</span> [<span class="st">"Apple"</span>, <span class="st">"Banana"</span>, <span class="st">"Orange"</span>]:</span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(fruit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Apple
-Banana
-Orange</code></pre>
-</div>
-</div>
-</section>
-</section>
-<section id="additional-resources" class="level2" data-number="6.5">
-<h2 data-number="6.5" class="anchored" data-anchor-id="additional-resources"><span class="header-section-number">6.5</span> Additional resources</h2>
-<p>Learning Python should be a continuous endeavor through practice. Luckily there’s an abundance of high quality resources online. Here’s a few examples:</p>
+<p>Get familiar with the data. Notice:</p>
 <ul>
-<li><a href="https://docs.python.org/3/tutorial/">Official Python Documentation</a></li>
-<li><a href="https://learnxinyminutes.com/python/">Learn X in Y minutes</a></li>
-<li><a href="https://www.freecodecamp.org/learn/scientific-computing-with-python/">FreeCodeCamp: Scientific Computing with Python</a></li>
+<li>The time axis is non-equidistant</li>
+<li>Values represent rainfall depth since the last time step.</li>
+<li>Rainfall events always start at values of zero.</li>
 </ul>
+<div id="22ed8ad9" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>df.describe().T</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="2">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">count</th>
+<th data-quarto-table-cell-role="th">mean</th>
+<th data-quarto-table-cell-role="th">std</th>
+<th data-quarto-table-cell-role="th">min</th>
+<th data-quarto-table-cell-role="th">25%</th>
+<th data-quarto-table-cell-role="th">50%</th>
+<th data-quarto-table-cell-role="th">75%</th>
+<th data-quarto-table-cell-role="th">max</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">rainfall</td>
+<td>1086.0</td>
+<td>1.120283</td>
+<td>3.219804</td>
+<td>0.0</td>
+<td>0.185</td>
+<td>0.37</td>
+<td>0.667</td>
+<td>36.667</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div id="25c30ec6" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>df.plot()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="07_writing_dfs0_files/figure-html/cell-4-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="4ee87445" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>df.plot.hist(bins<span class="op">=</span><span class="dv">50</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="07_writing_dfs0_files/figure-html/cell-5-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>This subset shows the division between two rainfall events:</p>
+<div id="f026aa65" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>df.loc[<span class="st">"2021-07-25 17:32:00"</span>:<span class="st">"2021-07-25 20:30:00"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="5">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">rainfall</th>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">time</th>
+<th data-quarto-table-cell-role="th"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2021-07-25 17:32:00</td>
+<td>0.476</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">2021-07-25 17:33:00</td>
+<td>0.476</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2021-07-25 17:34:00</td>
+<td>0.476</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">2021-07-25 20:28:00</td>
+<td>0.000</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2021-07-25 20:29:00</td>
+<td>3.333</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">2021-07-25 20:30:00</td>
+<td>0.667</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+<section id="dataframe-to-dataset" class="level2" data-number="15.3">
+<h2 data-number="15.3" class="anchored" data-anchor-id="dataframe-to-dataset"><span class="header-section-number">15.3</span> DataFrame to Dataset</h2>
+<p>Converting a <code>DataFrame</code> to a <code>Dataset</code> is straightforward using <code>mikeio.from_pandas()</code>:</p>
+<div id="6d3565b8" class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>ds <span class="op">=</span> mikeio.from_pandas(df)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>ds</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="7">
+<pre><code>&lt;mikeio.Dataset&gt;
+dims: (time:1086)
+time: 2021-07-02 09:51:00 - 2021-07-31 13:16:00 (1086 non-equidistant records)
+geometry: GeometryUndefined()
+items:
+  0:  rainfall &lt;Undefined&gt; (undefined)</code></pre>
+</div>
+</div>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -796,13 +720,141 @@ Tip
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Python is used by a wide variety of domains (e.g.&nbsp;web development). Try to use resources specific for engineering/science applications for a more efficient learning path.</p>
+<p>Ensure your DataFrame’s index is a <code>DatetimeIndex</code> for time series dfs0 files. This is crucial for MIKE IO to correctly interpret the time information.</p>
+</div>
+</div>
+<p>Notice that the item type and unit are “undefined”. Let’s inspect the <code>ItemInfo</code> MIKE IO used by default:</p>
+<div id="72192807" class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>item <span class="op">=</span> ds[<span class="dv">0</span>].item</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Item Name: </span><span class="sc">{</span>item<span class="sc">.</span>name<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Item Type: </span><span class="sc">{</span>item<span class="sc">.</span><span class="bu">type</span><span class="sc">.</span>name<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Item Unit: </span><span class="sc">{</span>item<span class="sc">.</span>unit<span class="sc">.</span>name<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Item Data Value Type: </span><span class="sc">{</span>item<span class="sc">.</span>data_value_type<span class="sc">.</span>name<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Item Name: rainfall
+Item Type: Undefined
+Item Unit: undefined
+Item Data Value Type: Instantaneous</code></pre>
+</div>
+</div>
+<p>This highlights the need to almost always define item metadata before calling <code>from_pandas()</code>.</p>
+<div class="callout callout-style-default callout-caution callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Caution
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Providing accurate <code>ItemInfo</code> is key for ensuring compatibility with MIKE software and correctly interpreting the meaning of your data within the MIKE ecosystem.</p>
 </div>
 </div>
 </section>
-<section id="example---using-pythons-interpreter" class="level2" data-number="6.6">
-<h2 data-number="6.6" class="anchored" data-anchor-id="example---using-pythons-interpreter"><span class="header-section-number">6.6</span> Example - Using Python’s Interpreter</h2>
-<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/U2gxRmstAC0?si=u07FDPI3u1gtp6b5" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
+<section id="item-metadata" class="level2" data-number="15.4">
+<h2 data-number="15.4" class="anchored" data-anchor-id="item-metadata"><span class="header-section-number">15.4</span> Item Metadata</h2>
+<p>Please review <a href="https://dhi.github.io/mikeio/user-guide/eum.html">MIKE IO’s user guide on EUM</a> before proceeding.</p>
+<p>Create an <code>ItemInfo</code> object for our example rainfall data:</p>
+<div id="14778c6b" class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>item <span class="op">=</span> mikeio.ItemInfo(</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    name <span class="op">=</span> <span class="st">"Rainfall"</span>,</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    itemtype <span class="op">=</span> mikeio.EUMType.Rainfall_Depth,</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    unit <span class="op">=</span> mikeio.EUMUnit.millimeter,</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    data_value_type<span class="op">=</span> <span class="st">"StepAccumulated"</span>,</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>item</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="9">
+<pre><code>Rainfall &lt;Rainfall Depth&gt; (millimeter) - 2</code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Data Value Type">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Data Value Type
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The <code>Data Value Type</code> specifies how data values relate to time steps. Common options include:</p>
+<ul>
+<li><strong>Instantaneous</strong>: Value at a specific point in time.</li>
+<li><strong>Accumulated</strong>: Value aggregated over the entire period up to the timestamp.</li>
+<li><strong>StepAccumulated</strong>: Value aggregated over the preceding time interval.</li>
+<li><strong>MeanStepBackward</strong>: Average value over the preceding time interval.</li>
+</ul>
+<p>Refer to MIKE+ documentation for explanation of these options.</p>
+</div>
+</div>
+</div>
+<p>Let’s recreate the <code>Dataset</code> using the <code>ItemInfo</code> object for our rainfall.</p>
+<div id="05a5552e" class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>ds <span class="op">=</span> mikeio.from_pandas(df, items<span class="op">=</span>[item])</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>ds</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="10">
+<pre><code>&lt;mikeio.Dataset&gt;
+dims: (time:1086)
+time: 2021-07-02 09:51:00 - 2021-07-31 13:16:00 (1086 non-equidistant records)
+geometry: GeometryUndefined()
+items:
+  0:  rainfall &lt;Rainfall Depth&gt; (millimeter) - 2</code></pre>
+</div>
+</div>
+<p>Notice the item info is now correct on the <code>Dataset</code>.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Mapping items to column by name">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Mapping items to column by name
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The order of <code>items</code> matches the order of the <code>DataFrame</code> columns. You may prefer to explicitly name the columns:</p>
+<div id="3bcb82a5" class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>mikeio.from_pandas(df, items<span class="op">=</span>{</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"rainfall"</span> : item</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="11">
+<pre><code>&lt;mikeio.Dataset&gt;
+dims: (time:1086)
+time: 2021-07-02 09:51:00 - 2021-07-31 13:16:00 (1086 non-equidistant records)
+geometry: GeometryUndefined()
+items:
+  0:  rainfall &lt;Rainfall Depth&gt; (millimeter) - 2</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="dataset-to-dfs0" class="level2" data-number="15.5">
+<h2 data-number="15.5" class="anchored" data-anchor-id="dataset-to-dfs0"><span class="header-section-number">15.5</span> Dataset to dfs0</h2>
+<p>The final step is to save your carefully prepared <code>Dataset</code> object, now containing the correct data and metadata, to a dfs0 file. This is done using the <code>.to_dfs()</code> method of the <code>Dataset</code> object.</p>
+<div id="5dd76717" class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>ds.to_dfs(<span class="st">"rainfall.dfs0"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>This will create a file named <code>rainfall.dfs0</code> ready to be used in MIKE+.</p>
+<p>Confirm it worked by reading the dfs0 file back into a <code>Dataset</code> (optional).</p>
+<div id="59880b31" class="cell" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>ds_validation <span class="op">=</span> mikeio.read(<span class="st">"rainfall.dfs0"</span>)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>ds_validation</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="13">
+<pre><code>&lt;mikeio.Dataset&gt;
+dims: (time:1086)
+time: 2021-07-02 09:51:00 - 2021-07-31 13:16:00 (1086 non-equidistant records)
+geometry: GeometryUndefined()
+items:
+  0:  rainfall &lt;Rainfall Depth&gt; (millimeter) - 2</code></pre>
+</div>
+</div>
 
 
 </section>
@@ -1254,13 +1306,13 @@ Tip
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../module1_foundations/jupyter_notebooks.html" class="pagination-link" aria-label="Jupyter Notebooks">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Jupyter Notebooks</span></span>
+      <a href="../module2_time_series/06_data_cleaning.html" class="pagination-link" aria-label="Data Cleaning">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Data Cleaning</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../module1_foundations/llm_coding.html" class="pagination-link" aria-label="LLMs for Coding">
-        <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">LLMs for Coding</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../module2_time_series/homework.html" class="pagination-link" aria-label="Homework">
+        <span class="nav-page-text">Homework</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

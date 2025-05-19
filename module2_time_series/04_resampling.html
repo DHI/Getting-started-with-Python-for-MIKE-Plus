@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>6&nbsp; Python Basics – Getting started with Python for MIKE+</title>
+<title>12&nbsp; Resampling – Getting started with Python for MIKE+</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -58,15 +58,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../site_libs/quarto-nav/headroom.min.js"></script>
 <script src="../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../module1_foundations/llm_coding.html" rel="next">
-<link href="../module1_foundations/jupyter_notebooks.html" rel="prev">
+<link href="../module2_time_series/05_visualization.html" rel="next">
+<link href="../module2_time_series/03_data_selection.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
@@ -108,6 +108,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
 
 <link rel="stylesheet" href="../styles.css">
@@ -284,7 +287,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../module1_foundations/index.html">Module 1 - Foundations</a></li><li class="breadcrumb-item"><a href="../module1_foundations/python_basics.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Python Basics</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../module2_time_series/index.html">Module 2 - Time Series</a></li><li class="breadcrumb-item"><a href="../module2_time_series/04_resampling.html"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Resampling</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -368,7 +371,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../module1_foundations/python_basics.html" class="sidebar-item-text sidebar-link active">
+  <a href="../module1_foundations/python_basics.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Python Basics</span></span></a>
   </div>
 </li>
@@ -427,7 +430,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../module2_time_series/04_resampling.html" class="sidebar-item-text sidebar-link">
+  <a href="../module2_time_series/04_resampling.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Resampling</span></span></a>
   </div>
 </li>
@@ -483,22 +486,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#using-libraries" id="toc-using-libraries" class="nav-link active" data-scroll-target="#using-libraries"><span class="header-section-number">6.1</span> Using libraries</a>
-  <ul class="collapse">
-  <li><a href="#import-libraries" id="toc-import-libraries" class="nav-link" data-scroll-target="#import-libraries"><span class="header-section-number">6.1.1</span> Import libraries</a></li>
-  <li><a href="#objects" id="toc-objects" class="nav-link" data-scroll-target="#objects"><span class="header-section-number">6.1.2</span> Objects</a></li>
-  <li><a href="#using-functions-methods" id="toc-using-functions-methods" class="nav-link" data-scroll-target="#using-functions-methods"><span class="header-section-number">6.1.3</span> Using Functions / Methods</a></li>
-  <li><a href="#using-classes" id="toc-using-classes" class="nav-link" data-scroll-target="#using-classes"><span class="header-section-number">6.1.4</span> Using Classes</a></li>
-  </ul></li>
-  <li><a href="#variables" id="toc-variables" class="nav-link" data-scroll-target="#variables"><span class="header-section-number">6.2</span> Variables</a></li>
-  <li><a href="#collections" id="toc-collections" class="nav-link" data-scroll-target="#collections"><span class="header-section-number">6.3</span> Collections</a></li>
-  <li><a href="#control-logic" id="toc-control-logic" class="nav-link" data-scroll-target="#control-logic"><span class="header-section-number">6.4</span> Control Logic</a>
-  <ul class="collapse">
-  <li><a href="#conditional-statements" id="toc-conditional-statements" class="nav-link" data-scroll-target="#conditional-statements"><span class="header-section-number">6.4.1</span> Conditional statements</a></li>
-  <li><a href="#loops" id="toc-loops" class="nav-link" data-scroll-target="#loops"><span class="header-section-number">6.4.2</span> Loops</a></li>
-  </ul></li>
-  <li><a href="#additional-resources" id="toc-additional-resources" class="nav-link" data-scroll-target="#additional-resources"><span class="header-section-number">6.5</span> Additional resources</a></li>
-  <li><a href="#example---using-pythons-interpreter" id="toc-example---using-pythons-interpreter" class="nav-link" data-scroll-target="#example---using-pythons-interpreter"><span class="header-section-number">6.6</span> Example - Using Python’s Interpreter</a></li>
+  <li><a href="#what-is-resampling" id="toc-what-is-resampling" class="nav-link active" data-scroll-target="#what-is-resampling"><span class="header-section-number">12.1</span> What is Resampling?</a></li>
+  <li><a href="#why-resample" id="toc-why-resample" class="nav-link" data-scroll-target="#why-resample"><span class="header-section-number">12.2</span> Why Resample?</a></li>
+  <li><a href="#how-to-resample-with-pandas" id="toc-how-to-resample-with-pandas" class="nav-link" data-scroll-target="#how-to-resample-with-pandas"><span class="header-section-number">12.3</span> How to resample (with Pandas)</a></li>
+  <li><a href="#common-frequency-rules" id="toc-common-frequency-rules" class="nav-link" data-scroll-target="#common-frequency-rules"><span class="header-section-number">12.4</span> Common Frequency Rules</a></li>
+  <li><a href="#aggregation-methods-downsampling" id="toc-aggregation-methods-downsampling" class="nav-link" data-scroll-target="#aggregation-methods-downsampling"><span class="header-section-number">12.5</span> Aggregation Methods (Downsampling)</a></li>
+  <li><a href="#fill-methods-upsampling" id="toc-fill-methods-upsampling" class="nav-link" data-scroll-target="#fill-methods-upsampling"><span class="header-section-number">12.6</span> Fill Methods (Upsampling)</a></li>
   </ul>
 </nav>
     </div>
@@ -506,9 +499,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <main class="content" id="quarto-document-content">
 
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../module1_foundations/index.html">Module 1 - Foundations</a></li><li class="breadcrumb-item"><a href="../module1_foundations/python_basics.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Python Basics</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../module2_time_series/index.html">Module 2 - Time Series</a></li><li class="breadcrumb-item"><a href="../module2_time_series/04_resampling.html"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Resampling</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Python Basics</span></h1>
+<h1 class="title"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Resampling</span></h1>
 </div>
 
 
@@ -525,7 +518,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>This section provides a crash course on basic Python concepts used throughout the course. It is purposefully brief, with additional resources provided at the end.</p>
+<p>Resampling is a powerful technique for changing the frequency of time series data, a common task when working with MIKE+ model inputs or outputs.</p>
+<section id="what-is-resampling" class="level2" data-number="12.1">
+<h2 data-number="12.1" class="anchored" data-anchor-id="what-is-resampling"><span class="header-section-number">12.1</span> What is Resampling?</h2>
+<p>At its core, resampling involves adjusting the time steps in your data. There are two main types:</p>
+<ul>
+<li><strong>Downsampling:</strong> reducing the frequency of data points (e.g., hourly to daily rainfall).</li>
+<li><strong>Upsampling:</strong> increasing the frequency of data points (e.g., hourly to minutely discharge).</li>
+</ul>
+<p>A prerequisite for resampling in Pandas is that the DataFrame must have a <code>DatetimeIndex</code>. This will be the case if it was created via MIKE IO’s <code>to_dataframe()</code> method.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -536,255 +537,166 @@ Tip
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Follow along by running these cells in a Jupyter Notebook. Alternatively, run them in the <a href="https://docs.python.org/3/tutorial/interpreter.html">Python Interpreter</a> which can be started with <code>uv run python</code>.</p>
-</div>
-</div>
-<section id="using-libraries" class="level2" data-number="6.1">
-<h2 data-number="6.1" class="anchored" data-anchor-id="using-libraries"><span class="header-section-number">6.1</span> Using libraries</h2>
-<p>Most functionality useful for MIKE+ modelling exists in Python packages (e.g.&nbsp;mikeio). Therefore, it’s important to understand how to access functionality in a Python package.</p>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Note
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>The terms package, library, and module are used interchangeably throughout this course.</p>
-</div>
-</div>
-<section id="import-libraries" class="level3" data-number="6.1.1">
-<h3 data-number="6.1.1" class="anchored" data-anchor-id="import-libraries"><span class="header-section-number">6.1.1</span> Import libraries</h3>
-<p>Import libraries using the <code>import</code> statement:</p>
-<div id="e3a32ef1" class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> math</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>Or import specific functionality from a library:</p>
-<div id="7d6904b6" class="cell" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> math <span class="im">import</span> sqrt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="objects" class="level3" data-number="6.1.2">
-<h3 data-number="6.1.2" class="anchored" data-anchor-id="objects"><span class="header-section-number">6.1.2</span> Objects</h3>
-<p>All imports are <em>objects</em> containing some functionality. Objects have <em>members</em> accessible via the dot notation:</p>
-<div id="416bd24d" class="cell" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>math.pi</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="3">
-<pre><code>3.141592653589793</code></pre>
-</div>
-</div>
-<p>Dot accessors can be chained together, since all members are also objects.</p>
-<div id="bd991218" class="cell" data-execution_count="4">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>math.pi.is_integer()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="4">
-<pre><code>False</code></pre>
-</div>
-</div>
-<p>There are a few common types of objects to be aware of:</p>
-<ol type="1">
-<li>Modules: <em>reusable code you can import into your program.</em></li>
-<li>Classes: <em>templates for creating objects with specific properties and behaviors.</em></li>
-<li>Functions / Methods: <em>blocks of code that return a result.</em></li>
-<li>Data: <em>any stored information (e.g.&nbsp;numbers, text).</em></li>
-</ol>
-<p>See the type of an object with:</p>
-<div id="2c3953c9" class="cell" data-execution_count="5">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="bu">type</span>(math)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="5">
-<pre><code>module</code></pre>
-</div>
-</div>
-<p>See the members of an object with:</p>
-<div id="54e6a5a7" class="cell" data-execution_count="6">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="bu">dir</span>(math)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>Get help for an object:</p>
-<div id="43c8f98a" class="cell" data-execution_count="7">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="bu">help</span>(math)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>Good libraries have documentation. For example, see the <a href="https://docs.python.org/3/library/math.html">documentation for math</a>.</p>
-</section>
-<section id="using-functions-methods" class="level3" data-number="6.1.3">
-<h3 data-number="6.1.3" class="anchored" data-anchor-id="using-functions-methods"><span class="header-section-number">6.1.3</span> Using Functions / Methods</h3>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Note
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>This course will use the terms ‘function’ and ‘method’ interchangeably.</p>
-</div>
-</div>
-<p>Use a function by <em>invoking</em> it with round brackets:</p>
-<div id="afb286c5" class="cell" data-execution_count="8">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>sqrt(<span class="dv">25</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="8">
-<pre><code>5.0</code></pre>
-</div>
-</div>
-<p>Between the brackets is the function <em>arguments</em>. There’s different ways of specifying arguments. For example, there could be a list of arguments:</p>
-<div id="cac9447a" class="cell" data-execution_count="9">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>math.<span class="bu">pow</span>(<span class="dv">2</span>, <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="9">
-<pre><code>8.0</code></pre>
+<p>If a DataFrame’s index is time-like but not already a <code>DatetimeIndex</code>, you can usually convert it with:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>df.index <span class="op">=</span> pd.to_datetime(df.index)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </section>
-<section id="using-classes" class="level3" data-number="6.1.4">
-<h3 data-number="6.1.4" class="anchored" data-anchor-id="using-classes"><span class="header-section-number">6.1.4</span> Using Classes</h3>
-<p>Some library functionality is provided via a <em>class</em> that needs to be <em>instantiated</em> before using it.</p>
-<p>Below, the <code>Random</code> class is instantiated and assigned to the identifier <code>my_random</code> for reference later on.</p>
-<div id="ea1c5cdf" class="cell" data-execution_count="10">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> random <span class="im">import</span> Random</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>my_random <span class="op">=</span> Random()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>An instantiation of a class is called an <em>instance</em>, and is also an object whose functionality is accessible with the dot notation:</p>
-<div id="4e1ddeb1" class="cell" data-execution_count="11">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>my_random.random() <span class="co"># returns a random number</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="11">
-<pre><code>0.9995012671207436</code></pre>
-</div>
-</div>
-</section>
-</section>
-<section id="variables" class="level2" data-number="6.2">
-<h2 data-number="6.2" class="anchored" data-anchor-id="variables"><span class="header-section-number">6.2</span> Variables</h2>
-<p>Store data/objects in named variables by using the assignment operator <code>=</code>.</p>
-<div id="0dfa2fe7" class="cell" data-execution_count="12">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> <span class="dv">1</span> <span class="op">+</span> <span class="dv">1</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>result</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="12">
-<pre><code>2</code></pre>
-</div>
-</div>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Note
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>A valid name must be used. In general, this means it must start with a letter or underscore.</p>
-</div>
-</div>
-<p>Variable names can be referenced anywhere after their definition.</p>
-<div id="6d9a5ba9" class="cell" data-execution_count="13">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> result <span class="op">*</span> <span class="dv">2</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>result</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="13">
-<pre><code>4</code></pre>
-</div>
-</div>
-</section>
-<section id="collections" class="level2" data-number="6.3">
-<h2 data-number="6.3" class="anchored" data-anchor-id="collections"><span class="header-section-number">6.3</span> Collections</h2>
-<p>A common need is to have a collection of related data. Perhaps the most common type of collection is a <code>list</code>, which is briefly introduced below.</p>
-<p>Create a list with square brackets. Optionally include comma separated elements, otherwise an empty list is created.</p>
-<div id="4dedae98" class="cell" data-execution_count="14">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>my_numbers <span class="op">=</span> [<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>]</span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>my_numbers</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="14">
-<pre><code>[1, 2, 3]</code></pre>
-</div>
-</div>
-<p>Append elements to an existing list.</p>
-<div id="8a8e61d4" class="cell" data-execution_count="15">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>my_numbers.append(<span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>Access a specific element by <em>indexing</em> the list with the zero-based index. Zero refers to the first element, one the second, and so on.</p>
-<div id="72abbb53" class="cell" data-execution_count="16">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>my_numbers[<span class="dv">0</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="16">
-<pre><code>1</code></pre>
-</div>
-</div>
-<p>Access a subset of a list by <em>slicing</em> it. The example below accesses elements with index 0 up to, but excluding, 2.</p>
-<div id="7bb8cfbe" class="cell" data-execution_count="17">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>my_numbers[<span class="dv">0</span>:<span class="dv">2</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="17">
-<pre><code>[1, 2]</code></pre>
-</div>
-</div>
-</section>
-<section id="control-logic" class="level2" data-number="6.4">
-<h2 data-number="6.4" class="anchored" data-anchor-id="control-logic"><span class="header-section-number">6.4</span> Control Logic</h2>
-<p>Control logic allows the flow of a program to be controlled via boolean conditions.</p>
-<section id="conditional-statements" class="level3" data-number="6.4.1">
-<h3 data-number="6.4.1" class="anchored" data-anchor-id="conditional-statements"><span class="header-section-number">6.4.1</span> Conditional statements</h3>
-<p>Use <code>if</code> statements to execute code only if the specified condition is true.</p>
-<div id="0b2caa61" class="cell" data-execution_count="18">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="dv">100</span> <span class="op">&gt;</span> <span class="dv">10</span>:</span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"100 is greater than 10"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>100 is greater than 10</code></pre>
-</div>
-</div>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Note
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>The code that the <code>if</code> statement applies to is called a <em>block</em>, which must be indented.</p>
-</div>
-</div>
-<p>Use <code>else</code> statements after an <code>if</code> statement to execute code only if the condition is untrue.</p>
-<div id="99b3631b" class="cell" data-execution_count="19">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="dv">100</span> <span class="op">&lt;</span> <span class="dv">10</span>:</span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"100 is less than 10"</span>)</span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
-<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"of course, 100 is not less than 10"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>of course, 100 is not less than 10</code></pre>
-</div>
-</div>
-</section>
-<section id="loops" class="level3" data-number="6.4.2">
-<h3 data-number="6.4.2" class="anchored" data-anchor-id="loops"><span class="header-section-number">6.4.2</span> Loops</h3>
-<p>A <code>while</code> loop continuously executes a block of code <em>while</em> the specified condition is true.</p>
-<div id="60e6ecd2" class="cell" data-execution_count="20">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>i <span class="op">=</span> <span class="dv">0</span></span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> i <span class="op">&lt;</span> <span class="dv">3</span>:</span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(i)</span>
-<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>    i <span class="op">=</span> i <span class="op">+</span> <span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>0
-1
-2</code></pre>
-</div>
-</div>
-<p>A <code>for</code> loop executes a block of code per element in a specified collection.</p>
-<div id="66035150" class="cell" data-execution_count="21">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> fruit <span class="kw">in</span> [<span class="st">"Apple"</span>, <span class="st">"Banana"</span>, <span class="st">"Orange"</span>]:</span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(fruit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Apple
-Banana
-Orange</code></pre>
-</div>
-</div>
-</section>
-</section>
-<section id="additional-resources" class="level2" data-number="6.5">
-<h2 data-number="6.5" class="anchored" data-anchor-id="additional-resources"><span class="header-section-number">6.5</span> Additional resources</h2>
-<p>Learning Python should be a continuous endeavor through practice. Luckily there’s an abundance of high quality resources online. Here’s a few examples:</p>
+<section id="why-resample" class="level2" data-number="12.2">
+<h2 data-number="12.2" class="anchored" data-anchor-id="why-resample"><span class="header-section-number">12.2</span> Why Resample?</h2>
+<p>Two common motivations for resampling time series data in MIKE+ modelling are:</p>
 <ul>
-<li><a href="https://docs.python.org/3/tutorial/">Official Python Documentation</a></li>
-<li><a href="https://learnxinyminutes.com/python/">Learn X in Y minutes</a></li>
-<li><a href="https://www.freecodecamp.org/learn/scientific-computing-with-python/">FreeCodeCamp: Scientific Computing with Python</a></li>
+<li><strong>Aligning Series:</strong> comparing time series that were recorded at different frequencies (e.g., aligning 15-minute model results with hourly observations).</li>
+<li><strong>Smoothing Data:</strong> reducing noise to highlight underlying trends by aggregating data over longer periods (e.g., hourly average flow from noisy instantaneous readings).</li>
+</ul>
+</section>
+<section id="how-to-resample-with-pandas" class="level2" data-number="12.3">
+<h2 data-number="12.3" class="anchored" data-anchor-id="how-to-resample-with-pandas"><span class="header-section-number">12.3</span> How to resample (with Pandas)</h2>
+<p>Pandas provides a straightforward <code>resample()</code> method for time series data.</p>
+<p>The general syntax is: <code>df.resample(&lt;rule&gt;).&lt;aggregation_or_fill_method&gt;()</code>.</p>
+<dl>
+<dt><strong>rule</strong></dt>
+<dd>
+A string specifying the target frequency (e.g., ‘D’ for daily).
+</dd>
+<dt><strong>aggregation_or_fill_method</strong></dt>
+<dd>
+A function to apply to the data within each new time bin. For downsampling, this is typically an aggregation like <code>.mean()</code> or <code>.sum()</code>. For upsampling, this is a fill method like <code>.ffill()</code> or <code>.interpolate()</code>.
+</dd>
+</dl>
+<p>A quick example for illustration with the following DataFrame:</p>
+<div id="cd67f0cd" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>df.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="2">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">ST 2: WL (m)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">1993-12-02 00:00:00</td>
+<td>-0.2689</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1993-12-02 00:30:00</td>
+<td>-0.2847</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">1993-12-02 01:00:00</td>
+<td>-0.3020</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1993-12-02 01:30:00</td>
+<td>-0.3223</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">1993-12-02 02:00:00</td>
+<td>-0.3483</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>To resample this half-hourly data to daily mean values:</p>
+<div id="160d193c" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>df_daily_mean <span class="op">=</span> df.resample(<span class="st">'D'</span>).mean()</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>df_daily_mean.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="3">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">ST 2: WL (m)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">1993-12-02</td>
+<td>-0.302979</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1993-12-03</td>
+<td>0.041185</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">1993-12-04</td>
+<td>0.014558</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1993-12-05</td>
+<td>0.265933</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">1993-12-06</td>
+<td>-0.004035</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div id="ee4f392e" class="cell" data-execution_count="4">
+<details class="code-fold">
+<summary>Show Plotting Code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> df.plot()</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>df_daily_mean.plot(ax<span class="op">=</span>ax)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>ax.legend([<span class="st">"Original"</span>, <span class="st">"Downsampled"</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="04_resampling_files/figure-html/cell-5-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="common-frequency-rules" class="level2" data-number="12.4">
+<h2 data-number="12.4" class="anchored" data-anchor-id="common-frequency-rules"><span class="header-section-number">12.4</span> Common Frequency Rules</h2>
+<p>Pandas offers many frequency aliases (rules). Some of the most common include:</p>
+<ul>
+<li><code>"M"</code>: Month-end frequency</li>
+<li><code>"W"</code>: Weekly frequency (defaults to Sunday)</li>
+<li><code>"D"</code>: Calendar day frequency</li>
+<li><code>"H"</code>: Hourly frequency</li>
+<li><code>"15min"</code>: 15-minute frequency</li>
+</ul>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>For a comprehensive list of frequency strings (offset aliases), refer to the <a href="https://pandas.pydata.org/pandas-docs/stable/user_guide/timeseries.html#offset-aliases">Pandas documentation on Time Series / Date functionality</a>.</p>
+</div>
+</div>
+</section>
+<section id="aggregation-methods-downsampling" class="level2" data-number="12.5">
+<h2 data-number="12.5" class="anchored" data-anchor-id="aggregation-methods-downsampling"><span class="header-section-number">12.5</span> Aggregation Methods (Downsampling)</h2>
+<p>When downsampling, you are reducing the number of data points, so you need to decide how to aggregate the values within each new, larger time period. Common aggregation methods include:</p>
+<ul>
+<li><code>.mean()</code>: calculate the average of the values.</li>
+<li><code>.sum()</code>: calculate the sum of the values.</li>
+<li><code>.first()</code>: select the first value in the period.</li>
+<li><code>.last()</code>: select the last value in the period.</li>
+<li><code>.min()</code>: find the minimum value.</li>
+<li><code>.max()</code>: find the maximum value.</li>
 </ul>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -796,13 +708,317 @@ Tip
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Python is used by a wide variety of domains (e.g.&nbsp;web development). Try to use resources specific for engineering/science applications for a more efficient learning path.</p>
+<p>The choice of aggregation method depends on the nature of your data and what you want to represent. For instance, rainfall is often summed, while water levels or flows might be averaged.</p>
+</div>
+</div>
+<p>Resample to daily values by choosing the maximum value on each day.</p>
+<div id="0f0b6e35" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>df_daily_max <span class="op">=</span> df.resample(<span class="st">'D'</span>).<span class="bu">max</span>()</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>df_daily_max.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="5">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">ST 2: WL (m)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">1993-12-02</td>
+<td>0.0799</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1993-12-03</td>
+<td>0.1486</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">1993-12-04</td>
+<td>0.1583</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1993-12-05</td>
+<td>0.5106</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">1993-12-06</td>
+<td>0.1793</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>Or, choose the minimum value on each day.</p>
+<div id="cbf8eca0" class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>df_daily_min <span class="op">=</span> df.resample(<span class="st">'D'</span>).<span class="bu">min</span>()</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>df_daily_min.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="6">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">ST 2: WL (m)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">1993-12-02</td>
+<td>-0.5012</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1993-12-03</td>
+<td>-0.0701</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">1993-12-04</td>
+<td>-0.1112</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1993-12-05</td>
+<td>0.0524</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">1993-12-06</td>
+<td>-0.1114</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>Compare these two aggregation methods with a plot.</p>
+<div id="14069f05" class="cell" data-execution_count="7">
+<details class="code-fold">
+<summary>Show Plotting Code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> df.plot(color<span class="op">=</span><span class="st">'grey'</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>df_daily_mean.plot(ax<span class="op">=</span>ax, linestyle<span class="op">=</span><span class="st">"--"</span>)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>df_daily_min.plot(ax<span class="op">=</span>ax, linestyle<span class="op">=</span><span class="st">"--"</span>)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>df_daily_max.plot(ax<span class="op">=</span>ax, linestyle<span class="op">=</span><span class="st">"--"</span>)</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>ax.legend([<span class="st">"Original"</span>, <span class="st">"Downsample (mean)"</span>, <span class="st">"Downsample (min)"</span>, <span class="st">"Downsample (max)"</span>])</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>ax.grid(which<span class="op">=</span><span class="st">"both"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="04_resampling_files/figure-html/cell-8-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
 </div>
 </div>
 </section>
-<section id="example---using-pythons-interpreter" class="level2" data-number="6.6">
-<h2 data-number="6.6" class="anchored" data-anchor-id="example---using-pythons-interpreter"><span class="header-section-number">6.6</span> Example - Using Python’s Interpreter</h2>
-<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/U2gxRmstAC0?si=u07FDPI3u1gtp6b5" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
+<section id="fill-methods-upsampling" class="level2" data-number="12.6">
+<h2 data-number="12.6" class="anchored" data-anchor-id="fill-methods-upsampling"><span class="header-section-number">12.6</span> Fill Methods (Upsampling)</h2>
+<p>When upsampling, you are increasing the number of data points, which means you’ll have new time steps with no existing data. You need to specify a method to fill these gaps. Common fill methods include:</p>
+<ul>
+<li><code>.ffill()</code> (forward fill): propagate the last valid observation forward.</li>
+<li><code>.bfill()</code> (backward fill): use the next valid observation to fill the gap.</li>
+<li><code>.interpolate()</code>: fill <code>nan</code> values using an interpolation method (e.g., linear, spline).</li>
+</ul>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><code>nan</code> stands for ‘not a number’, which is a common way to represent missing values. See <a href="https://numpy.org/doc/stable/reference/constants.html#numpy.nan">NumPy’s nan</a>.</p>
+</div>
+</div>
+<p>Recall our original DataFrame had half-hourly time steps:</p>
+<div id="88bd9151" class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>df.head(<span class="dv">2</span>) <span class="co"># show only first two rows</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="8">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">ST 2: WL (m)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">1993-12-02 00:00:00</td>
+<td>-0.2689</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1993-12-02 00:30:00</td>
+<td>-0.2847</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>Upsample this to a resolution of one minute, comparing <code>ffill</code> and <code>bfill</code>:</p>
+<div id="de93137f" class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>df.resample(<span class="st">"5min"</span>).ffill().head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="9">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">ST 2: WL (m)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">1993-12-02 00:00:00</td>
+<td>-0.2689</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1993-12-02 00:05:00</td>
+<td>-0.2689</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">1993-12-02 00:10:00</td>
+<td>-0.2689</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1993-12-02 00:15:00</td>
+<td>-0.2689</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">1993-12-02 00:20:00</td>
+<td>-0.2689</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div id="45d11edf" class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>df.resample(<span class="st">"5min"</span>).bfill().head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="10">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">ST 2: WL (m)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">1993-12-02 00:00:00</td>
+<td>-0.2689</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1993-12-02 00:05:00</td>
+<td>-0.2847</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">1993-12-02 00:10:00</td>
+<td>-0.2847</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1993-12-02 00:15:00</td>
+<td>-0.2847</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">1993-12-02 00:20:00</td>
+<td>-0.2847</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>Compare the difference between these two. Find the new time stamps and how their values were chosen.</p>
+<p>Depending on use case, a more appropriate approach may be filling gaps with linear interpolation:</p>
+<div id="972e3b4c" class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>df_interpolated <span class="op">=</span> df.resample(<span class="st">'5min'</span>).interpolate(method<span class="op">=</span><span class="st">'linear'</span>)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>df_interpolated.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="11">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">ST 2: WL (m)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">1993-12-02 00:00:00</td>
+<td>-0.268900</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1993-12-02 00:05:00</td>
+<td>-0.271533</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">1993-12-02 00:10:00</td>
+<td>-0.274167</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1993-12-02 00:15:00</td>
+<td>-0.276800</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">1993-12-02 00:20:00</td>
+<td>-0.279433</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>Compare interpolation to original data for a zoomed-in time period:</p>
+<div id="d46932e3" class="cell" data-execution_count="12">
+<details class="code-fold">
+<summary>Show Plotting Code</summary>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>subset <span class="op">=</span> <span class="bu">slice</span>(<span class="st">"1993-12-02 00:00:00"</span>, <span class="st">"1993-12-02 08:00:00"</span>)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> df.loc[subset].plot(color<span class="op">=</span><span class="st">"grey"</span>, alpha<span class="op">=</span><span class="fl">0.7</span>, linewidth<span class="op">=</span><span class="dv">8</span>)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>df_interpolated.loc[subset].plot(ax<span class="op">=</span>ax, linestyle<span class="op">=</span><span class="st">"--"</span>)</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>ax.legend([<span class="st">"Original"</span>, <span class="st">"Interpolated"</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="04_resampling_files/figure-html/cell-13-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Upsampling should be done with caution, as it involves making assumptions about the data between known points. The choice of fill method can significantly impact the resulting time series.</p>
+</div>
+</div>
 
 
 </section>
@@ -1254,13 +1470,13 @@ Tip
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../module1_foundations/jupyter_notebooks.html" class="pagination-link" aria-label="Jupyter Notebooks">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Jupyter Notebooks</span></span>
+      <a href="../module2_time_series/03_data_selection.html" class="pagination-link" aria-label="Data Selection">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Data Selection</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../module1_foundations/llm_coding.html" class="pagination-link" aria-label="LLMs for Coding">
-        <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">LLMs for Coding</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../module2_time_series/05_visualization.html" class="pagination-link" aria-label="Data Visualization">
+        <span class="nav-page-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Data Visualization</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
