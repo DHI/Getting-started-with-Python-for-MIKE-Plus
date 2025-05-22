@@ -12,3 +12,13 @@ This module launches you into the practical world of time series data, a fundame
 - Convert Pandas DataFrame to dfs0
 
 You'll build on your knowledge of Pandas, and be introduced to a new library: MIKE IO. Let's go!
+
+::: {.callout-tip title="Where can I download sample data to follow along?" collapse="true"}
+All of the sample data used in this module is available for download:
+
+- [discharge.dfs0](data/discharge.dfs0)
+- [rain_events_2021_july.csv](data/rain_events_2021_july.csv)
+- [rain_events_2021_june.csv](data/rain_events_2021_june.csv)
+- [single_water_level.dfs0](data/single_water_level.dfs0)
+- [sirius_idf_rainfall.dfs0](data/sirius_idf_rainfall.dfs0)
+:::
