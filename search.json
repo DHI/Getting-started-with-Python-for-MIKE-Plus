@@ -395,7 +395,7 @@
     "href": "module1_foundations/python_basics.html#using-libraries",
     "title": "6  Python Basics",
     "section": "",
-    "text": "Note\n\n\n\nThe terms package, library, and module are used interchangeably throughout this course.\n\n\n\n6.1.1 Import libraries\nImport libraries using the import statement:\n\nimport math\n\nOr import specific functionality from a library:\n\nfrom math import sqrt\n\n\n\n6.1.2 Objects\nAll imports are objects containing some functionality. Objects have members accessible via the dot notation:\n\nmath.pi\n\n3.141592653589793\n\n\nDot accessors can be chained together, since all members are also objects.\n\nmath.pi.is_integer()\n\nFalse\n\n\nThere are a few common types of objects to be aware of:\n\nModules: reusable code you can import into your program.\nClasses: templates for creating objects with specific properties and behaviors.\nFunctions / Methods: blocks of code that return a result.\nData: any stored information (e.g. numbers, text).\n\nSee the type of an object with:\n\ntype(math)\n\nmodule\n\n\nSee the members of an object with:\n\ndir(math)\n\nGet help for an object:\n\nhelp(math)\n\nGood libraries have documentation. For example, see the documentation for math.\n\n\n6.1.3 Using Functions / Methods\n\n\n\n\n\n\nNote\n\n\n\nThis course will use the terms ‘function’ and ‘method’ interchangeably.\n\n\nUse a function by invoking it with round brackets:\n\nsqrt(25)\n\n5.0\n\n\nBetween the brackets is the function arguments. There’s different ways of specifying arguments. For example, there could be a list of arguments:\n\nmath.pow(2, 3)\n\n8.0\n\n\n\n\n6.1.4 Using Classes\nSome library functionality is provided via a class that needs to be instantiated before using it.\nBelow, the Random class is instantiated and assigned to the identifier my_random for reference later on.\n\nfrom random import Random\nmy_random = Random()\n\nAn instantiation of a class is called an instance, and is also an object whose functionality is accessible with the dot notation:\n\nmy_random.random() # returns a random number\n\n0.7181862310331428",
+    "text": "Note\n\n\n\nThe terms package, library, and module are used interchangeably throughout this course.\n\n\n\n6.1.1 Import libraries\nImport libraries using the import statement:\n\nimport math\n\nOr import specific functionality from a library:\n\nfrom math import sqrt\n\n\n\n6.1.2 Objects\nAll imports are objects containing some functionality. Objects have members accessible via the dot notation:\n\nmath.pi\n\n3.141592653589793\n\n\nDot accessors can be chained together, since all members are also objects.\n\nmath.pi.is_integer()\n\nFalse\n\n\nThere are a few common types of objects to be aware of:\n\nModules: reusable code you can import into your program.\nClasses: templates for creating objects with specific properties and behaviors.\nFunctions / Methods: blocks of code that return a result.\nData: any stored information (e.g. numbers, text).\n\nSee the type of an object with:\n\ntype(math)\n\nmodule\n\n\nSee the members of an object with:\n\ndir(math)\n\nGet help for an object:\n\nhelp(math)\n\nGood libraries have documentation. For example, see the documentation for math.\n\n\n6.1.3 Using Functions / Methods\n\n\n\n\n\n\nNote\n\n\n\nThis course will use the terms ‘function’ and ‘method’ interchangeably.\n\n\nUse a function by invoking it with round brackets:\n\nsqrt(25)\n\n5.0\n\n\nBetween the brackets is the function arguments. There’s different ways of specifying arguments. For example, there could be a list of arguments:\n\nmath.pow(2, 3)\n\n8.0\n\n\n\n\n6.1.4 Using Classes\nSome library functionality is provided via a class that needs to be instantiated before using it.\nBelow, the Random class is instantiated and assigned to the identifier my_random for reference later on.\n\nfrom random import Random\nmy_random = Random()\n\nAn instantiation of a class is called an instance, and is also an object whose functionality is accessible with the dot notation:\n\nmy_random.random() # returns a random number\n\n0.7557336784299375",
     "crumbs": [
       "Module 1 - Foundations",
       "<span class='chapter-number'>6</span>  <span class='chapter-title'>Python Basics</span>"
@@ -1025,6 +1025,314 @@
     "text": "Exercise 1\n\nDownload this dfs0 file into a new project folder.\nCreate an empty Jupyter Notebook and import mikeio.\nRead the dfs0 file into a Dataset object.\nConvert the Dataset object into a Pandas DataFrame object.\nCall the describe() method and review the statistics.\nIn the same notebook, select a subset of the items.\nExport the subset DataFrame to csv with Pandas (hint: to_csv())\n\nExercise 2\n\nDownload this dfs0 file into a new project folder.\nCreate an empty Jupyter Notebook and import mikeio.\nRead the dfs0 file into a Dataset, only including data between “1993-12-02 16:00” and “1993-12-02 20:00”.\nConvert the Dataset object into a Pandas DataFrame object.\nPlot the DataFrame using .plot().\nSelect the first 3 rows of the DataFrame in two different ways: using iloc and using loc.\n\nExercise 3\n\nRepeat steps 1-2 of the previous exercise.\nRead the dfs0 file into a Dataset object, then convert it to a DataFrame.\nResample the half-hourly data to minutely data (i.e. upsample) using time interpolation.\nResample the half-hourly data to hourly data (i.e downsample) using mean aggregation.\nTry 3-4 again, except choose a different fill/aggregation method. Compare the results.\n\nExercise 4\n\nDownload this dfs0 file into a new project folder.\nCreate an empty Jupyter Notebook and import mikeio.\nRead the dfs0 file into a Dataset object, then convert it to a DataFrame.\nCompare the observed and model values using a line plot, a scatter plot, and a histogram.\nSave the plots to a png file.\n\nExercise 5\n\nDownload this csv file into a new project folder.\nRead the csv file into a DataFrame using Pandas.\nCheck for nan values in the rainfall. How many missing values are there?\nFill the missing value(s) using an appropriate imputation method.\n\nExercise 6\n\nContinue from where you left off in the previous exercise.\nCreate an ItemInfo object for the rainfall data.\nCreate a Dataset object from the DataFrame. Ensure its item metadata is correct.\nSave the Dataset object to a dfs0 file.\nOpen the dfs0 file in MIKE+. Does it make sense?",
     "crumbs": [
       "Module 2 - Time Series",
+      "Homework"
+    ]
+  },
+  {
+    "objectID": "module3_network_results/index.html",
+    "href": "module3_network_results/index.html",
+    "title": "Welcome to Module 3!",
+    "section": "",
+    "text": "This module dives into the specifics of handling 1D network model results, a common task for MIKE+ users working with collection systems, water distribution networks, or river models. Our focus is on equipping you to efficiently access, analyze, and prepare 1D simulation outputs using Python:\n\nOpen and read network result files (e.g., .res1d, .res, .resx).\nExplore and navigate the network structure (nodes, reaches, catchments, gridpoints).\nSelect and subset specific data by location, quantity, and time.\nConvert network data to Pandas DataFrames for further analysis and visualization.\nExport selected network data to common formats like dfs0 or csv.\n\nYou’ll be introduced to a powerful new library: MIKE IO 1D. Let’s begin!\n\n\n\n\n\n\nWhere can I download sample data to follow along?\n\n\n\n\n\nAll of the sample data used in this module is available for download:\n\nnetwork.res1d\ncatchments.res1d\nflow_meter_data.csv",
+    "crumbs": [
+      "Module 3 - Network Results",
+      "Welcome to Module 3!"
+    ]
+  },
+  {
+    "objectID": "module3_network_results/01_overview_mikeio1d.html",
+    "href": "module3_network_results/01_overview_mikeio1d.html",
+    "title": "16  MIKE IO 1D",
+    "section": "",
+    "text": "16.1 What is MIKE IO 1D?\nThis section introduces MIKE IO 1D, a specialized Python package for working with 1D network result files from MIKE+ models.\nMIKE IO 1D is an open-source Python package developed by DHI, forming an integral part of DHI’s Python ecosystem. Similar to MIKE IO, it empowers modelers with full flexibility by bridging the gap between various MIKE 1D file formats and Scientific Python’s rich and powerful package ecosystem.",
+    "crumbs": [
+      "Module 3 - Network Results",
+      "<span class='chapter-number'>16</span>  <span class='chapter-title'>MIKE IO 1D</span>"
+    ]
+  },
+  {
+    "objectID": "module3_network_results/01_overview_mikeio1d.html#mike-io-vs-mike-io-1d",
+    "href": "module3_network_results/01_overview_mikeio1d.html#mike-io-vs-mike-io-1d",
+    "title": "16  MIKE IO 1D",
+    "section": "16.2 MIKE IO vs MIKE IO 1D",
+    "text": "16.2 MIKE IO vs MIKE IO 1D\nMIKE IO 1D is specifically tailored for interacting with MIKE 1D modelling files, such as network result files (e.g., .res1d) and cross-section files (e.g., .xns11). MIKE IO, on the other hand, primarily handles n-dimensional data files (e.g., .dfs0, .dfs2, .dfsu) for gridded or mesh-based data. MIKE+ modellers will often require both packages to support their workflows.\n\n\n\n\n\n\nHistory of MIKE IO 1D\n\n\n\n\n\nMIKE IO 1D was historically part of MIKE IO. It was split into a separate library due to fundamental differences in 1D functionality and the then-objectives of MIKE IO.",
+    "crumbs": [
+      "Module 3 - Network Results",
+      "<span class='chapter-number'>16</span>  <span class='chapter-title'>MIKE IO 1D</span>"
+    ]
+  },
+  {
+    "objectID": "module3_network_results/01_overview_mikeio1d.html#usage-in-course",
+    "href": "module3_network_results/01_overview_mikeio1d.html#usage-in-course",
+    "title": "16  MIKE IO 1D",
+    "section": "16.3 Usage in course",
+    "text": "16.3 Usage in course\nMost MIKE+ models (collection system, water distribution, rivers) require handling network result files (e.g. res1d, res, resx). We introduce a subset of MIKE IO 1D’s features that are useful for such workflows.\nWhile MIKE IO 1D includes other features, like cross-sectional data, this module excludes them to keep the content manageable for beginners. We encourage you to explore MIKE IO 1D’s documentation and examples of these features when you’re ready.",
+    "crumbs": [
+      "Module 3 - Network Results",
+      "<span class='chapter-number'>16</span>  <span class='chapter-title'>MIKE IO 1D</span>"
+    ]
+  },
+  {
+    "objectID": "module3_network_results/01_overview_mikeio1d.html#installation",
+    "href": "module3_network_results/01_overview_mikeio1d.html#installation",
+    "title": "16  MIKE IO 1D",
+    "section": "16.4 Installation",
+    "text": "16.4 Installation\nInstall MIKE IO 1D with:\nuv pip install mikeio1d\n\n\n\n\n\n\nTip\n\n\n\nAlways check the official MIKE IO 1D’s documentation for the latest installation instructions.",
+    "crumbs": [
+      "Module 3 - Network Results",
+      "<span class='chapter-number'>16</span>  <span class='chapter-title'>MIKE IO 1D</span>"
+    ]
+  },
+  {
+    "objectID": "module3_network_results/01_overview_mikeio1d.html#network-structure",
+    "href": "module3_network_results/01_overview_mikeio1d.html#network-structure",
+    "title": "16  MIKE IO 1D",
+    "section": "16.5 Network Structure",
+    "text": "16.5 Network Structure\nUnderstanding MIKE 1D’s network structure (e.g., nodes, reaches, catchments, gridpoints) is crucial when you work with MIKE IO 1D. You may already have a solid understanding of these concepts as a MIKE+ modeller. Please refer to MIKE IO 1D’s documentation for a brief refresher on the topic. For detailed information, refer to MIKE+’s documentation.",
+    "crumbs": [
+      "Module 3 - Network Results",
+      "<span class='chapter-number'>16</span>  <span class='chapter-title'>MIKE IO 1D</span>"
+    ]
+  },
+  {
+    "objectID": "module3_network_results/01_overview_mikeio1d.html#quick-glance",
+    "href": "module3_network_results/01_overview_mikeio1d.html#quick-glance",
+    "title": "16  MIKE IO 1D",
+    "section": "16.6 Quick glance",
+    "text": "16.6 Quick glance\nLet’s take a quick look at some core MIKE IO 1D objects and how to access them. When you open a network result file (e.g. res1d, res), MIKE IO 1D returns a Res1D object.\n\nimport mikeio1d\n\nres = mikeio1d.open(\"data/network.res1d\") \n\n\n\n\n\n\n\nAll network result file types (res1d, res, etc.) return a Res1D object on open()\n\n\n\n\n\nMIKE IO 1D opens all result file types with open(), returning a Res1D object regardless of the initial file extension. Refer to MIKE IO 1D’s documentation on this for details.\n\n\n\n\n\n\n\n\n\nTip\n\n\n\nThe Res1D object is the core container for network results, analogous to the Dataset object in MIKE IO.\n\n\nAll results within a Res1D object share a common time axis, much like data items in a .dfs0 file.\n\nres.time_index\n\nMIKE IO 1D provides access to standard result quantities (e.g., Water Level, Discharge).\n\nres.quantities\n\nAdditionally, it includes derived quantities (e.g., Water Depth) that are calculated on-the-fly, similar to MIKE+.\n\nres.derived_quantities\n\n\n\n\n\n\n\nNote\n\n\n\nDerived quantities are not stored in the result file, thus they always require calculation at runtime (even by MIKE+).\n\n\nYou can convert quantities at network locations into Pandas DataFrames.\n\nres.nodes[\"101\"].WaterLevel.to_dataframe()",
+    "crumbs": [
+      "Module 3 - Network Results",
+      "<span class='chapter-number'>16</span>  <span class='chapter-title'>MIKE IO 1D</span>"
+    ]
+  },
+  {
+    "objectID": "module3_network_results/01_overview_mikeio1d.html#key-concepts",
+    "href": "module3_network_results/01_overview_mikeio1d.html#key-concepts",
+    "title": "16  MIKE IO 1D",
+    "section": "16.7 Key Concepts",
+    "text": "16.7 Key Concepts\nUnderstanding these core concepts will help you navigate MIKE IO 1D:\n\nRes1D: This is the primary object representing the contents of a network result file (e.g., .res1d). It acts as the main entry point to all data.\nLocations: Results are associated with specific locations within the network model, such as nodes, reaches, or specific grid points along a reach.\nQuantities: Time series data with a concrete type, like ‘WaterLevel’ or ‘Discharge’, at a specific network location.\n\nImagine a hierarchy: a Res1D object contains various Locations (nodes, reaches, catchments). Each Location can have multiple Quantities available as time series data.\n\n\n\n“MIKE IO 1D Data Structure”\n\n\n\n\n\n\n\n\nNote\n\n\n\nThis is a simplified diagram that excludes some details covered later in the module. For example, the hierarchical group of reaches could be further divided into gridpoints along each reach.",
+    "crumbs": [
+      "Module 3 - Network Results",
+      "<span class='chapter-number'>16</span>  <span class='chapter-title'>MIKE IO 1D</span>"
+    ]
+  },
+  {
+    "objectID": "module3_network_results/01_overview_mikeio1d.html#additional-reading-optional",
+    "href": "module3_network_results/01_overview_mikeio1d.html#additional-reading-optional",
+    "title": "16  MIKE IO 1D",
+    "section": "16.8 Additional reading (optional)",
+    "text": "16.8 Additional reading (optional)\nThe following are useful resources for learning MIKE IO 1D:\n\nMIKE IO 1D’s official documentation\nMIKE IO 1D Example Notebooks\nMIKE IO 1D’s GitHub repository",
+    "crumbs": [
+      "Module 3 - Network Results",
+      "<span class='chapter-number'>16</span>  <span class='chapter-title'>MIKE IO 1D</span>"
+    ]
+  },
+  {
+    "objectID": "module3_network_results/02_reading_network_files.html",
+    "href": "module3_network_results/02_reading_network_files.html",
+    "title": "17  Reading res1d",
+    "section": "",
+    "text": "17.1 Workflow\nThis section guides you through loading network results (e.g., from res1d files) into Pandas DataFrames. The approach is similar to that used with MIKE IO, allowing you to apply your DataFrame knowledge to network results.\nThe general workflow for network results in MIKE IO 1D is as follows:",
+    "crumbs": [
+      "Module 3 - Network Results",
+      "<span class='chapter-number'>17</span>  <span class='chapter-title'>Reading res1d</span>"
+    ]
+  },
+  {
+    "objectID": "module3_network_results/02_reading_network_files.html#workflow",
+    "href": "module3_network_results/02_reading_network_files.html#workflow",
+    "title": "17  Reading res1d",
+    "section": "",
+    "text": "Open the network result file to obtain a Res1D object.\nOptionally, subset this Res1D object to select specific locations, quantities, or time steps.\nConvert the (subsetted) data to a DataFrame.\nPerform some additional analysis via the DataFrame.\n\n\n\n\n\n\n\nTip\n\n\n\nThis workflow is quite similar to the one you learned in Module 2 for handling dfs0 files with MIKE IO. The core idea of opening a file, accessing data, and then often converting to a DataFrame remains consistent.",
+    "crumbs": [
+      "Module 3 - Network Results",
+      "<span class='chapter-number'>17</span>  <span class='chapter-title'>Reading res1d</span>"
+    ]
+  },
+  {
+    "objectID": "module3_network_results/02_reading_network_files.html#res1d",
+    "href": "module3_network_results/02_reading_network_files.html#res1d",
+    "title": "17  Reading res1d",
+    "section": "17.2 Res1D",
+    "text": "17.2 Res1D\nThe Res1D object is central to interacting with 1D network result files. It acts as the primary container for your simulation data, analogous to MIKE IO’s Dataset object for other DHI file types.\nTo start, you open your result file using mikeio1d.open():\n\nimport mikeio1d\n\nres = mikeio1d.open(\"data/network.res1d\")\nres\n\n&lt;mikeio1d.Res1D&gt;\n\n\n\n\n\n\n\n\nNote\n\n\n\nMIKE IO uses read() to create a Dataset, whereas MIKE IO 1D uses open() to create a Res1D object.\n\n\nGet an overview of key meta data with info().\n\nres.info()\n\nStart time: 1994-08-07 16:35:00\nEnd time: 1994-08-07 18:35:00\n# Timesteps: 110\n# Catchments: 0\n# Nodes: 119\n# Reaches: 118\n# Globals: 0\n0 - Water level (m)\n1 - Discharge (m^3/s)\n\n\nNotice the this produces similar information to that of a MIKE IO Dataset:\n\nTotal number of time steps\nTimestamps for first and last time step\nAll available quantities\n\nLike dfs0 files, all results within a Res1D object share a common time axis.",
+    "crumbs": [
+      "Module 3 - Network Results",
+      "<span class='chapter-number'>17</span>  <span class='chapter-title'>Reading res1d</span>"
+    ]
+  },
+  {
+    "objectID": "module3_network_results/02_reading_network_files.html#convert-to-dataframe",
+    "href": "module3_network_results/02_reading_network_files.html#convert-to-dataframe",
+    "title": "17  Reading res1d",
+    "section": "17.3 Convert to DataFrame",
+    "text": "17.3 Convert to DataFrame\nThe read() method is the primary way to convert data from a Res1D object (or its subsets) into a Pandas DataFrame. This is a versatile method that can be called at various levels.\nYou can convert the entire content of the Res1D object into a single DataFrame. Each quantity at a specific location becomes a column in the DataFrame.\n\ndf = res.read()\ndf.head()\n\n\n\n\n\n\n\n\nWaterLevel:1\nWaterLevel:2\nWaterLevel:3\nWaterLevel:4\nWaterLevel:5\nWaterLevel:6\nWaterLevel:7\nWaterLevel:8\nWaterLevel:9\nWaterLevel:10\n...\nDischarge:99l1:22.2508\nWaterLevel:9l1:0\nWaterLevel:9l1:10\nDischarge:9l1:5\nWaterLevel:Weir:119w1:0\nWaterLevel:Weir:119w1:1\nDischarge:Weir:119w1:0.5\nWaterLevel:Pump:115p1:0\nWaterLevel:Pump:115p1:82.4281\nDischarge:Pump:115p1:41.214\n\n\n\n\n1994-08-07 16:35:00.000\n195.052994\n195.821503\n195.8815\n193.604996\n193.615005\n193.625000\n193.675003\n193.764999\n193.774994\n193.804993\n...\n0.000002\n193.774994\n193.764999\n0.000031\n193.550003\n188.479996\n0.0\n193.304993\n195.005005\n0.0\n\n\n1994-08-07 16:36:01.870\n195.052994\n195.821701\n195.8815\n193.604996\n193.615005\n193.625320\n193.675110\n193.765060\n193.775116\n193.804993\n...\n0.000002\n193.775070\n193.765060\n0.000031\n193.550003\n188.479996\n0.0\n193.306061\n195.005005\n0.0\n\n\n1994-08-07 16:37:07.560\n195.052994\n195.821640\n195.8815\n193.604996\n193.615005\n193.625671\n193.675369\n193.765106\n193.775513\n193.804993\n...\n0.000002\n193.775391\n193.765106\n0.000033\n193.550034\n188.479996\n0.0\n193.307144\n195.005005\n0.0\n\n\n1994-08-07 16:38:55.828\n195.052994\n195.821503\n195.8815\n193.604996\n193.615005\n193.626236\n193.675751\n193.765228\n193.776077\n193.804993\n...\n0.000002\n193.775894\n193.765228\n0.000037\n193.550079\n188.479996\n0.0\n193.308884\n195.005005\n0.0\n\n\n1994-08-07 16:39:55.828\n195.052994\n195.821503\n195.8815\n193.604996\n193.615005\n193.626556\n193.675949\n193.765335\n193.776352\n193.804993\n...\n0.000002\n193.776154\n193.765335\n0.000039\n193.550095\n188.479996\n0.0\n193.309860\n195.005005\n0.0\n\n\n\n\n5 rows × 495 columns\n\n\n\nThe DataFrame above includes all reaches and nodes, which results in many columns. To create more manageable DataFrames, call read() on data subsets (e.g., by location or quantity).\nFor example, all results for the location group reaches:\n\ndf_reaches = res.reaches.read()\ndf_reaches.head()\n\n\n\n\n\n\n\n\nWaterLevel:100l1:0\nWaterLevel:100l1:47.6827\nWaterLevel:101l1:0\nWaterLevel:101l1:66.4361\nWaterLevel:102l1:0\nWaterLevel:102l1:10.9366\nWaterLevel:103l1:0\nWaterLevel:103l1:26.0653\nWaterLevel:104l1:0\nWaterLevel:104l1:34.4131\n...\nDischarge:93l1:24.5832\nDischarge:94l1:21.2852\nDischarge:95l1:21.9487\nDischarge:96l1:14.9257\nDischarge:97l1:5.71207\nDischarge:98l1:8.00489\nDischarge:99l1:22.2508\nDischarge:9l1:5\nDischarge:Weir:119w1:0.5\nDischarge:Pump:115p1:41.214\n\n\n\n\n1994-08-07 16:35:00.000\n195.441498\n194.661499\n195.931503\n195.441498\n193.550003\n193.550003\n195.801498\n195.701508\n197.072006\n196.962006\n...\n0.000004\n0.000003\n0.000001\n0.000005\n0.000013\n0.000003\n0.000002\n0.000031\n0.0\n0.0\n\n\n1994-08-07 16:36:01.870\n195.441498\n194.661621\n195.931503\n195.441605\n193.550140\n193.550064\n195.801498\n195.703171\n197.072006\n196.962051\n...\n0.000004\n0.000003\n0.000001\n0.000005\n0.000010\n0.000003\n0.000002\n0.000031\n0.0\n0.0\n\n\n1994-08-07 16:37:07.560\n195.441498\n194.661728\n195.931503\n195.441620\n193.550232\n193.550156\n195.801498\n195.703400\n197.072006\n196.962082\n...\n0.000004\n0.000003\n0.000001\n0.000005\n0.000010\n0.000003\n0.000002\n0.000033\n0.0\n0.0\n\n\n1994-08-07 16:38:55.828\n195.441498\n194.661804\n195.931503\n195.441605\n193.550369\n193.550308\n195.801498\n195.703690\n197.072006\n196.962112\n...\n0.000004\n0.000003\n0.000001\n0.000005\n0.000009\n0.000003\n0.000002\n0.000037\n0.0\n0.0\n\n\n1994-08-07 16:39:55.828\n195.441498\n194.661972\n195.931503\n195.441605\n193.550430\n193.550369\n195.801498\n195.703827\n197.072006\n196.962128\n...\n0.000004\n0.000003\n0.000001\n0.000005\n0.000009\n0.000003\n0.000002\n0.000039\n0.0\n0.0\n\n\n\n\n5 rows × 376 columns\n\n\n\nOr results for a reach named 100l1:\n\ndf_reach_100l1 = res.reaches[\"100l1\"].read()\ndf_reach_100l1.head()\n\n\n\n\n\n\n\n\nWaterLevel:100l1:0\nWaterLevel:100l1:47.6827\nDischarge:100l1:23.8414\n\n\n\n\n1994-08-07 16:35:00.000\n195.441498\n194.661499\n0.000006\n\n\n1994-08-07 16:36:01.870\n195.441498\n194.661621\n0.000006\n\n\n1994-08-07 16:37:07.560\n195.441498\n194.661728\n0.000006\n\n\n1994-08-07 16:38:55.828\n195.441498\n194.661804\n0.000006\n\n\n1994-08-07 16:39:55.828\n195.441498\n194.661972\n0.000006\n\n\n\n\n\n\n\nOr just the Discharge quantity of the previous reach.\n\ndf_reach_100l1_q = res.reaches[\"100l1\"].Discharge.read()\ndf_reach_100l1_q.head()\n\n\n\n\n\n\n\n\nDischarge:100l1:23.8414\n\n\n\n\n1994-08-07 16:35:00.000\n0.000006\n\n\n1994-08-07 16:36:01.870\n0.000006\n\n\n1994-08-07 16:37:07.560\n0.000006\n\n\n1994-08-07 16:38:55.828\n0.000006\n\n\n1994-08-07 16:39:55.828\n0.000006\n\n\n\n\n\n\n\nIn the coming sections, we will cover how to explore the network structure of Res1D and select data. For now, just know that it’s possible to call read() from various sub-objects of Res1D to obtain a DataFrame.\n\n\n\n\n\n\nTip\n\n\n\nOnce you have your network data in a Pandas DataFrame using .read(), you can apply all the powerful analysis, manipulation, and visualization techniques you learned in Module 1 and Module 2.",
+    "crumbs": [
+      "Module 3 - Network Results",
+      "<span class='chapter-number'>17</span>  <span class='chapter-title'>Reading res1d</span>"
+    ]
+  },
+  {
+    "objectID": "module3_network_results/02_reading_network_files.html#plotting-and-other-formats",
+    "href": "module3_network_results/02_reading_network_files.html#plotting-and-other-formats",
+    "title": "17  Reading res1d",
+    "section": "17.4 Plotting and other formats",
+    "text": "17.4 Plotting and other formats\nFor convenience, a plot() method is available anywhere that read() can be called. This allows for quick visualization of the data.\n\nres.reaches[\"100l1\"].Discharge.plot()\n\n\n\n\n\n\n\n\nSimilarly, wherever read() is available, you can export data to other common formats. For example:\n\nres.reaches[\"100l1\"].Discharge.to_dfs0(\"discharge_of_interest.dfs0\")\n\n\nres.reaches[\"100l1\"].Discharge.to_csv(\"discharge_of_interest.csv\")",
+    "crumbs": [
+      "Module 3 - Network Results",
+      "<span class='chapter-number'>17</span>  <span class='chapter-title'>Reading res1d</span>"
+    ]
+  },
+  {
+    "objectID": "module3_network_results/02_reading_network_files.html#practical-example",
+    "href": "module3_network_results/02_reading_network_files.html#practical-example",
+    "title": "17  Reading res1d",
+    "section": "17.5 Practical Example",
+    "text": "17.5 Practical Example\nLet’s combine some of these concepts to accomplish the following objectives:\n\nGet descriptive statistics of all node water levels\nGet descriptive statistics of all reach discharges\n\nFirst, open the result file.\n\nimport mikeio1d\n\nres = mikeio1d.open(\"data/network.res1d\")\n\nThen, get our node water levels and reach discharges into DataFrames.\n\ndf_nodes_wl = res.nodes.WaterLevel.read()\ndf_reaches_q = res.reaches.Discharge.read()\n\nUse describe() on each DataFrame, just like from previous modules.\n\nwl_stats = df_nodes_wl.describe().T\nwl_stats.head()\n\n\n\n\n\n\n\n\ncount\nmean\nstd\nmin\n25%\n50%\n75%\nmax\n\n\n\n\nWaterLevel:1\n110.0\n195.198898\n0.159523\n195.052994\n195.090881\n195.131989\n195.258179\n195.669006\n\n\nWaterLevel:2\n110.0\n195.822342\n0.000657\n195.821503\n195.821503\n195.822784\n195.822937\n195.822968\n\n\nWaterLevel:3\n110.0\n195.881470\n0.000000\n195.881500\n195.881500\n195.881500\n195.881500\n195.881500\n\n\nWaterLevel:4\n110.0\n193.947418\n0.348278\n193.604996\n193.614719\n193.891739\n194.173325\n194.661331\n\n\nWaterLevel:5\n110.0\n194.010544\n0.379473\n193.615005\n193.659035\n193.940742\n194.260757\n194.793060\n\n\n\n\n\n\n\n\nq_stats = df_reaches_q.describe().T\nq_stats.head()\n\n\n\n\n\n\n\n\ncount\nmean\nstd\nmin\n25%\n50%\n75%\nmax\n\n\n\n\nDischarge:100l1:23.8414\n110.0\n0.014078\n0.026875\n0.000006\n0.000636\n0.001032\n0.005988\n0.099751\n\n\nDischarge:101l1:33.218\n110.0\n-0.000034\n0.005649\n-0.022655\n0.000004\n0.000005\n0.000022\n0.019202\n\n\nDischarge:102l1:5.46832\n110.0\n0.069058\n0.100331\n-0.011316\n0.003062\n0.017987\n0.096062\n0.326383\n\n\nDischarge:103l1:13.0327\n110.0\n-0.000011\n0.001084\n-0.006748\n0.000002\n0.000017\n0.000337\n0.001056\n\n\nDischarge:104l1:17.2065\n110.0\n0.000005\n0.000002\n0.000003\n0.000005\n0.000005\n0.000005\n0.000025\n\n\n\n\n\n\n\nFrom here we might want to use existing Pandas functionality to export our data for reporting purposes:\n\nwl_stats.to_excel(\"node_water_levels.xlsx\")\nq_stats.to_excel(\"reaches_discharges.xlsx\")\n\n\n\n\n\n\n\nTip\n\n\n\nYou need to install a Python package like openpyxl to use Pandas’ to_excel() method.",
+    "crumbs": [
+      "Module 3 - Network Results",
+      "<span class='chapter-number'>17</span>  <span class='chapter-title'>Reading res1d</span>"
+    ]
+  },
+  {
+    "objectID": "module3_network_results/03_exploring_network_and_results.html",
+    "href": "module3_network_results/03_exploring_network_and_results.html",
+    "title": "18  Exploring Networks",
+    "section": "",
+    "text": "18.1 Nodes\nThis section guides you through navigating MIKE IO 1D’s Res1D object. You’ll learn how to access nodes, catchments, reaches, and individual gridpoints, along with their associated data and properties. This exploration is key to understanding the structure and results of your MIKE+ 1D models.\nNode data is accessible via the Res1D object, typically named res in our examples. The res.nodes attribute provides access to all nodes in your result file.\nres.nodes\n\n&lt;ResultNodes&gt; (119)\n    \n    Quantities (1)Water level (m)Derived Quantities (3)NodeFloodingNodeWaterDepthNodeWaterLevelAboveCritical\nThe nodes object behaves like a Python dictionary, where node IDs are the keys and specific node objects are the values. You can access a specific node by its ID.\nres.nodes[\"1\"]\n\n&lt;Manhole: 1&gt;\n    \n    Attributes (8)id: 1type: Manholexcoord: -687934.6000976562ycoord: -1056500.69921875ground_level: 197.07000732421875bottom_level: 195.0500030517578critical_level: infdiameter: 1.0Quantities (1)Water level (m)Derived Quantities (3)NodeFloodingNodeWaterDepthNodeWaterLevelAboveCritical\nEach node object contains both dynamic quantities (time series results like water level) and static properties (like invert level).\nTo access a dynamic quantity:\nres.nodes[\"1\"].WaterLevel\n\n&lt;Quantity: Water level (m)&gt;\nAs shown in the last section, dynamic quantities can be converted to a DataFrame with read(), or plotted with plot():\nres.nodes[\"1\"].WaterLevel.plot()\nTo access a static property:\nres.nodes[\"1\"].bottom_level\n\n195.0500030517578\nYou can iterate through all nodes, similar to a Python dictionary. For example:\nfor node_id, node in res.nodes.items():\n    if node.type == \"Outlet\":\n        display(node)\n\n&lt;Outlet: 120&gt;\n    \n    Attributes (8)id: 120type: Outletxcoord: -687917.30078125ycoord: -1056709.4993896484ground_level: 194.0bottom_level: 193.4499969482422critical_level: Nonediameter: NoneQuantities (1)Water level (m)Derived Quantities (3)NodeFloodingNodeWaterDepthNodeWaterLevelAboveCritical\n\n\n&lt;Outlet: Weir Outlet:119w1&gt;\n    \n    Attributes (8)id: Weir Outlet:119w1type: Outletxcoord: -687941.8002929688ycoord: -1056652.400024414ground_level: 197.1699981689453bottom_level: 183.47999572753906critical_level: Nonediameter: NoneQuantities (1)Water level (m)Derived Quantities (3)NodeFloodingNodeWaterDepthNodeWaterLevelAboveCritical",
+    "crumbs": [
+      "Module 3 - Network Results",
+      "<span class='chapter-number'>18</span>  <span class='chapter-title'>Exploring Networks</span>"
+    ]
+  },
+  {
+    "objectID": "module3_network_results/03_exploring_network_and_results.html#nodes",
+    "href": "module3_network_results/03_exploring_network_and_results.html#nodes",
+    "title": "18  Exploring Networks",
+    "section": "",
+    "text": "Tip\n\n\n\nNotice that displaying res.nodes shows relevant metadata. This is true for all location objects.",
+    "crumbs": [
+      "Module 3 - Network Results",
+      "<span class='chapter-number'>18</span>  <span class='chapter-title'>Exploring Networks</span>"
+    ]
+  },
+  {
+    "objectID": "module3_network_results/03_exploring_network_and_results.html#catchments",
+    "href": "module3_network_results/03_exploring_network_and_results.html#catchments",
+    "title": "18  Exploring Networks",
+    "section": "18.2 Catchments",
+    "text": "18.2 Catchments\nYou handle catchments similarly to nodes, but they are typically in a separate result file, often from rainfall-runoff simulations.\n\nres_rr.catchments\n\n&lt;ResultCatchments&gt; (31)\n    \n    Quantities (5)Total Runoff (m^3/s)Actual Rainfall (m/s)Zink, Load, RR (kg/s)Zink, Mass, Accumulated, RR (kg)Zink, RR (mg/l)Derived Quantities (0)\n\n\n\n\n\n\n\n\nWhy are separate result files used?\n\n\n\n\n\nRecall that all quantities in a network result file share the same time axis. Hydraulic simulations require finer time steps than hydrologic simulations, and thus a different time index. This is the main reason hydrologic and hydraulic results are stored in separate files.\n\n\n\nThe catchments object also acts like a dictionary, with catchment IDs as keys.\n\nres_rr.catchments[\"100_16_16\"]\n\n&lt;Catchment: 100_16_16&gt;\n    \n    Attributes (3)id: 100_16_16area: 22800.0type: Kinematic WaveQuantities (5)Total Runoff (m^3/s)Actual Rainfall (m/s)Zink, Load, RR (kg/s)Zink, Mass, Accumulated, RR (kg)Zink, RR (mg/l)Derived Quantities (0)\n\n\nCatchment objects also have dynamic quantities and static properties. For instance, TotalRunOff is a dynamic quantity, and area is a static property.\n\nres_rr.catchments[\"100_16_16\"].TotalRunOff.plot()\n\n\n\n\n\n\n\n\n\nres_rr.catchments[\"100_16_16\"].area\n\n22800.0\n\n\nJust like nodes, you can iterate through catchments like a Python dictionary. For example:\n\nfor catchment_id, catchment in res_rr.catchments.items():\n    if \"28\" in catchment_id:\n        display(catchment)\n\n&lt;Catchment: 28_6_6&gt;\n    \n    Attributes (3)id: 28_6_6area: 3500.0type: Kinematic WaveQuantities (5)Total Runoff (m^3/s)Actual Rainfall (m/s)Zink, Load, RR (kg/s)Zink, Mass, Accumulated, RR (kg)Zink, RR (mg/l)Derived Quantities (0)\n\n\n&lt;Catchment: 90_28_28&gt;\n    \n    Attributes (3)id: 90_28_28area: 48000.0type: Kinematic WaveQuantities (5)Total Runoff (m^3/s)Actual Rainfall (m/s)Zink, Load, RR (kg/s)Zink, Mass, Accumulated, RR (kg)Zink, RR (mg/l)Derived Quantities (0)",
+    "crumbs": [
+      "Module 3 - Network Results",
+      "<span class='chapter-number'>18</span>  <span class='chapter-title'>Exploring Networks</span>"
+    ]
+  },
+  {
+    "objectID": "module3_network_results/03_exploring_network_and_results.html#reaches",
+    "href": "module3_network_results/03_exploring_network_and_results.html#reaches",
+    "title": "18  Exploring Networks",
+    "section": "18.3 Reaches",
+    "text": "18.3 Reaches\nReaches are accessed similarly to nodes and catchments. A key difference is that individual reach objects also contain gridpoints.\n\nres.reaches\n\n&lt;ResultReaches&gt; (118)\n    \n    Quantities (2)Water level (m)Discharge (m^3/s)Derived Quantities (6)ReachAbsoluteDischargeReachFillingReachFloodingReachQQManningReachWaterDepthReachWaterLevelAboveCritical\n\n\nThe reaches object is dictionary-like, with reach names as keys and specific reach objects as values.\n\nres.reaches[\"101l1\"]\n\n&lt;Reach: 101l1&gt;\n    \n    Attributes (9)name: 101l1length: 66.4360966980845start_chainage: 0.0end_chainage: 66.4360966980845n_gridpoints: 3start_node: 101end_node: 100height: 0.30000001192092896full_flow_discharge: 0.0809713208695954Quantities (2)Water level (m)Discharge (m^3/s)Derived Quantities (6)ReachAbsoluteDischargeReachFillingReachFloodingReachQQManningReachWaterDepthReachWaterLevelAboveCritical\n\n\nEach reach object contains dynamic quantities and static properties.\n\nres.reaches[\"101l1\"].WaterLevel.plot()\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nTip\n\n\n\nNotice that two water levels are plotted above, representing the start and end H-points of the reach.\n\n\n\nres.reaches[\"101l1\"].n_gridpoints\n\n3\n\n\nJust like before, you can iterate through reaches like a Python dictionary. For example:\n\n# This may print multiple lines\nfor reach_name, reach in res.reaches.items():\n    if reach.start_node == \"1\":\n        display(reach)\n\n&lt;Reach: 1l1&gt;\n    \n    Attributes (9)name: 1l1length: 12.0784172521484start_chainage: 0.0end_chainage: 12.0784172521484n_gridpoints: 3start_node: 1end_node: 16height: 0.6000000238418579full_flow_discharge: 0.7808684423624622Quantities (2)Water level (m)Discharge (m^3/s)Derived Quantities (6)ReachAbsoluteDischargeReachFillingReachFloodingReachQQManningReachWaterDepthReachWaterLevelAboveCritical",
+    "crumbs": [
+      "Module 3 - Network Results",
+      "<span class='chapter-number'>18</span>  <span class='chapter-title'>Exploring Networks</span>"
+    ]
+  },
+  {
+    "objectID": "module3_network_results/03_exploring_network_and_results.html#gridpoints",
+    "href": "module3_network_results/03_exploring_network_and_results.html#gridpoints",
+    "title": "18  Exploring Networks",
+    "section": "18.4 Gridpoints",
+    "text": "18.4 Gridpoints\nSpecific reach objects are also both list- and dictionary-like, mapping to their constituent gridpoint objects. Gridpoints are the locations along a reach where results are calculated.\n\n\n\n\n\n\nNote\n\n\n\nUnlike Python dictionaries, reaches also support sequential indexing (e.g., [0] for the first gridpoint) for convenient gridpoint access.\n\n\nAccess the first gridpoint of reach “101l1”:\n\nres.reaches[\"101l1\"][0]\n\n&lt;ResultGridPoint&gt;\n    \n    Attributes (5)reach_name: 101l1chainage: 0.0xcoord: -687859.5004882812ycoord: -1056308.700012207bottom_level: 195.92999267578125Quantities (1)Water level (m)Derived Quantities (0)\n\n\nAccess the last gridpoint of reach “101l1”:\n\nres.reaches[\"101l1\"][-1]\n\n&lt;ResultGridPoint&gt;\n    \n    Attributes (5)reach_name: 101l1chainage: 66.4360966980845xcoord: -687887.6008911133ycoord: -1056368.9006958008bottom_level: 195.44000244140625Quantities (1)Water level (m)Derived Quantities (0)\n\n\nYou can also access gridpoints by their chainage value. Chainage can be a float or a string.\n\nres.reaches[\"100l1\"]['23.841']\n\n&lt;ResultGridPoint&gt;\n    \n    Attributes (5)reach_name: 100l1chainage: 23.8413574216414xcoord: -687897.8000488281ycoord: -1056390.4503479004bottom_level: 195.0500030517578Quantities (1)Discharge (m^3/s)Derived Quantities (0)\n\n\nNotice that each gridpoint has its own dynamic quantities and static properties.\nAccess WaterLevel at the first gridpoint:\n\nres.reaches[\"100l1\"][0].WaterLevel.plot()\n\n\n\n\n\n\n\n\nAccess Discharge at the second gridpoint:\n\nres.reaches[\"100l1\"][1].Discharge.plot()\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNote\n\n\n\nGridpoint quantities can vary along a reach. For example, WaterLevel is typically available at H-points (calculation points), while Discharge is available at Q-points (flow points, often at gridpoint centers or structures). Refer to the MIKE+ documentation for details on H-points and Q-points.\n\n\nAccess the chainage static property of a gridpoint:\n\nres.reaches[\"100l1\"][-1].chainage\n\n47.6827148432828\n\n\nJust like before, you can iterate through reaches like a Python dictionary. The keys are the gridpoint chainage along the reach. For example:\n\nfor chainage, gridpoint in res.reaches[\"100l1\"].items():\n    print(f\"Bottom level at chainage {chainage} is {gridpoint.bottom_level}\")\n\nBottom level at chainage 0.000 is 195.44000244140625\nBottom level at chainage 23.841 is 195.0500030517578\nBottom level at chainage 47.683 is 194.66000366210938",
+    "crumbs": [
+      "Module 3 - Network Results",
+      "<span class='chapter-number'>18</span>  <span class='chapter-title'>Exploring Networks</span>"
+    ]
+  },
+  {
+    "objectID": "module3_network_results/03_exploring_network_and_results.html#example---dynamic-autocompletion",
+    "href": "module3_network_results/03_exploring_network_and_results.html#example---dynamic-autocompletion",
+    "title": "18  Exploring Networks",
+    "section": "18.5 Example - Dynamic Autocompletion",
+    "text": "18.5 Example - Dynamic Autocompletion\nDynamic autocompletion in environments like Jupyter or VS Code significantly aids in exploring these objects. Watch this video to see it in action.",
+    "crumbs": [
+      "Module 3 - Network Results",
+      "<span class='chapter-number'>18</span>  <span class='chapter-title'>Exploring Networks</span>"
+    ]
+  },
+  {
+    "objectID": "module3_network_results/04_selecting_network_data.html",
+    "href": "module3_network_results/04_selecting_network_data.html",
+    "title": "19  Data Selection",
+    "section": "",
+    "text": "19.1 Alternative Methods\nThis section covers how to select specific subsets of network result data.\nThere are various ways of selecting subsets of network result data. This section covers three main approaches:",
+    "crumbs": [
+      "Module 3 - Network Results",
+      "<span class='chapter-number'>19</span>  <span class='chapter-title'>Data Selection</span>"
+    ]
+  },
+  {
+    "objectID": "module3_network_results/04_selecting_network_data.html#alternative-methods",
+    "href": "module3_network_results/04_selecting_network_data.html#alternative-methods",
+    "title": "19  Data Selection",
+    "section": "",
+    "text": "Using Pandas DataFrame.\nUsing the Res1D object to subset locations and quantities.\nUsing mikeio1d.open().\n\n\n\n\n\n\n\nMemory considerations\n\n\n\n\n\nSimilar to MIKE IO, selecting data via open() is generally most performant since it avoids loading the entire file into memory.",
+    "crumbs": [
+      "Module 3 - Network Results",
+      "<span class='chapter-number'>19</span>  <span class='chapter-title'>Data Selection</span>"
+    ]
+  },
+  {
+    "objectID": "module3_network_results/04_selecting_network_data.html#selecting-locations",
+    "href": "module3_network_results/04_selecting_network_data.html#selecting-locations",
+    "title": "19  Data Selection",
+    "section": "19.2 Selecting Locations",
+    "text": "19.2 Selecting Locations\nWhen dealing with network results, you often want to focus on specific parts of your model, like certain nodes or reaches.\nSelecting data purely with DataFrames can be difficult due to the large number of columns and their header format. For example, this DataFrame has 495 columns:\n\ndf = res.read()\ndf.head()\n\n\n\n\n\n\n\n\nWaterLevel:1\nWaterLevel:2\nWaterLevel:3\nWaterLevel:4\nWaterLevel:5\nWaterLevel:6\nWaterLevel:7\nWaterLevel:8\nWaterLevel:9\nWaterLevel:10\n...\nDischarge:99l1:22.2508\nWaterLevel:9l1:0\nWaterLevel:9l1:10\nDischarge:9l1:5\nWaterLevel:Weir:119w1:0\nWaterLevel:Weir:119w1:1\nDischarge:Weir:119w1:0.5\nWaterLevel:Pump:115p1:0\nWaterLevel:Pump:115p1:82.4281\nDischarge:Pump:115p1:41.214\n\n\n\n\n1994-08-07 16:35:00.000\n195.052994\n195.821503\n195.8815\n193.604996\n193.615005\n193.625000\n193.675003\n193.764999\n193.774994\n193.804993\n...\n0.000002\n193.774994\n193.764999\n0.000031\n193.550003\n188.479996\n0.0\n193.304993\n195.005005\n0.0\n\n\n1994-08-07 16:36:01.870\n195.052994\n195.821701\n195.8815\n193.604996\n193.615005\n193.625320\n193.675110\n193.765060\n193.775116\n193.804993\n...\n0.000002\n193.775070\n193.765060\n0.000031\n193.550003\n188.479996\n0.0\n193.306061\n195.005005\n0.0\n\n\n1994-08-07 16:37:07.560\n195.052994\n195.821640\n195.8815\n193.604996\n193.615005\n193.625671\n193.675369\n193.765106\n193.775513\n193.804993\n...\n0.000002\n193.775391\n193.765106\n0.000033\n193.550034\n188.479996\n0.0\n193.307144\n195.005005\n0.0\n\n\n1994-08-07 16:38:55.828\n195.052994\n195.821503\n195.8815\n193.604996\n193.615005\n193.626236\n193.675751\n193.765228\n193.776077\n193.804993\n...\n0.000002\n193.775894\n193.765228\n0.000037\n193.550079\n188.479996\n0.0\n193.308884\n195.005005\n0.0\n\n\n1994-08-07 16:39:55.828\n195.052994\n195.821503\n195.8815\n193.604996\n193.615005\n193.626556\n193.675949\n193.765335\n193.776352\n193.804993\n...\n0.000002\n193.776154\n193.765335\n0.000039\n193.550095\n188.479996\n0.0\n193.309860\n195.005005\n0.0\n\n\n\n\n5 rows × 495 columns\n\n\n\nTo select the ‘Water Level’ quantity for node ‘1’ from the DataFrame, you need to use a column name formed by concatenating the quantity and ID with a ‘:’ separator:\n\ndf[[\"WaterLevel:1\"]]\n\n\n\n\n\n\n\n\nWaterLevel:1\n\n\n\n\n1994-08-07 16:35:00.000\n195.052994\n\n\n1994-08-07 16:36:01.870\n195.052994\n\n\n1994-08-07 16:37:07.560\n195.052994\n\n\n1994-08-07 16:38:55.828\n195.052994\n\n\n1994-08-07 16:39:55.828\n195.052994\n\n\n...\n...\n\n\n1994-08-07 18:30:07.967\n195.119919\n\n\n1994-08-07 18:31:07.967\n195.118607\n\n\n1994-08-07 18:32:07.967\n195.117310\n\n\n1994-08-07 18:33:07.967\n195.115753\n\n\n1994-08-07 18:35:00.000\n195.112534\n\n\n\n\n110 rows × 1 columns\n\n\n\nSimilarly, to select the “Water Level” of reach “100l1” at chainage 47.6827:\n\ndf[[\"WaterLevel:100l1:47.6827\"]]\n\n\n\n\n\n\n\n\nWaterLevel:100l1:47.6827\n\n\n\n\n1994-08-07 16:35:00.000\n194.661499\n\n\n1994-08-07 16:36:01.870\n194.661621\n\n\n1994-08-07 16:37:07.560\n194.661728\n\n\n1994-08-07 16:38:55.828\n194.661804\n\n\n1994-08-07 16:39:55.828\n194.661972\n\n\n...\n...\n\n\n1994-08-07 18:30:07.967\n194.689072\n\n\n1994-08-07 18:31:07.967\n194.688934\n\n\n1994-08-07 18:32:07.967\n194.688812\n\n\n1994-08-07 18:33:07.967\n194.688354\n\n\n1994-08-07 18:35:00.000\n194.686172\n\n\n\n\n110 rows × 1 columns\n\n\n\nThis format is not very user-friendly, especially for selecting all quantities of a specific reach. The fluent-like API, shown earlier, offers a more intuitive way to do this.\n\nres.reaches[\"100l1\"].read()\n\n\n\n\n\n\n\n\nWaterLevel:100l1:0\nWaterLevel:100l1:47.6827\nDischarge:100l1:23.8414\n\n\n\n\n1994-08-07 16:35:00.000\n195.441498\n194.661499\n0.000006\n\n\n1994-08-07 16:36:01.870\n195.441498\n194.661621\n0.000006\n\n\n1994-08-07 16:37:07.560\n195.441498\n194.661728\n0.000006\n\n\n1994-08-07 16:38:55.828\n195.441498\n194.661804\n0.000006\n\n\n1994-08-07 16:39:55.828\n195.441498\n194.661972\n0.000006\n\n\n...\n...\n...\n...\n\n\n1994-08-07 18:30:07.967\n195.455109\n194.689072\n0.000588\n\n\n1994-08-07 18:31:07.967\n195.455063\n194.688934\n0.000583\n\n\n1994-08-07 18:32:07.967\n195.455002\n194.688812\n0.000579\n\n\n1994-08-07 18:33:07.967\n195.453049\n194.688354\n0.000526\n\n\n1994-08-07 18:35:00.000\n195.450409\n194.686172\n0.000343\n\n\n\n\n110 rows × 3 columns\n\n\n\nA more computationally efficient approach is to select locations when you open the file. You can specify lists of IDs for nodes, reaches, or catchments. For example:\n\nres = mikeio1d.open(\"data/network.res1d\", reaches=[\"100l1\"])\ndf = res.read()\ndf.head()\n\n\n\n\n\n\n\n\nWaterLevel:100l1:0\nWaterLevel:100l1:47.6827\nDischarge:100l1:23.8414\n\n\n\n\n1994-08-07 16:35:00.000\n195.441498\n194.661499\n0.000006\n\n\n1994-08-07 16:36:01.870\n195.441498\n194.661621\n0.000006\n\n\n1994-08-07 16:37:07.560\n195.441498\n194.661728\n0.000006\n\n\n1994-08-07 16:38:55.828\n195.441498\n194.661804\n0.000006\n\n\n1994-08-07 16:39:55.828\n195.441498\n194.661972\n0.000006\n\n\n\n\n\n\n\nSimilarly for nodes:\n\nres = mikeio1d.open(\"data/network.res1d\", nodes=[\"1\", \"2\"])\ndf = res.read()\ndf.head()\n\n\n\n\n\n\n\n\nWaterLevel:1\nWaterLevel:2\n\n\n\n\n1994-08-07 16:35:00.000\n195.052994\n195.821503\n\n\n1994-08-07 16:36:01.870\n195.052994\n195.821701\n\n\n1994-08-07 16:37:07.560\n195.052994\n195.821640\n\n\n1994-08-07 16:38:55.828\n195.052994\n195.821503\n\n\n1994-08-07 16:39:55.828\n195.052994\n195.821503\n\n\n\n\n\n\n\nAnd for catchments:\n\nres = mikeio1d.open(\"data/catchments.res1d\", catchments=[\"100_16_16\"])\ndf = res.read()\ndf.head()\n\n\n\n\n\n\n\n\nTotalRunOff:100_16_16\nActualRainfall:100_16_16\nZinkLoadRR:100_16_16\nZinkMassAccumulatedRR:100_16_16\nZinkRR:100_16_16\n\n\n\n\n1994-08-07 16:35:00\n0.0\n3.333333e-07\n0.0\n0.0\n100.0\n\n\n1994-08-07 16:36:00\n0.0\n3.333333e-07\n0.0\n0.0\n100.0\n\n\n1994-08-07 16:37:00\n0.0\n3.333333e-07\n0.0\n0.0\n100.0\n\n\n1994-08-07 16:38:00\n0.0\n3.333333e-07\n0.0\n0.0\n100.0\n\n\n1994-08-07 16:39:00\n0.0\n3.333333e-07\n0.0\n0.0\n100.0",
+    "crumbs": [
+      "Module 3 - Network Results",
+      "<span class='chapter-number'>19</span>  <span class='chapter-title'>Data Selection</span>"
+    ]
+  },
+  {
+    "objectID": "module3_network_results/04_selecting_network_data.html#selecting-quantities",
+    "href": "module3_network_results/04_selecting_network_data.html#selecting-quantities",
+    "title": "19  Data Selection",
+    "section": "19.3 Selecting Quantities",
+    "text": "19.3 Selecting Quantities\nJust as with locations, you can select specific physical quantities (like Water Level or Discharge). Trying to pick these out from a full DataFrame is one approach:\n\ndf = res.read()\ndischarge_columns = [column for column in df.columns if \"Discharge\" in column]\ndf[discharge_columns].head()\n\n\n\n\n\n\n\n\nDischarge:100l1:23.8414\nDischarge:101l1:33.218\nDischarge:102l1:5.46832\nDischarge:103l1:13.0327\nDischarge:104l1:17.2065\nDischarge:105l1:13.4997\nDischarge:106l1:11.4056\nDischarge:107l1:8.46476\nDischarge:108l1:15.3589\nDischarge:109l1:13.546\n...\nDischarge:93l1:24.5832\nDischarge:94l1:21.2852\nDischarge:95l1:21.9487\nDischarge:96l1:14.9257\nDischarge:97l1:5.71207\nDischarge:98l1:8.00489\nDischarge:99l1:22.2508\nDischarge:9l1:5\nDischarge:Weir:119w1:0.5\nDischarge:Pump:115p1:41.214\n\n\n\n\n1994-08-07 16:35:00.000\n0.000006\n0.000004\n0.000000\n0.000003\n0.000005\n0.000003\n0.000005\n0.000005\n0.000003\n0.000002\n...\n0.000004\n0.000003\n0.000001\n0.000005\n0.000013\n0.000003\n0.000002\n0.000031\n0.0\n0.0\n\n\n1994-08-07 16:36:01.870\n0.000006\n0.000004\n0.000008\n0.000003\n0.000005\n0.000003\n0.000005\n0.000005\n0.000003\n0.000002\n...\n0.000004\n0.000003\n0.000001\n0.000005\n0.000010\n0.000003\n0.000002\n0.000031\n0.0\n0.0\n\n\n1994-08-07 16:37:07.560\n0.000006\n0.000004\n0.000016\n0.000003\n0.000005\n0.000003\n0.000005\n0.000005\n0.000003\n0.000002\n...\n0.000004\n0.000003\n0.000001\n0.000005\n0.000010\n0.000003\n0.000002\n0.000033\n0.0\n0.0\n\n\n1994-08-07 16:38:55.828\n0.000006\n0.000004\n0.000022\n0.000003\n0.000005\n0.000003\n0.000004\n0.000004\n0.000003\n0.000002\n...\n0.000004\n0.000003\n0.000001\n0.000005\n0.000009\n0.000003\n0.000002\n0.000037\n0.0\n0.0\n\n\n1994-08-07 16:39:55.828\n0.000006\n0.000004\n0.000024\n0.000003\n0.000005\n0.000003\n0.000004\n0.000004\n0.000003\n0.000002\n...\n0.000004\n0.000003\n0.000001\n0.000005\n0.000009\n0.000003\n0.000002\n0.000039\n0.0\n0.0\n\n\n\n\n5 rows × 129 columns\n\n\n\nHowever, it’s often expressed more succinctly using the Res1D fluent-like API:\n\ndf = res.reaches.Discharge.read()\ndf.head()\n\n\n\n\n\n\n\n\nDischarge:100l1:23.8414\nDischarge:101l1:33.218\nDischarge:102l1:5.46832\nDischarge:103l1:13.0327\nDischarge:104l1:17.2065\nDischarge:105l1:13.4997\nDischarge:106l1:11.4056\nDischarge:107l1:8.46476\nDischarge:108l1:15.3589\nDischarge:109l1:13.546\n...\nDischarge:93l1:24.5832\nDischarge:94l1:21.2852\nDischarge:95l1:21.9487\nDischarge:96l1:14.9257\nDischarge:97l1:5.71207\nDischarge:98l1:8.00489\nDischarge:99l1:22.2508\nDischarge:9l1:5\nDischarge:Weir:119w1:0.5\nDischarge:Pump:115p1:41.214\n\n\n\n\n1994-08-07 16:35:00.000\n0.000006\n0.000004\n0.000000\n0.000003\n0.000005\n0.000003\n0.000005\n0.000005\n0.000003\n0.000002\n...\n0.000004\n0.000003\n0.000001\n0.000005\n0.000013\n0.000003\n0.000002\n0.000031\n0.0\n0.0\n\n\n1994-08-07 16:36:01.870\n0.000006\n0.000004\n0.000008\n0.000003\n0.000005\n0.000003\n0.000005\n0.000005\n0.000003\n0.000002\n...\n0.000004\n0.000003\n0.000001\n0.000005\n0.000010\n0.000003\n0.000002\n0.000031\n0.0\n0.0\n\n\n1994-08-07 16:37:07.560\n0.000006\n0.000004\n0.000016\n0.000003\n0.000005\n0.000003\n0.000005\n0.000005\n0.000003\n0.000002\n...\n0.000004\n0.000003\n0.000001\n0.000005\n0.000010\n0.000003\n0.000002\n0.000033\n0.0\n0.0\n\n\n1994-08-07 16:38:55.828\n0.000006\n0.000004\n0.000022\n0.000003\n0.000005\n0.000003\n0.000004\n0.000004\n0.000003\n0.000002\n...\n0.000004\n0.000003\n0.000001\n0.000005\n0.000009\n0.000003\n0.000002\n0.000037\n0.0\n0.0\n\n\n1994-08-07 16:39:55.828\n0.000006\n0.000004\n0.000024\n0.000003\n0.000005\n0.000003\n0.000004\n0.000004\n0.000003\n0.000002\n...\n0.000004\n0.000003\n0.000001\n0.000005\n0.000009\n0.000003\n0.000002\n0.000039\n0.0\n0.0\n\n\n\n\n5 rows × 129 columns\n\n\n\n\n\n\n\n\n\nNote\n\n\n\nYou must use the fluent-like API for quantity selection on a location group (e.g., res.reaches.Discharge) or a specific element, not directly on the top-level Res1D object. For top-level quantity filtering, use the quantities parameter in open().\n\n\nSimilar to location filtering, it’s also more computationally efficient to do this on open():\n\nres = mikeio1d.open(\"data/network.res1d\", quantities=[\"Discharge\"])\ndf = res.read()\ndf.head()\n\n\n\n\n\n\n\n\nDischarge:100l1:23.8414\nDischarge:101l1:33.218\nDischarge:102l1:5.46832\nDischarge:103l1:13.0327\nDischarge:104l1:17.2065\nDischarge:105l1:13.4997\nDischarge:106l1:11.4056\nDischarge:107l1:8.46476\nDischarge:108l1:15.3589\nDischarge:109l1:13.546\n...\nDischarge:93l1:24.5832\nDischarge:94l1:21.2852\nDischarge:95l1:21.9487\nDischarge:96l1:14.9257\nDischarge:97l1:5.71207\nDischarge:98l1:8.00489\nDischarge:99l1:22.2508\nDischarge:9l1:5\nDischarge:Weir:119w1:0.5\nDischarge:Pump:115p1:41.214\n\n\n\n\n1994-08-07 16:35:00.000\n0.000006\n0.000004\n0.000000\n0.000003\n0.000005\n0.000003\n0.000005\n0.000005\n0.000003\n0.000002\n...\n0.000004\n0.000003\n0.000001\n0.000005\n0.000013\n0.000003\n0.000002\n0.000031\n0.0\n0.0\n\n\n1994-08-07 16:36:01.870\n0.000006\n0.000004\n0.000008\n0.000003\n0.000005\n0.000003\n0.000005\n0.000005\n0.000003\n0.000002\n...\n0.000004\n0.000003\n0.000001\n0.000005\n0.000010\n0.000003\n0.000002\n0.000031\n0.0\n0.0\n\n\n1994-08-07 16:37:07.560\n0.000006\n0.000004\n0.000016\n0.000003\n0.000005\n0.000003\n0.000005\n0.000005\n0.000003\n0.000002\n...\n0.000004\n0.000003\n0.000001\n0.000005\n0.000010\n0.000003\n0.000002\n0.000033\n0.0\n0.0\n\n\n1994-08-07 16:38:55.828\n0.000006\n0.000004\n0.000022\n0.000003\n0.000005\n0.000003\n0.000004\n0.000004\n0.000003\n0.000002\n...\n0.000004\n0.000003\n0.000001\n0.000005\n0.000009\n0.000003\n0.000002\n0.000037\n0.0\n0.0\n\n\n1994-08-07 16:39:55.828\n0.000006\n0.000004\n0.000024\n0.000003\n0.000005\n0.000003\n0.000004\n0.000004\n0.000003\n0.000002\n...\n0.000004\n0.000003\n0.000001\n0.000005\n0.000009\n0.000003\n0.000002\n0.000039\n0.0\n0.0\n\n\n\n\n5 rows × 129 columns\n\n\n\n\n\n\n\n\n\nWhere do I find quantity names?\n\n\n\n\n\nTo see all available quantities in a Res1D object (res), you can inspect res.quantities. To see all possible MIKE 1D quantities, you can get a list as follows:\n\nfrom mikeio1d.res1d import mike1d_quantities\n\nall_quantities = mike1d_quantities()",
+    "crumbs": [
+      "Module 3 - Network Results",
+      "<span class='chapter-number'>19</span>  <span class='chapter-title'>Data Selection</span>"
+    ]
+  },
+  {
+    "objectID": "module3_network_results/04_selecting_network_data.html#selecting-time-steps",
+    "href": "module3_network_results/04_selecting_network_data.html#selecting-time-steps",
+    "title": "19  Data Selection",
+    "section": "19.4 Selecting Time Steps",
+    "text": "19.4 Selecting Time Steps\nFiltering by time is another common requirement. If you have your data in a Pandas DataFrame, you can use the time indexing techniques covered in Module 2. For example, the first three time steps:\n\ndf = res.read()\ndf.iloc[:3]\n\n\n\n\n\n\n\n\nWaterLevel:1\nWaterLevel:2\nWaterLevel:3\nWaterLevel:4\nWaterLevel:5\nWaterLevel:6\nWaterLevel:7\nWaterLevel:8\nWaterLevel:9\nWaterLevel:10\n...\nDischarge:99l1:22.2508\nWaterLevel:9l1:0\nWaterLevel:9l1:10\nDischarge:9l1:5\nWaterLevel:Weir:119w1:0\nWaterLevel:Weir:119w1:1\nDischarge:Weir:119w1:0.5\nWaterLevel:Pump:115p1:0\nWaterLevel:Pump:115p1:82.4281\nDischarge:Pump:115p1:41.214\n\n\n\n\n1994-08-07 16:35:00.000\n195.052994\n195.821503\n195.8815\n193.604996\n193.615005\n193.625000\n193.675003\n193.764999\n193.774994\n193.804993\n...\n0.000002\n193.774994\n193.764999\n0.000031\n193.550003\n188.479996\n0.0\n193.304993\n195.005005\n0.0\n\n\n1994-08-07 16:36:01.870\n195.052994\n195.821701\n195.8815\n193.604996\n193.615005\n193.625320\n193.675110\n193.765060\n193.775116\n193.804993\n...\n0.000002\n193.775070\n193.765060\n0.000031\n193.550003\n188.479996\n0.0\n193.306061\n195.005005\n0.0\n\n\n1994-08-07 16:37:07.560\n195.052994\n195.821640\n195.8815\n193.604996\n193.615005\n193.625671\n193.675369\n193.765106\n193.775513\n193.804993\n...\n0.000002\n193.775391\n193.765106\n0.000033\n193.550034\n188.479996\n0.0\n193.307144\n195.005005\n0.0\n\n\n\n\n3 rows × 495 columns\n\n\n\nAs with other selections, filtering by time when opening the file with open() is more efficient. To select time steps when opening the file, use the time parameter to specify the start and end bounds.\n\nres = mikeio1d.open(\"data/network.res1d\", time=('1994-08-07 16:35:00', '1994-08-07 16:38'))\nres.read()\n\n\n\n\n\n\n\n\nWaterLevel:1\nWaterLevel:2\nWaterLevel:3\nWaterLevel:4\nWaterLevel:5\nWaterLevel:6\nWaterLevel:7\nWaterLevel:8\nWaterLevel:9\nWaterLevel:10\n...\nDischarge:99l1:22.2508\nWaterLevel:9l1:0\nWaterLevel:9l1:10\nDischarge:9l1:5\nWaterLevel:Weir:119w1:0\nWaterLevel:Weir:119w1:1\nDischarge:Weir:119w1:0.5\nWaterLevel:Pump:115p1:0\nWaterLevel:Pump:115p1:82.4281\nDischarge:Pump:115p1:41.214\n\n\n\n\n1994-08-07 16:35:00.000\n195.052994\n195.821503\n195.8815\n193.604996\n193.615005\n193.625000\n193.675003\n193.764999\n193.774994\n193.804993\n...\n0.000002\n193.774994\n193.764999\n0.000031\n193.550003\n188.479996\n0.0\n193.304993\n195.005005\n0.0\n\n\n1994-08-07 16:36:01.870\n195.052994\n195.821701\n195.8815\n193.604996\n193.615005\n193.625320\n193.675110\n193.765060\n193.775116\n193.804993\n...\n0.000002\n193.775070\n193.765060\n0.000031\n193.550003\n188.479996\n0.0\n193.306061\n195.005005\n0.0\n\n\n1994-08-07 16:37:07.560\n195.052994\n195.821640\n195.8815\n193.604996\n193.615005\n193.625671\n193.675369\n193.765106\n193.775513\n193.804993\n...\n0.000002\n193.775391\n193.765106\n0.000033\n193.550034\n188.479996\n0.0\n193.307144\n195.005005\n0.0\n\n\n\n\n3 rows × 495 columns\n\n\n\nTo select every nth time step, you can use the step_every parameter:\n\nres = mikeio1d.open(\"data/network.res1d\", step_every=5)\nres.read().head()\n\n\n\n\n\n\n\n\nWaterLevel:1\nWaterLevel:2\nWaterLevel:3\nWaterLevel:4\nWaterLevel:5\nWaterLevel:6\nWaterLevel:7\nWaterLevel:8\nWaterLevel:9\nWaterLevel:10\n...\nDischarge:99l1:22.2508\nWaterLevel:9l1:0\nWaterLevel:9l1:10\nDischarge:9l1:5\nWaterLevel:Weir:119w1:0\nWaterLevel:Weir:119w1:1\nDischarge:Weir:119w1:0.5\nWaterLevel:Pump:115p1:0\nWaterLevel:Pump:115p1:82.4281\nDischarge:Pump:115p1:41.214\n\n\n\n\n1994-08-07 16:35:00.000\n195.052994\n195.821503\n195.8815\n193.604996\n193.615005\n193.625000\n193.675003\n193.764999\n193.774994\n193.804993\n...\n0.000002\n193.774994\n193.764999\n0.000031\n193.550003\n188.479996\n0.0\n193.304993\n195.005005\n0.0\n\n\n1994-08-07 16:40:55.828\n195.052994\n195.821503\n195.8815\n193.604996\n193.615005\n193.626877\n193.676117\n193.765457\n193.776596\n193.805038\n...\n0.000002\n193.776382\n193.765457\n0.000042\n193.550110\n188.479996\n0.0\n193.310852\n195.005005\n0.0\n\n\n1994-08-07 16:45:55.828\n195.052994\n195.821503\n195.8815\n193.604996\n193.615128\n193.628540\n193.676895\n193.766235\n193.777557\n193.805786\n...\n0.000003\n193.777252\n193.766235\n0.000053\n193.550125\n188.479996\n0.0\n193.315674\n195.005005\n0.0\n\n\n1994-08-07 16:51:29.529\n195.099609\n195.821655\n195.8815\n193.605225\n193.624008\n193.648056\n193.678299\n193.774384\n193.795883\n193.829300\n...\n0.000717\n193.794693\n193.774384\n0.000513\n193.550461\n188.479996\n0.0\n193.321274\n195.005005\n0.0\n\n\n1994-08-07 16:58:12.888\n195.088943\n195.821503\n195.8815\n193.607758\n193.634552\n193.672958\n193.706161\n193.829422\n193.852097\n193.869766\n...\n0.001972\n193.846848\n193.829422\n0.005163\n193.555649\n188.479996\n0.0\n193.353027\n195.005005\n0.0\n\n\n\n\n5 rows × 495 columns\n\n\n\nNotice that these options are similar to when loading network result files in MIKE+:\n\n\n\nLoading network results in MIKE+",
+    "crumbs": [
+      "Module 3 - Network Results",
+      "<span class='chapter-number'>19</span>  <span class='chapter-title'>Data Selection</span>"
+    ]
+  },
+  {
+    "objectID": "module3_network_results/04_selecting_network_data.html#practical-example",
+    "href": "module3_network_results/04_selecting_network_data.html#practical-example",
+    "title": "19  Data Selection",
+    "section": "19.5 Practical Example",
+    "text": "19.5 Practical Example\nImagine you’re calibrating a MIKE+ model. There’s two specific points in the network where you have observed flow data. You also have a list of calibration event time stamps you deem relevant. Let’s use Python to automate generating some plots that could be useful during the calibration process.\nFirst, make a list of the reach IDs where the flow meters are.\n\ncalibration_points = [\"12l1\", \"116l1\"]\n\nNext let’s define the event start and stop times.\n\ncalibration_events = [\n    (\"1994-08-07 17:00\", \"1994-08-07 18:30\"),\n    # here we could add another event, but for this example we only use one\n]\n\nLoad the flow meter data from csv.\n\nimport pandas as pd\ndf_obs = pd.read_csv(\"data/flow_meter_data.csv\", index_col=0, parse_dates=True)\ndf_obs.head()\n\n\n\n\n\n\n\n\n116l1_observed\n12l1_observed\n\n\ntime\n\n\n\n\n\n\n1994-08-07 16:35:00\n-0.014113\n-0.095583\n\n\n1994-08-07 16:36:00\n0.043355\n-0.058748\n\n\n1994-08-07 16:37:00\n-0.129244\n0.040089\n\n\n1994-08-07 16:38:00\n-0.052462\n0.068110\n\n\n1994-08-07 16:39:00\n-0.051976\n-0.024882\n\n\n\n\n\n\n\nNow let’s create plots for each calibration point:\n\nfor event in calibration_events:\n    event_start = event[0]  # event start time\n    event_end = event[1]    # event end time\n\n    res = mikeio1d.open(\"data/network.res1d\", time=(event_start, event_end))\n    df_obs_event = df_obs.loc[event_start : event_end]\n\n    for reach in calibration_points:\n        ax = res.reaches[reach].Discharge.plot()\n        df_obs_event[f\"{reach}_observed\"].plot(ax=ax, color='grey', linestyle=\"--\", zorder=-1)\n        ax.legend()\n        ax.grid()\n        ax.set_title(f\"Calibration Plot for Reach '{reach}'\")\n        \n        # optional: save the figure to a PNG file using standard Matplotlib functionality",
+    "crumbs": [
+      "Module 3 - Network Results",
+      "<span class='chapter-number'>19</span>  <span class='chapter-title'>Data Selection</span>"
+    ]
+  },
+  {
+    "objectID": "module3_network_results/homework.html",
+    "href": "module3_network_results/homework.html",
+    "title": "Homework",
+    "section": "",
+    "text": "Exercise 1\n\nDownload network.res1d into a new project folder.\nCreate an empty Jupyter Notebook and import mikeio1d.\nOpen the network.res1d file into a Res1D object.\nUse the info() method to get an overview of the results.\nRead all ‘WaterLevel’ quantities for all nodes into a Pandas DataFrame.\nDisplay the describe() statistics for this DataFrame.\n\nExercise 2\n\nContinue with the Res1D object from Exercise 1 (or reopen network.res1d).\nAccess the reach named “101l1”.\nPrint the static properties: length and n_gridpoints for this reach.\nPlot the ‘WaterLevel’ time series for reach “101l1”.\nOn a separate plot, plot the ‘Discharge’ time series for reach “101l1”.\n\nExercise 3\n\nReopen network.res1d using mikeio1d.open().\nThis time, during the open() call, specify that you only want to load:\n\nNodes: “1”, “5”, and “10”.\nQuantities: Only “WaterLevel”.\nTime range: From “1994-08-07 17:00:00” to “1994-08-07 17:30:00”.\n\nRead the data from the resulting Res1D object into a Pandas DataFrame.\nPrint the head() of this DataFrame. How many columns does it have?\n\nExercise 4\n\nOpen network.res1d into a Res1D object.\nAccess the first grid point on the reach named “100l1”.\nPlot its water level.\nAccess the last grid point on the reach named “100l1”.\nPlot its water level.\n\nExercise 5\n\nDownload model.res1d into a new project folder.\nOpen model.res1d into a Res1D object.\nRead the discharge of reach G60F260_G60F240_l1 into a Pandas DateFrame. Use the discharge closest to the end node.\nConfirm the end node of the reach is a node of type Outlet with id G60F240.\nDownload observed.csv into your project folder.\nRead observed flows from the CSV file into a DataFrame (remembering to use a DatetimeIndex). These represent observed flows of the reach referenced in step 3 above.\nPlot the time series comparison of model vs observed for the following events:\n\n2021-07-31 12:00 to 2021-07-31 15:45\n2021-07-28 17:25 to 2021-07-28 20:55\n2021-06-21 06:55 to 2021-06-21 18:00",
+    "crumbs": [
+      "Module 3 - Network Results",
       "Homework"
     ]
   }
