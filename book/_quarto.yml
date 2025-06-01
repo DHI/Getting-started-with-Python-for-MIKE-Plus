@@ -63,8 +63,14 @@ book:
        - module3_network_results/homework.qmd
 
     - part: "Module 4 - Calibration Plots and Statistics"
-      #chapters:
-      # - module4_calibration_plots_and_statistics\index.qmd
+      chapters:
+       - module4_calibration_plots_and_statistics\index.qmd
+       - module4_calibration_plots_and_statistics\01_intro_modelskill.qmd
+       - module4_calibration_plots_and_statistics\02_preparing_data.qmd
+       - module4_calibration_plots_and_statistics\03_matching_data.qmd
+       - module4_calibration_plots_and_statistics\04_visualizing_performance.qmd
+       - module4_calibration_plots_and_statistics\05_quantifying_performance.qmd
+       - module4_calibration_plots_and_statistics\homework.qmd
 
     - part: "Module 5 - MIKE+Py"
       #chapters:
@@ -85,5 +91,7 @@ format:
       light: cosmo
       dark: cyborg
     css: styles.css
+    toc-depth: 4
+    toc-expand: false
   #pdf:
   #  documentclass: scrreprt

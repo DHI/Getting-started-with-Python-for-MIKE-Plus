@@ -1,0 +1,84 @@
+---
+comments: false
+---
+
+# Homework {.unnumbered}
+
+**Exercise 1**
+
+1.  Download [module4_model.zip](data/module4_model.zip){download="module4_model.zip"} into a new project folder and extract its content.
+2.  Review the folder structure and files of the model. It should be as follows:
+```powershell
+module4_model
+├── data
+│   ├── flow_meter_A_2020_09.dfs0
+│   ├── flow_meter_B_2020_09.dfs0
+│   └── rainfall_events_2020-09.dfs0
+├── Dyrup_uncalibrated.mupp
+├── Dyrup_uncalibrated.sqlite
+├── LTS
+│   └── rainfall_events_LTS_2020_09.MJL
+└── results
+    ├── rainfallBaseDefault_Network_HD.res1d
+    └── rainfallBaseDefault_Surface_runoff.res1d
+```
+
+3. Open `Dyrup_uncalibrated.mupp` in MIKE+ and familiarize yourself with the model.
+   * Review the boundary conditions. Can you see where the rainfall is applied?
+   * Find the system's only node outlet: G60F360.
+   * Locate the two flow meters (A and B). Which reach IDs are they associated with?
+   * Review the simulation setup.
+4. Make a new LTS job list for the simulation. How does it compare with `LTS/rainfall_events_LTS_2020_09.MJL`?
+5. Run a simulation. Do you get the same results as those in the `results` folder?
+
+**Exercise 2**
+
+1.  Create a new Jupyter Notebook and save it in your project folder.
+2.  Create a `PointObservation` object for "Flow Meter A" using `data/flow_meter_A_2020_09.dfs0`.
+3.  Create a `PointObservation` object for "Flow Meter B" using `data/flow_meter_B_2020_09.dfs0`.
+4.  For both `obs_A` and `obs_B`:
+    *   Print their objects and inspect the data.
+    *   Plot their time series.
+
+**Exercise 3**
+
+1.  Use the model network results from Exercise 1 (or the provided reference results).
+2.  For "Flow Meter A" (model reach `G60F380_G60F360_l1`), extract its 'Discharge' quantity to a `dfs0` file.
+3.  Create a `PointModelResult` object from the `dfs0` file created above.
+4.  For "Flow Meter B" (model reach `G62F070_G62F060_l1`), extract its 'Discharge' quantity to a `dfs0` file.
+5.  Create a `PointModelResult` object from the `dfs0` file created above.
+6.  For both `mod_A` and `mod_B`:
+    *   Print the object summary.
+    *   Plot the model result time series.
+
+**Exercise 4**
+
+1.  Match `obs_A` with `mod_A` using `ms.match()`. Store in `comparer_A`.
+2.  Match `obs_B` with `mod_B`. Store in `comparer_B`.
+3.  For `comparer_A`:
+    *   Generate time series plot: `comparer_A.plot.timeseries()`.
+    *   Generate scatter plot: `comparer_A.plot.scatter()`.
+    *   Calculate and display skill table: `comparer_A.skill()`.
+4.  Repeat step 3 for `comparer_B`.
+5.  Examine the skill tables. Qualitatively, which metrics suggest better or worse performance for each location?
+
+**Exercise 5**
+
+1.  Create a `ComparerCollection` named `cc` from `comparer_A` and `comparer_B`.
+2.  Display `cc`. Check `cc.obs_names` and `cc.mod_names`.
+3.  Make a temporal coverage plot: `cc.plot.temporal_coverage()`.
+4.  Make a scatter plot: `cc.plot.scatter()`.
+5.  Make a residual histogram: `cc.plot.residual_hist()`.
+6.  Calculate and display the skill table for the collection: `cc.skill()`.
+    *   Modify to show only 'rmse', 'bias', 'nse', and 'kge' metrics.
+7.  Calculate and display the mean skill table: `cc.mean_skill()`.
+    *   Modify to show only 'rmse', 'bias', 'nse', and 'kge'.
+8.  Using `cc.score()`, retrieve and print the mean 'kge' score for the model.
+
+**Exercise 6**
+
+1. Repeat Exercise 4 and 5, but using the `max_model_gap` parameter of `ms.match()`. Use a value of 600 seconds.
+2. How do the number of observation points in each Comparer change?
+3. How does the temporal coverage plot change?
+4. How does this approach impact the skill assessment?
+5. Review [ModelSkill's documentation on 'nse'](https://dhi.github.io/modelskill/api/metrics.html#modelskill.metrics.nash_sutcliffe_efficiency). How do both flow meters, and the overall model perform on this metric?

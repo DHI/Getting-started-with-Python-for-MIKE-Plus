@@ -1,0 +1,206 @@
+# Skill Scores
+
+Visualizing model performance provides qualitative insights, but quantitative metrics are essential for objective assessment and comparison. Skill scores serve this purpose by providing numerical measures of how well a model's predictions match observed data. ModelSkill facilitates the calculation of these key statistics through its `Comparer` and `ComparerCollection` objects.
+
+```{python}
+#| echo: false
+#| output: false
+# Ensure this setup code is present or clearly referenced
+import modelskill as ms
+import mikeio
+# import pandas as pd # Already imported by modelskill or mikeio usually
+# import matplotlib.pyplot as plt # Not directly needed for skill scores
+
+ms.reset_option("metrics.list")
+
+#| code-fold: true
+#| code-summary: "Show setup code for Comparer and ComparerCollection objects"
+# Source datasets
+ds_obs_source = mikeio.read("data/flow_meter_data.dfs0")
+ds_model_source = mikeio.read("data/model_results.dfs0")
+
+# Observation for 116l1
+obs_116l1 = ms.PointObservation(
+    data=ds_obs_source,
+    item="116l1_observed",
+    name="116l1"
+)
+
+# Observation for 12l1
+obs_12l1 = ms.PointObservation(
+    data=ds_obs_source,
+    item="12l1_observed",
+    name="12l1"
+)
+
+# Model Result for 116l1 from MIKE+
+mod_116l1 = ms.PointModelResult(
+    data=ds_model_source,
+    item="reach:Discharge:116l1:37.651",
+    name="MIKE+"
+)
+
+# Model Result for 12l1 from MIKE+
+mod_12l1 = ms.PointModelResult(
+    data=ds_model_source,
+    item="reach:Discharge:12l1:28.410",
+    name="MIKE+"
+)
+
+# Create Comparers
+comparer_116l1 = ms.match(obs_116l1, mod_116l1)
+comparer_12l1 = ms.match(obs_12l1, mod_12l1)
+
+# Create ComparerCollection
+cc = ms.ComparerCollection([comparer_116l1, comparer_12l1])
+```
+
+## Comparer
+
+The `Comparer` object (e.g., `comparer_116l1`) calculates skill scores for a single observation-model pair.
+
+### Skill Table
+The `skill()` method returns a `SkillTable` object, which is a specialized data structure provided by ModelSkill for presenting multiple skill scores in a clear, tabular format.
+
+```{python}
+sk_single = comparer_116l1.skill()
+sk_single
+```
+
+::: {.callout-note title="Available metrics" collapse="true"}
+You'll notice several metrics listed (e.g., bias, rmse, nse). We'll cover the definitions of common metrics in more detail at the end of this section.
+:::
+
+::: {.callout-tip title="Skill metrics in DataFrame" collapse="true"}
+The `SkillTable` object can be converted to a Pandas DataFrame using `sk_single.to_dataframe()`.
+:::
+
+To get a subset of metrics, pass a list of metric names to the `metrics` argument.
+
+```{python}
+sk_subset_single = comparer_116l1.skill(metrics=['rmse', 'bias', 'nse'])
+sk_subset_single
+```
+
+### Single Score
+Use `score()` for direct access to a single numerical value for a specific metric. If model results within the `Comparer` are named (as in this example with "MIKE+"), this method returns a dictionary where keys are model names.
+
+```{python}
+rmse_val_dict = comparer_116l1.score(metric='rmse')
+print(f"RMSE for MIKE+ at 116l1: {rmse_val_dict['MIKE+']:.4f}")
+
+bias_val_dict = comparer_116l1.score(metric='bias')
+print(f"Bias for MIKE+ at 116l1: {bias_val_dict['MIKE+']:.4f}")
+```
+
+## ComparerCollection
+
+The `ComparerCollection` (e.g., `cc`) assesses model performance across multiple observation points.
+
+### Skill Table
+Calling `skill()` on a `ComparerCollection` returns a `SkillTable` object summarizing skill for each `Comparer` within the collection.
+
+```{python}
+sk_coll = cc.skill()
+sk_coll
+```
+
+You can request specific metrics for all comparisons.
+
+```{python}
+sk_subset_coll = cc.skill(metrics=['rmse', 'bias'])
+sk_subset_coll
+```
+
+### Mean Skill Table
+The `mean_skill()` method calculates average skill scores across all locations, presented in a `SkillTable`.
+
+```{python}
+sk_mean = cc.mean_skill()
+sk_mean
+```
+
+And for specific metrics:
+
+```{python}
+sk_mean_subset = cc.mean_skill(metrics=['rmse', 'bias', 'nse'])
+sk_mean_subset
+```
+
+::: {.callout-tip title="Weighted mean skill" collapse="true"}
+The `mean_skill()` method allows for weighted averages. You can provide weights for each observation if, for example, you trust some observation points more than others or if they represent areas of different importance. See the ModelSkill documentation for details on applying weights.
+:::
+
+### Score
+The `score()` method on a `ComparerCollection` calculates a score for each model across all relevant observations. It returns a Python dictionary where keys are the model names (e.g., 'MIKE+') and values are these scores (e.g., mean RMSE for 'MIKE+'). This provides a single summary value for each model's performance on a specific metric.
+
+```{python}
+# For our ComparerCollection 'cc' containing one model named "MIKE+"
+score_rmse_scores = cc.score(metric='rmse')
+print(f"Mean RMSE for models: {score_rmse_scores}")
+
+score_bias_scores = cc.score(metric='bias')
+print(f"Mean Bias for models: {score_bias_scores}")
+```
+
+::: {.callout-tip title="Weighted mean score" collapse="true"}
+Similar to `mean_skill()`, the `score()` method on a `ComparerCollection` also supports weighting. This enables you to calculate a weighted mean score (e.g., weighted RMSE) for each model across all observations.
+:::
+
+## Working with SkillTables
+
+`SkillTable` objects are more than just static tables; they offer several useful features for analysis and presentation.
+
+### Sorting Values
+You can sort the `SkillTable` by any of its columns (metrics or identifiers). This is useful for ranking models or observations.
+
+```{python}
+# Sort by RMSE in ascending order
+sk_coll_sorted = sk_coll.sort_values('rmse', ascending=True)
+sk_coll_sorted
+```
+
+### Styling Tables
+`SkillTable` objects integrate with Pandas' styling capabilities, allowing you to highlight important values, apply color maps, or format numbers for better readability in Jupyter environments.
+
+```{python}
+sk_coll.style()
+```
+
+### Plotting Skills
+`SkillTable` objects have a `.plot` accessor for quickly visualizing skill scores, such as creating bar charts of metrics.
+
+```{python}
+# Bar plot of RMSE for each observation point
+sk_coll["rmse"].plot.bar()
+```
+
+These are just a few examples. The `SkillTable`'s `.style` and `.plot` accessors offer more customization. Refer to the [ModelSkill documentation](https://dhi.github.io/modelskill/api/SkillTable.html) and Pandas styling documentation for further details.
+
+## Useful Skill Metrics
+
+ModelSkill calculates numerous metrics. The choice of metrics depends on your modelling goals. Some useful metrics include:
+
+*   **Bias** (`bias`): Average difference (Modeled - Observed). Ideal: 0.
+*   **RMSE (Root Mean Square Error)** (`rmse`): Typical magnitude of error. Ideal: 0.
+*   **NSE (Nash-Sutcliffe Efficiency)** (`nse`): Measures the predictive power of the model compared to using the mean of the observed data as the prediction. Ranges from -$\infty$ to 1. Ideal: 1.
+*   **KGE (Kling-Gupta Efficiency)** (`kge`): A composite metric evaluating correlation, bias, and variability components. Ranges from -$\infty$ to 1. Ideal: 1.
+*   **Willmott's Index of Agreement** (`willmott`): Measures the degree of model prediction error, standardized by observed variability. Ranges from 0 to 1. Ideal: 1.
+*   **Peak Ratio** (`pr`): Ratio of the maximum modeled value to the maximum observed value over the matched time period. Ideal: 1.0.
+
+You can change the default list of metrics that are used by `skill()` and `mean_skill()` as follows:
+
+```{python}
+ms.set_option("metrics.list", ['bias', 'rmse', 'nse', 'kge', 'willmott', 'pr'])
+cc.skill()
+```
+
+::: {.callout-note}
+Reset to default values with `ms.reset_option("metrics.list")`.
+:::
+
+For a comprehensive list of all available metrics and their precise definitions, please refer to the official [ModelSkill API documentation for metrics](https://dhi.github.io/modelskill/api/metrics.html).
+
+::: {.callout-tip title="Adding Custom Metrics" collapse="true"}
+ModelSkill's metrics are extensible. You can define and use your own custom skill score functions if needed. If you believe a metric would be broadly useful, consider suggesting it for inclusion in ModelSkill via a GitHub issue.
+:::

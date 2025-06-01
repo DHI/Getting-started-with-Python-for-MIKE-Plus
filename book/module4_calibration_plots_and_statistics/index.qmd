@@ -1,3 +1,29 @@
-# Introduction
+---
+comments: false
+---
 
-Coming soon...
+# Welcome to Module 4! {.unnumbered}
+
+This module introduces powerful techniques for model calibration and validation. We will explore *ModelSkill*, a dedicated Python package for comparing MIKE+ model outputs against observed data.
+
+You'll see how ModelSkill builds upon MIKE IO, leveraging your existing skills in data handling.
+
+Throughout this module, you will learn to:
+
+- Prepare `Observation` and `ModelResult` objects.
+- Match observational data with model results.
+- Visualize model performance using standard validation plots.
+- Quantify model accuracy using statistical skill scores.
+
+This module culminates in a practical homework assignment where you'll apply these skills to validate a sample MIKE+ model.
+
+Let's dive in!
+
+::: {.callout-tip title="Where can I download sample data to follow along?" collapse="true"}
+All of the sample data used in this module is available for download:
+
+*   [`flow_meter_data.dfs0`](data/flow_meter_data.dfs0){download="flow_meter_data.dfs0"}
+*   [`flow_meter_data.csv`](data/flow_meter_data.csv){download="flow_meter_data.csv"}
+*   [`model_results.dfs0`](data/model_results.dfs0){download="model_results.dfs0"}
+*   [`network.res1d`](data/network.res1d){download="network.res1d"}
+:::

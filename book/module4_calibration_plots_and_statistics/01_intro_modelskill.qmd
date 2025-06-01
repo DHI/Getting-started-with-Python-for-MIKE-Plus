@@ -1,0 +1,51 @@
+# ModelSkill
+
+ModelSkill is a Python package designed to streamline and standardize the validation of models, including those built with MIKE+. It helps you compare your model results against observed data, calculate skill scores, and generate insightful visualizations.
+
+## What is ModelSkill?
+
+The primary purpose of ModelSkill is to provide a robust framework for quantitative model skill assessment. It builds upon libraries like MIKE IO by leveraging their data reading capabilities to easily ingest model outputs and observational data from various formats. This makes it easier to integrate model validation into your Python-based workflows.
+
+For comprehensive information, refer to the [modelskill documentation](https://dhi.github.io/modelskill/).
+
+## Key Features
+
+ModelSkill offers several high-impact features for model validation:
+
+-   Easy comparison of one or more model results against observations.
+-   Automatic calculation of a wide range of statistical skill metrics.
+-   Generation of standard validation plots (e.g., time series, scatter plots).
+-   Flexible handling of various data types and structures.
+
+::: {.callout-note}
+ModelSkill offers a rich set of functionalities. For a detailed list, please refer to the official documentation's feature overview.
+:::
+
+## Installation
+
+You can install ModelSkill using uv in your terminal.
+
+```powershell
+uv pip install modelskill
+```
+
+::: {.callout-tip}
+Installation methods and specific package versions can change. Always refer to the official ModelSkill installation guide for the most up-to-date instructions and troubleshooting.
+:::
+
+## Core Concepts
+
+Understanding a few core concepts will help you use ModelSkill effectively. The main components are:
+
+-   **`Observation`**: Represents your observed data (e.g., sensor time series).
+-   **`ModelResult`**: Represents your model simulation data (e.g., MIKE+ time series output).
+-   **`Comparer`**: Matches one `Observation` with one `ModelResult`. It aligns them (e.g., spatially and in time) and is used to calculate skill scores and generate plots for this specific pair.
+-   **`ComparerCollection`**: Groups multiple `Comparer` objects. Use it to assess model performance against several observation points or to get overall skill scores.
+
+The general workflow involves preparing `Observation` and `ModelResult` objects, using `ms.match()` to create `Comparer` objects, optionally grouping them into a `ComparerCollection`, and then extracting skill metrics and visualizations.
+
+::: {.callout-note title="Filtering and Selecting Data in ModelSkill" collapse="true"}
+ModelSkill includes powerful methods like `.sel()`, `.query()`, and `.where()` to select and filter data in its `Observation`, `ModelResult`, and `Comparer` objects. These are excellent for refining your analysis, for example, by focusing on specific events or conditions.
+
+This module focuses on the essentials. While these advanced selection tools are highly useful, they are not covered in detail here. We encourage you to explore them after the course; they are valuable for more in-depth analysis.
+:::

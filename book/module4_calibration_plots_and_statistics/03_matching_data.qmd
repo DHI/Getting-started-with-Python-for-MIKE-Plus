@@ -1,0 +1,159 @@
+# Matching Data
+
+Now that you've prepared your `Observation` and `ModelResult` data, the next crucial step is to bring them together for direct comparison. ModelSkill makes this easy with `ms.match()` which creates a `Comparer` object. For situations where you need to assess performance across multiple locations or aggregate results, you can group several `Comparer` objects into a `ComparerCollection`.
+
+```{python}
+#| echo: false
+#| output: false
+# Common imports for this section
+import modelskill as ms
+import mikeio
+import pandas as pd
+```
+
+This section uses `Observation` and `ModelResult` objects prepared as in previous examples.
+
+```{python}
+#| code-fold: true
+#| code-summary: "Show setup code for Observation and ModelResult objects"
+# Source datasets
+ds_obs_source = mikeio.read("data/flow_meter_data.dfs0")
+ds_model_source = mikeio.read("data/model_results.dfs0")
+
+# Observation for 116l1
+obs_116l1 = ms.PointObservation(
+    data=ds_obs_source,
+    item="116l1_observed",
+    name="116l1"  # Unique name for this observation point
+)
+
+# Observation for 12l1
+obs_12l1 = ms.PointObservation(
+    data=ds_obs_source,
+    item="12l1_observed",
+    name="12l1"   # Unique name for this observation point
+)
+
+# Model Result for 116l1 from MIKE+
+mod_116l1 = ms.PointModelResult(
+    data=ds_model_source,
+    item="reach:Discharge:116l1:37.651",
+    name="MIKE+" # Name of the model simulation
+)
+
+# Model Result for 12l1 from MIKE+
+mod_12l1 = ms.PointModelResult(
+    data=ds_model_source,
+    item="reach:Discharge:12l1:28.410",
+    name="MIKE+" # Name of the model simulation (same as above)
+)
+```
+
+## Comparer
+
+Use `ms.match()` to create a `Comparer` object. A `Comparer` is designed to match one `Observation` with one `ModelResult`. For point data, `match()` intelligently interpolates model results to observation timestamps, ensuring a direct, like-for-like comparison.
+
+Let's match our previously defined `obs_116l1` with `mod_116l1`:
+```{python}
+obs_116l1
+```
+```{python}
+mod_116l1
+```
+```{python}
+comparer_116l1 = ms.match(obs_116l1, mod_116l1)
+comparer_116l1
+```
+
+The `Comparer` now conveniently holds your matched data, interpolated and aligned, ready for detailed analysis and visualization. You can convert this to a Pandas `DataFrame` to inspect the aligned data. Notice how the DataFrame contains raw observation values and model values interpolated to the exact observation times.
+```{python}
+df_aligned_single = comparer_116l1.to_dataframe()
+df_aligned_single.head()
+```
+::: {.callout-caution title="Ensure Correct Pairing"}
+It's crucial that the `Observation` and `ModelResult` objects passed to `ms.match()` represent the same physical location and variable. ModelSkill relies on you to provide these correctly paired inputs.
+:::
+
+::: {.callout-tip title="Handling Gaps in Model Data During Matching" collapse="true"}
+When matching, ModelSkill interpolates model results to observation times. If your model data has significant time gaps, you might not want to interpolate across very large intervals. For example, this is often the case with LTS simulations. The `max_model_gap` parameter in `ms.match()` controls this. It specifies the maximum gap (in seconds) in the model data over which to interpolate. If a gap is larger, the corresponding observation points will not have a matched model value.
+
+```{python}
+comparer_116l1_gapped = ms.match(obs_116l1, mod_116l1, max_model_gap=600)
+comparer_116l1_gapped
+```
+:::
+
+A `Comparer` object is your gateway to generating insightful plots and calculating a range of skill scores. Plotting and skill assessment are detailed later in this module, but here's a quick preview:
+```{python}
+comparer_116l1.plot.timeseries()
+```
+```{python}
+comparer_116l1.skill()
+```
+
+::: {.callout-tip title="Filtering Matched Data" collapse="true"}
+After matching, you might want to further filter the `Comparer` data before calculating skill scores. For example, you might want to exclude periods of low flow or focus only on specific events. The `.query()` method allows you to apply conditions, similar to Pandas. It returns a new `Comparer` object with the filtered data.
+
+```{python}
+comparer_116l1_filtered = comparer_116l1.query("Observation > 0.8")
+comparer_116l1_filtered.plot.timeseries()
+```
+
+ModelSkill offers more filtering options not covered here — see the documentation for details.
+:::
+
+## ComparerCollection
+
+Often, you'll want to evaluate your model against multiple observation points simultaneously or assess its overall performance across different locations. For this, ModelSkill provides the `ComparerCollection`, which groups multiple `Comparer` objects.
+
+::: {.callout-note title="Comparing models against other models" collapse="true"}
+A `ComparerCollection` can also be used to compare multiple different models against the same set of observations. That use case is not covered in this module. Refer to ModelSkill's documentation for details on this powerful feature.
+:::
+
+First, let's create another `Comparer` for our second observation point, `obs_12l1`, and its corresponding model result, `mod_12l1` (which comes from the same `MIKE+` simulation).
+```{python}
+obs_12l1
+```
+```{python}
+mod_12l1
+```
+```{python}
+comparer_12l1 = ms.match(obs_12l1, mod_12l1)
+comparer_12l1
+```
+
+Now, we can combine `comparer_116l1` and `comparer_12l1` into a `ComparerCollection`:
+```{python}
+cc = ms.ComparerCollection([comparer_116l1, comparer_12l1])
+cc
+```
+The `ComparerCollection` (`cc`) now manages both comparisons. This allows for powerful aggregate views. For instance, it provides skill assessment for each individual observation:
+```{python}
+cc.skill()
+```
+
+More importantly, it enables aggregate views of model performance, such as overall skill scores that consider all included comparisons:
+```{python}
+cc.mean_skill()
+```
+And aggregate plots, like a histogram of residual errors across all matched observation points:
+```{python}
+cc.plot.residual_hist()
+```
+
+You can inspect the collection's properties to see which observations and models are included:
+
+Unique observation names within the collection:
+```{python}
+cc.obs_names
+```
+Unique model names. Since both `mod_116l1` and `mod_12l1` were created with `name="MIKE+"`, "MIKE+" appears only once, signifying they are from the same model run.
+```{python}
+cc.mod_names
+```
+
+You can also select an individual `Comparer` from the collection by its observation name, allowing you to focus on a specific comparison:
+```{python}
+selected_comparer = cc['116l1']
+selected_comparer.plot.timeseries()
+```
