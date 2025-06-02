@@ -508,8 +508,57 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
-      <span class="sidebar-item-text sidebar-link text-start">
- <span class="menu-text">Module 4 - Calibration Plots and Statistics</span></span>
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Module 4 - Calibration Plots and Statistics</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../module4_calibration_plots_and_statistics/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Welcome to Module 4!</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../module4_calibration_plots_and_statistics/01_intro_modelskill.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">ModelSkill</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../module4_calibration_plots_and_statistics/02_preparing_data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Preparing Data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../module4_calibration_plots_and_statistics/03_matching_data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Matching Data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../module4_calibration_plots_and_statistics/04_visualizing_performance.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Visualization</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../module4_calibration_plots_and_statistics/05_quantifying_performance.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Skill Scores</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../module4_calibration_plots_and_statistics/homework.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Homework</span></a>
+  </div>
+</li>
+      </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <span class="sidebar-item-text sidebar-link text-start">
@@ -525,7 +574,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
+        <nav id="TOC" role="doc-toc" class="toc-active" data-toc-expanded="-1">
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
@@ -599,7 +648,7 @@ Memory considerations
 <section id="selecting-items" class="level2" data-number="11.3">
 <h2 data-number="11.3" class="anchored" data-anchor-id="selecting-items"><span class="header-section-number">11.3</span> Selecting Items</h2>
 <p>When reading data with <code>mikeio.read()</code>, the <code>items</code> argument lets you specify which items to load. You can do this by providing a list of item names.</p>
-<div id="266f1342" class="cell" data-execution_count="2">
+<div id="2fdf2315" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>ds <span class="op">=</span> mikeio.read(</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"data/sirius_idf_rainfall.dfs0"</span>, </span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    items<span class="op">=</span>[<span class="st">" F=1"</span>, <span class="st">" F=2"</span>]</span>
@@ -616,7 +665,7 @@ items:
 </div>
 </div>
 <p>Alternatively, you can select items using their numerical indices (zero-based). For example, to load the first and third items:</p>
-<div id="5f06b90f" class="cell" data-execution_count="3">
+<div id="e3ee339f" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>ds <span class="op">=</span> mikeio.read(</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"data/sirius_idf_rainfall.dfs0"</span>,</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    items<span class="op">=</span>[<span class="dv">4</span>, <span class="dv">3</span>]</span>
@@ -646,7 +695,7 @@ Tip
 </div>
 </div>
 <p>From a Pandas DataFrame, you can select items using standard Pandas column selection techniques.</p>
-<div id="65f863fd" class="cell" data-execution_count="4">
+<div id="83750d04" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>ds <span class="op">=</span> mikeio.read(<span class="st">"data/sirius_idf_rainfall.dfs0"</span>)</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> ds.to_dataframe()</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>df.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -737,7 +786,7 @@ Tip
 </div>
 </div>
 <p>To select a single item:</p>
-<div id="c4b28080" class="cell" data-execution_count="5">
+<div id="55d29fd2" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>df[[<span class="st">" F=20"</span>]].head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="5">
 <div>
@@ -791,7 +840,7 @@ Tip
 </div>
 </div>
 <p>For multiple items, provide a list of column names:</p>
-<div id="3fbb5f21" class="cell" data-execution_count="6">
+<div id="0f019074" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>df[[<span class="st">" F=1"</span>, <span class="st">" F=2"</span>]].head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="6">
 <div>
@@ -842,7 +891,7 @@ Tip
 <h2 data-number="11.4" class="anchored" data-anchor-id="selecting-time-steps"><span class="header-section-number">11.4</span> Selecting Time Steps</h2>
 <p>When reading data with <code>mikeio.read()</code>, the <code>time</code> argument allows for various ways to specify the desired subset.</p>
 <p>You can select by a single time step index (e.g., the first time step, index <code>0</code>).</p>
-<div id="d4f95cc4" class="cell" data-execution_count="7">
+<div id="cedfdfc7" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>ds <span class="op">=</span> mikeio.read(</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"data/single_water_level.dfs0"</span>,</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    time<span class="op">=</span><span class="dv">0</span></span>
@@ -858,7 +907,7 @@ items:
 </div>
 </div>
 <p>Or provide a list of indices for specific time steps (e.g., the first three time steps).</p>
-<div id="a1b07433" class="cell" data-execution_count="8">
+<div id="6287d248" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>ds <span class="op">=</span> mikeio.read(</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"data/single_water_level.dfs0"</span>,</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    time<span class="op">=</span>[<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">2</span>]</span>
@@ -874,7 +923,7 @@ items:
 </div>
 </div>
 <p>You can also use timestamp strings.</p>
-<div id="e9b62c8f" class="cell" data-execution_count="9">
+<div id="7f3d28c9" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>ds <span class="op">=</span> mikeio.read(</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"data/single_water_level.dfs0"</span>,</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    time<span class="op">=</span><span class="st">"1993-12-02 00:00:00"</span></span>
@@ -890,7 +939,7 @@ items:
 </div>
 </div>
 <p>Select multiple timestamps with a more general string, such as all times on a specific date.</p>
-<div id="b0073a69" class="cell" data-execution_count="10">
+<div id="1dcdc9fc" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>ds <span class="op">=</span> mikeio.read(</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"data/single_water_level.dfs0"</span>,</span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    time<span class="op">=</span><span class="st">"1993-12-03"</span></span>
@@ -906,7 +955,7 @@ items:
 </div>
 </div>
 <p>To specify a time range, use Python’s <code>slice()</code> object with start and end timestamps:</p>
-<div id="ed968682" class="cell" data-execution_count="11">
+<div id="a1f1e568" class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>ds <span class="op">=</span> mikeio.read(</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"data/single_water_level.dfs0"</span>,</span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    time<span class="op">=</span><span class="bu">slice</span>(<span class="st">"1993-12-02 12:00"</span>, <span class="st">"1993-12-02 16:00"</span>)</span>
@@ -936,7 +985,7 @@ Tip
 </div>
 <p>From a Pandas DataFrame, standard indexing and slicing techniques of the <code>DatetimeIndex</code> may be used.</p>
 <p>To select by time step index, use <code>.iloc</code>.</p>
-<div id="99ef36ff" class="cell" data-execution_count="12">
+<div id="5496648d" class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>ds <span class="op">=</span> mikeio.read(<span class="st">"data/single_water_level.dfs0"</span>)</span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> ds.to_dataframe()</span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>df.iloc[[<span class="dv">0</span>]] </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -976,7 +1025,7 @@ Tip
 </div>
 </div>
 <p>For the first three time steps:</p>
-<div id="e1a2fa55" class="cell" data-execution_count="13">
+<div id="93ddedac" class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>df.iloc[<span class="dv">0</span>:<span class="dv">3</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="13">
 <div>
@@ -1009,7 +1058,7 @@ Tip
 </div>
 </div>
 <p>For selection by timestamp strings, use <code>.loc</code>.</p>
-<div id="c882a5ef" class="cell" data-execution_count="14">
+<div id="bdfc621c" class="cell" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>df.loc[[<span class="st">"1993-12-02 00:00:00"</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="14">
 <div>
@@ -1034,7 +1083,7 @@ Tip
 </div>
 </div>
 <p>To select all data for a particular day:</p>
-<div id="c1d2559c" class="cell" data-execution_count="15">
+<div id="2ce5bb09" class="cell" data-execution_count="15">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>df.loc[<span class="st">"1993-12-03"</span>].head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="15">
 <div>
@@ -1075,7 +1124,7 @@ Tip
 </div>
 </div>
 <p>And for a range between start and end timestamps:</p>
-<div id="589db1b2" class="cell" data-execution_count="16">
+<div id="37ede9f0" class="cell" data-execution_count="16">
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>df.loc[<span class="st">"1993-12-02 12:00"</span>:<span class="st">"1993-12-02 16:00"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="16">
 <div>
@@ -1142,7 +1191,7 @@ Tip
 <h2 data-number="11.5" class="anchored" data-anchor-id="example"><span class="header-section-number">11.5</span> Example</h2>
 <p>Let’s tie these concepts together with an example of plotting a subset of a dfs0 file.</p>
 <p><strong>1. Read a specific item of the dfs0 file into a Dataset</strong></p>
-<div id="93a40bc1" class="cell" data-execution_count="17">
+<div id="b4ee93a1" class="cell" data-execution_count="17">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>ds <span class="op">=</span> mikeio.read(<span class="st">"data/single_water_level.dfs0"</span>, items<span class="op">=</span><span class="st">"ST 2: WL (m)"</span>)</span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>ds</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="17">
@@ -1155,7 +1204,7 @@ items:
 </div>
 </div>
 <p><strong>2. Convert to Pandas DataFrame:</strong></p>
-<div id="a1af5364" class="cell" data-execution_count="18">
+<div id="727f9239" class="cell" data-execution_count="18">
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> ds.to_dataframe()</span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="18">
@@ -1222,7 +1271,7 @@ items:
 </div>
 </div>
 <p><strong>3. Filter the Pandas DataFrame for the time range of interest.</strong></p>
-<div id="9b346f7d" class="cell" data-execution_count="19">
+<div id="a067ed0b" class="cell" data-execution_count="19">
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df.loc[<span class="st">"1993-12-02 00:00"</span>:<span class="st">"1993-12-02 4:00"</span>]</span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="19">
@@ -1280,7 +1329,7 @@ items:
 </div>
 </div>
 <p><strong>4. Plot</strong></p>
-<div id="a15ee7d1" class="cell" data-execution_count="20">
+<div id="e4213dbb" class="cell" data-execution_count="20">
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> df.plot()</span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"Water Level at Night"</span>)</span>
 <span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">"Water Level (m)"</span>)</span>
