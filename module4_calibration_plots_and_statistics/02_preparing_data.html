@@ -695,7 +695,7 @@ Coordinates (x, y) for a PointObservation
 <section id="from-dataset" class="level3">
 <h3 class="anchored" data-anchor-id="from-dataset">From Dataset</h3>
 <p>First, read a <code>dfs0</code> file into a MIKE IO <code>Dataset</code>.</p>
-<div id="4cb6e14e" class="cell" data-execution_count="2">
+<div id="3fb7750d" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>ds_obs <span class="op">=</span> mikeio.read(<span class="st">"data/flow_meter_data.dfs0"</span>)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>ds_obs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="2">
@@ -709,13 +709,15 @@ items:
 </div>
 </div>
 <p>Create a <code>PointObservation</code> from this <code>Dataset</code>, selecting one item.</p>
-<div id="6e21097f" class="cell" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>obs_116l1 <span class="op">=</span> ms.PointObservation(</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    data<span class="op">=</span>ds_obs,</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    item<span class="op">=</span><span class="st">"116l1_observed"</span>,    <span class="co"># Selects one column/item</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    name<span class="op">=</span><span class="st">"116l1_Gauge"</span>,       <span class="co"># Descriptive name for this specific observation</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>obs_116l1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="dc923bda" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> modelskill <span class="im">as</span> ms</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>obs_116l1 <span class="op">=</span> ms.PointObservation(</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    data<span class="op">=</span>ds_obs,</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    item<span class="op">=</span><span class="st">"116l1_observed"</span>,    <span class="co"># Selects one column/item</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    name<span class="op">=</span><span class="st">"116l1_Gauge"</span>,       <span class="co"># Descriptive name for this specific observation</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>obs_116l1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="3">
 <pre><code>&lt;PointObservation&gt;: 116l1_Gauge
 Location: nan, nan
@@ -724,7 +726,7 @@ Quantity: Discharge [m^3/s]</code></pre>
 </div>
 </div>
 <p>A <code>PointObservation</code> has useful attributes and methods. Plot to verify:</p>
-<div id="a944e35b" class="cell" data-execution_count="4">
+<div id="9f166e13" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>obs_116l1.plot()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
@@ -738,7 +740,7 @@ Quantity: Discharge [m^3/s]</code></pre>
 <section id="from-dfs0-file" class="level3">
 <h3 class="anchored" data-anchor-id="from-dfs0-file">From dfs0 file</h3>
 <p>Alternatively, create a <code>PointObservation</code> using the <code>dfs0</code> file path directly:</p>
-<div id="b5bf34ec" class="cell" data-execution_count="5">
+<div id="d1bde407" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>obs_116l1_from_file <span class="op">=</span> ms.PointObservation(</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    data<span class="op">=</span><span class="st">"data/flow_meter_data.dfs0"</span>,</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    item<span class="op">=</span><span class="st">"116l1_observed"</span>,</span>
@@ -791,7 +793,7 @@ Quantity: Discharge [m^3/s]</code></pre>
 <section id="from-pandas-dataframe" class="level3">
 <h3 class="anchored" data-anchor-id="from-pandas-dataframe">From Pandas DataFrame</h3>
 <p>First, prepare a Pandas <code>DataFrame</code>.</p>
-<div id="164c92b5" class="cell" data-execution_count="6">
+<div id="81f14850" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>df_obs_csv <span class="op">=</span> pd.read_csv(<span class="st">"data/flow_meter_data.csv"</span>, index_col<span class="op">=</span><span class="st">"time"</span>, parse_dates<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>df_obs_csv.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="6">
@@ -844,7 +846,7 @@ Quantity: Discharge [m^3/s]</code></pre>
 </div>
 </div>
 <p>Create a <code>PointObservation</code> from the <code>DataFrame</code>. Provide <code>quantity</code> as DataFrames lack EUM information.</p>
-<div id="8d98fb0c" class="cell" data-execution_count="7">
+<div id="06154306" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>obs_12l1_from_df <span class="op">=</span> ms.PointObservation(</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    data<span class="op">=</span>df_obs_csv,</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    item<span class="op">=</span><span class="st">"12l1_observed"</span>,</span>
@@ -928,7 +930,7 @@ Many PointModelResult objects can share the same name
 <section id="from-dataset-1" class="level3">
 <h3 class="anchored" data-anchor-id="from-dataset-1">From Dataset</h3>
 <p>First, read a <code>dfs0</code> file with model output into a MIKE IO <code>Dataset</code>.</p>
-<div id="1cdca75c" class="cell" data-execution_count="8">
+<div id="80003163" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>ds_model_data <span class="op">=</span> mikeio.read(<span class="st">"data/model_results.dfs0"</span>)</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>ds_model_data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="8">
@@ -942,7 +944,7 @@ items:
 </div>
 </div>
 <p>Create the <code>PointModelResult</code> from the <code>Dataset</code>. <code>name</code> identifies the model simulation. <code>quantity</code> is often inferred from <code>dfs0</code> files with EUM information.</p>
-<div id="83d169c9" class="cell" data-execution_count="9">
+<div id="b1977cc5" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>mod_116l1_dataset <span class="op">=</span> ms.PointModelResult(</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    data<span class="op">=</span>ds_model_data,</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    item<span class="op">=</span><span class="st">"reach:Discharge:116l1:37.651"</span>,       <span class="co"># Item name from the dfs0</span></span>
@@ -957,7 +959,7 @@ Quantity: Discharge [m^3/s]</code></pre>
 </div>
 </div>
 <p>Like with observations, the <code>PointModelResult</code> object has useful attributes and methods. For example, plot to verify:</p>
-<div id="902fb070" class="cell" data-execution_count="10">
+<div id="96990cef" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>mod_116l1_dataset.plot()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
@@ -971,7 +973,7 @@ Quantity: Discharge [m^3/s]</code></pre>
 <section id="from-dfs0-file-1" class="level3">
 <h3 class="anchored" data-anchor-id="from-dfs0-file-1">From dfs0 file</h3>
 <p>Create a <code>PointModelResult</code> using the <code>dfs0</code> file path directly.</p>
-<div id="1e13e4b1" class="cell" data-execution_count="11">
+<div id="2492d656" class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>mod_12l1_file <span class="op">=</span> ms.PointModelResult(</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    data<span class="op">=</span><span class="st">"data/model_results.dfs0"</span>,</span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    item<span class="op">=</span><span class="st">"reach:Discharge:12l1:28.410"</span>,</span>
@@ -1024,7 +1026,7 @@ Quantity: Discharge [m^3/s]</code></pre>
 <section id="from-pandas-dataframe-1" class="level3">
 <h3 class="anchored" data-anchor-id="from-pandas-dataframe-1">From Pandas DataFrame</h3>
 <p>First, prepare a Pandas <code>DataFrame</code> with model data. This example reads a <code>dfs0</code> file into a DataFrame.</p>
-<div id="4c95b432" class="cell" data-execution_count="12">
+<div id="a1ddc004" class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>df_model <span class="op">=</span> mikeio.read(<span class="st">"data/model_results.dfs0"</span>).to_dataframe()</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>df_model.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="12">
@@ -1072,7 +1074,7 @@ Quantity: Discharge [m^3/s]</code></pre>
 </div>
 </div>
 <p>Create a <code>PointModelResult</code> from the <code>DataFrame</code>. Provide <code>quantity</code> as DataFrames lack EUM information.</p>
-<div id="c8964eac" class="cell" data-execution_count="13">
+<div id="d466a33a" class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>mod_116l1_df <span class="op">=</span> ms.PointModelResult(</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>    data<span class="op">=</span>df_model,</span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    item<span class="op">=</span><span class="st">"reach:Discharge:116l1:37.651"</span>,            <span class="co"># Column name in the DataFrame</span></span>
@@ -1093,7 +1095,7 @@ Quantity: Discharge [m^3/s]</code></pre>
 <h3 class="anchored" data-anchor-id="from-res1d-file">From res1d file</h3>
 <p>MIKE+ <code>res1d</code> files store results for an entire network. For point comparisons with <code>PointObservation</code> in ModelSkill, first extract the specific time series for the point(s) into an intermediate format (e.g., <code>dfs0</code> file, Pandas DataFrame). This example extracts one model output point to a <code>dfs0</code> file, then creates a <code>PointModelResult</code>.</p>
 <p>First, extract model output (one point, one variable) to a <code>dfs0</code> file.</p>
-<div id="00b65ed0" class="cell" data-execution_count="14">
+<div id="c63ae0f9" class="cell" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>res <span class="op">=</span> mikeio1d.<span class="bu">open</span>(<span class="st">"data/network.res1d"</span>)</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>res.reaches[<span class="st">"116l1"</span>][<span class="st">"37.651"</span>].Discharge.to_dfs0(<span class="st">"data/model_Q_116l1.dfs0"</span>)</span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>ds <span class="op">=</span> mikeio.read(<span class="st">"data/model_Q_116l1.dfs0"</span>)</span>
@@ -1108,7 +1110,7 @@ items:
 </div>
 </div>
 <p>Now, create a <code>PointModelResult</code> from this new <code>dfs0</code> file. Use the item name from the <code>Dataset</code> object created above.</p>
-<div id="dfcdc8f1" class="cell" data-execution_count="15">
+<div id="3c90d1c0" class="cell" data-execution_count="15">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>mod_116l1 <span class="op">=</span> ms.PointModelResult(</span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>    data<span class="op">=</span>ds,</span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>    item<span class="op">=</span><span class="st">"reach:Discharge:116l1:37.651"</span>,</span>

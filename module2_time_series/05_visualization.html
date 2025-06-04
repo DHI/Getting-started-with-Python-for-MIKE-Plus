@@ -645,7 +645,7 @@ Note
 <h2 data-number="13.2" class="anchored" data-anchor-id="simple-statistics"><span class="header-section-number">13.2</span> Simple Statistics</h2>
 <p>Before diving into plots, it’s often useful to get a quick numerical summary of your data.</p>
 <p>Assuming you have a DataFrame <code>df</code> containing your time series with both observed and model data:</p>
-<div id="d3efac1f" class="cell" data-execution_count="2">
+<div id="10baa61a" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>df.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="2">
 <div>
@@ -692,7 +692,7 @@ Note
 </div>
 </div>
 <p>The <code>describe()</code> method provides useful statistics of each column in the DataFrame.</p>
-<div id="33ba9e52" class="cell" data-execution_count="3">
+<div id="f382698b" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>df.describe()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="3">
 <div>
@@ -761,7 +761,7 @@ Note
 <h3 data-number="13.3.1" class="anchored" data-anchor-id="line-plots"><span class="header-section-number">13.3.1</span> Line Plots</h3>
 <p>Line plots are essential for visualizing temporal patterns in hydraulic data like flows, water levels, or rainfall. They are also the primary way to compare simulated versus observed time series.</p>
 <p>You can plot a single series directly from a DataFrame column:</p>
-<div id="b6ae5545" class="cell" data-execution_count="4">
+<div id="7b55b577" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'Observed'</span>].plot(</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    title<span class="op">=</span><span class="st">'Observed Flow Over Time'</span>,</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    xlabel<span class="op">=</span><span class="st">'Time'</span>,</span>
@@ -776,7 +776,7 @@ Note
 </div>
 </div>
 <p>Compare two time series, such as observed and modelled flow:</p>
-<div id="ad936f90" class="cell" data-execution_count="5">
+<div id="50ba5b10" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>df[[<span class="st">'Observed'</span>, <span class="st">'Model'</span>]].plot(</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    title<span class="op">=</span><span class="st">'Flow Comparison: Observed vs. Model'</span>,</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    ylabel<span class="op">=</span><span class="st">'Flow (m$^3$/s)'</span></span>
@@ -793,7 +793,7 @@ Note
 <section id="rolling-mean-moving-average-plot" class="level3" data-number="13.3.2">
 <h3 data-number="13.3.2" class="anchored" data-anchor-id="rolling-mean-moving-average-plot"><span class="header-section-number">13.3.2</span> Rolling Mean / Moving Average Plot</h3>
 <p>This plot helps smooth out noisy time series data, such as high-frequency sensor readings for flow or water level. This smoothing can make it easier to visualize underlying trends or long-term patterns.</p>
-<div id="a67c2458" class="cell" data-execution_count="6">
+<div id="20834eb4" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'Observed_Rolling_Mean'</span>] <span class="op">=</span> df[<span class="st">'Observed'</span>].rolling(window<span class="op">=</span><span class="dv">6</span>).mean()</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>df[[<span class="st">'Observed'</span>, <span class="st">'Observed_Rolling_Mean'</span>]].plot(</span>
@@ -825,7 +825,7 @@ Tip
 <section id="scatter-plots" class="level3" data-number="13.3.3">
 <h3 data-number="13.3.3" class="anchored" data-anchor-id="scatter-plots"><span class="header-section-number">13.3.3</span> Scatter Plots</h3>
 <p>Scatter plots are particularly useful for model calibration. By plotting paired observed values against simulated values, you can assess point-by-point agreement.</p>
-<div id="2099e352" class="cell" data-execution_count="7">
+<div id="d73cf4ff" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> df.plot.scatter(</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    x<span class="op">=</span><span class="st">'Observed'</span>,</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    y<span class="op">=</span><span class="st">'Model'</span>,</span>
@@ -863,7 +863,7 @@ Note
 <section id="box-plots" class="level3" data-number="13.3.4">
 <h3 data-number="13.3.4" class="anchored" data-anchor-id="box-plots"><span class="header-section-number">13.3.4</span> Box Plots</h3>
 <p>To understand seasonal variability in your data (e.g.&nbsp;diurnal or seasonal flow patterns), box plots can be effective.</p>
-<div id="107da2b7" class="cell" data-execution_count="8">
+<div id="3ded55d9" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'Day'</span>] <span class="op">=</span> df.index.day_name()</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> df.boxplot(column<span class="op">=</span><span class="st">'Observed'</span>, by<span class="op">=</span><span class="st">'Day'</span>)</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>ax.get_figure().suptitle(<span class="st">""</span>) <span class="co"># remove figure title, just use axes title</span></span>
@@ -884,7 +884,7 @@ Note
 <section id="cumulative-sum-plots" class="level3" data-number="13.3.5">
 <h3 data-number="13.3.5" class="anchored" data-anchor-id="cumulative-sum-plots"><span class="header-section-number">13.3.5</span> Cumulative Sum Plots</h3>
 <p>Cumulative sum plots are excellent for assessing overall water balance or comparing total accumulated volumes (e.g., rainfall, runoff) between observed and simulated data over a period.</p>
-<div id="79a53b66" class="cell" data-execution_count="10">
+<div id="deb94b80" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>df_discharge.cumsum().plot(ylabel<span class="op">=</span><span class="st">"Cumulative Discharge (m$^3$/s)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
@@ -911,7 +911,7 @@ Note
 <section id="distribution-plots" class="level3" data-number="13.3.6">
 <h3 data-number="13.3.6" class="anchored" data-anchor-id="distribution-plots"><span class="header-section-number">13.3.6</span> Distribution Plots</h3>
 <p>Histograms help you examine the frequency distribution of variables, such as water levels or flows. This can be useful for comparing the overall statistical profile of observed versus simulated data or understanding the prevalence of certain magnitudes.</p>
-<div id="b49355a7" class="cell" data-execution_count="12">
+<div id="5f2bd249" class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>df.plot.hist(bins<span class="op">=</span><span class="dv">15</span>, alpha<span class="op">=</span><span class="fl">0.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
@@ -922,7 +922,7 @@ Note
 </div>
 </div>
 <p>Similarly, review frequency distribution with KDE plots:</p>
-<div id="a26c9149" class="cell" data-execution_count="13">
+<div id="239dfc2e" class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>df.plot.kde()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
@@ -937,7 +937,7 @@ Note
 <section id="saving-plots" class="level2" data-number="13.4">
 <h2 data-number="13.4" class="anchored" data-anchor-id="saving-plots"><span class="header-section-number">13.4</span> Saving Plots</h2>
 <p>Easily save plots for inclusion in reports via <code>plt.savefig()</code>.</p>
-<div id="f74d0090" class="cell" data-execution_count="14">
+<div id="1fe86b29" class="cell" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> df[<span class="st">'Observed'</span>].plot(title<span class="op">=</span><span class="st">'Daily Average Flow'</span>, ylabel<span class="op">=</span><span class="st">"Flow ($m^3/s$)"</span>)</span>
