@@ -80,7 +80,7 @@ catchment_muids[:3]
 
 MIKE+Py provides several ways to filter rows based on conditions.
 
-### Filtering with `by_muid()`
+### Filtering with by_muid()
 
 If you know the MUID(s) of the specific record(s) you want, the `by_muid()` method is a convenient way to filter.
 
@@ -108,7 +108,7 @@ You can also provide a list of MUIDs.
 )
 ```
 
-### Filtering with `where()`
+### Filtering with where()
 
 For more complex filtering based on column values, use the `where()` method. This method accepts an SQL-like condition string.
 

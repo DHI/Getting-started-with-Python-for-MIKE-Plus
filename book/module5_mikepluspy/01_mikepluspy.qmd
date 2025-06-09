@@ -37,9 +37,9 @@ Always refer to the [official MIKE+Py documentation](https://dhi.github.io/mikep
 
 You'll primarily work with these MIKE+Py components:
 
-*   **`Database` object**: Your main connection to the MIKE+ project, opened from a `.sqlite` file. It's the gateway to all other functionalities.
-*   **`Tables`**: Access and modify data stored in the model's relational tables (e.g., `msm_Node` for nodes, `msm_Link` for pipes).
-*   **`Scenarios` and `Alternatives`**: Programmatically manage different versions or configurations of your model.
+*   **Database object**: Your main connection to the MIKE+ project, opened from a `.sqlite` file. It's the gateway to all other functionalities.
+*   **Tables**: Access and modify data stored in the model's relational tables (e.g., `msm_Node` for nodes, `msm_Link` for pipes).
+*   **Scenarios and Alternatives**: Programmatically manage different versions or configurations of your model.
 
 ## Example Use Cases
 
