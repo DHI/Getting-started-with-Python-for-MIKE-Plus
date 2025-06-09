@@ -395,7 +395,7 @@
     "href": "module1_foundations/python_basics.html#using-libraries",
     "title": "6  Python Basics",
     "section": "",
-    "text": "Note\n\n\n\nThe terms package, library, and module are used interchangeably throughout this course.\n\n\n\n6.1.1 Import libraries\nImport libraries using the import statement:\n\nimport math\n\nOr import specific functionality from a library:\n\nfrom math import sqrt\n\n\n\n6.1.2 Objects\nAll imports are objects containing some functionality. Objects have members accessible via the dot notation:\n\nmath.pi\n\n3.141592653589793\n\n\nDot accessors can be chained together, since all members are also objects.\n\nmath.pi.is_integer()\n\nFalse\n\n\nThere are a few common types of objects to be aware of:\n\nModules: reusable code you can import into your program.\nClasses: templates for creating objects with specific properties and behaviors.\nFunctions / Methods: blocks of code that return a result.\nData: any stored information (e.g. numbers, text).\n\nSee the type of an object with:\n\ntype(math)\n\nmodule\n\n\nSee the members of an object with:\n\ndir(math)\n\nGet help for an object:\n\nhelp(math)\n\nGood libraries have documentation. For example, see the documentation for math.\n\n\n6.1.3 Using Functions / Methods\n\n\n\n\n\n\nNote\n\n\n\nThis course will use the terms ‘function’ and ‘method’ interchangeably.\n\n\nUse a function by invoking it with round brackets:\n\nsqrt(25)\n\n5.0\n\n\nBetween the brackets is the function arguments. There’s different ways of specifying arguments. For example, there could be a list of arguments:\n\nmath.pow(2, 3)\n\n8.0\n\n\n\n\n6.1.4 Using Classes\nSome library functionality is provided via a class that needs to be instantiated before using it.\nBelow, the Random class is instantiated and assigned to the identifier my_random for reference later on.\n\nfrom random import Random\nmy_random = Random()\n\nAn instantiation of a class is called an instance, and is also an object whose functionality is accessible with the dot notation:\n\nmy_random.random() # returns a random number\n\n0.8025334765081212",
+    "text": "Note\n\n\n\nThe terms package, library, and module are used interchangeably throughout this course.\n\n\n\n6.1.1 Import libraries\nImport libraries using the import statement:\n\nimport math\n\nOr import specific functionality from a library:\n\nfrom math import sqrt\n\n\n\n6.1.2 Objects\nAll imports are objects containing some functionality. Objects have members accessible via the dot notation:\n\nmath.pi\n\n3.141592653589793\n\n\nDot accessors can be chained together, since all members are also objects.\n\nmath.pi.is_integer()\n\nFalse\n\n\nThere are a few common types of objects to be aware of:\n\nModules: reusable code you can import into your program.\nClasses: templates for creating objects with specific properties and behaviors.\nFunctions / Methods: blocks of code that return a result.\nData: any stored information (e.g. numbers, text).\n\nSee the type of an object with:\n\ntype(math)\n\nmodule\n\n\nSee the members of an object with:\n\ndir(math)\n\nGet help for an object:\n\nhelp(math)\n\nGood libraries have documentation. For example, see the documentation for math.\n\n\n6.1.3 Using Functions / Methods\n\n\n\n\n\n\nNote\n\n\n\nThis course will use the terms ‘function’ and ‘method’ interchangeably.\n\n\nUse a function by invoking it with round brackets:\n\nsqrt(25)\n\n5.0\n\n\nBetween the brackets is the function arguments. There’s different ways of specifying arguments. For example, there could be a list of arguments:\n\nmath.pow(2, 3)\n\n8.0\n\n\n\n\n6.1.4 Using Classes\nSome library functionality is provided via a class that needs to be instantiated before using it.\nBelow, the Random class is instantiated and assigned to the identifier my_random for reference later on.\n\nfrom random import Random\nmy_random = Random()\n\nAn instantiation of a class is called an instance, and is also an object whose functionality is accessible with the dot notation:\n\nmy_random.random() # returns a random number\n\n0.7744977257940052",
     "crumbs": [
       "Module 1 - Foundations",
       "<span class='chapter-number'>6</span>  <span class='chapter-title'>Python Basics</span>"
@@ -1564,6 +1564,369 @@
     "text": "Exercise 1\n\nDownload module4_model.zip into a new project folder and extract its content.\nReview the folder structure and files of the model. It should be as follows:\n\nmodule4_model\n├── data\n│   ├── flow_meter_A_2020_09.dfs0\n│   ├── flow_meter_B_2020_09.dfs0\n│   └── rainfall_events_2020-09.dfs0\n├── Dyrup_uncalibrated.mupp\n├── Dyrup_uncalibrated.sqlite\n├── LTS\n│   └── rainfall_events_LTS_2020_09.MJL\n└── results\n    ├── rainfallBaseDefault_Network_HD.res1d\n    └── rainfallBaseDefault_Surface_runoff.res1d\n\nOpen Dyrup_uncalibrated.mupp in MIKE+ and familiarize yourself with the model.\n\nReview the boundary conditions. Can you see where the rainfall is applied?\nFind the system’s only node outlet: G60F360.\nLocate the two flow meters (A and B). Which reach IDs are they associated with?\nReview the simulation setup.\n\nMake a new LTS job list for the simulation. How does it compare with LTS/rainfall_events_LTS_2020_09.MJL?\nRun a simulation. Do you get the same results as those in the results folder?\n\nExercise 2\n\nCreate a new Jupyter Notebook and save it in your project folder.\nCreate a PointObservation object for “Flow Meter A” using data/flow_meter_A_2020_09.dfs0.\nCreate a PointObservation object for “Flow Meter B” using data/flow_meter_B_2020_09.dfs0.\nFor both obs_A and obs_B:\n\nPrint their objects and inspect the data.\nPlot their time series.\n\n\nExercise 3\n\nUse the model network results from Exercise 1 (or the provided reference results).\nFor “Flow Meter A” (model reach G60F380_G60F360_l1), extract its ‘Discharge’ quantity to a dfs0 file.\nCreate a PointModelResult object from the dfs0 file created above.\nFor “Flow Meter B” (model reach G62F070_G62F060_l1), extract its ‘Discharge’ quantity to a dfs0 file.\nCreate a PointModelResult object from the dfs0 file created above.\nFor both mod_A and mod_B:\n\nPrint the object summary.\nPlot the model result time series.\n\n\nExercise 4\n\nMatch obs_A with mod_A using ms.match(). Store in comparer_A.\nMatch obs_B with mod_B. Store in comparer_B.\nFor comparer_A:\n\nGenerate time series plot: comparer_A.plot.timeseries().\nGenerate scatter plot: comparer_A.plot.scatter().\nCalculate and display skill table: comparer_A.skill().\n\nRepeat step 3 for comparer_B.\nExamine the skill tables. Qualitatively, which metrics suggest better or worse performance for each location?\n\nExercise 5\n\nCreate a ComparerCollection named cc from comparer_A and comparer_B.\nDisplay cc. Check cc.obs_names and cc.mod_names.\nMake a temporal coverage plot: cc.plot.temporal_coverage().\nMake a scatter plot: cc.plot.scatter().\nMake a residual histogram: cc.plot.residual_hist().\nCalculate and display the skill table for the collection: cc.skill().\n\nModify to show only ‘rmse’, ‘bias’, ‘nse’, and ‘kge’ metrics.\n\nCalculate and display the mean skill table: cc.mean_skill().\n\nModify to show only ‘rmse’, ‘bias’, ‘nse’, and ‘kge’.\n\nUsing cc.score(), retrieve and print the mean ‘kge’ score for the model.\n\nExercise 6\n\nRepeat Exercise 4 and 5, but using the max_model_gap parameter of ms.match(). Use a value of 600 seconds.\nHow do the number of observation points in each Comparer change?\nHow does the temporal coverage plot change?\nHow does this approach impact the skill assessment?\nReview ModelSkill’s documentation on ‘nse’. How do both flow meters, and the overall model perform on this metric?",
     "crumbs": [
       "Module 4 - Calibration Plots and Statistics",
+      "Homework"
+    ]
+  },
+  {
+    "objectID": "module5_mikepluspy/index.html",
+    "href": "module5_mikepluspy/index.html",
+    "title": "Welcome to Module 5!",
+    "section": "",
+    "text": "This module introduces MIKE+Py, a Python package for programmatic interaction with MIKE+ model databases. You’ll learn to automate common modelling tasks, enhancing your efficiency and reproducibility.\nThis package allows direct access to your MIKE+ project’s .sqlite database to read/write data, manage scenarios, and run simulations.\nThroughout this module, you will learn to:\n\nUnderstand the structure of MIKE+ project databases.\nConnect to a MIKE+ database using MIKE+Py.\nRead data from various model tables.\nModify model parameters and data.\nManage scenarios and alternatives programmatically.\nConfigure and execute MIKE+ simulations from Python.\n\nThis module culminates in a practical homework assignment where you’ll apply these skills to automate tasks for a sample MIKE+ model.\nLet’s get started!\n\n\n\n\n\n\nWhere can I download sample data to follow along?\n\n\n\n\n\nAll of the sample data used in this module is available for download:\n\nmodule5_model.zip\n\nNote: this is the exact same model from Module 4 (Homework - Exercise 1).",
+    "crumbs": [
+      "Module 5 - MIKE+Py",
+      "Welcome to Module 5!"
+    ]
+  },
+  {
+    "objectID": "module5_mikepluspy/01_mikepluspy.html",
+    "href": "module5_mikepluspy/01_mikepluspy.html",
+    "title": "MIKE+Py",
+    "section": "",
+    "text": "What is MIKE+Py and Why Use It?\nThis section introduces MIKE+Py, a Python package for interacting with MIKE+ projects. You’ll learn its purpose, capabilities, installation, and core concepts.\nMIKE+Py is an open-source Python package that lets you work directly with MIKE+ model databases (.sqlite files). Its main goals are to automate modelling tasks and improve the reproducibility of your MIKE+ workflows.\nWith MIKE+Py, you can programmatically:",
+    "crumbs": [
+      "Module 5 - MIKE+Py",
+      "<span class='chapter-number'>25</span>  <span class='chapter-title'>MIKE+Py</span>"
+    ]
+  },
+  {
+    "objectID": "module5_mikepluspy/01_mikepluspy.html#what-is-mikepy-and-why-use-it",
+    "href": "module5_mikepluspy/01_mikepluspy.html#what-is-mikepy-and-why-use-it",
+    "title": "MIKE+Py",
+    "section": "",
+    "text": "Read and modify model parameters: Change pipe diameters, node inverts, catchment properties, etc.\nManage scenarios and alternatives: Create and switch between different model configurations.\nRun simulations: Execute MIKE+ model simulations.\nRun tools: Execute some GUI tools pythonically (e.g. import/export tool).\n\n\n\n\n\n\n\nModifying Databases Correctly\n\n\n\nUse MIKE+Py for database modifications, not generic SQLite libraries (e.g., Python’s sqlite3). MIKE+Py leverages MIKE+’s internal .NET API, ensuring changes adhere to MIKE+ specific logic and maintain database integrity. Generic tools bypass this, risking model corruption.",
+    "crumbs": [
+      "Module 5 - MIKE+Py",
+      "<span class='chapter-number'>25</span>  <span class='chapter-title'>MIKE+Py</span>"
+    ]
+  },
+  {
+    "objectID": "module5_mikepluspy/01_mikepluspy.html#installation",
+    "href": "module5_mikepluspy/01_mikepluspy.html#installation",
+    "title": "MIKE+Py",
+    "section": "Installation",
+    "text": "Installation\nInstall MIKE+Py using uv in your terminal:\nuv pip install mikeplus\n\n\n\n\n\n\nNote\n\n\n\nUse of MIKE+Py requires a valid MIKE+ license, unlike previously covered Python packages (e.g. MIKE IO, MIKE IO 1D).\n\n\n\n\n\n\n\n\nTip\n\n\n\nAlways refer to the official MIKE+Py documentation for the most up-to-date installation instructions.",
+    "crumbs": [
+      "Module 5 - MIKE+Py",
+      "<span class='chapter-number'>25</span>  <span class='chapter-title'>MIKE+Py</span>"
+    ]
+  },
+  {
+    "objectID": "module5_mikepluspy/01_mikepluspy.html#core-components",
+    "href": "module5_mikepluspy/01_mikepluspy.html#core-components",
+    "title": "MIKE+Py",
+    "section": "Core Components",
+    "text": "Core Components\nYou’ll primarily work with these MIKE+Py components:\n\nDatabase object: Your main connection to the MIKE+ project, opened from a .sqlite file. It’s the gateway to all other functionalities.\nTables: Access and modify data stored in the model’s relational tables (e.g., msm_Node for nodes, msm_Link for pipes).\nScenarios and Alternatives: Programmatically manage different versions or configurations of your model.",
+    "crumbs": [
+      "Module 5 - MIKE+Py",
+      "<span class='chapter-number'>25</span>  <span class='chapter-title'>MIKE+Py</span>"
+    ]
+  },
+  {
+    "objectID": "module5_mikepluspy/01_mikepluspy.html#example-use-cases",
+    "href": "module5_mikepluspy/01_mikepluspy.html#example-use-cases",
+    "title": "MIKE+Py",
+    "section": "Example Use Cases",
+    "text": "Example Use Cases\nCommon applications of MIKE+Py include:\n\nAutomating sensitivity analyses by systematically varying parameters across numerous scenarios.\nRunning batch simulations for different rainfall events or operational strategies.\nDeveloping scripted model calibration and validation workflows.\nExtracting specific model data for custom reports or further analysis.\n\nThe following sections will detail how to connect to databases, read and modify data, manage scenarios, and run simulations.",
+    "crumbs": [
+      "Module 5 - MIKE+Py",
+      "<span class='chapter-number'>25</span>  <span class='chapter-title'>MIKE+Py</span>"
+    ]
+  },
+  {
+    "objectID": "module5_mikepluspy/01_mikepluspy.html#maturity-potential-and-challenges",
+    "href": "module5_mikepluspy/01_mikepluspy.html#maturity-potential-and-challenges",
+    "title": "MIKE+Py",
+    "section": "Maturity, Potential, and Challenges",
+    "text": "Maturity, Potential, and Challenges\nMIKE+Py is less mature than other DHI packages, like MIKE IO and MIKE IO 1D. It is actively being developed, with more features planned.\n\n\n\n\n\n\nCompatibility issues\n\n\n\nThere are known compatibility issues when using MIKE+Py alongside other DHI libraries (e.g. MIKE IO, MIKE IO 1D, ModelSkill).\n\nImporting MIKE IO after MIKE+Py is not supported and will cause errors.\nImporting MIKE IO 1D before MIKE+Py is not supported and will cause errors.\n\nThe following is the suggest import order which works for most use cases, but could still run into issues:\nimport mikeio\nimport modelskill as ms\nimport mikeplus as mp\nimport mikeio1d",
+    "crumbs": [
+      "Module 5 - MIKE+Py",
+      "<span class='chapter-number'>25</span>  <span class='chapter-title'>MIKE+Py</span>"
+    ]
+  },
+  {
+    "objectID": "module5_mikepluspy/02_databases.html",
+    "href": "module5_mikepluspy/02_databases.html",
+    "title": "MIKE+ Database",
+    "section": "",
+    "text": "General\nUnderstanding how MIKE+ stores its data is crucial for effectively using MIKE+Py. This section covers the basics of the MIKE+ database, shows how to explore the database structure both within the MIKE+ GUI and programmatically with MIKE+Py.\nThis section provides a concise primer on useful background knowledge.",
+    "crumbs": [
+      "Module 5 - MIKE+Py",
+      "<span class='chapter-number'>26</span>  <span class='chapter-title'>MIKE+ Database</span>"
+    ]
+  },
+  {
+    "objectID": "module5_mikepluspy/02_databases.html#general",
+    "href": "module5_mikepluspy/02_databases.html#general",
+    "title": "MIKE+ Database",
+    "section": "",
+    "text": "SQLite3\nMIKE+ stores model data in an SQLite database, a common and self-contained format.\n\nIt’s a single file\n\nA single .sqlite file holds all tables and data.\n\nIt’s relational\n\nTables are organized and linked together using keys (unique IDs like MUID).\n\nIt’s free and serverless\n\nAs open-source software, it requires no installation and works with many tools.\n\n\n\n\n\n\n\n\nNote\n\n\n\nWhile MIKE+ also supports PostgreSQL databases, MIKE+Py currently only supports SQLite.\n\n\n\n\nSQL\nSQL (Structured Query Language) is the standard language for managing data in a relational database. You use it to query and modify data with commands like:\n\nSELECT\n\nGet specific data from tables.\n\nUPDATE, INSERT, DELETE\n\nChange, add, or remove data.\n\nWHERE\n\nFilter data with conditions.\n\n\nYou do not need to know SQL to use MIKE+Py. However, MIKE+Py’s design intentionally mirrors common SQL patterns, so being familiar with the concepts is helpful.\n\n\n\n\n\n\nLearning SQL\n\n\n\n\n\nIf you’re new to SQL, there are many excellent resources available online. Here are a few starting points:\n\nLearn X in Y minutes - SQL\nSQLZoo",
+    "crumbs": [
+      "Module 5 - MIKE+Py",
+      "<span class='chapter-number'>26</span>  <span class='chapter-title'>MIKE+ Database</span>"
+    ]
+  },
+  {
+    "objectID": "module5_mikepluspy/02_databases.html#mike-projects",
+    "href": "module5_mikepluspy/02_databases.html#mike-projects",
+    "title": "MIKE+ Database",
+    "section": "MIKE+ Projects",
+    "text": "MIKE+ Projects\nWhen you work with a MIKE+ project, you’ll typically interact with two main file types:\n\nProject File (.mupp)\n\nThe main file you open with MIKE+. It points to the database location and stores UI settings like map symbology, preferences, and background layers.\n\nProject Database (.sqlite)\n\nThis file is the model database. It stores all the core model data, including network elements (nodes, links, catchments), their parameters, simulation setups, scenarios, and alternatives.\n\n\nMIKE+Py works on the project database (.sqlite), not the project file.\n\n\n\n\n\n\nNeed to modify a .mupp file?\n\n\n\n\n\nSimply open it with any text editor. It uses DHI’s PFS format, which is structured plain-text. For more advanced edits, consider using MIKE IO’s PFS functionality.",
+    "crumbs": [
+      "Module 5 - MIKE+Py",
+      "<span class='chapter-number'>26</span>  <span class='chapter-title'>MIKE+ Database</span>"
+    ]
+  },
+  {
+    "objectID": "module5_mikepluspy/02_databases.html#mike-database",
+    "href": "module5_mikepluspy/02_databases.html#mike-database",
+    "title": "MIKE+ Database",
+    "section": "MIKE+ Database",
+    "text": "MIKE+ Database\nThe MIKE+ Database organizes tables into groups with the following naming conventions.\n\n\n\n\n\n\n\n\nPrefix\nDescription\nExample(s)\n\n\n\n\nm_\nGeneral MIKE+ tables\nm_ModelSetting\n\n\nms_\nTables common to collection systems and water distribution\nms_Tab\n\n\nmw_\nWater distribution specific tables\nmw_Pipe, mw_Junction\n\n\nmsm_\nMIKE 1D collection systems\nmsm_Node, msm_Link\n\n\nmrm_\nMIKE 1D rivers\nmrm_Branch\n\n\nmss_\nSWMM specific tables\nmss_Node, mss_Link\n\n\nm2d_\nMIKE 21 specific tables\nm2d_Boundary\n\n\n\nMost tables have a MUID column, which serves as a unique identifier for each record (row) within that table.\nRefer to MIKE+’s documentation for more detailed descriptions.",
+    "crumbs": [
+      "Module 5 - MIKE+Py",
+      "<span class='chapter-number'>26</span>  <span class='chapter-title'>MIKE+ Database</span>"
+    ]
+  },
+  {
+    "objectID": "module5_mikepluspy/02_databases.html#exploring-database-in-the-mike-gui",
+    "href": "module5_mikepluspy/02_databases.html#exploring-database-in-the-mike-gui",
+    "title": "MIKE+ Database",
+    "section": "Exploring Database in the MIKE+ GUI",
+    "text": "Exploring Database in the MIKE+ GUI\nBefore diving into programmatic access, it’s helpful to know how to identify table and column names using the MIKE+ GUI. This will help you identify the table and column of the data you’re interested in.\nThe easiest way is with MIKE+’s tooltips. When you hover over a field, a tooltip is displayed containing both the table name and column name. The format is: TableName.ColumnName. For example, the video below shows three different columns that all reside in the table msm_Catchment.\n\nA typical workflow in MIKE+Py is first identifying where the data is via the GUI. This information is essential for querying and modifying specific data.\n\n\n\n\n\n\nTip\n\n\n\nYou can also hover over the column headers in a MIKE+ table view.",
+    "crumbs": [
+      "Module 5 - MIKE+Py",
+      "<span class='chapter-number'>26</span>  <span class='chapter-title'>MIKE+ Database</span>"
+    ]
+  },
+  {
+    "objectID": "module5_mikepluspy/02_databases.html#exploring-the-database-with-mikepy",
+    "href": "module5_mikepluspy/02_databases.html#exploring-the-database-with-mikepy",
+    "title": "MIKE+ Database",
+    "section": "Exploring the Database with MIKE+Py",
+    "text": "Exploring the Database with MIKE+Py\n\nOpening Database\nFirst, open a database with mp.open(). This returns a Database object, which is central for all database operations.\n\nimport mikeplus as mp\n\ndb = mp.open(\"data/Dyrup_uncalibrated.sqlite\")\nprint(f\"MIKE+ Database Version: {db.version}\")\ndb.close()\n\nMIKE+ Database Version: 2025.0.0\n\n\nIt’s important to close the Database object at the end of your workflow with close().\nIt’s easy to forget, therefore it’s recommended to use Python’s context manager syntax to handle closing automatically:\n\nwith mp.open(\"data/Dyrup_uncalibrated.sqlite\") as db:\n    print(f\"MIKE+ Active Model: {db.active_model}\")\n    # database remains open within this code block...\n\n# now it's closed :)\n\nMIKE+ Active Model: CS_MIKE1D\n\n\n\n\n\n\n\n\nNote\n\n\n\nThe remaining code examples assume a Database object was obtained per the above examples.\n\n\n\n\nTables\nThe db.tables attribute provides access to a collection of all tables in the database.\n\ndb.tables\n\nTableCollection&lt;323 tables&gt;\n\n\nYou can access a specific Table object by attribute-style access. Notice this conveniently includes auto-completion.\n\ndb.tables.msm_Catchment\n\nmsm_CatchmentTable&lt;Catchments&gt;\n\n\nWe’ll look into working with tables in the next section, but notice it’s integrated with Pandas:\n\ndf = db.tables.msm_Catchment.to_dataframe()\ndf.head()\n\n\n\n\n\n\n\n\nMUID\nEnabled\nGeomCentroidX\nGeomCentroidY\nArea\nGeomArea\nPersons\nHydrologicalModelNo\nLossDefinition\nModelAImpArea\n...\nSWMM_InitDef\nSWMM_Conduct\nSWMM_RunoffCN\nSWMM_CRegen\nSWMM_Tag\nDataSource\nAssetName\nElement_S\nNetTypeNo\nDescription\n\n\n\n\nG61F011_7292\nG61F011_7292\n1\n585625.618252\n6134811.993345\n4501.460376\n4501.456959\n0.0\n1\n1\n0.375906\n...\nNone\nNone\n0\nNone\nNone\nNone\nNone\nNone\n3\nD10F050\n\n\nG61F013_7293\nG61F013_7293\n1\n585673.073141\n6134756.306611\n2376.508964\n2376.511229\n0.0\n1\n1\n0.327839\n...\nNone\nNone\n0\nNone\nNone\nNone\nNone\nNone\n3\nD10F050\n\n\nG61F030_7294\nG61F030_7294\n1\n585564.527279\n6134874.864836\n4567.727442\n4567.727991\n0.0\n1\n1\n0.416389\n...\nNone\nNone\n0\nNone\nNone\nNone\nNone\nNone\n3\nD10F050\n\n\nG61F031_7295\nG61F031_7295\n1\n585533.822109\n6134832.92312\n3759.297083\n3759.301193\n0.0\n1\n1\n0.387001\n...\nNone\nNone\n0\nNone\nNone\nNone\nNone\nNone\n3\nD10F050\n\n\nG61F032_7296\nG61F032_7296\n1\n585499.225735\n6134786.067181\n5635.766493\n5635.764436\n0.0\n1\n1\n0.344482\n...\nNone\nNone\n0\nNone\nNone\nNone\nNone\nNone\n3\nD10F050\n\n\n\n\n5 rows × 109 columns\n\n\n\n\n\nColumns\nEach table object has a columns attribute that allows you to see the names of its columns. This is mostly useful for auto-completion and avoiding typos.\n\ndb.tables.msm_Catchment.columns.ModelAConcTime\n\n'ModelAConcTime'\n\n\n\n\n\n\n\n\n\nAuto-completion slow to load?\n\n\n\n\n\nMIKE+ has many tables which can take a few seconds to load on first import. In VS Code, you can open the auto-completion menu with Ctrl+Space, which will indicate it’s loading, then update when finished.\n\n\n\n\n\n\n\n\n\nTip\n\n\n\nCheck out MIKE+Py’s API documentation for a searchable overview of tables and columns.\n\n\nThe next section will dive into more flexible queries of table information.",
+    "crumbs": [
+      "Module 5 - MIKE+Py",
+      "<span class='chapter-number'>26</span>  <span class='chapter-title'>MIKE+ Database</span>"
+    ]
+  },
+  {
+    "objectID": "module5_mikepluspy/03_select.html",
+    "href": "module5_mikepluspy/03_select.html",
+    "title": "Selecting Data",
+    "section": "",
+    "text": "Selecting Data\nMIKE+Py allows you to programmatically read data from your MIKE+ model database. This is done by constructing and executing queries against specific tables. This section focuses on SELECT queries, which are used to retrieve data.\nQueries in MIKE+Py are typically initiated from a Table object, which you access through an opened Database object.\nFirst, let’s open our MIKE+ project database. We’ll use the db object for all subsequent examples in this section.\nThe primary way to retrieve data is by using the select() method on a table object (e.g., db.tables.msm_Node). This creates a SelectQuery object, which you can then refine and execute.",
+    "crumbs": [
+      "Module 5 - MIKE+Py",
+      "<span class='chapter-number'>27</span>  <span class='chapter-title'>Selecting Data</span>"
+    ]
+  },
+  {
+    "objectID": "module5_mikepluspy/03_select.html#selecting-data",
+    "href": "module5_mikepluspy/03_select.html#selecting-data",
+    "title": "Selecting Data",
+    "section": "",
+    "text": "All Columns\nTo select all columns from a table, you can call select() without arguments, followed by to_dataframe() to get the results as a Pandas DataFrame.\nLet’s retrieve all data from the msm_Catchment table:\n\ndf_all_catchments = db.tables.msm_Catchment.select().to_dataframe()\ndf_all_catchments.head()\n\n\n\n\n\n\n\n\nMUID\nEnabled\nGeomCentroidX\nGeomCentroidY\nArea\nGeomArea\nPersons\nHydrologicalModelNo\nLossDefinition\nModelAImpArea\n...\nSWMM_InitDef\nSWMM_Conduct\nSWMM_RunoffCN\nSWMM_CRegen\nSWMM_Tag\nDataSource\nAssetName\nElement_S\nNetTypeNo\nDescription\n\n\n\n\nG61F011_7292\nG61F011_7292\n1\n585625.618252\n6134811.993345\n4501.460376\n4501.456959\n0.0\n1\n1\n0.375906\n...\nNone\nNone\n0\nNone\nNone\nNone\nNone\nNone\n3\nD10F050\n\n\nG61F013_7293\nG61F013_7293\n1\n585673.073141\n6134756.306611\n2376.508964\n2376.511229\n0.0\n1\n1\n0.327839\n...\nNone\nNone\n0\nNone\nNone\nNone\nNone\nNone\n3\nD10F050\n\n\nG61F030_7294\nG61F030_7294\n1\n585564.527279\n6134874.864836\n4567.727442\n4567.727991\n0.0\n1\n1\n0.416389\n...\nNone\nNone\n0\nNone\nNone\nNone\nNone\nNone\n3\nD10F050\n\n\nG61F031_7295\nG61F031_7295\n1\n585533.822109\n6134832.92312\n3759.297083\n3759.301193\n0.0\n1\n1\n0.387001\n...\nNone\nNone\n0\nNone\nNone\nNone\nNone\nNone\n3\nD10F050\n\n\nG61F032_7296\nG61F032_7296\n1\n585499.225735\n6134786.067181\n5635.766493\n5635.764436\n0.0\n1\n1\n0.344482\n...\nNone\nNone\n0\nNone\nNone\nNone\nNone\nNone\n3\nD10F050\n\n\n\n\n5 rows × 109 columns\n\n\n\n\n\n\n\n\n\nTip\n\n\n\nWhen retrieving all columns, a shortcut is simply calling to_dataframe() on the table itself, omitting select().\n\n\n\n\nSpecific Columns\nOften, you only need a subset of columns. You can specify these by passing a list of column names to the select() method.\nLet’s select only the Area, and ModelAImpArea for all catchments:\n\ndf_catchment_subset = db.tables.msm_Catchment.select(['Area', 'ModelAImpArea']).to_dataframe()\ndf_catchment_subset.head()\n\n\n\n\n\n\n\n\nArea\nModelAImpArea\n\n\n\n\nG61F011_7292\n4501.460376\n0.375906\n\n\nG61F013_7293\n2376.508964\n0.327839\n\n\nG61F030_7294\n4567.727442\n0.416389\n\n\nG61F031_7295\n3759.297083\n0.387001\n\n\nG61F032_7296\n5635.766493\n0.344482\n\n\n\n\n\n\n\nExpressions can be made more readable to help better understand complex queries. Additionally, specifying column names by object rather than string helps reduce typo errors.\n\ndf_catchment_subset = (\n    db.tables.msm_Catchment\n        .select([\n            db.tables.msm_Catchment.columns.Area,\n            db.tables.msm_Catchment.columns.ModelAImpArea,\n            db.tables.msm_Catchment.columns.ModelAConcTime,\n            db.tables.msm_Catchment.columns.ModelARFactor,\n        ])\n        .to_dataframe()\n)\ndf_catchment_subset.head()\n\n\n\n\n\n\n\n\nArea\nModelAImpArea\nModelAConcTime\nModelARFactor\n\n\n\n\nG61F011_7292\n4501.460376\n0.375906\n1200.0\n1.0\n\n\nG61F013_7293\n2376.508964\n0.327839\n1200.0\n1.0\n\n\nG61F030_7294\n4567.727442\n0.416389\n1200.0\n1.0\n\n\nG61F031_7295\n3759.297083\n0.387001\n1200.0\n1.0\n\n\nG61F032_7296\n5635.766493\n0.344482\n1200.0\n1.0\n\n\n\n\n\n\n\nAlthough the expression above is more verbose, it’s now much more readable, especially when you read it a year later.\n\n\n\n\n\n\nNote\n\n\n\nUse parentheses to break long statements across lines for readability. Alternatively, use backslashes.",
+    "crumbs": [
+      "Module 5 - MIKE+Py",
+      "<span class='chapter-number'>27</span>  <span class='chapter-title'>Selecting Data</span>"
+    ]
+  },
+  {
+    "objectID": "module5_mikepluspy/03_select.html#muids",
+    "href": "module5_mikepluspy/03_select.html#muids",
+    "title": "Selecting Data",
+    "section": "MUIDs",
+    "text": "MUIDs\nIf you only need the MUIDs (unique identifiers) for all records in a table, you can use the get_muids() method.\n\ncatchment_muids = db.tables.msm_Catchment.get_muids()\ncatchment_muids[:3]\n\n['G61F011_7292', 'G61F013_7293', 'G61F030_7294']",
+    "crumbs": [
+      "Module 5 - MIKE+Py",
+      "<span class='chapter-number'>27</span>  <span class='chapter-title'>Selecting Data</span>"
+    ]
+  },
+  {
+    "objectID": "module5_mikepluspy/03_select.html#filtering-rows",
+    "href": "module5_mikepluspy/03_select.html#filtering-rows",
+    "title": "Selecting Data",
+    "section": "Filtering Rows",
+    "text": "Filtering Rows\nMIKE+Py provides several ways to filter rows based on conditions.\n\nFiltering with by_muid()\nIf you know the MUID(s) of the specific record(s) you want, the by_muid() method is a convenient way to filter.\nRetrieve data for a catchment with a specific MUID, for example, ‘G61F011_7292’.\n\n(\n    db.tables.msm_Catchment\n        .select()\n        .by_muid('G61F011_7292')\n        .to_dataframe()\n        .head()\n)\n\n\n\n\n\n\n\n\nMUID\nEnabled\nGeomCentroidX\nGeomCentroidY\nArea\nGeomArea\nPersons\nHydrologicalModelNo\nLossDefinition\nModelAImpArea\n...\nSWMM_InitDef\nSWMM_Conduct\nSWMM_RunoffCN\nSWMM_CRegen\nSWMM_Tag\nDataSource\nAssetName\nElement_S\nNetTypeNo\nDescription\n\n\n\n\nG61F011_7292\nG61F011_7292\n1\n585625.618252\n6134811.993345\n4501.460376\n4501.456959\n0.0\n1\n1\n0.375906\n...\nNone\nNone\n0\nNone\nNone\nNone\nNone\nNone\n3\nD10F050\n\n\n\n\n1 rows × 109 columns\n\n\n\nYou can also provide a list of MUIDs.\n\n(\n    db.tables.msm_Catchment\n        .select()\n        .by_muid(['G61F011_7292', 'G61F013_7293'])\n        .to_dataframe()\n        .head()\n)\n\n\n\n\n\n\n\n\nMUID\nEnabled\nGeomCentroidX\nGeomCentroidY\nArea\nGeomArea\nPersons\nHydrologicalModelNo\nLossDefinition\nModelAImpArea\n...\nSWMM_InitDef\nSWMM_Conduct\nSWMM_RunoffCN\nSWMM_CRegen\nSWMM_Tag\nDataSource\nAssetName\nElement_S\nNetTypeNo\nDescription\n\n\n\n\nG61F011_7292\nG61F011_7292\n1\n585625.618252\n6134811.993345\n4501.460376\n4501.456959\n0.0\n1\n1\n0.375906\n...\nNone\nNone\n0\nNone\nNone\nNone\nNone\nNone\n3\nD10F050\n\n\nG61F013_7293\nG61F013_7293\n1\n585673.073141\n6134756.306611\n2376.508964\n2376.511229\n0.0\n1\n1\n0.327839\n...\nNone\nNone\n0\nNone\nNone\nNone\nNone\nNone\n3\nD10F050\n\n\n\n\n2 rows × 109 columns\n\n\n\n\n\nFiltering with where()\nFor more complex filtering based on column values, use the where() method. This method accepts an SQL-like condition string.\nSelect catchments where the Area is greater than 0.8 hectares.\n\n(\n    db.tables.msm_Catchment\n        .select(['Area'])\n        .where(\"Area &gt; 8000\")\n        .to_dataframe()\n)\n\n\n\n\n\n\n\n\nArea\n\n\n\n\nG61F080_7311\n8936.923187\n\n\nG61F163_7318\n8633.103482\n\n\nG61F430_7362\n8076.876771\n\n\nG62F090_7429\n9543.676343\n\n\n\n\n\n\n\n\n\n\n\n\n\nUnits in MIKE+ GUI versus what’s in the database\n\n\n\nValues displayed in the MIKE+ GUI may have different units than what is stored in the database. The examples above show catchment area in ‘hectares’, whereas the database stores them in ‘m²’. Stored units depend on the ‘Unit system’ defined for the specific model.\n\n\nSelect pipes having node ‘G61F351’ as its start node.\n\n(\n    db.tables.msm_Link\n        .select(['FromNodeID'])\n        .where(\"FromNodeID = 'G61F351'\")\n        .to_dataframe()\n)\n\n\n\n\n\n\n\n\nFromNodeID\n\n\n\n\nG61F351_G61F350_l1\nG61F351\n\n\n\n\n\n\n\nNotice the following about string condition passed to where():\n\ncolumn names are not in quotes (e.g. FromNodeID)\nstring values are in single quotes (e.g. ‘G61F351’)\nnumeric values are not in quotes (e.g. 8000)\n\nWrongly formatted condition strings is a common source of errors. MIKE+Py provides a helper function mp.to_sql() that helps with this formatting by preventing mistakes like forgetting to close quote pairs, or forgetting them entirely.\n\n(\n    db.tables.msm_Link\n        .select(['FromNodeID'])\n        .where(f\"FromNodeID = {mp.to_sql(\"G61F351\")}\")\n        .to_dataframe()\n)\n\n\n\n\n\n\n\n\nFromNodeID\n\n\n\n\nG61F351_G61F350_l1\nG61F351\n\n\n\n\n\n\n\nYou can chain multiple where() calls, or combine conditions within a single where() string using AND or OR. Chaining where() calls implies an AND relationship.\nSelect catchments where Area &gt; 8000 AND ModelAImpArea (impervious area for Model A) is less than 0.5.\n\n(\n    db.tables.msm_Catchment\n        .select(['MUID', 'Area', 'ModelAImpArea'])\n        .where(f\"Area &gt; {mp.to_sql(8000)}\")\n        .where(f\"ModelAImpArea &lt; {mp.to_sql(0.5)}\")\n        .to_dataframe()\n)\n\n\n\n\n\n\n\n\nMUID\nArea\nModelAImpArea\n\n\n\n\nG61F080_7311\nG61F080_7311\n8936.923187\n0.115279\n\n\nG61F163_7318\nG61F163_7318\n8633.103482\n0.249552\n\n\nG61F430_7362\nG61F430_7362\n8076.876771\n0.36946\n\n\nG62F090_7429\nG62F090_7429\n9543.676343\n0.447018\n\n\n\n\n\n\n\nThis is equivalent to:\n\n(\n    db.tables.msm_Catchment\n        .select(['MUID', 'Area', 'ModelAImpArea'])\n        .where(f\"Area &gt; {mp.to_sql(8000)} AND ModelAImpArea &lt; {mp.to_sql(0.5)}\")\n        .to_dataframe()\n)\n\n\n\n\n\n\n\n\nMUID\nArea\nModelAImpArea\n\n\n\n\nG61F080_7311\nG61F080_7311\n8936.923187\n0.115279\n\n\nG61F163_7318\nG61F163_7318\n8633.103482\n0.249552\n\n\nG61F430_7362\nG61F430_7362\n8076.876771\n0.36946\n\n\nG62F090_7429\nG62F090_7429\n9543.676343\n0.447018",
+    "crumbs": [
+      "Module 5 - MIKE+Py",
+      "<span class='chapter-number'>27</span>  <span class='chapter-title'>Selecting Data</span>"
+    ]
+  },
+  {
+    "objectID": "module5_mikepluspy/03_select.html#practical-example",
+    "href": "module5_mikepluspy/03_select.html#practical-example",
+    "title": "Selecting Data",
+    "section": "Practical Example",
+    "text": "Practical Example\nLet’s say we defined a selection of catchments in MIKE+, for which we we want to retrieve their Area, ModelAImpArea, and ModelAConcTime.\nFirst let’s find the table that selections are stored in. Notice there’s no hover tooltips in MIKE+ GUI for selections. However, we find the table m_Selection anyways by searching MIKE+Py’s documentation for selection. Alternatively, we could have guessed it with help from IDE auto-completion, typing something like db.tables.selec.\nStart by displaying the whole table.\n\ndb.tables.m_Selection.to_dataframe()\n\n\n\n\n\n\n\n\nMUID\nSelectionID\nTableName\nItemMUID\n\n\n\n\nSel_1\nSel_1\nFlow_Meter_B_Catchments\nmsm_Catchment\nG61F180_7321\n\n\nSel_2\nSel_2\nFlow_Meter_B_Catchments\nmsm_Catchment\nG62F060_7424\n\n\nSel_3\nSel_3\nFlow_Meter_B_Catchments\nmsm_Catchment\nG62F070_7425\n\n\nSel_4\nSel_4\nFlow_Meter_B_Catchments\nmsm_Catchment\nG62F071_7426\n\n\nSel_5\nSel_5\nFlow_Meter_B_Catchments\nmsm_Catchment\nG62F072_7427\n\n\n...\n...\n...\n...\n...\n\n\nSel_108\nSel_108\nFlow_Meter_A_Catchments\nmsm_Catchment\nG62F014_7419\n\n\nSel_109\nSel_109\nFlow_Meter_A_Catchments\nmsm_Catchment\nG62F015_7420\n\n\nSel_110\nSel_110\nFlow_Meter_A_Catchments\nmsm_Catchment\nG62F020_7421\n\n\nSel_111\nSel_111\nFlow_Meter_A_Catchments\nmsm_Catchment\nG62F022_7422\n\n\nSel_112\nSel_112\nFlow_Meter_A_Catchments\nmsm_Catchment\nG62F023_7423\n\n\n\n\n112 rows × 4 columns\n\n\n\nWe notice the column SelectionID corresponds with our selection names. TableName and ItemMUID together seem to refer to the items of the selection. We want the catchment MUIDs for selection Flow_Meter_B_Catchments.\n\nmuids = (\n    db.tables.m_Selection\n        .select([\"ItemMUID\"])\n        .where(f\"{db.tables.m_Selection.columns.SelectionID} = {mp.to_sql(\"Flow_Meter_B_Catchments\")}\")\n        .where(f\"{db.tables.m_Selection.columns.TableName} = {mp.to_sql(db.tables.msm_Catchment.name)}\")\n        .to_dataframe()[\"ItemMUID\"]\n        .values.tolist()\n)\nmuids[:3]\n\n['G61F180_7321', 'G62F060_7424', 'G62F070_7425']\n\n\nNow that we have a list of MUIDs, we can use by_muid() to get our desired data.\n\n(\n    db.tables.msm_Catchment\n        .select(['Area', 'ModelAImpArea', 'ModelAConcTime'])\n        .by_muid(muids)\n        .to_dataframe()\n)\n\n\n\n\n\n\n\n\nArea\nModelAImpArea\nModelAConcTime\n\n\n\n\nG61F180_7321\n3426.042426\n0.471066\n2500.0\n\n\nG62F060_7424\n5248.974839\n0.372547\n2500.0\n\n\nG62F070_7425\n3483.333978\n0.493153\n2500.0\n\n\nG62F071_7426\n7680.506712\n0.422575\n2500.0\n\n\nG62F072_7427\n6110.634318\n0.403768\n2500.0\n\n\nG62F073_7428\n3291.502189\n0.337902\n2500.0\n\n\nG62F090_7429\n9543.676343\n0.447018\n2500.0\n\n\nG62F091_7430\n6482.144842\n0.350343\n2500.0\n\n\nG62F092_7431\n4877.124584\n0.356388\n2500.0\n\n\nG62F093_7432\n5069.445488\n0.339430\n2500.0\n\n\nG62F094_7433\n5118.905991\n0.358003\n2500.0\n\n\nG62F095_7434\n5029.988743\n0.383146\n2500.0\n\n\nG62F110_7435\n6385.861122\n0.398525\n2500.0\n\n\nG62F112_7436\n7932.460472\n0.354533\n2500.0\n\n\nG62F113_7437\n4526.396075\n0.361819\n2500.0\n\n\nG62F114_7438\n3481.524653\n0.406584\n2500.0\n\n\nG62F115_7439\n1952.681519\n0.489942\n2500.0\n\n\nG62F116_7440\n3796.497897\n0.475596\n2500.0\n\n\nG62F117_7441\n1745.517658\n0.387302\n2500.0\n\n\nG62F121_7442\n6943.703429\n0.327055\n2500.0\n\n\nG62F122_7443\n4712.980255\n0.395809\n2500.0\n\n\nG62F130_7444\n3543.567635\n0.399932\n2500.0\n\n\nG62F140_7445\n6021.019428\n0.359946\n2500.0\n\n\nG62F160_7446\n6060.401422\n0.358035\n2500.0\n\n\nG62F170_7447\n5339.049153\n0.362818\n2500.0\n\n\nG62F180_7448\n7958.281468\n0.351433\n2500.0\n\n\nG62F191_7449\n4628.034499\n0.420837\n2500.0\n\n\nG62F195_7450\n3289.125097\n0.544337\n2500.0\n\n\nG62F197_7451\n4284.428469\n0.467404\n2500.0\n\n\nG62F199_7452\n3187.640319\n0.429698\n2500.0\n\n\nG62F402_7453\n1495.125317\n0.487788\n2500.0\n\n\nG62F403_7454\n2068.891662\n0.605979\n2500.0\n\n\n\n\n\n\n\nIn the next section, you’ll discover how to modify data and that it uses the same filter mechanisms.",
+    "crumbs": [
+      "Module 5 - MIKE+Py",
+      "<span class='chapter-number'>27</span>  <span class='chapter-title'>Selecting Data</span>"
+    ]
+  },
+  {
+    "objectID": "module5_mikepluspy/04_modify.html",
+    "href": "module5_mikepluspy/04_modify.html",
+    "title": "Modifying Data",
+    "section": "",
+    "text": "Update Operations\nThe previous section focused on reading data from your MIKE+ model database. This section delves into modifying that data programmatically using MIKE+Py. You’ll learn how to perform UPDATE, INSERT, and DELETE operations, enabling you to automate changes to your model setup, parameters, and even create new model elements.\nFirst, let’s open our copied MIKE+ project database. We’ll use the db object for all subsequent examples in this section.\nThe update() method on a table object allows you to change existing data in your MIKE+ database. It creates an UpdateQuery object, which you then refine with conditions (using where() or by_muid()) and the new values. To apply the changes to the database, you must call execute() on the query object.\nThe execute() method for an update query returns a list of MUIDs for the rows that were updated.",
+    "crumbs": [
+      "Module 5 - MIKE+Py",
+      "<span class='chapter-number'>28</span>  <span class='chapter-title'>Modifying Data</span>"
+    ]
+  },
+  {
+    "objectID": "module5_mikepluspy/04_modify.html#update-operations",
+    "href": "module5_mikepluspy/04_modify.html#update-operations",
+    "title": "Modifying Data",
+    "section": "",
+    "text": "Updating Specific Rows\nLet’s update the diameter of two specific pipes in the msm_Link table.\nFirst, we can inspect their current diameters:\n\n(\n    db.tables.msm_Link\n    .select(['MUID', 'Diameter'])\n    .by_muid(['G60F380_G60F360_l1', 'G62F070_G62F060_l1'])\n    .to_dataframe()\n)\n\n\n\n\n\n\n\n\nMUID\nDiameter\n\n\n\n\nG60F380_G60F360_l1\nG60F380_G60F360_l1\n0.8\n\n\nG62F070_G62F060_l1\nG62F070_G62F060_l1\n0.55\n\n\n\n\n\n\n\nNow, update their diameters. For example, set pipe G60F380_G60F360_l1 and G62F070_G62F060_l1 to 0.6m. The argument passed to update() is a Python dictionary with keys of column names and values matching the desired updated value.\n\n(\n    db.tables.msm_Link\n    .update({\n        db.tables.msm_Link.columns.Diameter : 0.4\n    })\n    .by_muid(['G60F380_G60F360_l1', 'G62F070_G62F060_l1'])\n    .execute() # don't forget this, or nothing happens\n)\n\n['G60F380_G60F360_l1', 'G62F070_G62F060_l1']\n\n\nNotice the update() returned MUIDs of the updated rows. Verify the changes:\n\n(\n    db.tables.msm_Link\n    .select(['MUID', 'Diameter'])\n    .by_muid(['G60F380_G60F360_l1', 'G62F070_G62F060_l1'])\n    .to_dataframe()\n)\n\n\n\n\n\n\n\n\nMUID\nDiameter\n\n\n\n\nG60F380_G60F360_l1\nG60F380_G60F360_l1\n0.4\n\n\nG62F070_G62F060_l1\nG62F070_G62F060_l1\n0.4\n\n\n\n\n\n\n\n\n\n\n\n\n\nTip\n\n\n\nUse the return value of update() to confirm the result is what you intended. A common error is to forget calling execute().\n\n\n\n\nUpdating All Rows in a Table\nYou can update all rows in a table by calling all() before execute(). Be extremely careful with this operation.\nLet’s update the Description for all nodes in the msm_Node table.\n\nupdated_muids = (\n    db.tables.msm_Node\n    .update({\n        'Description': 'Hello from MIKE+Py'\n    })\n    .all().execute()\n)\nlen(updated_muids)\n\n143\n\n\nYou can verify this change by selecting a few rows or opening the model in MIKE+.",
+    "crumbs": [
+      "Module 5 - MIKE+Py",
+      "<span class='chapter-number'>28</span>  <span class='chapter-title'>Modifying Data</span>"
+    ]
+  },
+  {
+    "objectID": "module5_mikepluspy/04_modify.html#insert-operations",
+    "href": "module5_mikepluspy/04_modify.html#insert-operations",
+    "title": "Modifying Data",
+    "section": "Insert Operations",
+    "text": "Insert Operations\nThe insert() method is used to add new rows to a table. You provide a dictionary where keys are column names and values are the data to be inserted. The same default values as MIKE+ are used if a column value is not specified.\nBy default, insert() executes immediately and returns the MUID of the newly inserted row. If you set execute=False, it returns an InsertQuery object, which you would then need to call execute() on.\nMIKE+Py will typically auto-generate an MUID if one is not provided in the values dictionary.\n\n\n\n\n\n\nNote\n\n\n\nCurrently, the insert() method via MIKE+Py is best suited for inserting single rows at a time. For bulk inserts, you need to loop through your data and call insert() for each row.\n\n\n\nInserting a New Simulation Setup\nLet’s insert a new simulation setup into the msm_Project table. We’ll define a new MUID and ScenarioName, and set some essential parameters.\n\ndb.tables.msm_Project.insert({\n    db.tables.msm_Project.columns.MUID              : 'My_Simulation',\n    db.tables.msm_Project.columns.Description       : 'Simulation setup created by MIKE+Py',\n    db.tables.msm_Project.columns.Enable_Catchment  : 1,\n    db.tables.msm_Project.columns.Enable_CS         : 1,\n    db.tables.msm_Project.columns.Enable_RR         : 1,\n    db.tables.msm_Project.columns.Enable_HD         : 1,\n    db.tables.msm_Project.columns.Enable_LTS        : 1,\n})\n\n'My_Simulation'\n\n\nNotice the MUID of the inserted row is returned.",
+    "crumbs": [
+      "Module 5 - MIKE+Py",
+      "<span class='chapter-number'>28</span>  <span class='chapter-title'>Modifying Data</span>"
+    ]
+  },
+  {
+    "objectID": "module5_mikepluspy/04_modify.html#delete-operations",
+    "href": "module5_mikepluspy/04_modify.html#delete-operations",
+    "title": "Modifying Data",
+    "section": "Delete Operations",
+    "text": "Delete Operations\nThe delete() method removes rows from a table. Similar to update(), it creates a DeleteQuery. You must specify which rows to delete using where() or by_muid(), or use all() to delete all rows (with extreme caution). Call execute() to perform the deletion.\nThe execute() method for a delete query returns a list of MUIDs for the rows that were deleted.\n\nDeleting a Specific Row\nLet’s delete the simulation setup we just created using its MUID.\n\n(\n    db.tables.msm_Project\n        .delete()\n        .by_muid('My_Simulation')\n        .execute()\n)\n\n['My_Simulation']\n\n\n\n\nDeleting Rows with a Filter\nYou can delete multiple rows that match a specific condition. For instance, to delete all pipes in msm_Link with a Diameter less than 0.2m:\n\ndeleted_pipes = (\n    db.tables.msm_Link\n        .delete()\n        .where(f\"{db.tables.msm_Link.columns.Diameter} &lt; {mp.to_sql(0.2)}\")\n        .execute()\n)\nlen(deleted_pipes)\n\n6\n\n\n\n\nDeleting All Rows in a Table\nTo delete all rows from a table, use all().execute(). This is a very destructive operation. For example, to delete all simulation setups from msm_Project (use with extreme caution):\n\ndb.tables.msm_Project.delete().all().execute()\n\n['rainfall']",
+    "crumbs": [
+      "Module 5 - MIKE+Py",
+      "<span class='chapter-number'>28</span>  <span class='chapter-title'>Modifying Data</span>"
+    ]
+  },
+  {
+    "objectID": "module5_mikepluspy/04_modify.html#practical-example",
+    "href": "module5_mikepluspy/04_modify.html#practical-example",
+    "title": "Modifying Data",
+    "section": "Practical Example",
+    "text": "Practical Example\nIn the previous section, we identified how to get MUIDs for catchments belonging to a specific selection. Let’s use that to modify the ‘Time of Concentration’ (ModelAConcTime) for all catchments in the “Flow_Meter_B_Catchments” selection, increasing it by 10%.\nFirst, let’s get a list of the catchment MUIDs again.\n\nselection_name = \"Flow_Meter_B_Catchments\"\ncatchment_muids_to_modify = (\n    db.tables.m_Selection\n        .select(['ItemMUID'])\n        .where(f\"{db.tables.m_Selection.columns.SelectionID} = {mp.to_sql(selection_name)}\")\n        .where(f\"{db.tables.m_Selection.columns.TableName} = {mp.to_sql(db.tables.msm_Catchment.name)}\")\n        .to_dataframe()['ItemMUID']\n        .tolist()\n)\ncatchment_muids_to_modify[:3] # Show first few MUIDs\n\n['G61F180_7321', 'G62F060_7424', 'G62F070_7425']\n\n\nNext, let’s review the initial times of concentration.\n\ndf_toc = (\n    db.tables.msm_Catchment\n    .select(['ModelAConcTime'])\n    .by_muid(catchment_muids_to_modify)\n    .to_dataframe()\n)\ndf_toc.describe()\n\n\n\n\n\n\n\n\nModelAConcTime\n\n\n\n\ncount\n32.0\n\n\nmean\n2500.0\n\n\nstd\n0.0\n\n\nmin\n2500.0\n\n\n25%\n2500.0\n\n\n50%\n2500.0\n\n\n75%\n2500.0\n\n\nmax\n2500.0\n\n\n\n\n\n\n\nNow let’s calculate new times of concentration.\n\ndf_toc = df_toc * 1.1\ndf_toc.describe()\n\n\n\n\n\n\n\n\nModelAConcTime\n\n\n\n\ncount\n32.0\n\n\nmean\n2750.0\n\n\nstd\n0.0\n\n\nmin\n2750.0\n\n\n25%\n2750.0\n\n\n50%\n2750.0\n\n\n75%\n2750.0\n\n\nmax\n2750.0\n\n\n\n\n\n\n\nFinally, we’ll update each catchment with its new time of concentration.\n\nupdated_count = 0\nfor muid, row in df_toc.iterrows():\n    updated_count += len(\n        db.tables.msm_Catchment\n            .update({'ModelAConcTime': row['ModelAConcTime']})\n            .by_muid(muid)\n            .execute()\n    )\n\nprint(f\"Updated Time of Concentration for {updated_count} catchments.\")\n\nUpdated Time of Concentration for 32 catchments.\n\n\nVerify the changes.\n\n(\n    db.tables.msm_Catchment\n        .select(['ModelAConcTime'])\n        .by_muid(catchment_muids_to_modify)\n        .to_dataframe()\n        .describe()\n)\n\n\n\n\n\n\n\n\nModelAConcTime\n\n\n\n\ncount\n32.0\n\n\nmean\n2750.0\n\n\nstd\n0.0\n\n\nmin\n2750.0\n\n\n25%\n2750.0\n\n\n50%\n2750.0\n\n\n75%\n2750.0\n\n\nmax\n2750.0\n\n\n\n\n\n\n\nThis practical example demonstrates a common workflow: selecting data, performing calculations or logic in Python (often with Pandas), writing the modified data back to the MIKE+ database, and verifying everything went okay.",
+    "crumbs": [
+      "Module 5 - MIKE+Py",
+      "<span class='chapter-number'>28</span>  <span class='chapter-title'>Modifying Data</span>"
+    ]
+  },
+  {
+    "objectID": "module5_mikepluspy/05_scenarios.html",
+    "href": "module5_mikepluspy/05_scenarios.html",
+    "title": "Scenarios",
+    "section": "",
+    "text": "Concept Overview\nMIKE+Py allows you to programmatically manage scenarios and alternatives within your MIKE+ model database, enabling automation of scenario-based analyses.\nMIKE+ uses a system of scenarios and alternatives to manage different model setups and variations.\nFor a detailed conceptual understanding of scenarios and alternatives, please refer to the MIKE+ documentation. This section focuses on how to interact with them using MIKE+Py.",
+    "crumbs": [
+      "Module 5 - MIKE+Py",
+      "<span class='chapter-number'>29</span>  <span class='chapter-title'>Scenarios</span>"
+    ]
+  },
+  {
+    "objectID": "module5_mikepluspy/05_scenarios.html#concept-overview",
+    "href": "module5_mikepluspy/05_scenarios.html#concept-overview",
+    "title": "Scenarios",
+    "section": "",
+    "text": "Scenarios\n\nRepresent a complete model configuration for a specific simulation case (e.g., “Current Conditions”, “Future Development with Pipe Upgrade A”). Scenarios can inherit from a parent scenario. Only one scenario may be active at a time.\n\nAlternative Groups\n\nOrganize different types of model data that can vary between scenarios (e.g., “CS Network data”). Each group contains one or more alternatives, which can inherit from parent alternatives. Only one alternative may be active at a time within an alternative group.\n\nAlternatives\n\nRepresent a specific version of the data within an alternative group (e.g., for “CS Network data”, you might have a “Base Network” alternative and a “Upgraded Pipes” alternative).",
+    "crumbs": [
+      "Module 5 - MIKE+Py",
+      "<span class='chapter-number'>29</span>  <span class='chapter-title'>Scenarios</span>"
+    ]
+  },
+  {
+    "objectID": "module5_mikepluspy/05_scenarios.html#alternative-groups",
+    "href": "module5_mikepluspy/05_scenarios.html#alternative-groups",
+    "title": "Scenarios",
+    "section": "Alternative Groups",
+    "text": "Alternative Groups\nList the names of all alternative groups. These are the main categories visible from the MIKE+ Scenarios editor.\n\ndb.alternative_groups.group_names()\n\n['CS Network data',\n 'River network data',\n 'Loads and boundaries data',\n 'Catchments and hydrology data',\n 'Transport data',\n 'Control rules data',\n 'Long Term Statistics data',\n 'Profiles and curves',\n '2D overland',\n '2D boundaries data']\n\n\nAccess a specific alternative group by its name:\n\nnetwork_group = db.alternative_groups[\"CS Network data\"]\nnetwork_group\n\n&lt;AlternativeGroup CS Network data&gt;\n\n\nEach group has a base alternative:\n\nnetwork_group.base\n\nAlternative(CS Network data) &lt;Base Alternative&gt;\n\n\nAnd an active alternative (which is part of the active scenario):\n\nnetwork_group.active\n\nAlternative(CS Network data) &lt;Base Alternative&gt;\n\n\nList the tables associated with an alternative group:\n\nnetwork_group.tables\n\n['msm_Node',\n 'msm_Link',\n 'msm_Pump',\n 'msm_Weir',\n 'msm_Orifice',\n 'msm_Valve',\n 'msm_CurbInlet',\n 'msm_OnGrade',\n 'msm_OnGradeD']",
+    "crumbs": [
+      "Module 5 - MIKE+Py",
+      "<span class='chapter-number'>29</span>  <span class='chapter-title'>Scenarios</span>"
+    ]
+  },
+  {
+    "objectID": "module5_mikepluspy/05_scenarios.html#alternatives",
+    "href": "module5_mikepluspy/05_scenarios.html#alternatives",
+    "title": "Scenarios",
+    "section": "Alternatives",
+    "text": "Alternatives\nSee all alternatives for the group.\n\nlist(network_group)\n\n[Alternative(CS Network data) &lt;Base Alternative&gt;]\n\n\nAccess an alternative within a group by its name:\n\nnetwork_group.by_name(\"Base Alternative\")\n\nAlternative(CS Network data) &lt;Base Alternative&gt;\n\n\nCreate a new alternative. It will be a child of its parent (defaults to the group’s base alternative if not specified):\n\nnew_roughness_alt = network_group.create(\"New Roughness Values\", parent=network_group.base)\nnew_roughness_alt\n\nAlternative(CS Network data) &lt;New Roughness Values&gt;\n\n\nAlternatives have several properties. For example, change an alternative’s comment:\n\nnew_roughness_alt.comment = \"Alternative for testing higher roughness.\"\nnew_roughness_alt.comment\n\n'Alternative for testing higher roughness.'",
+    "crumbs": [
+      "Module 5 - MIKE+Py",
+      "<span class='chapter-number'>29</span>  <span class='chapter-title'>Scenarios</span>"
+    ]
+  },
+  {
+    "objectID": "module5_mikepluspy/05_scenarios.html#scenarios",
+    "href": "module5_mikepluspy/05_scenarios.html#scenarios",
+    "title": "Scenarios",
+    "section": "Scenarios",
+    "text": "Scenarios\nScenarios combine various alternatives to define a complete model state. Access all scenarios in the database:\n\ndb.scenarios\n\nScenarioCollection &lt;1&gt;\n\n\nGet the currently active scenario:\n\ndb.scenarios.active\n\nScenario &lt;Base&gt;\n\n\nGet the base scenario:\n\ndb.scenarios.base\n\nScenario &lt;Base&gt;\n\n\nAccess a scenario by its name (returns the first match):\n\ndb.scenarios.by_name(\"Base\")\n\nScenario &lt;Base&gt;\n\n\nList all scenarios:\n\nlist(db.scenarios)\n\n[Scenario &lt;Base&gt;]\n\n\nCreate new scenarios with a name and its parent scenario (defaults to base scenario if not provided)\n\nnew_scenario = db.scenarios.create(\"My Scenario\", parent=db.scenarios.base)\nlist(db.scenarios)\n\n[Scenario &lt;Base&gt;, Scenario &lt;My Scenario&gt;]\n\n\nSimilar to Alternatives, Scenarios have several properties. For example:\n\nnew_scenario.comment = \"This is a test scenario\"\n\nList the alternatives used by a scenario:\n\nnew_scenario.alternatives\n\n[Alternative(CS Network data) &lt;Base Alternative&gt;,\n Alternative(River network data) &lt;Base Alternative&gt;,\n Alternative(Loads and boundaries data) &lt;Base Alternative&gt;,\n Alternative(Catchments and hydrology data) &lt;Base Alternative&gt;,\n Alternative(Transport data) &lt;Base Alternative&gt;,\n Alternative(Control rules data) &lt;Base Alternative&gt;,\n Alternative(Long Term Statistics data) &lt;Base Alternative&gt;,\n Alternative(Profiles and curves) &lt;Base Alternative&gt;,\n Alternative(2D overland) &lt;Base Alternative&gt;,\n Alternative(2D boundaries data) &lt;Base Alternative&gt;]\n\n\nCheck if a scenario is active\n\nnew_scenario.is_active\n\nFalse\n\n\nActivate a scenario. This makes it the current context for data modifications and simulations.\n\nnew_scenario.activate()\nnew_scenario.is_active\n\nTrue\n\n\nSet a specific alternative for a scenario. This will replace any existing alternative from the same group.\nLet’s use the new_roughness_alt created earlier and assign it to new_scenario.\n\nnew_scenario.set_alternative(new_roughness_alt)\nlist(new_scenario.alternatives)\n\n[Alternative(CS Network data) &lt;New Roughness Values&gt;,\n Alternative(River network data) &lt;Base Alternative&gt;,\n Alternative(Loads and boundaries data) &lt;Base Alternative&gt;,\n Alternative(Catchments and hydrology data) &lt;Base Alternative&gt;,\n Alternative(Transport data) &lt;Base Alternative&gt;,\n Alternative(Control rules data) &lt;Base Alternative&gt;,\n Alternative(Long Term Statistics data) &lt;Base Alternative&gt;,\n Alternative(Profiles and curves) &lt;Base Alternative&gt;,\n Alternative(2D overland) &lt;Base Alternative&gt;,\n Alternative(2D boundaries data) &lt;Base Alternative&gt;]\n\n\nDelete a scenario. You cannot delete the base scenario.\n\ndb.scenarios.delete(new_scenario)\nlist(db.scenarios)\n\n[Scenario &lt;Base&gt;]",
+    "crumbs": [
+      "Module 5 - MIKE+Py",
+      "<span class='chapter-number'>29</span>  <span class='chapter-title'>Scenarios</span>"
+    ]
+  },
+  {
+    "objectID": "module5_mikepluspy/05_scenarios.html#practical-example",
+    "href": "module5_mikepluspy/05_scenarios.html#practical-example",
+    "title": "Scenarios",
+    "section": "Practical Example",
+    "text": "Practical Example\nLet’s continue with the catchment examples of the previous section. We would like to test two different scenarios:\n\nTime of concentration = 2000s for all catchments draining to Flow Meter B\nTime of concentration = 3000s for all catchments draining to Flow Meter B\n\n\n\n\n\n\n\nNote\n\n\n\nRecall that the initial time of concentration for these catchments was 2500 seconds.\n\n\nFirst, get a list of the catchment MUIDs again.\n\nselection_name = \"Flow_Meter_B_Catchments\"\ncatchment_muids_to_modify = (\n    db.tables.m_Selection\n        .select(['ItemMUID'])\n        .where(f\"{db.tables.m_Selection.columns.SelectionID} = {mp.to_sql(selection_name)}\")\n        .where(f\"{db.tables.m_Selection.columns.TableName} = {mp.to_sql(db.tables.msm_Catchment.name)}\")\n        .to_dataframe()['ItemMUID']\n        .tolist()\n)\ncatchment_muids_to_modify[:3] # Show first few MUIDs\n\n['G61F180_7321', 'G62F060_7424', 'G62F070_7425']\n\n\nOur catchments are in table msm_Catchment, which is part of the Catchments and hydrology data Alternative Group. Let’s create two new alternatives.\n\nalternative_2000 = db.alternative_groups[\"Catchments and hydrology data\"].create(\"Time of Concentration = 2000s\")\nalternative_3000 = db.alternative_groups[\"Catchments and hydrology data\"].create(\"Time of Concentration = 3000s\")\nlist(db.alternative_groups[\"Catchments and hydrology data\"])\n\n[Alternative(Catchments and hydrology data) &lt;Base Alternative&gt;,\n Alternative(Catchments and hydrology data) &lt;Time of Concentration = 2000s&gt;,\n Alternative(Catchments and hydrology data) &lt;Time of Concentration = 3000s&gt;]\n\n\nLet’s create two new scenarios, and apply the alternatives to them.\n\nscenario_2000 = db.scenarios.create(\"Time of Concentration = 2000s\")\nscenario_2000.set_alternative(alternative_2000)\n\nscenario_3000 = db.scenarios.create(\"Time of Concentration = 3000s\")\nscenario_3000.set_alternative(alternative_3000)\n\nlist(db.scenarios)\n\n[Scenario &lt;Base&gt;,\n Scenario &lt;Time of Concentration = 2000s&gt;,\n Scenario &lt;Time of Concentration = 3000s&gt;]\n\n\nNow let’s activate each scenario and make changes to the new alternative.\n\nscenario_2000.activate()\nupdated = (\n    db.tables.msm_Catchment\n        .update({\n            db.tables.msm_Catchment.columns.ModelAConcTime : 2000\n        })\n        .by_muid(catchment_muids_to_modify)\n        .execute()\n)\nlen(updated)\n\n32\n\n\n\nscenario_3000.activate()\nupdated = (\n    db.tables.msm_Catchment\n        .update({\n            db.tables.msm_Catchment.columns.ModelAConcTime : 3000\n        })\n        .by_muid(catchment_muids_to_modify)\n        .execute()\n)\nlen(updated)\n\n32\n\n\nNow let’s verify by activating each scenario and checking time of concentration values.\n\nimport pandas as pd\n\n# Check base scenario\ndb.scenarios.base.activate()\ndf_base = (\n    db.tables.msm_Catchment\n        .select([db.tables.msm_Catchment.columns.ModelAConcTime])\n        .by_muid(catchment_muids_to_modify)\n        .to_dataframe()\n)\ndf_base.columns = [\"Base Tc\"]\n\n# Check Tc = 2000\ndb.scenarios.by_name(\"Time of Concentration = 2000s\").activate()\ndf_2000 = (\n    db.tables.msm_Catchment\n        .select([db.tables.msm_Catchment.columns.ModelAConcTime])\n        .by_muid(catchment_muids_to_modify)\n        .to_dataframe()\n)\ndf_2000.columns = [\"Tc = 2000s\"]\n\n# Check Tc = 3000\ndb.scenarios.by_name(\"Time of Concentration = 3000s\").activate()\ndf_3000 = (\n    db.tables.msm_Catchment\n        .select([db.tables.msm_Catchment.columns.ModelAConcTime])\n        .by_muid(catchment_muids_to_modify)\n        .to_dataframe()\n)\ndf_3000.columns = [\"Tc = 3000s\"]\n\n# Concatenate into common DataFrame for comparison\ndf_compare = pd.concat([df_base, df_2000, df_3000], axis=1)\ndf_compare.describe()\n\n\n\n\n\n\n\n\nBase Tc\nTc = 2000s\nTc = 3000s\n\n\n\n\ncount\n32.0\n32.0\n32.0\n\n\nmean\n2500.0\n2000.0\n3000.0\n\n\nstd\n0.0\n0.0\n0.0\n\n\nmin\n2500.0\n2000.0\n3000.0\n\n\n25%\n2500.0\n2000.0\n3000.0\n\n\n50%\n2500.0\n2000.0\n3000.0\n\n\n75%\n2500.0\n2000.0\n3000.0\n\n\nmax\n2500.0\n2000.0\n3000.0\n\n\n\n\n\n\n\n This section demonstrated how to view, create, and manage scenarios and alternatives. In the next section, you’ll learn how to run MIKE+ simulations.",
+    "crumbs": [
+      "Module 5 - MIKE+Py",
+      "<span class='chapter-number'>29</span>  <span class='chapter-title'>Scenarios</span>"
+    ]
+  },
+  {
+    "objectID": "module5_mikepluspy/06_simulations.html",
+    "href": "module5_mikepluspy/06_simulations.html",
+    "title": "Simulations",
+    "section": "",
+    "text": "Running Simulations\nMIKE+Py enables you to configure and execute MIKE+ simulations programmatically from Python scripts, which is particularly useful for automating workflows like scenario analysis or calibration.",
+    "crumbs": [
+      "Module 5 - MIKE+Py",
+      "<span class='chapter-number'>30</span>  <span class='chapter-title'>Simulations</span>"
+    ]
+  },
+  {
+    "objectID": "module5_mikepluspy/06_simulations.html#running-simulations",
+    "href": "module5_mikepluspy/06_simulations.html#running-simulations",
+    "title": "Simulations",
+    "section": "",
+    "text": "By Active Simulation\nYou can run the simulation setup that is currently marked as “active” in the MIKE+ project.\nFirst, you can identify the active simulation setup’s MUID:\n\nactive_sim_muid = db.active_simulation\nactive_sim_muid\n\n'rainfall'\n\n\nTo run the active simulation, call db.run() without specifying a simulation_muid. It will return a list of Path objects pointing to the generated result files.\n\nresult_files_active = db.run()\nfor rf in result_files_active:\n    print(rf.name)\n\n\n\nrainfallBaseDefault_Network_HD.res1d\nrainfallBaseDefault_Surface_runoff.res1d\n\n\n\n\nBy Simulation MUID\nMore commonly, you’ll want to run a specific simulation setup, regardless of which one is currently active. You can do this by providing the simulation_muid argument to db.run().\nYou can find available simulation setup MUIDs by inspecting a project table, like msm_Project:\n\ndb.tables.msm_Project.select([\"ScenarioName\", \"Description\"]).to_dataframe()\n\n\n\n\n\n\n\n\nScenarioName\nDescription\n\n\n\n\nrainfall\nBase\nNone\n\n\n\n\n\n\n\nTo run the simulation setup named ‘rainfall’:\n\nresult_files_rainfall = db.run(simulation_muid=\"rainfall\")\nfor rf in result_files_rainfall:\n    print(rf.name)\n\n\n\nrainfallBaseDefault_Network_HD.res1d\nrainfallBaseDefault_Surface_runoff.res1d",
+    "crumbs": [
+      "Module 5 - MIKE+Py",
+      "<span class='chapter-number'>30</span>  <span class='chapter-title'>Simulations</span>"
+    ]
+  },
+  {
+    "objectID": "module5_mikepluspy/06_simulations.html#practical-example",
+    "href": "module5_mikepluspy/06_simulations.html#practical-example",
+    "title": "Simulations",
+    "section": "Practical Example",
+    "text": "Practical Example\nA common use case is to run the same simulation configuration but for different scenarios. In this example, we’ll run the scenarios created in the previous section.\nRecall that two scenarios were created in addition to the base scenario:\n\n\nCode for generating scenarios (based on previous section)\nselection_name = \"Flow_Meter_B_Catchments\"\n\n# Catchment MUIDs draining to Flow Meter B\ncatchment_muids_to_modify = (\n    db.tables.m_Selection\n        .select(['ItemMUID'])\n        .where(f\"{db.tables.m_Selection.columns.SelectionID} = {mp.to_sql(selection_name)}\")\n        .where(f\"{db.tables.m_Selection.columns.TableName} = {mp.to_sql(db.tables.msm_Catchment.name)}\")\n        .to_dataframe()['ItemMUID']\n        .tolist()\n)\n\n\nalternative_2000 = db.alternative_groups[\"Catchments and hydrology data\"].create(\"Time of Concentration = 2000s\")\nscenario_2000 = db.scenarios.create(\"Time of Concentration = 2000s\")\nscenario_2000.set_alternative(alternative_2000)\n\nalternative_3000 = db.alternative_groups[\"Catchments and hydrology data\"].create(\"Time of Concentration = 3000s\")\nscenario_3000 = db.scenarios.create(\"Time of Concentration = 3000s\")\nscenario_3000.set_alternative(alternative_3000)\n\nscenario_2000.activate()\n(\ndb.tables.msm_Catchment\n    .update({\n        db.tables.msm_Catchment.columns.ModelAConcTime : 2000\n    })\n    .by_muid(catchment_muids_to_modify)\n    .execute()\n)\n\nscenario_3000.activate()\n(\ndb.tables.msm_Catchment\n    .update({\n        db.tables.msm_Catchment.columns.ModelAConcTime : 3000\n    })\n    .by_muid(catchment_muids_to_modify)\n    .execute()\n)\n\nlist(db.scenarios)\n\n\n[Scenario &lt;Base&gt;,\n Scenario &lt;Time of Concentration = 2000s&gt;,\n Scenario &lt;Time of Concentration = 3000s&gt;]\n\n\nLet’s inspect our model simulation setups.\n\ndf_sim_setups = db.tables.msm_Project.select([\"ScenarioName\", \"Description\"]).to_dataframe()\ndf_sim_setups\n\n\n\n\n\n\n\n\nScenarioName\nDescription\n\n\n\n\nrainfall\nBase\nNone\n\n\n\n\n\n\n\nWe will use the simulation setup with MUID ‘rainfall’, iteratively running all scenarios by modifying the ScenarioName.\n\nsimulation_setup_muid = \"rainfall\"\nscenarios_to_run = [\n    db.scenarios.base,\n    db.scenarios.by_name(\"Time of Concentration = 2000s\"),\n    db.scenarios.by_name(\"Time of Concentration = 3000s\"),\n]\nscenario_results = {}\n\nfor scenario in scenarios_to_run:\n\n    # Update the simulation setup to use the current scenario\n    (\n        db.tables.msm_Project\n            .update({\n                db.tables.msm_Project.columns.ScenarioName: scenario.name\n            })\n            .by_muid(simulation_setup_muid)\n            .execute()\n    )\n    \n    # Run simulation\n    result_paths = db.run(simulation_muid=simulation_setup_muid)\n\n    # Store result paths\n    scenario_results[scenario.name] = [p.name for p in result_paths]\n\n# Print all files generated\nfor scenario_name, files in scenario_results.items():\n    print(f\"Scenario '{scenario_name}'\")\n    for file in files:\n        print(f\"\\t- {file}\")\n\n\n\nScenario 'Base'\n    - rainfallBaseDefault_Network_HD.res1d\n    - rainfallBaseDefault_Surface_runoff.res1d\nScenario 'Time of Concentration = 2000s'\n    - rainfallTime of Concentration = 2000sDefault_Network_HD.res1d\n    - rainfallTime of Concentration = 2000sDefault_Surface_runoff.res1d\nScenario 'Time of Concentration = 3000s'\n    - rainfallTime of Concentration = 3000sDefault_Network_HD.res1d\n    - rainfallTime of Concentration = 3000sDefault_Surface_runoff.res1d",
+    "crumbs": [
+      "Module 5 - MIKE+Py",
+      "<span class='chapter-number'>30</span>  <span class='chapter-title'>Simulations</span>"
+    ]
+  },
+  {
+    "objectID": "module5_mikepluspy/homework.html",
+    "href": "module5_mikepluspy/homework.html",
+    "title": "Homework",
+    "section": "",
+    "text": "On its way…",
+    "crumbs": [
+      "Module 5 - MIKE+Py",
       "Homework"
     ]
   }

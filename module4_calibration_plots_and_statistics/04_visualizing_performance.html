@@ -558,8 +558,63 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
-      <span class="sidebar-item-text sidebar-link text-start">
- <span class="menu-text">Module 5 - MIKE+Py</span></span>
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Module 5 - MIKE+Py</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../module5_mikepluspy/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Welcome to Module 5!</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../module5_mikepluspy/01_mikepluspy.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">MIKE+Py</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../module5_mikepluspy/02_databases.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">MIKE+ Database</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../module5_mikepluspy/03_select.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Selecting Data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../module5_mikepluspy/04_modify.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Modifying Data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../module5_mikepluspy/05_scenarios.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Scenarios</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../module5_mikepluspy/06_simulations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">Simulations</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../module5_mikepluspy/homework.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Homework</span></a>
+  </div>
+</li>
+      </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <span class="sidebar-item-text sidebar-link text-start">
@@ -614,7 +669,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <p>After matching observations and model results into <code>Comparer</code> and <code>ComparerCollection</code> objects (as shown in the previous section), you can visualize these comparisons. <em>ModelSkill</em> simplifies generating standard validation plots, offering a more direct approach than manually creating them with Pandas and Matplotlib as covered in Module 2. This section demonstrates these built-in plotting capabilities for assessing model performance, both for individual comparison points and aggregated across multiple locations.</p>
-<div id="26a5586b" class="cell" data-execution_count="2">
+<div id="57882c37" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>Show setup code for Comparer and ComparerCollection objects</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Source datasets</span></span>
@@ -663,7 +718,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="time-series-plot" class="level3">
 <h3 class="anchored" data-anchor-id="time-series-plot">Time Series Plot</h3>
 <p>Overlays observed and model time series. Shows how well the model captures temporal patterns, peaks, and timing.</p>
-<div id="050c6b9a" class="cell" data-execution_count="3">
+<div id="775f2b12" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>comparer_116l1.plot.timeseries()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
@@ -677,7 +732,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="scatter-plot" class="level3">
 <h3 class="anchored" data-anchor-id="scatter-plot">Scatter Plot</h3>
 <p>Plots observed values against model values. Points near the 1:1 line indicate good agreement. Helps identify bias or scaling issues.</p>
-<div id="7e0cf425" class="cell" data-execution_count="4">
+<div id="035b14fb" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>comparer_116l1.plot.scatter()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
@@ -691,7 +746,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="histogram-plot" class="level3">
 <h3 class="anchored" data-anchor-id="histogram-plot">Histogram Plot</h3>
 <p>Compares frequency distributions of observed and model data. Shows if the model reproduces the overall value spread.</p>
-<div id="cd153ff4" class="cell" data-execution_count="5">
+<div id="ae88faad" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>comparer_116l1.plot.hist()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
@@ -710,7 +765,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="temporal-coverage-plot" class="level3">
 <h3 class="anchored" data-anchor-id="temporal-coverage-plot">Temporal Coverage Plot</h3>
 <p>Shows the temporal data availability for each observation and model result in the collection, indicating periods of overlap and data gaps.</p>
-<div id="33ca2f3d" class="cell" data-execution_count="6">
+<div id="b39c2952" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>cc.plot.temporal_coverage()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
@@ -724,7 +779,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="scatter-plot-1" class="level3">
 <h3 class="anchored" data-anchor-id="scatter-plot-1">Scatter Plot</h3>
 <p>Aggregates all (observed, model) pairs from the collection. This gives an overview of model performance across all locations, providing a holistic view of point-by-point agreement.</p>
-<div id="bd00d5be" class="cell" data-execution_count="7">
+<div id="58c36ee4" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>cc.plot.scatter()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
@@ -738,7 +793,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="histogram-plot-1" class="level3">
 <h3 class="anchored" data-anchor-id="histogram-plot-1">Histogram Plot</h3>
 <p>Combines data from all comparisons. This shows if the model matches the overall statistical profile of the observed data when considering all sites together.</p>
-<div id="edeb2b45" class="cell" data-execution_count="8">
+<div id="28385355" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>cc.plot.hist()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
