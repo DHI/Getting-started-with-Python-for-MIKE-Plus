@@ -4,4 +4,109 @@ comments: false
 
 # Homework {.unnumbered}
 
-On its way...
+**Setup**
+
+1. Download the [module5_model.zip](data/module5_model.zip){download="module5_model.zip"} file.
+2. Create a new project folder for this homework.
+3. Extract the contents of `module5_model.zip` into a `data` subfolder within your project folder. Your project structure should look something like below.
+```{powershell}
+Your_Project_Folder/
+├── data/
+│   ├── Dyrup_uncalibrated.mupp
+│   ├── Dyrup_uncalibrated.sqlite
+│   └── ... (other files from the zip)
+└── Module5_Homework.ipynb  (or your script)
+```
+
+::: {.callout-tip}
+This is the exact same model that was used in Module 4 Homework, and for the content of Module 5.
+:::
+
+**Exercise 1**
+
+1.  Create a Python script or Jupyter Notebook.
+2.  Import the `mikeplus` package as `mp`.
+3.  Open the `Dyrup_uncalibrated.sqlite` database from your `data` subfolder using a context manager (`with mp.open(...) as db:`).
+4.  Inside the context manager:
+    - Print the database version.
+    - Print the name of the active model configuration.
+    - Print the name of the active scenario.
+5.  Retrieve all MUIDs from the `msm_Catchment` table and print the first 5 MUIDs.
+6.  Retrieve the `Area`, `ModelAConcTime`, and `ModelARFactor` for all catchments and display the head of the resulting DataFrame.
+
+**Exercise 2**
+
+::: {.callout-note}
+For this exercise, make a copy of `Dyrup_uncalibrated.sqlite` (e.g., `Dyrup_uncalibrated_ex2_copy.sqlite`) and work with this copy.
+:::
+
+1.  Open your copied database.
+2.  Select the catchments with MUIDs 'G61F080_7311' and 'G61F375_7353'. Display their current `ModelAConcTime`.
+3.  Update the `ModelAConcTime` for these two catchments to `1800` seconds.
+4.  Verify the change by selecting and displaying the `ModelAConcTime` for these two catchments again.
+5.  Close the database.
+
+**Exercise 3**
+
+::: {.callout-note}
+Continue working with a fresh copy of the original database or the copy from Exercise 2.
+:::
+
+1.  Open your copied database.
+2.  Identify the alternative group that contains catchment data (Hint: its name likely involves "Catchments" or "hydrology"). Store this `AlternativeGroup` object.
+3.  Create a new alternative named "High_ConcTime_AllCatchments" within this group, making it a child of the group's base alternative.
+4.  Create a new scenario named "Scenario_High_Tc", making it a child of the base scenario.
+5.  Assign the "High_ConcTime_AllCatchments" alternative to the "Scenario_High_Tc" scenario.
+6.  Activate the "Scenario_High_Tc" scenario and confirm it was activated.
+7.  Within this active scenario ("Scenario_High_Tc" with "High_ConcTime_AllCatchments" active for catchments):
+    - Update the `ModelAConcTime` for *all* catchments in the `msm_Catchment` table to `3600` seconds.
+8.  Verify the change:
+    - While "Scenario_High_Tc" is active, select and display the `ModelAConcTime` for a few catchments (e.g., the first 3 MUIDs from `msm_Catchment`). They should show `3600`.
+    - Activate the base scenario.
+    - Select and display the `ModelAConcTime` for the same catchments. They should show their original values (e.g., `1200.0` if unchanged from the original database).
+9.  Close the database.
+
+**Exercise 4**
+
+::: {.callout-note}
+Continue working with the database copy you modified in Exercise 3 (the one with "Scenario_High_Tc").
+:::
+
+1.  Open the database copy from Exercise 3.
+2.  Retrieve the simulation setup with MUID 'rainfall' from the `msm_Project` table.
+3.  Update this 'rainfall' simulation setup to use your "Scenario_High_Tc" scenario by setting its `ScenarioName` column.
+4.  Verify that the `ScenarioName` for the 'rainfall' simulation setup in `msm_Project` is now "Scenario_High_Tc".
+5.  Run the 'rainfall' simulation.
+6.  Print the list of result files generated.
+7.  Close the database.
+
+**Exercise 5**
+
+::: {.callout-note}
+Start with a fresh copy of the original `Dyrup_uncalibrated.sqlite` database (e.g., `Dyrup_uncalibrated_ex5_copy.sqlite`). This exercise will create many scenarios and run multiple simulations, which can take some time.
+:::
+
+The goal is to investigate the impact of `ModelAConcTime` and `ModelARFactor` for *all* catchments on the simulation results.
+
+1.  Define two Python lists:
+    - `conc_times_sec = [1200, 1500, 1800, 2100, 2400]` (these are 20, 25, 30, 35, 40 minutes in seconds)
+    - `r_factors = [0.6, 0.7, 0.8, 0.9, 1.0]`
+2.  Open your copied database.
+3.  Get the "Catchments and hydrology data" alternative group object.
+4.  Loop through each combination of `conc_time` from `conc_times_sec` and `r_factor` from `r_factors`. For each of the 25 combinations:
+    a.  Create a unique alternative name, e.g., `Tc{tc}_Rf{rf}`.
+    b.  Create a new alternative in the "Catchments and hydrology data" group using the unique name, parented to the group's base alternative.
+    c.  Create a unique scenario name, e.g., `Tc{tc}_Rf{rf}`.
+    d.  Create a new scenario using the unique name, parented to the database's base scenario.
+    e.  Assign the newly created alternative to the newly created scenario.
+    f.  Activate the new scenario.
+    g.  In the active scenario, update `ModelAConcTime` to the current `tc` value and `ModelARFactor` to the current `rf` value for **all** catchments in the `msm_Catchment` table.
+    h.  Update the simulation setup with MUID 'rainfall' in the `msm_Project` table to use the current `new_scenario.name` for its `ScenarioName` column.
+    i.  Run the 'rainfall' simulation.
+    j.  Print the current scenario name and the list of result files generated for this scenario. (Optionally, just print the name of the `.res1d` file containing network HD results).
+5.  After the loop finishes, close the database.
+6.  Open the model in MIKE+. Can you see your scenarios? Try activating a few and checking catchment parameters.
+
+---
+
+This set of exercises will guide you through the core functionalities of MIKE+Py, preparing you for more complex automated workflows. Good luck!
