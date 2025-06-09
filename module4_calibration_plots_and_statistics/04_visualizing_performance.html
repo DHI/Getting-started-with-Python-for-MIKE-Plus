@@ -669,7 +669,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <p>After matching observations and model results into <code>Comparer</code> and <code>ComparerCollection</code> objects (as shown in the previous section), you can visualize these comparisons. <em>ModelSkill</em> simplifies generating standard validation plots, offering a more direct approach than manually creating them with Pandas and Matplotlib as covered in Module 2. This section demonstrates these built-in plotting capabilities for assessing model performance, both for individual comparison points and aggregated across multiple locations.</p>
-<div id="57882c37" class="cell" data-execution_count="2">
+<div id="44056544" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>Show setup code for Comparer and ComparerCollection objects</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Source datasets</span></span>
@@ -718,7 +718,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="time-series-plot" class="level3">
 <h3 class="anchored" data-anchor-id="time-series-plot">Time Series Plot</h3>
 <p>Overlays observed and model time series. Shows how well the model captures temporal patterns, peaks, and timing.</p>
-<div id="775f2b12" class="cell" data-execution_count="3">
+<div id="f83ae946" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>comparer_116l1.plot.timeseries()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
@@ -732,7 +732,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="scatter-plot" class="level3">
 <h3 class="anchored" data-anchor-id="scatter-plot">Scatter Plot</h3>
 <p>Plots observed values against model values. Points near the 1:1 line indicate good agreement. Helps identify bias or scaling issues.</p>
-<div id="035b14fb" class="cell" data-execution_count="4">
+<div id="8a49ac13" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>comparer_116l1.plot.scatter()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
@@ -746,7 +746,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="histogram-plot" class="level3">
 <h3 class="anchored" data-anchor-id="histogram-plot">Histogram Plot</h3>
 <p>Compares frequency distributions of observed and model data. Shows if the model reproduces the overall value spread.</p>
-<div id="ae88faad" class="cell" data-execution_count="5">
+<div id="48a6fbdd" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>comparer_116l1.plot.hist()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
@@ -765,7 +765,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="temporal-coverage-plot" class="level3">
 <h3 class="anchored" data-anchor-id="temporal-coverage-plot">Temporal Coverage Plot</h3>
 <p>Shows the temporal data availability for each observation and model result in the collection, indicating periods of overlap and data gaps.</p>
-<div id="b39c2952" class="cell" data-execution_count="6">
+<div id="815552d5" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>cc.plot.temporal_coverage()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
@@ -779,7 +779,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="scatter-plot-1" class="level3">
 <h3 class="anchored" data-anchor-id="scatter-plot-1">Scatter Plot</h3>
 <p>Aggregates all (observed, model) pairs from the collection. This gives an overview of model performance across all locations, providing a holistic view of point-by-point agreement.</p>
-<div id="58c36ee4" class="cell" data-execution_count="7">
+<div id="0765da36" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>cc.plot.scatter()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
@@ -793,7 +793,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="histogram-plot-1" class="level3">
 <h3 class="anchored" data-anchor-id="histogram-plot-1">Histogram Plot</h3>
 <p>Combines data from all comparisons. This shows if the model matches the overall statistical profile of the observed data when considering all sites together.</p>
-<div id="28385355" class="cell" data-execution_count="8">
+<div id="5225542f" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>cc.plot.hist()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>

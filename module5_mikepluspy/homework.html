@@ -615,7 +615,163 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>On its way…</p>
+<p><strong>Setup</strong></p>
+<ol type="1">
+<li>Download the <a href="data/module5_model.zip" download="module5_model.zip">module5_model.zip</a> file.</li>
+<li>Create a new project folder for this homework.</li>
+<li>Extract the contents of <code>module5_model.zip</code> into a <code>data</code> subfolder within your project folder. Your project structure should look something like below.</li>
+</ol>
+<pre class="{powershell}"><code>Your_Project_Folder/
+├── data/
+│   ├── Dyrup_uncalibrated.mupp
+│   ├── Dyrup_uncalibrated.sqlite
+│   └── ... (other files from the zip)
+└── Module5_Homework.ipynb  (or your script)</code></pre>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This is the exact same model that was used in Module 4 Homework, and for the content of Module 5.</p>
+</div>
+</div>
+<p><strong>Exercise 1</strong></p>
+<ol type="1">
+<li>Create a Python script or Jupyter Notebook.</li>
+<li>Import the <code>mikeplus</code> package as <code>mp</code>.</li>
+<li>Open the <code>Dyrup_uncalibrated.sqlite</code> database from your <code>data</code> subfolder using a context manager (<code>with mp.open(...) as db:</code>).</li>
+<li>Inside the context manager:
+<ul>
+<li>Print the database version.</li>
+<li>Print the name of the active model configuration.</li>
+<li>Print the name of the active scenario.</li>
+</ul></li>
+<li>Retrieve all MUIDs from the <code>msm_Catchment</code> table and print the first 5 MUIDs.</li>
+<li>Retrieve the <code>Area</code>, <code>ModelAConcTime</code>, and <code>ModelARFactor</code> for all catchments and display the head of the resulting DataFrame.</li>
+</ol>
+<p><strong>Exercise 2</strong></p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>For this exercise, make a copy of <code>Dyrup_uncalibrated.sqlite</code> (e.g., <code>Dyrup_uncalibrated_ex2_copy.sqlite</code>) and work with this copy.</p>
+</div>
+</div>
+<ol type="1">
+<li>Open your copied database.</li>
+<li>Select the catchments with MUIDs ‘G61F080_7311’ and ‘G61F375_7353’. Display their current <code>ModelAConcTime</code>.</li>
+<li>Update the <code>ModelAConcTime</code> for these two catchments to <code>1800</code> seconds.</li>
+<li>Verify the change by selecting and displaying the <code>ModelAConcTime</code> for these two catchments again.</li>
+<li>Close the database.</li>
+</ol>
+<p><strong>Exercise 3</strong></p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Continue working with a fresh copy of the original database or the copy from Exercise 2.</p>
+</div>
+</div>
+<ol type="1">
+<li>Open your copied database.</li>
+<li>Identify the alternative group that contains catchment data (Hint: its name likely involves “Catchments” or “hydrology”). Store this <code>AlternativeGroup</code> object.</li>
+<li>Create a new alternative named “High_ConcTime_AllCatchments” within this group, making it a child of the group’s base alternative.</li>
+<li>Create a new scenario named “Scenario_High_Tc”, making it a child of the base scenario.</li>
+<li>Assign the “High_ConcTime_AllCatchments” alternative to the “Scenario_High_Tc” scenario.</li>
+<li>Activate the “Scenario_High_Tc” scenario and confirm it was activated.</li>
+<li>Within this active scenario (“Scenario_High_Tc” with “High_ConcTime_AllCatchments” active for catchments):
+<ul>
+<li>Update the <code>ModelAConcTime</code> for <em>all</em> catchments in the <code>msm_Catchment</code> table to <code>3600</code> seconds.</li>
+</ul></li>
+<li>Verify the change:
+<ul>
+<li>While “Scenario_High_Tc” is active, select and display the <code>ModelAConcTime</code> for a few catchments (e.g., the first 3 MUIDs from <code>msm_Catchment</code>). They should show <code>3600</code>.</li>
+<li>Activate the base scenario.</li>
+<li>Select and display the <code>ModelAConcTime</code> for the same catchments. They should show their original values (e.g., <code>1200.0</code> if unchanged from the original database).</li>
+</ul></li>
+<li>Close the database.</li>
+</ol>
+<p><strong>Exercise 4</strong></p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Continue working with the database copy you modified in Exercise 3 (the one with “Scenario_High_Tc”).</p>
+</div>
+</div>
+<ol type="1">
+<li>Open the database copy from Exercise 3.</li>
+<li>Retrieve the simulation setup with MUID ‘rainfall’ from the <code>msm_Project</code> table.</li>
+<li>Update this ‘rainfall’ simulation setup to use your “Scenario_High_Tc” scenario by setting its <code>ScenarioName</code> column.</li>
+<li>Verify that the <code>ScenarioName</code> for the ‘rainfall’ simulation setup in <code>msm_Project</code> is now “Scenario_High_Tc”.</li>
+<li>Run the ‘rainfall’ simulation.</li>
+<li>Print the list of result files generated.</li>
+<li>Close the database.</li>
+</ol>
+<p><strong>Exercise 5</strong></p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Start with a fresh copy of the original <code>Dyrup_uncalibrated.sqlite</code> database (e.g., <code>Dyrup_uncalibrated_ex5_copy.sqlite</code>). This exercise will create many scenarios and run multiple simulations, which can take some time.</p>
+</div>
+</div>
+<p>The goal is to investigate the impact of <code>ModelAConcTime</code> and <code>ModelARFactor</code> for <em>all</em> catchments on the simulation results.</p>
+<ol type="1">
+<li>Define two Python lists:
+<ul>
+<li><code>conc_times_sec = [1200, 1500, 1800, 2100, 2400]</code> (these are 20, 25, 30, 35, 40 minutes in seconds)</li>
+<li><code>r_factors = [0.6, 0.7, 0.8, 0.9, 1.0]</code></li>
+</ul></li>
+<li>Open your copied database.</li>
+<li>Get the “Catchments and hydrology data” alternative group object.</li>
+<li>Loop through each combination of <code>conc_time</code> from <code>conc_times_sec</code> and <code>r_factor</code> from <code>r_factors</code>. For each of the 25 combinations:
+<ol type="a">
+<li>Create a unique alternative name, e.g., <code>Tc{tc}_Rf{rf}</code>.</li>
+<li>Create a new alternative in the “Catchments and hydrology data” group using the unique name, parented to the group’s base alternative.</li>
+<li>Create a unique scenario name, e.g., <code>Tc{tc}_Rf{rf}</code>.</li>
+<li>Create a new scenario using the unique name, parented to the database’s base scenario.</li>
+<li>Assign the newly created alternative to the newly created scenario.</li>
+<li>Activate the new scenario.</li>
+<li>In the active scenario, update <code>ModelAConcTime</code> to the current <code>tc</code> value and <code>ModelARFactor</code> to the current <code>rf</code> value for <strong>all</strong> catchments in the <code>msm_Catchment</code> table.</li>
+<li>Update the simulation setup with MUID ‘rainfall’ in the <code>msm_Project</code> table to use the current <code>new_scenario.name</code> for its <code>ScenarioName</code> column.</li>
+<li>Run the ‘rainfall’ simulation.</li>
+<li>Print the current scenario name and the list of result files generated for this scenario. (Optionally, just print the name of the <code>.res1d</code> file containing network HD results).</li>
+</ol></li>
+<li>After the loop finishes, close the database.</li>
+<li>Open the model in MIKE+. Can you see your scenarios? Try activating a few and checking catchment parameters.</li>
+</ol>
+<hr>
+<p>This set of exercises will guide you through the core functionalities of MIKE+Py, preparing you for more complex automated workflows. Good luck!</p>
 
 
 

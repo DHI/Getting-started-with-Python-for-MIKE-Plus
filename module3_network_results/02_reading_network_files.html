@@ -692,7 +692,7 @@ Tip
 <h2 data-number="17.2" class="anchored" data-anchor-id="res1d"><span class="header-section-number">17.2</span> Res1D</h2>
 <p>The <code>Res1D</code> object is central to interacting with 1D network result files. It acts as the primary container for your simulation data, analogous to MIKE IO’s <code>Dataset</code> object for other DHI file types.</p>
 <p>To start, you open your result file using <code>mikeio1d.open()</code>:</p>
-<div id="00b50500" class="cell" data-execution_count="1">
+<div id="3d87a20b" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> mikeio1d</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>res <span class="op">=</span> mikeio1d.<span class="bu">open</span>(<span class="st">"data/network.res1d"</span>)</span>
@@ -715,7 +715,7 @@ Note
 </div>
 </div>
 <p>Get an overview of key meta data with <code>info()</code>.</p>
-<div id="005aa761" class="cell" data-execution_count="2">
+<div id="4d362c41" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>res.info()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Start time: 1994-08-07 16:35:00
@@ -741,7 +741,7 @@ End time: 1994-08-07 18:35:00
 <h2 data-number="17.3" class="anchored" data-anchor-id="convert-to-dataframe"><span class="header-section-number">17.3</span> Convert to DataFrame</h2>
 <p>The <code>read()</code> method is the primary way to convert data from a <code>Res1D</code> object (or its subsets) into a Pandas DataFrame. This is a versatile method that can be called at various levels.</p>
 <p>You can convert the entire content of the <code>Res1D</code> object into a single DataFrame. Each quantity at a specific location becomes a column in the DataFrame.</p>
-<div id="61c41572" class="cell" data-execution_count="3">
+<div id="415ff226" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> res.read()</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>df.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="3">
@@ -905,7 +905,7 @@ End time: 1994-08-07 18:35:00
 </div>
 <p>The <code>DataFrame</code> above includes all reaches and nodes, which results in many columns. To create more manageable DataFrames, call <code>read()</code> on data subsets (e.g., by location or quantity).</p>
 <p>For example, all results for the location group <code>reaches</code>:</p>
-<div id="981bf704" class="cell" data-execution_count="4">
+<div id="ebe2adce" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>df_reaches <span class="op">=</span> res.reaches.read()</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>df_reaches.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="4">
@@ -1068,7 +1068,7 @@ End time: 1994-08-07 18:35:00
 </div>
 </div>
 <p>Or results for a reach named <code>100l1</code>:</p>
-<div id="85668d7c" class="cell" data-execution_count="5">
+<div id="4288e492" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>df_reach_100l1 <span class="op">=</span> res.reaches[<span class="st">"100l1"</span>].read()</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>df_reach_100l1.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="5">
@@ -1122,7 +1122,7 @@ End time: 1994-08-07 18:35:00
 </div>
 </div>
 <p>Or just the <code>Discharge</code> quantity of the previous reach.</p>
-<div id="31218991" class="cell" data-execution_count="6">
+<div id="4d555d36" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>df_reach_100l1_q <span class="op">=</span> res.reaches[<span class="st">"100l1"</span>].Discharge.read()</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>df_reach_100l1_q.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="6">
@@ -1181,7 +1181,7 @@ Tip
 <section id="plotting-and-other-formats" class="level2" data-number="17.4">
 <h2 data-number="17.4" class="anchored" data-anchor-id="plotting-and-other-formats"><span class="header-section-number">17.4</span> Plotting and other formats</h2>
 <p>For convenience, a <code>plot()</code> method is available anywhere that <code>read()</code> can be called. This allows for quick visualization of the data.</p>
-<div id="475d50bc" class="cell" data-execution_count="7">
+<div id="5e362f2a" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>res.reaches[<span class="st">"100l1"</span>].Discharge.plot()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
@@ -1192,10 +1192,10 @@ Tip
 </div>
 </div>
 <p>Similarly, wherever <code>read()</code> is available, you can export data to other common formats. For example:</p>
-<div id="c5d5d45e" class="cell" data-execution_count="8">
+<div id="1244b98b" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>res.reaches[<span class="st">"100l1"</span>].Discharge.to_dfs0(<span class="st">"discharge_of_interest.dfs0"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="246a0b26" class="cell" data-execution_count="9">
+<div id="d634741d" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>res.reaches[<span class="st">"100l1"</span>].Discharge.to_csv(<span class="st">"discharge_of_interest.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
@@ -1207,18 +1207,18 @@ Tip
 <li>Get descriptive statistics of all reach discharges</li>
 </ol>
 <p>First, open the result file.</p>
-<div id="15617d5e" class="cell" data-execution_count="11">
+<div id="76eba3f6" class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> mikeio1d</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>res <span class="op">=</span> mikeio1d.<span class="bu">open</span>(<span class="st">"data/network.res1d"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Then, get our node water levels and reach discharges into DataFrames.</p>
-<div id="e4223e49" class="cell" data-execution_count="12">
+<div id="b13fd14f" class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>df_nodes_wl <span class="op">=</span> res.nodes.WaterLevel.read()</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>df_reaches_q <span class="op">=</span> res.reaches.Discharge.read()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Use <code>describe()</code> on each DataFrame, just like from previous modules.</p>
-<div id="ddc88fac" class="cell" data-execution_count="13">
+<div id="052deb58" class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>wl_stats <span class="op">=</span> df_nodes_wl.describe().T</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>wl_stats.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="13">
@@ -1301,7 +1301,7 @@ Tip
 </div>
 </div>
 </div>
-<div id="902b5868" class="cell" data-execution_count="14">
+<div id="354c0ed9" class="cell" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>q_stats <span class="op">=</span> df_reaches_q.describe().T</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>q_stats.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="14">
@@ -1385,7 +1385,7 @@ Tip
 </div>
 </div>
 <p>From here we might want to use existing Pandas functionality to export our data for reporting purposes:</p>
-<div id="941e3484" class="cell" data-execution_count="15">
+<div id="6e0f511c" class="cell" data-execution_count="15">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>wl_stats.to_excel(<span class="st">"node_water_levels.xlsx"</span>)</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>q_stats.to_excel(<span class="st">"reaches_discharges.xlsx"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
