@@ -1,3 +1,30 @@
-# Introduction
+---
+comments: false
+---
 
-Coming soon...
+# Welcome to Module 5! {.unnumbered}
+
+This module introduces *MIKE+Py*, a Python package for programmatic interaction with MIKE+ model databases. You'll learn to automate common modelling tasks, enhancing your efficiency and reproducibility.
+
+This package allows direct access to your MIKE+ project's `.sqlite` database to read/write data, manage scenarios, and run simulations.
+
+Throughout this module, you will learn to:
+
+- Understand the structure of MIKE+ project databases.
+- Connect to a MIKE+ database using MIKE+Py.
+- Read data from various model tables.
+- Modify model parameters and data.
+- Manage scenarios and alternatives programmatically.
+- Configure and execute MIKE+ simulations from Python.
+
+This module culminates in a practical homework assignment where you'll apply these skills to automate tasks for a sample MIKE+ model.
+
+Let's get started!
+
+::: {.callout-tip title="Where can I download sample data to follow along?" collapse="true"}
+All of the sample data used in this module is available for download:
+
+*   [module5_model.zip](data/module5_model.zip){download="module5_model.zip"}
+
+Note: this is the exact same model from Module 4 (Homework - Exercise 1).
+:::

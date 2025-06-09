@@ -1,0 +1,288 @@
+# Scenarios
+
+MIKE+Py allows you to programmatically manage scenarios and alternatives within your MIKE+ model database, enabling automation of scenario-based analyses.
+
+```{python}
+#| echo: false
+#| output: false
+from pathlib import Path
+import shutil
+import mikeplus as mp
+
+# Create a copy of the database to modify
+source_db = Path('data/Dyrup_uncalibrated.sqlite')
+copied_db_path = Path('data/Dyrup_uncalibrated_copy.sqlite')
+shutil.copy2(source_db, copied_db_path)
+```
+
+```{python}
+import mikeplus as mp
+
+db = mp.open('data/Dyrup_uncalibrated_copy.sqlite')
+```
+
+## Concept Overview
+
+MIKE+ uses a system of scenarios and alternatives to manage different model setups and variations.
+
+Scenarios
+: Represent a complete model configuration for a specific simulation case (e.g., "Current Conditions", "Future Development with Pipe Upgrade A"). Scenarios can inherit from a parent scenario. Only one scenario may be active at a time.
+
+Alternative Groups
+: Organize different types of model data that can vary between scenarios (e.g., "CS Network data"). Each group contains one or more alternatives, which can inherit from parent alternatives. Only one alternative may be active at a time within an alternative group.
+
+Alternatives
+: Represent a specific version of the data within an alternative group (e.g., for "CS Network data", you might have a "Base Network" alternative and a "Upgraded Pipes" alternative).
+
+For a detailed conceptual understanding of scenarios and alternatives, please refer to the MIKE+ documentation. This section focuses on how to interact with them using MIKE+Py.
+
+
+## Alternative Groups
+
+List the names of all alternative groups. These are the main categories visible from the MIKE+ Scenarios editor.
+```{python}
+db.alternative_groups.group_names()
+```
+
+Access a specific alternative group by its name:
+```{python}
+network_group = db.alternative_groups["CS Network data"]
+network_group
+```
+
+Each group has a base alternative:
+```{python}
+network_group.base
+```
+
+And an active alternative (which is part of the active scenario):
+```{python}
+network_group.active
+```
+
+List the tables associated with an alternative group:
+```{python}
+network_group.tables
+```
+
+## Alternatives
+
+See all alternatives for the group.
+```{python}
+list(network_group)
+```
+
+Access an alternative within a group by its name:
+```{python}
+network_group.by_name("Base Alternative")
+```
+
+Create a new alternative. It will be a child of its parent (defaults to the group's base alternative if not specified):
+```{python}
+new_roughness_alt = network_group.create("New Roughness Values", parent=network_group.base)
+new_roughness_alt
+```
+
+Alternatives have several properties. For example, change an alternative's comment:
+
+```{python}
+new_roughness_alt.comment = "Alternative for testing higher roughness."
+new_roughness_alt.comment
+```
+
+## Scenarios
+
+Scenarios combine various alternatives to define a complete model state. Access all scenarios in the database:
+```{python}
+db.scenarios
+```
+
+Get the currently active scenario:
+```{python}
+db.scenarios.active
+```
+
+Get the base scenario:
+```{python}
+db.scenarios.base
+```
+
+Access a scenario by its name (returns the first match):
+```{python}
+db.scenarios.by_name("Base")
+```
+
+List all scenarios:
+
+```{python}
+list(db.scenarios)
+```
+
+Create new scenarios with a name and its parent scenario (defaults to base scenario if not provided)
+
+```{python}
+new_scenario = db.scenarios.create("My Scenario", parent=db.scenarios.base)
+list(db.scenarios)
+```
+
+Similar to Alternatives, Scenarios have several properties. For example:
+```{python}
+new_scenario.comment = "This is a test scenario"
+```
+
+List the alternatives used by a scenario:
+```{python}
+new_scenario.alternatives
+```
+
+Check if a scenario is active
+```{python}
+new_scenario.is_active
+```
+
+Activate a scenario. This makes it the current context for data modifications and simulations.
+```{python}
+new_scenario.activate()
+new_scenario.is_active
+```
+
+Set a specific alternative for a scenario. This will replace any existing alternative from the same group.
+
+Let's use the `new_roughness_alt` created earlier and assign it to `new_scenario`.
+```{python}
+new_scenario.set_alternative(new_roughness_alt)
+list(new_scenario.alternatives)
+```
+
+Delete a scenario. You cannot delete the base scenario.
+```{python}
+db.scenarios.delete(new_scenario)
+list(db.scenarios)
+```
+
+## Practical Example
+
+Let's continue with the catchment examples of the previous section. We would like to test two different scenarios:
+
+1. Time of concentration = 2000s for all catchments draining to Flow Meter B
+2. Time of concentration = 3000s for all catchments draining to Flow Meter B
+
+::: {.callout-note}
+Recall that the initial time of concentration for these catchments was 2500 seconds.
+:::
+
+First, get a list of the catchment MUIDs again.
+
+```{python}
+selection_name = "Flow_Meter_B_Catchments"
+catchment_muids_to_modify = (
+    db.tables.m_Selection
+        .select(['ItemMUID'])
+        .where(f"{db.tables.m_Selection.columns.SelectionID} = {mp.to_sql(selection_name)}")
+        .where(f"{db.tables.m_Selection.columns.TableName} = {mp.to_sql(db.tables.msm_Catchment.name)}")
+        .to_dataframe()['ItemMUID']
+        .tolist()
+)
+catchment_muids_to_modify[:3] # Show first few MUIDs
+```
+
+Our catchments are in table `msm_Catchment`, which is part of the `Catchments and hydrology data` Alternative Group. Let's create two new alternatives.
+
+```{python}
+alternative_2000 = db.alternative_groups["Catchments and hydrology data"].create("Time of Concentration = 2000s")
+alternative_3000 = db.alternative_groups["Catchments and hydrology data"].create("Time of Concentration = 3000s")
+list(db.alternative_groups["Catchments and hydrology data"])
+```
+
+Let's create two new scenarios, and apply the alternatives to them.
+
+```{python}
+scenario_2000 = db.scenarios.create("Time of Concentration = 2000s")
+scenario_2000.set_alternative(alternative_2000)
+
+scenario_3000 = db.scenarios.create("Time of Concentration = 3000s")
+scenario_3000.set_alternative(alternative_3000)
+
+list(db.scenarios)
+```
+
+Now let's activate each scenario and make changes to the new alternative.
+
+```{python}
+scenario_2000.activate()
+updated = (
+    db.tables.msm_Catchment
+        .update({
+            db.tables.msm_Catchment.columns.ModelAConcTime : 2000
+        })
+        .by_muid(catchment_muids_to_modify)
+        .execute()
+)
+len(updated)
+```
+
+```{python}
+scenario_3000.activate()
+updated = (
+    db.tables.msm_Catchment
+        .update({
+            db.tables.msm_Catchment.columns.ModelAConcTime : 3000
+        })
+        .by_muid(catchment_muids_to_modify)
+        .execute()
+)
+len(updated)
+```
+
+Now let's verify by activating each scenario and checking time of concentration values.
+
+```{python}
+#| code-line-numbers: true
+import pandas as pd
+
+# Check base scenario
+db.scenarios.base.activate()
+df_base = (
+    db.tables.msm_Catchment
+        .select([db.tables.msm_Catchment.columns.ModelAConcTime])
+        .by_muid(catchment_muids_to_modify)
+        .to_dataframe()
+)
+df_base.columns = ["Base Tc"]
+
+# Check Tc = 2000
+db.scenarios.by_name("Time of Concentration = 2000s").activate()
+df_2000 = (
+    db.tables.msm_Catchment
+        .select([db.tables.msm_Catchment.columns.ModelAConcTime])
+        .by_muid(catchment_muids_to_modify)
+        .to_dataframe()
+)
+df_2000.columns = ["Tc = 2000s"]
+
+# Check Tc = 3000
+db.scenarios.by_name("Time of Concentration = 3000s").activate()
+df_3000 = (
+    db.tables.msm_Catchment
+        .select([db.tables.msm_Catchment.columns.ModelAConcTime])
+        .by_muid(catchment_muids_to_modify)
+        .to_dataframe()
+)
+df_3000.columns = ["Tc = 3000s"]
+
+# Concatenate into common DataFrame for comparison
+df_compare = pd.concat([df_base, df_2000, df_3000], axis=1)
+df_compare.describe()
+```
+
+<br>
+This section demonstrated how to view, create, and manage scenarios and alternatives. In the next section, you'll learn how to run MIKE+ simulations.
+
+```{python}
+#| echo: false
+#| output: false
+# Cleanup: Close the database and delete the copy
+db.close()
+if copied_db_path.exists():
+    copied_db_path.unlink()
+```

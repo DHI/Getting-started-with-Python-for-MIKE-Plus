@@ -1,0 +1,140 @@
+// Created     : 2025-05-28 17:21:29
+// DLL         : C:\Program Files (x86)\DHI\MIKE+\2025\bin\x64\pfs2004.dll
+// Version     : 23.0.3.18318
+
+[MIKE1D_JOB_LIST]
+   [SIMULATION_SETUP]
+      Simulation_ID = 'rainfall'
+      Scenario_ID = 'Base'
+      Simulation_start = 2020, 9, 3, 16, 29, 0
+      Simulation_end = 2020, 9, 28, 8, 35, 0
+      Live_catchments = true
+   EndSect  // SIMULATION_SETUP
+
+   [BOUNDARY_CONDITIONS]
+      Global_source_boundaries = 'rainfall'
+   EndSect  // BOUNDARY_CONDITIONS
+
+   [LTS_SETUP]
+      [INITIAL_CONDITIONS]
+      EndSect  // INITIAL_CONDITIONS
+
+      [JOB_START_CRITERIA]
+         JL_Criterium_1 = 0.005, '00:30:00', 'AllNodes'
+      EndSect  // JOB_START_CRITERIA
+
+      [JOB_STOP_CRITERIA]
+         JL_Criterium_1 = 0.005, '01:00:00', 'AllNodes'
+      EndSect  // JOB_STOP_CRITERIA
+
+   EndSect  // LTS_SETUP
+
+   [SIMULATION_EVENT]
+      Simulation_start = '2020-09-03 16:29:00'
+      Simulation_end = '2020-09-03 21:11:00'
+      Simulation_end_no_duration = '2020-09-03 20:11:00'
+      Duration = '04:42:00'
+      Job_number = 1
+      Job_start_criterion = 'JL_Criterium_1'
+      Job_stop_criterion = 'JL_Criterium_1'
+   EndSect  // SIMULATION_EVENT
+
+   [SIMULATION_EVENT]
+      Simulation_start = '2020-09-05 07:43:00'
+      Simulation_end = '2020-09-05 09:52:00'
+      Simulation_end_no_duration = '2020-09-05 08:52:00'
+      Duration = '02:09:00'
+      Job_number = 2
+      Job_start_criterion = 'JL_Criterium_1'
+      Job_stop_criterion = 'JL_Criterium_1'
+   EndSect  // SIMULATION_EVENT
+
+   [SIMULATION_EVENT]
+      Simulation_start = '2020-09-05 16:20:00'
+      Simulation_end = '2020-09-05 18:31:00'
+      Simulation_end_no_duration = '2020-09-05 17:31:00'
+      Duration = '02:11:00'
+      Job_number = 3
+      Job_start_criterion = 'JL_Criterium_1'
+      Job_stop_criterion = 'JL_Criterium_1'
+   EndSect  // SIMULATION_EVENT
+
+   [SIMULATION_EVENT]
+      Simulation_start = '2020-09-06 11:41:00'
+      Simulation_end = '2020-09-06 13:32:00'
+      Simulation_end_no_duration = '2020-09-06 12:32:00'
+      Duration = '01:51:00'
+      Job_number = 4
+      Job_start_criterion = 'JL_Criterium_1'
+      Job_stop_criterion = 'JL_Criterium_1'
+   EndSect  // SIMULATION_EVENT
+
+   [SIMULATION_EVENT]
+      Simulation_start = '2020-09-09 08:52:00'
+      Simulation_end = '2020-09-09 14:38:00'
+      Simulation_end_no_duration = '2020-09-09 13:38:00'
+      Duration = '05:46:00'
+      Job_number = 5
+      Job_start_criterion = 'JL_Criterium_1'
+      Job_stop_criterion = 'JL_Criterium_1'
+   EndSect  // SIMULATION_EVENT
+
+   [SIMULATION_EVENT]
+      Simulation_start = '2020-09-12 12:51:00'
+      Simulation_end = '2020-09-12 14:56:00'
+      Simulation_end_no_duration = '2020-09-12 13:56:00'
+      Duration = '02:05:00'
+      Job_number = 6
+      Job_start_criterion = 'JL_Criterium_1'
+      Job_stop_criterion = 'JL_Criterium_1'
+   EndSect  // SIMULATION_EVENT
+
+   [SIMULATION_EVENT]
+      Simulation_start = '2020-09-24 04:37:00'
+      Simulation_end = '2020-09-24 06:23:00'
+      Simulation_end_no_duration = '2020-09-24 05:23:00'
+      Duration = '01:46:00'
+      Job_number = 7
+      Job_start_criterion = 'JL_Criterium_1'
+      Job_stop_criterion = 'JL_Criterium_1'
+   EndSect  // SIMULATION_EVENT
+
+   [SIMULATION_EVENT]
+      Simulation_start = '2020-09-25 06:33:00'
+      Simulation_end = '2020-09-25 09:38:00'
+      Simulation_end_no_duration = '2020-09-25 08:38:00'
+      Duration = '03:05:00'
+      Job_number = 8
+      Job_start_criterion = 'JL_Criterium_1'
+      Job_stop_criterion = 'JL_Criterium_1'
+   EndSect  // SIMULATION_EVENT
+
+   [SIMULATION_EVENT]
+      Simulation_start = '2020-09-25 16:57:00'
+      Simulation_end = '2020-09-25 19:31:00'
+      Simulation_end_no_duration = '2020-09-25 18:31:00'
+      Duration = '02:34:00'
+      Job_number = 9
+      Job_start_criterion = 'JL_Criterium_1'
+      Job_stop_criterion = 'JL_Criterium_1'
+   EndSect  // SIMULATION_EVENT
+
+   [SIMULATION_EVENT]
+      Simulation_start = '2020-09-26 18:02:00'
+      Simulation_end = '2020-09-26 21:37:00'
+      Simulation_end_no_duration = '2020-09-26 20:37:00'
+      Duration = '03:35:00'
+      Job_number = 10
+      Job_start_criterion = 'JL_Criterium_1'
+      Job_stop_criterion = 'JL_Criterium_1'
+   EndSect  // SIMULATION_EVENT
+
+   [SUMMARY]
+      Number_of_jobs = 10
+      Total_duration = '1.05:44:00'
+      JL_Criterium_1_use_count_for_start = 10
+      JL_Criterium_1_use_count_for_stop = 10
+   EndSect  // SUMMARY
+
+EndSect  // MIKE1D_JOB_LIST
+

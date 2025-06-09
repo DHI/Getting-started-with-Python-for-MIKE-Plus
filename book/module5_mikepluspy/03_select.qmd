@@ -1,0 +1,226 @@
+# Selecting Data
+
+MIKE+Py allows you to programmatically read data from your MIKE+ model database. This is done by constructing and executing queries against specific tables. This section focuses on `SELECT` queries, which are used to retrieve data.
+
+Queries in MIKE+Py are typically initiated from a `Table` object, which you access through an opened `Database` object.
+
+First, let's open our MIKE+ project database. We'll use the `db` object for all subsequent examples in this section.
+
+```{python}
+import mikeplus as mp
+
+# Open the database
+db = mp.open("data/Dyrup_uncalibrated.sqlite")
+```
+
+::: {.callout-note title="Reminder: remember to call db.close()" collapse="true"}
+Remember to close the database when you're finished if not using a context manager: `db.close()`. For simplicity in these examples, we'll assume it's closed at the end of the script or notebook session.
+:::
+
+## Selecting Data
+
+The primary way to retrieve data is by using the `select()` method on a table object (e.g., `db.tables.msm_Node`). This creates a `SelectQuery` object, which you can then refine and execute.
+
+### All Columns
+
+To select all columns from a table, you can call `select()` without arguments, followed by `to_dataframe()` to get the results as a Pandas DataFrame.
+
+Let's retrieve all data from the `msm_Catchment` table:
+```{python}
+df_all_catchments = db.tables.msm_Catchment.select().to_dataframe()
+df_all_catchments.head()
+```
+
+::: {.callout-tip}
+When retrieving all columns, a shortcut is simply calling `to_dataframe()` on the table itself, omitting `select()`.
+:::
+
+### Specific Columns
+
+Often, you only need a subset of columns. You can specify these by passing a list of column names to the `select()` method.
+
+Let's select only the `Area`, and `ModelAImpArea` for all catchments:
+```{python}
+df_catchment_subset = db.tables.msm_Catchment.select(['Area', 'ModelAImpArea']).to_dataframe()
+df_catchment_subset.head()
+```
+
+Expressions can be made more readable to help better understand complex queries. Additionally, specifying column names by object rather than string helps reduce typo errors.
+
+```{python}
+df_catchment_subset = (
+    db.tables.msm_Catchment
+        .select([
+            db.tables.msm_Catchment.columns.Area,
+            db.tables.msm_Catchment.columns.ModelAImpArea,
+            db.tables.msm_Catchment.columns.ModelAConcTime,
+            db.tables.msm_Catchment.columns.ModelARFactor,
+        ])
+        .to_dataframe()
+)
+df_catchment_subset.head()
+```
+
+Although the expression above is more verbose, it's now much more readable, especially when you read it a year later.
+
+::: {.callout-note}
+Use parentheses to break long statements across lines for readability. Alternatively, use backslashes.
+:::
+
+## MUIDs
+
+If you only need the MUIDs (unique identifiers) for all records in a table, you can use the `get_muids()` method.
+
+```{python}
+catchment_muids = db.tables.msm_Catchment.get_muids()
+catchment_muids[:3]
+```
+
+## Filtering Rows
+
+MIKE+Py provides several ways to filter rows based on conditions.
+
+### Filtering with `by_muid()`
+
+If you know the MUID(s) of the specific record(s) you want, the `by_muid()` method is a convenient way to filter.
+
+Retrieve data for a catchment with a specific MUID, for example, 'G61F011_7292'.
+
+```{python}
+(
+    db.tables.msm_Catchment
+        .select()
+        .by_muid('G61F011_7292')
+        .to_dataframe()
+        .head()
+)
+```
+
+You can also provide a list of MUIDs.
+
+```{python}
+(
+    db.tables.msm_Catchment
+        .select()
+        .by_muid(['G61F011_7292', 'G61F013_7293'])
+        .to_dataframe()
+        .head()
+)
+```
+
+### Filtering with `where()`
+
+For more complex filtering based on column values, use the `where()` method. This method accepts an SQL-like condition string.
+
+Select catchments where the `Area` is greater than 0.8 hectares.
+
+```{python}
+(
+    db.tables.msm_Catchment
+        .select(['Area'])
+        .where("Area > 8000")
+        .to_dataframe()
+)
+```
+
+::: {.callout-caution title="Units in MIKE+ GUI versus what's in the database"}
+Values displayed in the MIKE+ GUI may have different units than what is stored in the database. The examples above show catchment area in 'hectares', whereas the database stores them in 'm²'. Stored units depend on the 'Unit system' defined for the specific model.
+:::
+
+Select pipes having node 'G61F351' as its start node.
+
+```{python}
+(
+    db.tables.msm_Link
+        .select(['FromNodeID'])
+        .where("FromNodeID = 'G61F351'")
+        .to_dataframe()
+)
+```
+
+Notice the following about string condition passed to `where()`:
+
+- **column names** are not in quotes (e.g. FromNodeID)
+- **string values** are in single quotes (e.g. 'G61F351')
+- **numeric values** are not in quotes (e.g. 8000)
+
+Wrongly formatted condition strings is a common source of errors. MIKE+Py provides a helper function `mp.to_sql()` that helps with this formatting by preventing mistakes like forgetting to close quote pairs, or forgetting them entirely.
+
+```{python}
+(
+    db.tables.msm_Link
+        .select(['FromNodeID'])
+        .where(f"FromNodeID = {mp.to_sql("G61F351")}")
+        .to_dataframe()
+)
+```
+
+You can chain multiple `where()` calls, or combine conditions within a single `where()` string using `AND` or `OR`. Chaining `where()` calls implies an `AND` relationship.
+
+Select catchments where `Area` > 8000 AND `ModelAImpArea` (impervious area for Model A) is less than 0.5.
+
+```{python}
+(
+    db.tables.msm_Catchment
+        .select(['MUID', 'Area', 'ModelAImpArea'])
+        .where(f"Area > {mp.to_sql(8000)}")
+        .where(f"ModelAImpArea < {mp.to_sql(0.5)}")
+        .to_dataframe()
+)
+```
+
+This is equivalent to:
+
+```{python}
+(
+    db.tables.msm_Catchment
+        .select(['MUID', 'Area', 'ModelAImpArea'])
+        .where(f"Area > {mp.to_sql(8000)} AND ModelAImpArea < {mp.to_sql(0.5)}")
+        .to_dataframe()
+)
+```
+
+## Practical Example
+
+Let's say we defined a selection of catchments in MIKE+, for which we we want to retrieve their `Area`, `ModelAImpArea`, and `ModelAConcTime`.
+
+First let's find the table that selections are stored in. Notice there's no hover tooltips in MIKE+ GUI for selections. However, we find the table `m_Selection` anyways by searching MIKE+Py's documentation for *selection*. Alternatively, we could have *guessed* it with help from IDE auto-completion, typing something like `db.tables.selec`.
+
+Start by displaying the whole table.
+
+```{python}
+db.tables.m_Selection.to_dataframe()
+```
+
+We notice the column SelectionID corresponds with our selection names. TableName and ItemMUID together seem to refer to the items of the selection. We want the catchment MUIDs for selection `Flow_Meter_B_Catchments`.
+
+```{python}
+muids = (
+    db.tables.m_Selection
+        .select(["ItemMUID"])
+        .where(f"{db.tables.m_Selection.columns.SelectionID} = {mp.to_sql("Flow_Meter_B_Catchments")}")
+        .where(f"{db.tables.m_Selection.columns.TableName} = {mp.to_sql(db.tables.msm_Catchment.name)}")
+        .to_dataframe()["ItemMUID"]
+        .values.tolist()
+)
+muids[:3]
+```
+
+Now that we have a list of MUIDs, we can use `by_muid()` to get our desired data.
+
+```{python}
+(
+    db.tables.msm_Catchment
+        .select(['Area', 'ModelAImpArea', 'ModelAConcTime'])
+        .by_muid(muids)
+        .to_dataframe()
+)
+```
+
+In the next section, you'll discover how to modify data and that it uses the same filter mechanisms.
+
+```{python}
+#| echo: false
+# Close the database at the end of the section
+db.close()
+```

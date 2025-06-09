@@ -1,0 +1,204 @@
+# Simulations
+
+MIKE+Py enables you to configure and execute MIKE+ simulations programmatically from Python scripts, which is particularly useful for automating workflows like scenario analysis or calibration.
+
+```{python}
+#| echo: false
+#| output: false
+from pathlib import Path
+import shutil
+import mikeplus as mp # ensure this is the typical import
+import pandas as pd # for displaying dataframes
+
+# Create a copy of the database to modify
+source_db = Path('data/Dyrup_uncalibrated.sqlite')
+copied_db_path = Path('data/Dyrup_uncalibrated_copy.sqlite')
+if copied_db_path.exists():
+    copied_db_path.unlink(missing_ok=True) # Ensure clean copy for idempotency
+shutil.copy2(source_db, copied_db_path)
+```
+
+```{python}
+import mikeplus as mp
+
+db = mp.open('data/Dyrup_uncalibrated_copy.sqlite')
+```
+
+## Running Simulations
+
+### By Active Simulation
+
+You can run the simulation setup that is currently marked as "active" in the MIKE+ project.
+
+First, you can identify the active simulation setup's MUID:
+```{python}
+active_sim_muid = db.active_simulation
+active_sim_muid
+```
+
+To run the active simulation, call `db.run()` without specifying a `simulation_muid`. It will return a list of `Path` objects pointing to the generated result files.
+```{python}
+#| eval: false
+result_files_active = db.run()
+for rf in result_files_active:
+    print(rf.name)
+```
+```{python}
+#| eval: true
+#| echo: false
+
+# Mock result of cell above to avoid running simulation
+result_files_active = [Path("rainfallBaseDefault_Network_HD.res1d"), Path("rainfallBaseDefault_Surface_runoff.res1d")]
+for rf in result_files_active:
+    print(rf.name)
+```
+
+### By Simulation MUID
+
+More commonly, you'll want to run a specific simulation setup, regardless of which one is currently active. You can do this by providing the `simulation_muid` argument to `db.run()`.
+
+You can find available simulation setup MUIDs by inspecting a project table, like `msm_Project`:
+```{python}
+db.tables.msm_Project.select(["ScenarioName", "Description"]).to_dataframe()
+```
+
+To run the simulation setup named 'rainfall':
+```{python}
+#| eval: false
+result_files_rainfall = db.run(simulation_muid="rainfall")
+for rf in result_files_rainfall:
+    print(rf.name)
+```
+```{python}
+#| eval: true
+#| echo: false
+
+# Mock result of cell above to avoid running simulation
+result_files_rainfall = [Path("rainfallBaseDefault_Network_HD.res1d"), Path("rainfallBaseDefault_Surface_runoff.res1d")]
+for rf in result_files_rainfall:
+    print(rf.name)
+```
+
+## Practical Example
+
+A common use case is to run the same simulation configuration but for different scenarios. In this example, we'll run the scenarios created in the previous section.
+
+Recall that two scenarios were created in addition to the base scenario:
+```{python}
+#| code-fold: true
+#| code-summary: "Code for generating scenarios (based on previous section)"
+
+selection_name = "Flow_Meter_B_Catchments"
+
+# Catchment MUIDs draining to Flow Meter B
+catchment_muids_to_modify = (
+    db.tables.m_Selection
+        .select(['ItemMUID'])
+        .where(f"{db.tables.m_Selection.columns.SelectionID} = {mp.to_sql(selection_name)}")
+        .where(f"{db.tables.m_Selection.columns.TableName} = {mp.to_sql(db.tables.msm_Catchment.name)}")
+        .to_dataframe()['ItemMUID']
+        .tolist()
+)
+
+
+alternative_2000 = db.alternative_groups["Catchments and hydrology data"].create("Time of Concentration = 2000s")
+scenario_2000 = db.scenarios.create("Time of Concentration = 2000s")
+scenario_2000.set_alternative(alternative_2000)
+
+alternative_3000 = db.alternative_groups["Catchments and hydrology data"].create("Time of Concentration = 3000s")
+scenario_3000 = db.scenarios.create("Time of Concentration = 3000s")
+scenario_3000.set_alternative(alternative_3000)
+
+scenario_2000.activate()
+(
+db.tables.msm_Catchment
+    .update({
+        db.tables.msm_Catchment.columns.ModelAConcTime : 2000
+    })
+    .by_muid(catchment_muids_to_modify)
+    .execute()
+)
+
+scenario_3000.activate()
+(
+db.tables.msm_Catchment
+    .update({
+        db.tables.msm_Catchment.columns.ModelAConcTime : 3000
+    })
+    .by_muid(catchment_muids_to_modify)
+    .execute()
+)
+
+list(db.scenarios)
+```
+
+Let's inspect our model simulation setups.
+```{python}
+df_sim_setups = db.tables.msm_Project.select(["ScenarioName", "Description"]).to_dataframe()
+df_sim_setups
+```
+
+We will use the simulation setup with MUID 'rainfall', iteratively running all scenarios by modifying the `ScenarioName`.
+
+```{python}
+#| eval: false
+#| code-line-numbers: true
+
+simulation_setup_muid = "rainfall"
+scenarios_to_run = [
+    db.scenarios.base,
+    db.scenarios.by_name("Time of Concentration = 2000s"),
+    db.scenarios.by_name("Time of Concentration = 3000s"),
+]
+scenario_results = {}
+
+for scenario in scenarios_to_run:
+
+    # Update the simulation setup to use the current scenario
+    (
+        db.tables.msm_Project
+            .update({
+                db.tables.msm_Project.columns.ScenarioName: scenario.name
+            })
+            .by_muid(simulation_setup_muid)
+            .execute()
+    )
+    
+    # Run simulation
+    result_paths = db.run(simulation_muid=simulation_setup_muid)
+
+    # Store result paths
+    scenario_results[scenario.name] = [p.name for p in result_paths]
+
+# Print all files generated
+for scenario_name, files in scenario_results.items():
+    print(f"Scenario '{scenario_name}'")
+    for file in files:
+        print(f"\t- {file}")
+```
+```{python}
+#| eval: true
+#| echo: false
+
+# Mock result of cell above to avoid running simulation
+scenario_results = {
+    "Base" : ['rainfallBaseDefault_Network_HD.res1d', 'rainfallBaseDefault_Surface_runoff.res1d'],
+    "Time of Concentration = 2000s" : ['rainfallTime of Concentration = 2000sDefault_Network_HD.res1d', 'rainfallTime of Concentration = 2000sDefault_Surface_runoff.res1d'],
+    "Time of Concentration = 3000s" : ['rainfallTime of Concentration = 3000sDefault_Network_HD.res1d', 'rainfallTime of Concentration = 3000sDefault_Surface_runoff.res1d']
+}
+for key in scenario_results:
+    scenario_results[key] = [Path(f) for f in scenario_results[key]]
+
+for scenario_name, files in scenario_results.items():
+    print(f"Scenario '{scenario_name}'")
+    for file in files:
+        print(f"\t- {file}")
+```
+
+```{python}
+#| echo: false
+#| output: false
+db.close()
+if copied_db_path.exists():
+    copied_db_path.unlink(missing_ok=True)
+```

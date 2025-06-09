@@ -1,0 +1,72 @@
+# MIKE+Py
+
+This section introduces *MIKE+Py*, a Python package for interacting with MIKE+ projects. You'll learn its purpose, capabilities, installation, and core concepts.
+
+## What is MIKE+Py and Why Use It?
+
+MIKE+Py is an open-source Python package that lets you work directly with MIKE+ model databases (`.sqlite` files). Its main goals are to automate modelling tasks and improve the reproducibility of your MIKE+ workflows.
+
+With MIKE+Py, you can programmatically:
+
+*   **Read and modify model parameters:** Change pipe diameters, node inverts, catchment properties, etc.
+*   **Manage scenarios and alternatives:** Create and switch between different model configurations.
+*   **Run simulations:** Execute MIKE+ model simulations.
+*   **Run tools:** Execute some GUI tools pythonically (e.g. import/export tool).
+   
+::: {.callout-important title="Modifying Databases Correctly"}
+Use MIKE+Py for database modifications, not generic SQLite libraries (e.g., Python's `sqlite3`). MIKE+Py leverages MIKE+'s internal .NET API, ensuring changes adhere to MIKE+ specific logic and maintain database integrity. Generic tools bypass this, risking model corruption.
+:::
+
+## Installation
+
+Install MIKE+Py using `uv` in your terminal:
+
+```powershell
+uv pip install mikeplus
+```
+
+::: {.callout-note}
+Use of MIKE+Py requires a valid  MIKE+ license, unlike previously covered Python packages (e.g. MIKE IO, MIKE IO 1D).
+:::
+
+::: {.callout-tip}
+Always refer to the [official MIKE+Py documentation](https://dhi.github.io/mikepluspy/) for the most up-to-date installation instructions.
+:::
+
+## Core Components
+
+You'll primarily work with these MIKE+Py components:
+
+*   **`Database` object**: Your main connection to the MIKE+ project, opened from a `.sqlite` file. It's the gateway to all other functionalities.
+*   **`Tables`**: Access and modify data stored in the model's relational tables (e.g., `msm_Node` for nodes, `msm_Link` for pipes).
+*   **`Scenarios` and `Alternatives`**: Programmatically manage different versions or configurations of your model.
+
+## Example Use Cases
+
+Common applications of MIKE+Py include:
+
+*   Automating sensitivity analyses by systematically varying parameters across numerous scenarios.
+*   Running batch simulations for different rainfall events or operational strategies.
+*   Developing scripted model calibration and validation workflows.
+*   Extracting specific model data for custom reports or further analysis.
+
+The following sections will detail how to connect to databases, read and modify data, manage scenarios, and run simulations.
+
+## Maturity, Potential, and Challenges
+
+MIKE+Py is less mature than other DHI packages, like MIKE IO and MIKE IO 1D. It is actively being developed, with more features planned.
+
+::: {.callout-warning title="Compatibility issues"}
+There are known compatibility issues when using MIKE+Py alongside other DHI libraries (e.g. MIKE IO, MIKE IO 1D, ModelSkill).
+
+- Importing MIKE IO *after* MIKE+Py is not supported and will cause errors.
+- Importing MIKE IO 1D *before* MIKE+Py is not supported and will cause errors.
+
+The following is the suggest import order which works for most use cases, but could still run into issues:
+```python
+import mikeio
+import modelskill as ms
+import mikeplus as mp
+import mikeio1d
+```
+:::

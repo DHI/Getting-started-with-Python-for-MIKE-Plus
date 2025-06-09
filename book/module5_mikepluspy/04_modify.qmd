@@ -1,0 +1,235 @@
+# Modifying Data
+
+The previous section focused on reading data from your MIKE+ model database. This section delves into modifying that data programmatically using MIKE+Py. You'll learn how to perform `UPDATE`, `INSERT`, and `DELETE` operations, enabling you to automate changes to your model setup, parameters, and even create new model elements.
+
+::: {.callout-important title="With great power comes great responsibility"}
+Unlike with MIKE+, there is **no 'undo' button** when making changes programmatically with MIKE+Py. Once a change is executed, it is permanent. **Always work on a copy** of your MIKE+ `.sqlite` database to ensure original work remains intact.
+:::
+
+```{python}
+#| echo: false
+#| output: false
+from pathlib import Path
+import shutil
+
+source = Path('data/Dyrup_uncalibrated.sqlite')
+copied_db_path = Path('data/Dyrup_uncalibrated_copy.sqlite')
+
+shutil.copy2(source, copied_db_path)
+```
+
+First, let's open our copied MIKE+ project database. We'll use the `db` object for all subsequent examples in this section.
+
+```{python}
+import mikeplus as mp
+
+# Open the copied database
+db = mp.open("data/Dyrup_uncalibrated_copy.sqlite")
+```
+
+## Update Operations
+
+The `update()` method on a table object allows you to change existing data in your MIKE+ database. It creates an `UpdateQuery` object, which you then refine with conditions (using `where()` or `by_muid()`) and the new values. To apply the changes to the database, you must call `execute()` on the query object.
+
+The `execute()` method for an update query returns a list of MUIDs for the rows that were updated.
+
+### Updating Specific Rows
+
+Let's update the diameter of two specific pipes in the `msm_Link` table.
+
+First, we can inspect their current diameters:
+```{python}
+(
+    db.tables.msm_Link
+    .select(['MUID', 'Diameter'])
+    .by_muid(['G60F380_G60F360_l1', 'G62F070_G62F060_l1'])
+    .to_dataframe()
+)
+```
+
+Now, update their diameters. For example, set pipe `G60F380_G60F360_l1` and `G62F070_G62F060_l1` to 0.6m. The argument passed to `update()` is a Python dictionary with keys of column names and values matching the desired updated value.
+```{python}
+(
+    db.tables.msm_Link
+    .update({
+        db.tables.msm_Link.columns.Diameter : 0.4
+    })
+    .by_muid(['G60F380_G60F360_l1', 'G62F070_G62F060_l1'])
+    .execute() # don't forget this, or nothing happens
+)
+```
+
+Notice the `update()` returned MUIDs of the updated rows. Verify the changes:
+```{python}
+(
+    db.tables.msm_Link
+    .select(['MUID', 'Diameter'])
+    .by_muid(['G60F380_G60F360_l1', 'G62F070_G62F060_l1'])
+    .to_dataframe()
+)
+```
+
+::: {.callout-tip}
+Use the return value of `update()` to confirm the result is what you intended. A common error is to forget calling `execute()`.
+:::
+
+### Updating All Rows in a Table
+
+You can update all rows in a table by calling `all()` before `execute()`. Be extremely careful with this operation.
+
+Let's update the `Description` for all nodes in the `msm_Node` table.
+```{python}
+updated_muids = (
+    db.tables.msm_Node
+    .update({
+        'Description': 'Hello from MIKE+Py'
+    })
+    .all().execute()
+)
+len(updated_muids)
+```
+
+You can verify this change by selecting a few rows or opening the model in MIKE+.
+
+## Insert Operations
+
+The `insert()` method is used to add new rows to a table. You provide a dictionary where keys are column names and values are the data to be inserted. The same default values as MIKE+ are used if a column value is not specified.
+
+By default, `insert()` executes immediately and returns the MUID of the newly inserted row. If you set `execute=False`, it returns an `InsertQuery` object, which you would then need to call `execute()` on.
+
+MIKE+Py will typically auto-generate an MUID if one is not provided in the `values` dictionary.
+
+::: {.callout-note}
+Currently, the `insert()` method via MIKE+Py is best suited for inserting single rows at a time. For bulk inserts, you need to loop through your data and call `insert()` for each row.
+:::
+
+### Inserting a New Simulation Setup
+
+Let's insert a new simulation setup into the `msm_Project` table. We'll define a new MUID and ScenarioName, and set some essential parameters.
+
+```{python}
+db.tables.msm_Project.insert({
+    db.tables.msm_Project.columns.MUID              : 'My_Simulation',
+    db.tables.msm_Project.columns.Description       : 'Simulation setup created by MIKE+Py',
+    db.tables.msm_Project.columns.Enable_Catchment  : 1,
+    db.tables.msm_Project.columns.Enable_CS         : 1,
+    db.tables.msm_Project.columns.Enable_RR         : 1,
+    db.tables.msm_Project.columns.Enable_HD         : 1,
+    db.tables.msm_Project.columns.Enable_LTS        : 1,
+})
+```
+
+Notice the MUID of the inserted row is returned.
+
+## Delete Operations
+
+The `delete()` method removes rows from a table. Similar to `update()`, it creates a `DeleteQuery`. You must specify which rows to delete using `where()` or `by_muid()`, or use `all()` to delete all rows (with extreme caution). Call `execute()` to perform the deletion.
+
+The `execute()` method for a delete query returns a list of MUIDs for the rows that were deleted.
+
+### Deleting a Specific Row
+
+Let's delete the simulation setup we just created using its MUID.
+```{python}
+(
+    db.tables.msm_Project
+        .delete()
+        .by_muid('My_Simulation')
+        .execute()
+)
+```
+
+### Deleting Rows with a Filter
+
+You can delete multiple rows that match a specific condition. For instance, to delete all pipes in `msm_Link` with a `Diameter` less than 0.2m:
+
+```{python}
+deleted_pipes = (
+    db.tables.msm_Link
+        .delete()
+        .where(f"{db.tables.msm_Link.columns.Diameter} < {mp.to_sql(0.2)}")
+        .execute()
+)
+len(deleted_pipes)
+```
+
+### Deleting All Rows in a Table
+
+To delete all rows from a table, use `all().execute()`. This is a very destructive operation. For example, to delete all simulation setups from `msm_Project` (use with extreme caution):
+
+```{python}
+db.tables.msm_Project.delete().all().execute()
+```
+
+## Practical Example
+
+In the previous section, we identified how to get MUIDs for catchments belonging to a specific selection. Let's use that to modify the 'Time of Concentration' (`ModelAConcTime`) for all catchments in the "Flow_Meter_B_Catchments" selection, increasing it by 10%.
+
+First, let's get a list of the catchment MUIDs again.
+
+```{python}
+selection_name = "Flow_Meter_B_Catchments"
+catchment_muids_to_modify = (
+    db.tables.m_Selection
+        .select(['ItemMUID'])
+        .where(f"{db.tables.m_Selection.columns.SelectionID} = {mp.to_sql(selection_name)}")
+        .where(f"{db.tables.m_Selection.columns.TableName} = {mp.to_sql(db.tables.msm_Catchment.name)}")
+        .to_dataframe()['ItemMUID']
+        .tolist()
+)
+catchment_muids_to_modify[:3] # Show first few MUIDs
+```
+
+Next, let's review the initial times of concentration.
+
+```{python}
+df_toc = (
+    db.tables.msm_Catchment
+    .select(['ModelAConcTime'])
+    .by_muid(catchment_muids_to_modify)
+    .to_dataframe()
+)
+df_toc.describe()
+```
+
+Now let's calculate new times of concentration.
+
+```{python}
+df_toc = df_toc * 1.1
+df_toc.describe()
+```
+
+Finally, we'll update each catchment with its new time of concentration.
+
+```{python}
+updated_count = 0
+for muid, row in df_toc.iterrows():
+    updated_count += len(
+        db.tables.msm_Catchment
+            .update({'ModelAConcTime': row['ModelAConcTime']})
+            .by_muid(muid)
+            .execute()
+    )
+
+print(f"Updated Time of Concentration for {updated_count} catchments.")
+```
+
+Verify the changes.
+```{python}
+(
+    db.tables.msm_Catchment
+        .select(['ModelAConcTime'])
+        .by_muid(catchment_muids_to_modify)
+        .to_dataframe()
+        .describe()
+)
+```
+
+This practical example demonstrates a common workflow: selecting data, performing calculations or logic in Python (often with Pandas), writing the modified data back to the MIKE+ database, and verifying everything went okay.
+
+```{python}
+#| echo: false
+#| output: false
+db.close()
+copied_db_path.unlink()
+```

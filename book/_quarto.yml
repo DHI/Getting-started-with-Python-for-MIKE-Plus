@@ -73,8 +73,15 @@ book:
        - module4_calibration_plots_and_statistics\homework.qmd
 
     - part: "Module 5 - MIKE+Py"
-      #chapters:
-      #  - module5_mikepluspy\index.qmd
+      chapters:
+        - module5_mikepluspy\index.qmd
+        - module5_mikepluspy\01_mikepluspy.qmd
+        - module5_mikepluspy\02_databases.qmd
+        - module5_mikepluspy\03_select.qmd
+        - module5_mikepluspy\04_modify.qmd
+        - module5_mikepluspy\05_scenarios.qmd
+        - module5_mikepluspy\06_simulations.qmd
+        - module5_mikepluspy\homework.qmd
 
     - part: "Module 6 - Putting Everything Together"
       #chapters:

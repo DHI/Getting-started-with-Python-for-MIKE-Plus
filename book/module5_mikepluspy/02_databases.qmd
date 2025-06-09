@@ -1,0 +1,185 @@
+# MIKE+ Database
+
+Understanding how MIKE+ stores its data is crucial for effectively using MIKE+Py. This section covers the basics of the MIKE+ database, shows how to explore the database structure both within the MIKE+ GUI and programmatically with MIKE+Py.
+
+## General
+
+This section provides a concise primer on useful background knowledge.
+
+### SQLite3
+
+MIKE+ stores model data in an [SQLite database](https://www.sqlite.org/), a common and self-contained format.
+
+It's a single file
+
+:   A single .sqlite file holds all tables and data.
+
+It's relational
+
+:   Tables are organized and linked together using keys (unique IDs like *MUID*).
+
+It's free and serverless
+
+:   As open-source software, it requires no installation and works with many tools.
+
+::: callout-note
+While MIKE+ also supports PostgreSQL databases, MIKE+Py currently only supports SQLite.
+:::
+
+### SQL
+
+SQL (Structured Query Language) is the standard language for managing data in a relational database. You use it to query and modify data with commands like:
+
+SELECT
+
+:   Get specific data from tables.
+
+UPDATE, INSERT, DELETE
+
+:   Change, add, or remove data.
+
+WHERE
+
+:   Filter data with conditions.
+
+You do not need to know SQL to use MIKE+Py. However, MIKE+Py's design intentionally mirrors common SQL patterns, so being familiar with the concepts is helpful.
+
+::: {.callout-tip title="Learning SQL" collapse="true"}
+If you're new to SQL, there are many excellent resources available online. Here are a few starting points:
+
+-   [Learn X in Y minutes - SQL](https://learnxinyminutes.com/sql/)
+-   [SQLZoo](https://sqlzoo.net/wiki/SQL_Tutorial)
+:::
+
+## MIKE+ Projects
+
+When you work with a MIKE+ project, you'll typically interact with two main file types:
+
+Project File (.mupp)
+
+:   The main file you open with MIKE+. It points to the database location and stores UI settings like map symbology, preferences, and background layers.
+
+Project Database (.sqlite)
+
+:   This file *is* the model database. It stores all the core model data, including network elements (nodes, links, catchments), their parameters, simulation setups, scenarios, and alternatives.
+
+MIKE+Py works on the project database (.sqlite), not the project file.
+
+::: {.callout-tip title="Need to modify a .mupp file?" collapse="true"}
+Simply open it with any text editor. It uses DHI's *PFS* format, which is structured plain-text. For more advanced edits, consider using [MIKE IO's PFS functionality](https://dhi.github.io/mikeio/user-guide/pfs.html).
+:::
+
+## MIKE+ Database
+
+The MIKE+ Database organizes tables into groups with the following naming conventions.
+
+| Prefix | Description | Example(s) |
+|:-----------------|:-----------------------------------|:-----------------|
+| `m_` | General MIKE+ tables | `m_ModelSetting` |
+| `ms_` | Tables common to collection systems and water distribution | `ms_Tab` |
+| `mw_` | Water distribution specific tables | `mw_Pipe`, `mw_Junction` |
+| `msm_` | MIKE 1D collection systems | `msm_Node`, `msm_Link` |
+| `mrm_` | MIKE 1D rivers | `mrm_Branch` |
+| `mss_` | SWMM specific tables | `mss_Node`, `mss_Link` |
+| `m2d_` | MIKE 21 specific tables | `m2d_Boundary` |
+
+Most tables have a `MUID` column, which serves as a unique identifier for each record (row) within that table.
+
+Refer to [MIKE+'s documentation](https://manuals.mikepoweredbydhi.help//2025/Cities/MIKE_Plus_Model_Manager.pdf) for more detailed descriptions.
+
+## Exploring Database in the MIKE+ GUI
+
+Before diving into programmatic access, it's helpful to know how to identify table and column names using the MIKE+ GUI. This will help you identify the table and column of the data you're interested in.
+
+The easiest way is with MIKE+'s tooltips. When you hover over a field, a tooltip is displayed containing both the table name and column name. The format is: *TableName.ColumnName*. For example, the video below shows three different columns that all reside in the table *msm_Catchment*.
+
+![](/images/mikeplus_hover_tooltips.gif)
+
+A typical workflow in MIKE+Py is first identifying *where* the data is via the GUI. This information is essential for querying and modifying specific data.
+
+::: callout-tip
+You can also hover over the column headers in a MIKE+ table view.
+:::
+
+## Exploring the Database with MIKE+Py
+
+### Opening Database
+
+First, open a database with `mp.open()`. This returns a `Database` object, which is central for all database operations.
+
+```{python}
+import mikeplus as mp
+
+db = mp.open("data/Dyrup_uncalibrated.sqlite")
+print(f"MIKE+ Database Version: {db.version}")
+db.close()
+```
+
+It's important to close the `Database` object at the end of your workflow with `close()`.
+
+It's easy to forget, therefore it's recommended to use Python's context manager syntax to handle closing automatically:
+
+```{python}
+with mp.open("data/Dyrup_uncalibrated.sqlite") as db:
+    print(f"MIKE+ Active Model: {db.active_model}")
+    # database remains open within this code block...
+
+# now it's closed :)
+```
+
+::: {.callout-note}
+The remaining code examples assume a `Database` object was obtained per the above examples.
+:::
+
+```{python}
+#| echo: false
+#| output: false
+db = mp.open("data/Dyrup_uncalibrated.sqlite")
+```
+
+### Tables
+
+The `db.tables` attribute provides access to a collection of all tables in the database.
+
+```{python}
+db.tables
+```
+
+You can access a specific `Table` object by attribute-style access. Notice this conveniently includes auto-completion.
+
+```{python}
+db.tables.msm_Catchment
+```
+
+We'll look into working with tables in the next section, but notice it's integrated with Pandas:
+
+```{python}
+df = db.tables.msm_Catchment.to_dataframe()
+df.head()
+```
+
+### Columns
+
+Each table object has a `columns` attribute that allows you to see the names of its columns. This is mostly useful for auto-completion and avoiding typos.
+
+```{python}
+db.tables.msm_Catchment.columns.ModelAConcTime
+```
+
+![](/images/mikepluspy_autocompletion.gif)
+
+::: {.callout-note title="Auto-completion slow to load?" collapse="true"}
+MIKE+ has many tables which can take a few seconds to load on first import. In VS Code, you can open the auto-completion menu with `Ctrl+Space`, which will indicate it's loading, then update when finished.
+:::
+
+::: {.callout-tip}
+Check out [MIKE+Py's API documentation](https://dhi.github.io/mikepluspy/api/) for a searchable overview of tables and columns.
+:::
+
+The next section will dive into more flexible queries of table information.
+
+```{python}
+#| echo: false
+#| output: false
+db.close()
+```
