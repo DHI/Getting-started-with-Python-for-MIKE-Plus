@@ -620,8 +620,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
-      <span class="sidebar-item-text sidebar-link text-start">
- <span class="menu-text">Module 6 - Putting Everything Together</span></span>
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text">Module 6 - Putting Everything Together</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../module6_putting_everything_together/final_project.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">Final Project</span></span></a>
+  </div>
+</li>
+      </ul>
   </li>
     </ul>
     </div>
@@ -712,7 +725,7 @@ A function to apply to the data within each new time bin. For downsampling, this
 </dd>
 </dl>
 <p>A quick example for illustration with the following DataFrame:</p>
-<div id="8942eef6" class="cell" data-execution_count="2">
+<div id="27bc6992" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>df.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="2">
 <div>
@@ -753,7 +766,7 @@ A function to apply to the data within each new time bin. For downsampling, this
 </div>
 </div>
 <p>To resample this half-hourly data to daily mean values:</p>
-<div id="e3bd8425" class="cell" data-execution_count="3">
+<div id="ad24ebe0" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>df_daily_mean <span class="op">=</span> df.resample(<span class="st">'D'</span>).mean()</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>df_daily_mean.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="3">
@@ -794,7 +807,7 @@ A function to apply to the data within each new time bin. For downsampling, this
 </div>
 </div>
 </div>
-<div id="54c9fee0" class="cell" data-execution_count="4">
+<div id="462f5d25" class="cell" data-execution_count="4">
 <details class="code-fold">
 <summary>Show Plotting Code</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> df.plot()</span>
@@ -859,7 +872,7 @@ Tip
 </div>
 </div>
 <p>Resample to daily values by choosing the maximum value on each day.</p>
-<div id="cc273353" class="cell" data-execution_count="5">
+<div id="a08bcfe7" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>df_daily_max <span class="op">=</span> df.resample(<span class="st">'D'</span>).<span class="bu">max</span>()</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>df_daily_max.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="5">
@@ -901,7 +914,7 @@ Tip
 </div>
 </div>
 <p>Or, choose the minimum value on each day.</p>
-<div id="e54d6eb9" class="cell" data-execution_count="6">
+<div id="343b658b" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>df_daily_min <span class="op">=</span> df.resample(<span class="st">'D'</span>).<span class="bu">min</span>()</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>df_daily_min.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="6">
@@ -943,7 +956,7 @@ Tip
 </div>
 </div>
 <p>Compare these two aggregation methods with a plot.</p>
-<div id="8aa3b406" class="cell" data-execution_count="7">
+<div id="46b23f6d" class="cell" data-execution_count="7">
 <details class="code-fold">
 <summary>Show Plotting Code</summary>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> df.plot(color<span class="op">=</span><span class="st">'grey'</span>)</span>
@@ -984,7 +997,7 @@ Note
 </div>
 </div>
 <p>Recall our original DataFrame had half-hourly time steps:</p>
-<div id="76bef1d9" class="cell" data-execution_count="8">
+<div id="c19ddab5" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>df.head(<span class="dv">2</span>) <span class="co"># show only first two rows</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="8">
 <div>
@@ -1013,7 +1026,7 @@ Note
 </div>
 </div>
 <p>Upsample this to a resolution of one minute, comparing <code>ffill</code> and <code>bfill</code>:</p>
-<div id="196f2b98" class="cell" data-execution_count="9">
+<div id="f762046a" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>df.resample(<span class="st">"5min"</span>).ffill().head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="9">
 <div>
@@ -1053,7 +1066,7 @@ Note
 </div>
 </div>
 </div>
-<div id="b0216edb" class="cell" data-execution_count="10">
+<div id="30a00d6a" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>df.resample(<span class="st">"5min"</span>).bfill().head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="10">
 <div>
@@ -1095,7 +1108,7 @@ Note
 </div>
 <p>Compare the difference between these two. Find the new time stamps and how their values were chosen.</p>
 <p>Depending on use case, a more appropriate approach may be filling gaps with linear interpolation:</p>
-<div id="51331793" class="cell" data-execution_count="11">
+<div id="5dc49b37" class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>df_interpolated <span class="op">=</span> df.resample(<span class="st">'5min'</span>).interpolate(method<span class="op">=</span><span class="st">'linear'</span>)</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>df_interpolated.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="11">
@@ -1137,7 +1150,7 @@ Note
 </div>
 </div>
 <p>Compare interpolation to original data for a zoomed-in time period:</p>
-<div id="fcb12c4f" class="cell" data-execution_count="12">
+<div id="91d932e6" class="cell" data-execution_count="12">
 <details class="code-fold">
 <summary>Show Plotting Code</summary>
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>subset <span class="op">=</span> <span class="bu">slice</span>(<span class="st">"1993-12-02 00:00:00"</span>, <span class="st">"1993-12-02 08:00:00"</span>)</span>

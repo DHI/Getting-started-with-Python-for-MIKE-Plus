@@ -617,8 +617,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
-      <span class="sidebar-item-text sidebar-link text-start">
- <span class="menu-text">Module 6 - Putting Everything Together</span></span>
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text">Module 6 - Putting Everything Together</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../module6_putting_everything_together/final_project.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">Final Project</span></span></a>
+  </div>
+</li>
+      </ul>
   </li>
     </ul>
     </div>
@@ -683,7 +696,7 @@ Note
 </div>
 </div>
 <p>Assume we have a DataFrame with missing values on 1993-12-06:</p>
-<div id="31c658da" class="cell" data-execution_count="2">
+<div id="2d575eb0" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>Show Plotting Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> df.plot()</span>
@@ -705,7 +718,7 @@ Note
 </div>
 </div>
 <p>Count the number of missing values (e.g.&nbsp;<code>nan</code>) for each time series by summing the result of <code>isna()</code>.</p>
-<div id="bf91a471" class="cell" data-execution_count="3">
+<div id="5c5d7e5b" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>df.isna().<span class="bu">sum</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="3">
 <pre><code>ST 2: WL (m)    48
@@ -717,10 +730,10 @@ dtype: int64</code></pre>
 <h2 data-number="14.2" class="anchored" data-anchor-id="imputation"><span class="header-section-number">14.2</span> Imputation</h2>
 <p>The process of filling missing values is known as imputation.</p>
 <p>For missing values <em>between</em> valid data points (i.e.&nbsp;bounded), using the <code>.interpolate()</code> method is a common and effective approach.</p>
-<div id="f2a3e9ad" class="cell" data-execution_count="4">
+<div id="50d1671d" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>df_interpolated <span class="op">=</span> df.interpolate(method<span class="op">=</span><span class="st">'time'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="f83cd75a" class="cell" data-execution_count="5">
+<div id="b26130bd" class="cell" data-execution_count="5">
 <details class="code-fold">
 <summary>Show Plotting Code</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> df.plot()</span>
@@ -776,10 +789,10 @@ Tip
 </div>
 </div>
 <p>Same example as above, but using <code>ffill()</code>.</p>
-<div id="785e5af0" class="cell" data-execution_count="6">
+<div id="0c2f6121" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>df_interpolated <span class="op">=</span> df.ffill()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="4b9cc4a5" class="cell" data-execution_count="7">
+<div id="e2238401" class="cell" data-execution_count="7">
 <details class="code-fold">
 <summary>Show Plotting Code</summary>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> df.plot()</span>
@@ -803,10 +816,10 @@ Tip
 </div>
 </div>
 <p>Same example as above, but using <code>bfill()</code>.</p>
-<div id="403c3627" class="cell" data-execution_count="8">
+<div id="77ee85f5" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>df_interpolated <span class="op">=</span> df.bfill()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="4ab129e9" class="cell" data-execution_count="9">
+<div id="f637310f" class="cell" data-execution_count="9">
 <details class="code-fold">
 <summary>Show Plotting Code</summary>
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> df.plot()</span>
@@ -830,10 +843,10 @@ Tip
 </div>
 </div>
 <p>Same example as above, but using <code>fillna()</code>.</p>
-<div id="799a2836" class="cell" data-execution_count="10">
+<div id="973a0de3" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>df_interpolated <span class="op">=</span> df.fillna(<span class="fl">0.1</span>) <span class="co"># specify the value to fill with</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="ef439295" class="cell" data-execution_count="11">
+<div id="4ac62687" class="cell" data-execution_count="11">
 <details class="code-fold">
 <summary>Show Plotting Code</summary>
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> df.plot()</span>
@@ -892,7 +905,7 @@ Tip
 <section id="detecting-anomalies" class="level3" data-number="14.3.3">
 <h3 data-number="14.3.3" class="anchored" data-anchor-id="detecting-anomalies"><span class="header-section-number">14.3.3</span> Detecting Anomalies</h3>
 <p>Plot the initial time series.</p>
-<div id="9cc2a3b6" class="cell" data-execution_count="13">
+<div id="1ef3b157" class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>ts <span class="op">=</span> df[<span class="st">"ST 2: WL (m)"</span>]</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>ts.plot()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
@@ -917,7 +930,7 @@ Note
 </div>
 </div>
 <p>Select and instantiate a detector. If we know water levels must be in the range -0.4m to 0.4m, then a <code>RangeDetector</code> should be used.</p>
-<div id="0b6754b5" class="cell" data-execution_count="14">
+<div id="326b3398" class="cell" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> tsod.detectors <span class="im">import</span> RangeDetector</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>detector <span class="op">=</span> RangeDetector(</span>
@@ -930,7 +943,7 @@ Note
 </div>
 </div>
 <p>Detect anomalies for a given <code>Series</code> using the <code>detect()</code> method of the instantiated detector.</p>
-<div id="39dfc47c" class="cell" data-execution_count="15">
+<div id="b9525343" class="cell" data-execution_count="15">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>anomaly_mask <span class="op">=</span> detector.detect(ts)</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>anomaly_mask.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="15">
@@ -956,7 +969,7 @@ Note
 </div>
 </div>
 <p>Plot the detected anomalies.</p>
-<div id="8eddc834" class="cell" data-execution_count="16">
+<div id="cf711ce2" class="cell" data-execution_count="16">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> ts.plot()</span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>ts[anomaly_mask].plot(</span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    ax<span class="op">=</span>ax,</span>
@@ -978,7 +991,7 @@ Note
 </div>
 </div>
 <p>Replace anomalies with <code>nan</code>.</p>
-<div id="5937389a" class="cell" data-execution_count="17">
+<div id="cfdb3df1" class="cell" data-execution_count="17">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>ts_cleaned <span class="op">=</span> ts.copy()</span>
@@ -996,7 +1009,7 @@ Note
 <section id="impute-anomalies" class="level3" data-number="14.3.4">
 <h3 data-number="14.3.4" class="anchored" data-anchor-id="impute-anomalies"><span class="header-section-number">14.3.4</span> Impute anomalies</h3>
 <p>Impute anomalies by treating them just like missing values.</p>
-<div id="acf35dc4" class="cell" data-execution_count="18">
+<div id="73ac0e85" class="cell" data-execution_count="18">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>ts_cleaned <span class="op">=</span> ts_cleaned.interpolate(method<span class="op">=</span><span class="st">'time'</span>)</span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>ts_cleaned.plot()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
