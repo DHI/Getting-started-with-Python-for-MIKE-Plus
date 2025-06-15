@@ -84,8 +84,8 @@ book:
         - module5_mikepluspy\homework.qmd
 
     - part: "Module 6 - Putting Everything Together"
-      #chapters:
-      #  - module6_putting_everything_together\index.qmd
+      chapters:
+        - module6_putting_everything_together\final_project.qmd
 
   page-footer: "Copyright 2025, DHI Group"
 
