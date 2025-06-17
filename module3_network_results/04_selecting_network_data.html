@@ -707,7 +707,7 @@ Memory considerations
 <h2 data-number="19.2" class="anchored" data-anchor-id="selecting-locations"><span class="header-section-number">19.2</span> Selecting Locations</h2>
 <p>When dealing with network results, you often want to focus on specific parts of your model, like certain nodes or reaches.</p>
 <p>Selecting data purely with DataFrames can be difficult due to the large number of columns and their header format. For example, this DataFrame has 495 columns:</p>
-<div id="1a189781" class="cell" data-execution_count="2">
+<div id="393650c3" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> res.read()</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>df.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="2">
@@ -870,7 +870,7 @@ Memory considerations
 </div>
 </div>
 <p>To select the ‘Water Level’ quantity for node ‘1’ from the <code>DataFrame</code>, you need to use a column name formed by concatenating the quantity and ID with a ‘:’ separator:</p>
-<div id="8a608cb1" class="cell" data-execution_count="3">
+<div id="05a0e4cd" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>df[[<span class="st">"WaterLevel:1"</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="3">
 <div>
@@ -936,7 +936,7 @@ Memory considerations
 </div>
 </div>
 <p>Similarly, to select the “Water Level” of reach “100l1” at chainage 47.6827:</p>
-<div id="f6d7c9d3" class="cell" data-execution_count="4">
+<div id="ff159835" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>df[[<span class="st">"WaterLevel:100l1:47.6827"</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="4">
 <div>
@@ -1002,7 +1002,7 @@ Memory considerations
 </div>
 </div>
 <p>This format is not very user-friendly, especially for selecting all quantities of a specific reach. The fluent-like API, shown earlier, offers a more intuitive way to do this.</p>
-<div id="022f4893" class="cell" data-execution_count="5">
+<div id="48c0c8e4" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>res.reaches[<span class="st">"100l1"</span>].read()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="5">
 <div>
@@ -1092,7 +1092,7 @@ Memory considerations
 </div>
 </div>
 <p>A more computationally efficient approach is to select locations when you open the file. You can specify lists of IDs for <code>nodes</code>, <code>reaches</code>, or <code>catchments</code>. For example:</p>
-<div id="5f177552" class="cell" data-execution_count="6">
+<div id="56b21a82" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>res <span class="op">=</span> mikeio1d.<span class="bu">open</span>(<span class="st">"data/network.res1d"</span>, reaches<span class="op">=</span>[<span class="st">"100l1"</span>])</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> res.read()</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>df.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1147,7 +1147,7 @@ Memory considerations
 </div>
 </div>
 <p>Similarly for nodes:</p>
-<div id="c8e0dce7" class="cell" data-execution_count="7">
+<div id="96877b9a" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>res <span class="op">=</span> mikeio1d.<span class="bu">open</span>(<span class="st">"data/network.res1d"</span>, nodes<span class="op">=</span>[<span class="st">"1"</span>, <span class="st">"2"</span>])</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> res.read()</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>df.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1196,7 +1196,7 @@ Memory considerations
 </div>
 </div>
 <p>And for catchments:</p>
-<div id="e22fbf73" class="cell" data-execution_count="8">
+<div id="d4ac7c54" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>res <span class="op">=</span> mikeio1d.<span class="bu">open</span>(<span class="st">"data/catchments.res1d"</span>, catchments<span class="op">=</span>[<span class="st">"100_16_16"</span>])</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> res.read()</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>df.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1266,7 +1266,7 @@ Memory considerations
 <section id="selecting-quantities" class="level2" data-number="19.3">
 <h2 data-number="19.3" class="anchored" data-anchor-id="selecting-quantities"><span class="header-section-number">19.3</span> Selecting Quantities</h2>
 <p>Just as with locations, you can select specific physical quantities (like Water Level or Discharge). Trying to pick these out from a full DataFrame is one approach:</p>
-<div id="7f86feab" class="cell" data-execution_count="10">
+<div id="b29ad90f" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> res.read()</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>discharge_columns <span class="op">=</span> [column <span class="cf">for</span> column <span class="kw">in</span> df.columns <span class="cf">if</span> <span class="st">"Discharge"</span> <span class="kw">in</span> column]</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>df[discharge_columns].head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1430,7 +1430,7 @@ Memory considerations
 </div>
 </div>
 <p>However, it’s often expressed more succinctly using the <code>Res1D</code> fluent-like API:</p>
-<div id="ccde81dd" class="cell" data-execution_count="11">
+<div id="4684e341" class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> res.reaches.Discharge.read()</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>df.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="11">
@@ -1606,7 +1606,7 @@ Note
 </div>
 </div>
 <p>Similar to location filtering, it’s also more computationally efficient to do this on <code>open()</code>:</p>
-<div id="1a675c4a" class="cell" data-execution_count="12">
+<div id="ece8175c" class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>res <span class="op">=</span> mikeio1d.<span class="bu">open</span>(<span class="st">"data/network.res1d"</span>, quantities<span class="op">=</span>[<span class="st">"Discharge"</span>])</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> res.read()</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>df.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1782,7 +1782,7 @@ Where do I find quantity names?
 <div id="callout-3" class="callout-3-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>To see all available quantities in a <code>Res1D</code> object (<code>res</code>), you can inspect <code>res.quantities</code>. To see all possible MIKE 1D quantities, you can get a list as follows:</p>
-<div id="58189d5c" class="cell" data-execution_count="13">
+<div id="39d709cc" class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> mikeio1d.res1d <span class="im">import</span> mike1d_quantities</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>all_quantities <span class="op">=</span> mike1d_quantities()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1794,7 +1794,7 @@ Where do I find quantity names?
 <section id="selecting-time-steps" class="level2" data-number="19.4">
 <h2 data-number="19.4" class="anchored" data-anchor-id="selecting-time-steps"><span class="header-section-number">19.4</span> Selecting Time Steps</h2>
 <p>Filtering by time is another common requirement. If you have your data in a Pandas DataFrame, you can use the time indexing techniques covered in Module 2. For example, the first three time steps:</p>
-<div id="79cf691a" class="cell" data-execution_count="15">
+<div id="56e94f7b" class="cell" data-execution_count="15">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> res.read()</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>df.iloc[:<span class="dv">3</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="15">
@@ -1909,7 +1909,7 @@ Where do I find quantity names?
 </div>
 </div>
 <p>As with other selections, filtering by time when opening the file with <code>open()</code> is more efficient. To select time steps when opening the file, use the <code>time</code> parameter to specify the start and end bounds.</p>
-<div id="6fdde449" class="cell" data-execution_count="16">
+<div id="58a3347a" class="cell" data-execution_count="16">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>res <span class="op">=</span> mikeio1d.<span class="bu">open</span>(<span class="st">"data/network.res1d"</span>, time<span class="op">=</span>(<span class="st">'1994-08-07 16:35:00'</span>, <span class="st">'1994-08-07 16:38'</span>))</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>res.read()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="16">
@@ -2024,7 +2024,7 @@ Where do I find quantity names?
 </div>
 </div>
 <p>To select every nth time step, you can use the <code>step_every</code> parameter:</p>
-<div id="dc60a057" class="cell" data-execution_count="17">
+<div id="14d0d43e" class="cell" data-execution_count="17">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>res <span class="op">=</span> mikeio1d.<span class="bu">open</span>(<span class="st">"data/network.res1d"</span>, step_every<span class="op">=</span><span class="dv">5</span>)</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>res.read().head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="17">
@@ -2198,18 +2198,18 @@ Where do I find quantity names?
 <h2 data-number="19.5" class="anchored" data-anchor-id="practical-example"><span class="header-section-number">19.5</span> Practical Example</h2>
 <p>Imagine you’re calibrating a MIKE+ model. There’s two specific points in the network where you have observed flow data. You also have a list of calibration event time stamps you deem relevant. Let’s use Python to automate generating some plots that could be useful during the calibration process.</p>
 <p>First, make a list of the reach IDs where the flow meters are.</p>
-<div id="dbcb4465" class="cell" data-execution_count="18">
+<div id="e098695f" class="cell" data-execution_count="18">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>calibration_points <span class="op">=</span> [<span class="st">"12l1"</span>, <span class="st">"116l1"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Next let’s define the event start and stop times.</p>
-<div id="2df74973" class="cell" data-execution_count="19">
+<div id="c781e3d2" class="cell" data-execution_count="19">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>calibration_events <span class="op">=</span> [</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"1994-08-07 17:00"</span>, <span class="st">"1994-08-07 18:30"</span>),</span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># here we could add another event, but for this example we only use one</span></span>
 <span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Load the flow meter data from csv.</p>
-<div id="aac7508c" class="cell" data-execution_count="20">
+<div id="e7bc0307" class="cell" data-execution_count="20">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>df_obs <span class="op">=</span> pd.read_csv(<span class="st">"data/flow_meter_data.csv"</span>, index_col<span class="op">=</span><span class="dv">0</span>, parse_dates<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>df_obs.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -2263,7 +2263,7 @@ Where do I find quantity names?
 </div>
 </div>
 <p>Now let’s create plots for each calibration point:</p>
-<div id="c9ca004b" class="cell" data-execution_count="21">
+<div id="5437ec39" class="cell" data-execution_count="21">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> event <span class="kw">in</span> calibration_events:</span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>    event_start <span class="op">=</span> event[<span class="dv">0</span>]  <span class="co"># event start time</span></span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    event_end <span class="op">=</span> event[<span class="dv">1</span>]    <span class="co"># event end time</span></span>

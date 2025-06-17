@@ -678,7 +678,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <p>MIKE+Py allows you to programmatically manage scenarios and alternatives within your MIKE+ model database, enabling automation of scenario-based analyses.</p>
-<div id="f7c071e2" class="cell" data-execution_count="2">
+<div id="1d027035" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> mikeplus <span class="im">as</span> mp</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>db <span class="op">=</span> mp.<span class="bu">open</span>(<span class="st">'data/Dyrup_uncalibrated_copy.sqlite'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -705,7 +705,7 @@ Represent a specific version of the data within an alternative group (e.g., for 
 <section id="alternative-groups" class="level2">
 <h2 class="anchored" data-anchor-id="alternative-groups">Alternative Groups</h2>
 <p>List the names of all alternative groups. These are the main categories visible from the MIKE+ Scenarios editor.</p>
-<div id="43ab68ae" class="cell" data-execution_count="3">
+<div id="a01c9f2c" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>db.alternative_groups.group_names()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="3">
 <pre><code>['CS Network data',
@@ -721,7 +721,7 @@ Represent a specific version of the data within an alternative group (e.g., for 
 </div>
 </div>
 <p>Access a specific alternative group by its name:</p>
-<div id="512a13f3" class="cell" data-execution_count="4">
+<div id="50b24a8a" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>network_group <span class="op">=</span> db.alternative_groups[<span class="st">"CS Network data"</span>]</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>network_group</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="4">
@@ -729,21 +729,21 @@ Represent a specific version of the data within an alternative group (e.g., for 
 </div>
 </div>
 <p>Each group has a base alternative:</p>
-<div id="793ba8d9" class="cell" data-execution_count="5">
+<div id="80f2c57f" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>network_group.base</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="5">
 <pre><code>Alternative(CS Network data) &lt;Base Alternative&gt;</code></pre>
 </div>
 </div>
 <p>And an active alternative (which is part of the active scenario):</p>
-<div id="4fc7380a" class="cell" data-execution_count="6">
+<div id="4e8df7b8" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>network_group.active</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="6">
 <pre><code>Alternative(CS Network data) &lt;Base Alternative&gt;</code></pre>
 </div>
 </div>
 <p>List the tables associated with an alternative group:</p>
-<div id="ebd696e3" class="cell" data-execution_count="7">
+<div id="2e33e20e" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>network_group.tables</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="7">
 <pre><code>['msm_Node',
@@ -761,21 +761,21 @@ Represent a specific version of the data within an alternative group (e.g., for 
 <section id="alternatives" class="level2">
 <h2 class="anchored" data-anchor-id="alternatives">Alternatives</h2>
 <p>See all alternatives for the group.</p>
-<div id="7a5b4924" class="cell" data-execution_count="8">
+<div id="b66dc520" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="bu">list</span>(network_group)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="8">
 <pre><code>[Alternative(CS Network data) &lt;Base Alternative&gt;]</code></pre>
 </div>
 </div>
 <p>Access an alternative within a group by its name:</p>
-<div id="9e160b5d" class="cell" data-execution_count="9">
+<div id="a784149b" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>network_group.by_name(<span class="st">"Base Alternative"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="9">
 <pre><code>Alternative(CS Network data) &lt;Base Alternative&gt;</code></pre>
 </div>
 </div>
 <p>Create a new alternative. It will be a child of its parent (defaults to the group’s base alternative if not specified):</p>
-<div id="562b33c2" class="cell" data-execution_count="10">
+<div id="b9bf0b66" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>new_roughness_alt <span class="op">=</span> network_group.create(<span class="st">"New Roughness Values"</span>, parent<span class="op">=</span>network_group.base)</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>new_roughness_alt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="10">
@@ -783,7 +783,7 @@ Represent a specific version of the data within an alternative group (e.g., for 
 </div>
 </div>
 <p>Alternatives have several properties. For example, change an alternative’s comment:</p>
-<div id="c8a79be8" class="cell" data-execution_count="11">
+<div id="cc187025" class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>new_roughness_alt.comment <span class="op">=</span> <span class="st">"Alternative for testing higher roughness."</span></span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>new_roughness_alt.comment</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="11">
@@ -794,42 +794,42 @@ Represent a specific version of the data within an alternative group (e.g., for 
 <section id="scenarios" class="level2">
 <h2 class="anchored" data-anchor-id="scenarios">Scenarios</h2>
 <p>Scenarios combine various alternatives to define a complete model state. Access all scenarios in the database:</p>
-<div id="6da74655" class="cell" data-execution_count="12">
+<div id="53a3b6ca" class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>db.scenarios</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="12">
 <pre><code>ScenarioCollection &lt;1&gt;</code></pre>
 </div>
 </div>
 <p>Get the currently active scenario:</p>
-<div id="5cce4cf2" class="cell" data-execution_count="13">
+<div id="c800e085" class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>db.scenarios.active</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="13">
 <pre><code>Scenario &lt;Base&gt;</code></pre>
 </div>
 </div>
 <p>Get the base scenario:</p>
-<div id="6b39351d" class="cell" data-execution_count="14">
+<div id="1722de83" class="cell" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>db.scenarios.base</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="14">
 <pre><code>Scenario &lt;Base&gt;</code></pre>
 </div>
 </div>
 <p>Access a scenario by its name (returns the first match):</p>
-<div id="293a384c" class="cell" data-execution_count="15">
+<div id="eb3f6e00" class="cell" data-execution_count="15">
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>db.scenarios.by_name(<span class="st">"Base"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="15">
 <pre><code>Scenario &lt;Base&gt;</code></pre>
 </div>
 </div>
 <p>List all scenarios:</p>
-<div id="e4d4a023" class="cell" data-execution_count="16">
+<div id="278ca2f3" class="cell" data-execution_count="16">
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="bu">list</span>(db.scenarios)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="16">
 <pre><code>[Scenario &lt;Base&gt;]</code></pre>
 </div>
 </div>
 <p>Create new scenarios with a name and its parent scenario (defaults to base scenario if not provided)</p>
-<div id="6fe3a9af" class="cell" data-execution_count="17">
+<div id="d0c185e7" class="cell" data-execution_count="17">
 <div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>new_scenario <span class="op">=</span> db.scenarios.create(<span class="st">"My Scenario"</span>, parent<span class="op">=</span>db.scenarios.base)</span>
 <span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="bu">list</span>(db.scenarios)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="17">
@@ -837,11 +837,11 @@ Represent a specific version of the data within an alternative group (e.g., for 
 </div>
 </div>
 <p>Similar to Alternatives, Scenarios have several properties. For example:</p>
-<div id="a4387eb5" class="cell" data-execution_count="18">
+<div id="e8f1f8c5" class="cell" data-execution_count="18">
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>new_scenario.comment <span class="op">=</span> <span class="st">"This is a test scenario"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>List the alternatives used by a scenario:</p>
-<div id="49f253da" class="cell" data-execution_count="19">
+<div id="b48fd134" class="cell" data-execution_count="19">
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>new_scenario.alternatives</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="19">
 <pre><code>[Alternative(CS Network data) &lt;Base Alternative&gt;,
@@ -857,14 +857,14 @@ Represent a specific version of the data within an alternative group (e.g., for 
 </div>
 </div>
 <p>Check if a scenario is active</p>
-<div id="3ec897a3" class="cell" data-execution_count="20">
+<div id="b98aff16" class="cell" data-execution_count="20">
 <div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>new_scenario.is_active</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="20">
 <pre><code>False</code></pre>
 </div>
 </div>
 <p>Activate a scenario. This makes it the current context for data modifications and simulations.</p>
-<div id="93f27fb4" class="cell" data-execution_count="21">
+<div id="273b4f6d" class="cell" data-execution_count="21">
 <div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>new_scenario.activate()</span>
 <span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>new_scenario.is_active</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="21">
@@ -873,7 +873,7 @@ Represent a specific version of the data within an alternative group (e.g., for 
 </div>
 <p>Set a specific alternative for a scenario. This will replace any existing alternative from the same group.</p>
 <p>Let’s use the <code>new_roughness_alt</code> created earlier and assign it to <code>new_scenario</code>.</p>
-<div id="e931343b" class="cell" data-execution_count="22">
+<div id="797544b9" class="cell" data-execution_count="22">
 <div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>new_scenario.set_alternative(new_roughness_alt)</span>
 <span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="bu">list</span>(new_scenario.alternatives)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="22">
@@ -890,7 +890,7 @@ Represent a specific version of the data within an alternative group (e.g., for 
 </div>
 </div>
 <p>Delete a scenario. You cannot delete the base scenario.</p>
-<div id="b79bb3b7" class="cell" data-execution_count="23">
+<div id="de5ee196" class="cell" data-execution_count="23">
 <div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>db.scenarios.delete(new_scenario)</span>
 <span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="bu">list</span>(db.scenarios)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="23">
@@ -919,7 +919,7 @@ Note
 </div>
 </div>
 <p>First, get a list of the catchment MUIDs again.</p>
-<div id="145d79be" class="cell" data-execution_count="24">
+<div id="e7089624" class="cell" data-execution_count="24">
 <div class="sourceCode cell-code" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>selection_name <span class="op">=</span> <span class="st">"Flow_Meter_B_Catchments"</span></span>
 <span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>catchment_muids_to_modify <span class="op">=</span> (</span>
 <span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>    db.tables.m_Selection</span>
@@ -935,7 +935,7 @@ Note
 </div>
 </div>
 <p>Our catchments are in table <code>msm_Catchment</code>, which is part of the <code>Catchments and hydrology data</code> Alternative Group. Let’s create two new alternatives.</p>
-<div id="cb61fd4b" class="cell" data-execution_count="25">
+<div id="7a7581f0" class="cell" data-execution_count="25">
 <div class="sourceCode cell-code" id="cb45"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>alternative_2000 <span class="op">=</span> db.alternative_groups[<span class="st">"Catchments and hydrology data"</span>].create(<span class="st">"Time of Concentration = 2000s"</span>)</span>
 <span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>alternative_3000 <span class="op">=</span> db.alternative_groups[<span class="st">"Catchments and hydrology data"</span>].create(<span class="st">"Time of Concentration = 3000s"</span>)</span>
 <span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a><span class="bu">list</span>(db.alternative_groups[<span class="st">"Catchments and hydrology data"</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -946,7 +946,7 @@ Note
 </div>
 </div>
 <p>Let’s create two new scenarios, and apply the alternatives to them.</p>
-<div id="305182b2" class="cell" data-execution_count="26">
+<div id="aa99b90a" class="cell" data-execution_count="26">
 <div class="sourceCode cell-code" id="cb47"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>scenario_2000 <span class="op">=</span> db.scenarios.create(<span class="st">"Time of Concentration = 2000s"</span>)</span>
 <span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>scenario_2000.set_alternative(alternative_2000)</span>
 <span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -961,7 +961,7 @@ Note
 </div>
 </div>
 <p>Now let’s activate each scenario and make changes to the new alternative.</p>
-<div id="e63677d7" class="cell" data-execution_count="27">
+<div id="ec9dfa24" class="cell" data-execution_count="27">
 <div class="sourceCode cell-code" id="cb49"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>scenario_2000.activate()</span>
 <span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>updated <span class="op">=</span> (</span>
 <span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>    db.tables.msm_Catchment</span>
@@ -976,7 +976,7 @@ Note
 <pre><code>32</code></pre>
 </div>
 </div>
-<div id="a0f08c31" class="cell" data-execution_count="28">
+<div id="58d0cd2c" class="cell" data-execution_count="28">
 <div class="sourceCode cell-code" id="cb51"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>scenario_3000.activate()</span>
 <span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>updated <span class="op">=</span> (</span>
 <span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a>    db.tables.msm_Catchment</span>
@@ -992,7 +992,7 @@ Note
 </div>
 </div>
 <p>Now let’s verify by activating each scenario and checking time of concentration values.</p>
-<div id="a882c978" class="cell" data-execution_count="29">
+<div id="cadfd4bf" class="cell" data-execution_count="29">
 <div class="sourceCode cell-code" id="cb53"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb53-1"><a href="#cb53-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb53-2"><a href="#cb53-2"></a></span>
 <span id="cb53-3"><a href="#cb53-3"></a><span class="co"># Check base scenario</span></span>

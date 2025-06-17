@@ -874,7 +874,7 @@ Tip
 <section id="opening-database" class="level3">
 <h3 class="anchored" data-anchor-id="opening-database">Opening Database</h3>
 <p>First, open a database with <code>mp.open()</code>. This returns a <code>Database</code> object, which is central for all database operations.</p>
-<div id="adaf06e6" class="cell" data-execution_count="1">
+<div id="4dafcfc2" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> mikeplus <span class="im">as</span> mp</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>db <span class="op">=</span> mp.<span class="bu">open</span>(<span class="st">"data/Dyrup_uncalibrated.sqlite"</span>)</span>
@@ -886,7 +886,7 @@ Tip
 </div>
 <p>It’s important to close the <code>Database</code> object at the end of your workflow with <code>close()</code>.</p>
 <p>It’s easy to forget, therefore it’s recommended to use Python’s context manager syntax to handle closing automatically:</p>
-<div id="c070ef34" class="cell" data-execution_count="2">
+<div id="91458a54" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> mp.<span class="bu">open</span>(<span class="st">"data/Dyrup_uncalibrated.sqlite"</span>) <span class="im">as</span> db:</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"MIKE+ Active Model: </span><span class="sc">{</span>db<span class="sc">.</span>active_model<span class="sc">}</span><span class="ss">"</span>)</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># database remains open within this code block...</span></span>
@@ -913,21 +913,21 @@ Note
 <section id="tables" class="level3">
 <h3 class="anchored" data-anchor-id="tables">Tables</h3>
 <p>The <code>db.tables</code> attribute provides access to a collection of all tables in the database.</p>
-<div id="df330ccf" class="cell" data-execution_count="4">
+<div id="d2e0b942" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>db.tables</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="4">
 <pre><code>TableCollection&lt;323 tables&gt;</code></pre>
 </div>
 </div>
 <p>You can access a specific <code>Table</code> object by attribute-style access. Notice this conveniently includes auto-completion.</p>
-<div id="402b68a1" class="cell" data-execution_count="5">
+<div id="79b253ff" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>db.tables.msm_Catchment</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="5">
 <pre><code>msm_CatchmentTable&lt;Catchments&gt;</code></pre>
 </div>
 </div>
 <p>We’ll look into working with tables in the next section, but notice it’s integrated with Pandas:</p>
-<div id="04949fd6" class="cell" data-execution_count="6">
+<div id="be653c4f" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> db.tables.msm_Catchment.to_dataframe()</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>df.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="6">
@@ -1093,7 +1093,7 @@ Note
 <section id="columns" class="level3">
 <h3 class="anchored" data-anchor-id="columns">Columns</h3>
 <p>Each table object has a <code>columns</code> attribute that allows you to see the names of its columns. This is mostly useful for auto-completion and avoiding typos.</p>
-<div id="55d9efb7" class="cell" data-execution_count="7">
+<div id="db6ac719" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>db.tables.msm_Catchment.columns.ModelAConcTime</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="7">
 <pre><code>'ModelAConcTime'</code></pre>
