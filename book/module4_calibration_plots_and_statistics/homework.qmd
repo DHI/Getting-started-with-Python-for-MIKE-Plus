@@ -82,3 +82,21 @@ module4_model
 3. How does the temporal coverage plot change?
 4. How does this approach impact the skill assessment?
 5. Review [ModelSkill's documentation on 'nse'](https://dhi.github.io/modelskill/api/metrics.html#modelskill.metrics.nash_sutcliffe_efficiency). How do both flow meters, and the overall model perform on this metric?
+
+::: {.callout-tip title="Want to check your work?" collapse="true"}
+Download the exercise solutions:
+
+```{python}
+#| echo: false
+#| output: asis
+from pathlib import Path
+
+solution_dir = Path.cwd() / "solutions"
+solution_files = list(solution_dir.glob("*.ipynb"))
+
+for fname in solution_files:
+    display_name = fname.name.capitalize()
+    print(f'<a href="{fname.as_posix()}" download>{display_name}</a><br>')
+```
+
+:::

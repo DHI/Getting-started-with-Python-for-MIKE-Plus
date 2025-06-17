@@ -53,3 +53,21 @@ comments: false
 3. Create a `Dataset` object from the `DataFrame`. Ensure its item metadata is correct.
 4. Save the `Dataset` object to a dfs0 file.
 5. Open the dfs0 file in MIKE+. Does it make sense?
+
+::: {.callout-tip title="Want to check your work?" collapse="true"}
+Download the exercise solutions:
+
+```{python}
+#| echo: false
+#| output: asis
+from pathlib import Path
+
+solution_dir = Path.cwd() / "solutions"
+solution_files = list(solution_dir.glob("*.ipynb"))
+
+for fname in solution_files:
+    display_name = fname.name.capitalize()
+    print(f'<a href="{fname.as_posix()}" download>{display_name}</a><br>')
+```
+
+:::

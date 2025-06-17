@@ -66,3 +66,21 @@ print("I'm a script that uses mikeio1d version " + mikeio1d.__version__)
 - [Jupyter Notebook covering NumPy](data/homework/numpy.ipynb){download="numpy.ipynb"}
 - [Jupyter Notebook covering Pandas](data/homework/pandas.ipynb){download=".ipynb"}
 - [Jupyter Notebook covering Matplotlib](data/homework/matplotlib.ipynb){download="matplotlib.ipynb"}
+
+::: {.callout-tip title="Want to check your work?" collapse="true"}
+Download the exercise solutions:
+
+```{python}
+#| echo: false
+#| output: asis
+from pathlib import Path
+
+solution_dir = Path.cwd() / "solutions"
+solution_files = list(solution_dir.glob("*.ipynb"))
+
+for fname in solution_files:
+    display_name = fname.name.capitalize()
+    print(f'<a href="{fname.as_posix()}" download>{display_name}</a><br>')
+```
+
+:::
