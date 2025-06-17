@@ -66,8 +66,9 @@ solution_dir = Path.cwd() / "solutions"
 solution_files = list(solution_dir.glob("*.ipynb"))
 
 for fname in solution_files:
+    fname = fname.relative_to(fname.parent.parent)
     display_name = fname.name.capitalize()
-    print(f'<a href="{fname.as_posix()}" download>{display_name}</a><br>')
+    print(f'- [{display_name}]({fname.as_posix()}){{download="{fname.name}"}}')
 ```
 
 :::
