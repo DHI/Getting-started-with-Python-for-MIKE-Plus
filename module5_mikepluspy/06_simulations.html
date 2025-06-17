@@ -679,7 +679,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <p>MIKE+Py enables you to configure and execute MIKE+ simulations programmatically from Python scripts, which is particularly useful for automating workflows like scenario analysis or calibration.</p>
-<div id="3f1e3a33" class="cell" data-execution_count="2">
+<div id="8d33b6c2" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> mikeplus <span class="im">as</span> mp</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>db <span class="op">=</span> mp.<span class="bu">open</span>(<span class="st">'data/Dyrup_uncalibrated_copy.sqlite'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -690,7 +690,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 class="anchored" data-anchor-id="by-active-simulation">By Active Simulation</h3>
 <p>You can run the simulation setup that is currently marked as “active” in the MIKE+ project.</p>
 <p>First, you can identify the active simulation setup’s MUID:</p>
-<div id="ef4d7ffe" class="cell" data-execution_count="3">
+<div id="3df8be74" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>active_sim_muid <span class="op">=</span> db.active_simulation</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>active_sim_muid</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="3">
@@ -698,12 +698,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>To run the active simulation, call <code>db.run()</code> without specifying a <code>simulation_muid</code>. It will return a list of <code>Path</code> objects pointing to the generated result files.</p>
-<div id="9f97ddc7" class="cell" data-execution_count="4">
+<div id="7b1a561d" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>result_files_active <span class="op">=</span> db.run()</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> rf <span class="kw">in</span> result_files_active:</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(rf.name)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="cdaab2a8" class="cell" data-execution_count="5">
+<div id="a54dcc5b" class="cell" data-execution_count="5">
 <div class="cell-output cell-output-stdout">
 <pre><code>rainfallBaseDefault_Network_HD.res1d
 rainfallBaseDefault_Surface_runoff.res1d</code></pre>
@@ -714,7 +714,7 @@ rainfallBaseDefault_Surface_runoff.res1d</code></pre>
 <h3 class="anchored" data-anchor-id="by-simulation-muid">By Simulation MUID</h3>
 <p>More commonly, you’ll want to run a specific simulation setup, regardless of which one is currently active. You can do this by providing the <code>simulation_muid</code> argument to <code>db.run()</code>.</p>
 <p>You can find available simulation setup MUIDs by inspecting a project table, like <code>msm_Project</code>:</p>
-<div id="8cdfb200" class="cell" data-execution_count="6">
+<div id="86e4f709" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>db.tables.msm_Project.select([<span class="st">"ScenarioName"</span>, <span class="st">"Description"</span>]).to_dataframe()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="5">
 <div>
@@ -741,12 +741,12 @@ rainfallBaseDefault_Surface_runoff.res1d</code></pre>
 </div>
 </div>
 <p>To run the simulation setup named ‘rainfall’:</p>
-<div id="601ce5e1" class="cell" data-execution_count="7">
+<div id="6f3128f4" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>result_files_rainfall <span class="op">=</span> db.run(simulation_muid<span class="op">=</span><span class="st">"rainfall"</span>)</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> rf <span class="kw">in</span> result_files_rainfall:</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(rf.name)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="3717702d" class="cell" data-execution_count="8">
+<div id="b4f5b1cc" class="cell" data-execution_count="8">
 <div class="cell-output cell-output-stdout">
 <pre><code>rainfallBaseDefault_Network_HD.res1d
 rainfallBaseDefault_Surface_runoff.res1d</code></pre>
@@ -758,7 +758,7 @@ rainfallBaseDefault_Surface_runoff.res1d</code></pre>
 <h2 class="anchored" data-anchor-id="practical-example">Practical Example</h2>
 <p>A common use case is to run the same simulation configuration but for different scenarios. In this example, we’ll run the scenarios created in the previous section.</p>
 <p>Recall that two scenarios were created in addition to the base scenario:</p>
-<div id="ac5dab87" class="cell" data-execution_count="9">
+<div id="056c2d0a" class="cell" data-execution_count="9">
 <details class="code-fold">
 <summary>Code for generating scenarios (based on previous section)</summary>
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>selection_name <span class="op">=</span> <span class="st">"Flow_Meter_B_Catchments"</span></span>
@@ -811,7 +811,7 @@ rainfallBaseDefault_Surface_runoff.res1d</code></pre>
 </div>
 </div>
 <p>Let’s inspect our model simulation setups.</p>
-<div id="a409d4d6" class="cell" data-execution_count="10">
+<div id="547f4064" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>df_sim_setups <span class="op">=</span> db.tables.msm_Project.select([<span class="st">"ScenarioName"</span>, <span class="st">"Description"</span>]).to_dataframe()</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>df_sim_setups</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="8">
@@ -839,7 +839,7 @@ rainfallBaseDefault_Surface_runoff.res1d</code></pre>
 </div>
 </div>
 <p>We will use the simulation setup with MUID ‘rainfall’, iteratively running all scenarios by modifying the <code>ScenarioName</code>.</p>
-<div id="64c9b126" class="cell" data-execution_count="11">
+<div id="310d0565" class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1"></a>simulation_setup_muid <span class="op">=</span> <span class="st">"rainfall"</span></span>
 <span id="cb12-2"><a href="#cb12-2"></a>scenarios_to_run <span class="op">=</span> [</span>
 <span id="cb12-3"><a href="#cb12-3"></a>    db.scenarios.base,</span>
@@ -872,7 +872,7 @@ rainfallBaseDefault_Surface_runoff.res1d</code></pre>
 <span id="cb12-30"><a href="#cb12-30"></a>    <span class="cf">for</span> <span class="bu">file</span> <span class="kw">in</span> files:</span>
 <span id="cb12-31"><a href="#cb12-31"></a>        <span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\t</span><span class="ss">- </span><span class="sc">{</span><span class="bu">file</span><span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="bdd1689e" class="cell" data-execution_count="12">
+<div id="aa00e388" class="cell" data-execution_count="12">
 <div class="cell-output cell-output-stdout">
 <pre><code>Scenario 'Base'
     - rainfallBaseDefault_Network_HD.res1d

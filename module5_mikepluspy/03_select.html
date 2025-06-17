@@ -687,7 +687,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>MIKE+Py allows you to programmatically read data from your MIKE+ model database. This is done by constructing and executing queries against specific tables. This section focuses on <code>SELECT</code> queries, which are used to retrieve data.</p>
 <p>Queries in MIKE+Py are typically initiated from a <code>Table</code> object, which you access through an opened <code>Database</code> object.</p>
 <p>First, let’s open our MIKE+ project database. We’ll use the <code>db</code> object for all subsequent examples in this section.</p>
-<div id="7c8ec103" class="cell" data-execution_count="1">
+<div id="13d28369" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> mikeplus <span class="im">as</span> mp</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Open the database</span></span>
@@ -716,7 +716,7 @@ Reminder: remember to call db.close()
 <h3 class="anchored" data-anchor-id="all-columns">All Columns</h3>
 <p>To select all columns from a table, you can call <code>select()</code> without arguments, followed by <code>to_dataframe()</code> to get the results as a Pandas DataFrame.</p>
 <p>Let’s retrieve all data from the <code>msm_Catchment</code> table:</p>
-<div id="cb806e7d" class="cell" data-execution_count="2">
+<div id="b23c8b8c" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>df_all_catchments <span class="op">=</span> db.tables.msm_Catchment.select().to_dataframe()</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>df_all_catchments.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="2">
@@ -896,7 +896,7 @@ Tip
 <h3 class="anchored" data-anchor-id="specific-columns">Specific Columns</h3>
 <p>Often, you only need a subset of columns. You can specify these by passing a list of column names to the <code>select()</code> method.</p>
 <p>Let’s select only the <code>Area</code>, and <code>ModelAImpArea</code> for all catchments:</p>
-<div id="c2f5e7fb" class="cell" data-execution_count="3">
+<div id="1211b6cc" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>df_catchment_subset <span class="op">=</span> db.tables.msm_Catchment.select([<span class="st">'Area'</span>, <span class="st">'ModelAImpArea'</span>]).to_dataframe()</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>df_catchment_subset.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="3">
@@ -944,7 +944,7 @@ Tip
 </div>
 </div>
 <p>Expressions can be made more readable to help better understand complex queries. Additionally, specifying column names by object rather than string helps reduce typo errors.</p>
-<div id="f5024e26" class="cell" data-execution_count="4">
+<div id="94c58488" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>df_catchment_subset <span class="op">=</span> (</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    db.tables.msm_Catchment</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>        .select([</span>
@@ -1031,7 +1031,7 @@ Note
 <section id="muids" class="level2">
 <h2 class="anchored" data-anchor-id="muids">MUIDs</h2>
 <p>If you only need the MUIDs (unique identifiers) for all records in a table, you can use the <code>get_muids()</code> method.</p>
-<div id="0fc5f5f7" class="cell" data-execution_count="5">
+<div id="e24a65f6" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>catchment_muids <span class="op">=</span> db.tables.msm_Catchment.get_muids()</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>catchment_muids[:<span class="dv">3</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="5">
@@ -1046,7 +1046,7 @@ Note
 <h3 class="anchored" data-anchor-id="filtering-with-by_muid">Filtering with by_muid()</h3>
 <p>If you know the MUID(s) of the specific record(s) you want, the <code>by_muid()</code> method is a convenient way to filter.</p>
 <p>Retrieve data for a catchment with a specific MUID, for example, ‘G61F011_7292’.</p>
-<div id="aa406491" class="cell" data-execution_count="6">
+<div id="f96501f7" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>(</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    db.tables.msm_Catchment</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>        .select()</span>
@@ -1118,7 +1118,7 @@ Note
 </div>
 </div>
 <p>You can also provide a list of MUIDs.</p>
-<div id="49a86c4f" class="cell" data-execution_count="7">
+<div id="0919603e" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>(</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    db.tables.msm_Catchment</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>        .select()</span>
@@ -1218,7 +1218,7 @@ Note
 <h3 class="anchored" data-anchor-id="filtering-with-where">Filtering with where()</h3>
 <p>For more complex filtering based on column values, use the <code>where()</code> method. This method accepts an SQL-like condition string.</p>
 <p>Select catchments where the <code>Area</code> is greater than 0.8 hectares.</p>
-<div id="c256c33f" class="cell" data-execution_count="8">
+<div id="13f4a747" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>(</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    db.tables.msm_Catchment</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>        .select([<span class="st">'Area'</span>])</span>
@@ -1273,7 +1273,7 @@ Units in MIKE+ GUI versus what’s in the database
 </div>
 </div>
 <p>Select pipes having node ‘G61F351’ as its start node.</p>
-<div id="e3ad6323" class="cell" data-execution_count="9">
+<div id="5d7c8480" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>(</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    db.tables.msm_Link</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>        .select([<span class="st">'FromNodeID'</span>])</span>
@@ -1309,7 +1309,7 @@ Units in MIKE+ GUI versus what’s in the database
 <li><strong>numeric values</strong> are not in quotes (e.g.&nbsp;8000)</li>
 </ul>
 <p>Wrongly formatted condition strings is a common source of errors. MIKE+Py provides a helper function <code>mp.to_sql()</code> that helps with this formatting by preventing mistakes like forgetting to close quote pairs, or forgetting them entirely.</p>
-<div id="e73337ff" class="cell" data-execution_count="10">
+<div id="c21b463d" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>(</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    db.tables.msm_Link</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>        .select([<span class="st">'FromNodeID'</span>])</span>
@@ -1340,7 +1340,7 @@ Units in MIKE+ GUI versus what’s in the database
 </div>
 <p>You can chain multiple <code>where()</code> calls, or combine conditions within a single <code>where()</code> string using <code>AND</code> or <code>OR</code>. Chaining <code>where()</code> calls implies an <code>AND</code> relationship.</p>
 <p>Select catchments where <code>Area</code> &gt; 8000 AND <code>ModelAImpArea</code> (impervious area for Model A) is less than 0.5.</p>
-<div id="14725e5f" class="cell" data-execution_count="11">
+<div id="2aa66b20" class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>(</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    db.tables.msm_Catchment</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>        .select([<span class="st">'MUID'</span>, <span class="st">'Area'</span>, <span class="st">'ModelAImpArea'</span>])</span>
@@ -1393,7 +1393,7 @@ Units in MIKE+ GUI versus what’s in the database
 </div>
 </div>
 <p>This is equivalent to:</p>
-<div id="cd398a92" class="cell" data-execution_count="12">
+<div id="d18124a1" class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>(</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    db.tables.msm_Catchment</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>        .select([<span class="st">'MUID'</span>, <span class="st">'Area'</span>, <span class="st">'ModelAImpArea'</span>])</span>
@@ -1451,7 +1451,7 @@ Units in MIKE+ GUI versus what’s in the database
 <p>Let’s say we defined a selection of catchments in MIKE+, for which we we want to retrieve their <code>Area</code>, <code>ModelAImpArea</code>, and <code>ModelAConcTime</code>.</p>
 <p>First let’s find the table that selections are stored in. Notice there’s no hover tooltips in MIKE+ GUI for selections. However, we find the table <code>m_Selection</code> anyways by searching MIKE+Py’s documentation for <em>selection</em>. Alternatively, we could have <em>guessed</em> it with help from IDE auto-completion, typing something like <code>db.tables.selec</code>.</p>
 <p>Start by displaying the whole table.</p>
-<div id="84aa7952" class="cell" data-execution_count="13">
+<div id="4605ec58" class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>db.tables.m_Selection.to_dataframe()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="13">
 <div>
@@ -1553,7 +1553,7 @@ Units in MIKE+ GUI versus what’s in the database
 </div>
 </div>
 <p>We notice the column SelectionID corresponds with our selection names. TableName and ItemMUID together seem to refer to the items of the selection. We want the catchment MUIDs for selection <code>Flow_Meter_B_Catchments</code>.</p>
-<div id="2590ecb4" class="cell" data-execution_count="14">
+<div id="9fe21d59" class="cell" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>muids <span class="op">=</span> (</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>    db.tables.m_Selection</span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>        .select([<span class="st">"ItemMUID"</span>])</span>
@@ -1568,7 +1568,7 @@ Units in MIKE+ GUI versus what’s in the database
 </div>
 </div>
 <p>Now that we have a list of MUIDs, we can use <code>by_muid()</code> to get our desired data.</p>
-<div id="944027d2" class="cell" data-execution_count="15">
+<div id="3dfdf9ea" class="cell" data-execution_count="15">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>(</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>    db.tables.msm_Catchment</span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>        .select([<span class="st">'Area'</span>, <span class="st">'ModelAImpArea'</span>, <span class="st">'ModelAConcTime'</span>])</span>
