@@ -124,3 +124,21 @@ df.loc["2021-07-31 12:00" : "2021-07-31 15:45"].plot()
 df.loc["2021-07-28 17:25" : "2021-07-28 20:55"].plot()
 df.loc["2021-06-21 06:55" : "2021-06-21 18:00"].plot()
 ```
+
+::: {.callout-tip title="Want to check your work?" collapse="true"}
+Download the exercise solutions:
+
+```{python}
+#| echo: false
+#| output: asis
+from pathlib import Path
+
+solution_dir = Path.cwd() / "solutions"
+solution_files = list(solution_dir.glob("*.ipynb"))
+
+for fname in solution_files:
+    display_name = fname.name.capitalize()
+    print(f'<a href="{fname.as_posix()}" download>{display_name}</a><br>')
+```
+
+:::

@@ -110,3 +110,21 @@ The goal is to investigate the impact of `ModelAConcTime` and `ModelARFactor` fo
 ---
 
 This set of exercises will guide you through the core functionalities of MIKE+Py, preparing you for more complex automated workflows. Good luck!
+
+::: {.callout-tip title="Want to check your work?" collapse="true"}
+Download the exercise solutions:
+
+```{python}
+#| echo: false
+#| output: asis
+from pathlib import Path
+
+solution_dir = Path.cwd() / "solutions"
+solution_files = list(solution_dir.glob("*.ipynb"))
+
+for fname in solution_files:
+    display_name = fname.name.capitalize()
+    print(f'<a href="{fname.as_posix()}" download>{display_name}</a><br>')
+```
+
+:::
